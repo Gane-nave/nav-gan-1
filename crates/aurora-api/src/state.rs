@@ -6,6 +6,8 @@ use aurora_events::EventBus;
 use aurora_fusion::FusionEngine;
 use aurora_gnss::ConstellationManager;
 use aurora_integrity::IntegrityEngine;
+use aurora_metrics::registry::MetricRegistry;
+use aurora_observability::probes::ProbeManager;
 use aurora_telemetry::TelemetryRecorder;
 use parking_lot::RwLock;
 use std::sync::Arc;
@@ -19,6 +21,8 @@ pub struct AppState {
     pub telemetry: Arc<TelemetryRecorder>,
     pub event_bus: Arc<EventBus>,
     pub last_position: Arc<RwLock<Option<FusedPosition>>>,
+    pub metrics: Arc<MetricRegistry>,
+    pub probes: Arc<ProbeManager>,
 }
 
 impl AppState {
@@ -31,6 +35,8 @@ impl AppState {
             telemetry: Arc::new(TelemetryRecorder::new(50_000)),
             event_bus: Arc::new(EventBus::new()),
             last_position: Arc::new(RwLock::new(None)),
+            metrics: Arc::new(MetricRegistry::new()),
+            probes: Arc::new(ProbeManager::new()),
         }
     }
 }

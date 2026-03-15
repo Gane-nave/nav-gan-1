@@ -44,6 +44,9 @@ members = [
     "crates/aurora-integration-tests",
     "crates/aurora-bench",
     "crates/aurora-docs",
+    "crates/aurora-metrics",
+    "crates/aurora-observability",
+    "crates/aurora-deploy",
 ]
 
 [workspace.package]

@@ -12,7 +12,10 @@ use aurora_app::cli::CliArgs;
 use aurora_app::health::build_health_report;
 use aurora_app::pipeline::{print_banner, NavigationPipeline};
 use aurora_config::{load_config, AuroraConfig, ConfigBuilder};
+use aurora_metrics::registry::MetricRegistry;
+use aurora_observability::probes::ProbeManager;
 use std::net::SocketAddr;
+use std::sync::Arc;
 use tracing::info;
 
 // Re-export validate for post-override re-validation.
@@ -61,7 +64,10 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let addr: SocketAddr = format!("{}:{}", config.api.host, config.api.port).parse()?;
     info!("Starting AURORA NAV API server on {}", addr);
 
-    let state = std::sync::Arc::new(aurora_api::state::AppState {
+    let metrics = Arc::new(MetricRegistry::new());
+    let probes = Arc::new(ProbeManager::new());
+
+    let state = Arc::new(aurora_api::state::AppState {
         gnss: pipeline.gnss.clone(),
         fusion: pipeline.fusion.clone(),
         integrity: pipeline.integrity.clone(),
@@ -69,14 +75,57 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         telemetry: pipeline.telemetry.clone(),
         event_bus: pipeline.event_bus.clone(),
         last_position: pipeline.last_position.clone(),
+        metrics,
+        probes: probes.clone(),
     });
+
+    // Mark probes as started and ready
+    probes.mark_started();
 
     let app = aurora_api::server::build_router(state);
     let listener = tokio::net::TcpListener::bind(addr).await?;
-    info!("AURORA NAV is ready — listening on {}", addr);
-    axum::serve(listener, app).await?;
 
+    // Mark ready to receive traffic
+    probes.mark_ready();
+    info!("AURORA NAV is ready — listening on {}", addr);
+
+    // Graceful shutdown: listen for SIGTERM/SIGINT
+    let probes_shutdown = probes.clone();
+    axum::serve(listener, app)
+        .with_graceful_shutdown(shutdown_signal(probes_shutdown))
+        .await?;
+
+    info!("AURORA NAV shutdown complete");
     Ok(())
+}
+
+/// Wait for a shutdown signal (SIGTERM or SIGINT).
+async fn shutdown_signal(probes: Arc<ProbeManager>) {
+    let ctrl_c = async {
+        tokio::signal::ctrl_c()
+            .await
+            .expect("failed to install Ctrl+C handler");
+    };
+
+    #[cfg(unix)]
+    let terminate = async {
+        tokio::signal::unix::signal(tokio::signal::unix::SignalKind::terminate())
+            .expect("failed to install SIGTERM handler")
+            .recv()
+            .await;
+    };
+
+    #[cfg(not(unix))]
+    let terminate = std::future::pending::<()>();
+
+    tokio::select! {
+        _ = ctrl_c => { info!("Received SIGINT, initiating graceful shutdown..."); },
+        _ = terminate => { info!("Received SIGTERM, initiating graceful shutdown..."); },
+    }
+
+    // Mark not ready so load balancers stop sending traffic
+    probes.mark_not_ready();
+    info!("Draining in-flight requests...");
 }
 
 fn load_configuration(args: &CliArgs) -> Result<AuroraConfig, Box<dyn std::error::Error>> {

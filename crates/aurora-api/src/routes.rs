@@ -7,6 +7,8 @@ use serde::Serialize;
 use std::sync::Arc;
 
 use crate::state::AppState;
+use aurora_metrics::export::render_prometheus;
+use aurora_observability::openapi;
 
 // ---------------------------------------------------------------------------
 // Response types
@@ -168,4 +170,76 @@ pub async fn get_constellations(
         .collect();
 
     Json(states)
+}
+
+/// GET /metrics — Prometheus text exposition format.
+pub async fn get_metrics(
+    State(state): State<Arc<AppState>>,
+) -> (
+    StatusCode,
+    [(axum::http::header::HeaderName, &'static str); 1],
+    String,
+) {
+    let body = render_prometheus(&state.metrics);
+    (
+        StatusCode::OK,
+        [(
+            axum::http::header::CONTENT_TYPE,
+            "text/plain; version=0.0.4; charset=utf-8",
+        )],
+        body,
+    )
+}
+
+/// GET /openapi.json — OpenAPI 3.0 specification.
+pub async fn get_openapi() -> (StatusCode, Json<serde_json::Value>) {
+    let spec = openapi::build_spec();
+    let value = serde_json::to_value(spec).unwrap_or_default();
+    (StatusCode::OK, Json(value))
+}
+
+/// GET /swagger-ui — Swagger UI HTML page.
+pub async fn get_swagger_ui() -> (
+    StatusCode,
+    [(axum::http::header::HeaderName, &'static str); 1],
+    String,
+) {
+    let html = openapi::swagger_ui_html();
+    (
+        StatusCode::OK,
+        [(axum::http::header::CONTENT_TYPE, "text/html; charset=utf-8")],
+        html,
+    )
+}
+
+/// GET /readiness — Kubernetes readiness probe.
+pub async fn get_readiness(
+    State(state): State<Arc<AppState>>,
+) -> (StatusCode, Json<serde_json::Value>) {
+    let (code, response) = state.probes.readiness_response();
+    let status = if code == 200 {
+        StatusCode::OK
+    } else {
+        StatusCode::SERVICE_UNAVAILABLE
+    };
+    (
+        status,
+        Json(serde_json::to_value(response).unwrap_or_default()),
+    )
+}
+
+/// GET /liveness — Kubernetes liveness probe.
+pub async fn get_liveness(
+    State(state): State<Arc<AppState>>,
+) -> (StatusCode, Json<serde_json::Value>) {
+    let (code, response) = state.probes.liveness_response();
+    let status = if code == 200 {
+        StatusCode::OK
+    } else {
+        StatusCode::SERVICE_UNAVAILABLE
+    };
+    (
+        status,
+        Json(serde_json::to_value(response).unwrap_or_default()),
+    )
 }

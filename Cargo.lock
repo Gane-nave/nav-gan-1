@@ -86,6 +86,8 @@ dependencies = [
  "aurora-fusion",
  "aurora-gnss",
  "aurora-integrity",
+ "aurora-metrics",
+ "aurora-observability",
  "aurora-sensors",
  "aurora-telemetry",
  "axum",
@@ -115,6 +117,7 @@ dependencies = [
  "aurora-continuity",
  "aurora-core",
  "aurora-corrections",
+ "aurora-deploy",
  "aurora-developer",
  "aurora-edge",
  "aurora-emergency",
@@ -127,7 +130,9 @@ dependencies = [
  "aurora-lane",
  "aurora-map",
  "aurora-marketplace",
+ "aurora-metrics",
  "aurora-micro-nav",
+ "aurora-observability",
  "aurora-offline",
  "aurora-parking",
  "aurora-payments",
@@ -278,6 +283,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-deploy"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-developer"
@@ -553,6 +562,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-metrics"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-micro-nav"
 version = "0.1.0"
 dependencies = [
@@ -563,6 +583,20 @@ dependencies = [
  "serde_json",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-observability"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-metrics",
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "tracing",
+ "tracing-subscriber",
 ]
 
 [[package]]
