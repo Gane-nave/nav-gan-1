@@ -65,6 +65,7 @@ fn signing_data(msg: &SatMessage) -> String {
 }
 
 /// Encode bytes to hex string.
+#[allow(unknown_lints, clippy::manual_is_multiple_of)]
 mod hex {
     /// Encode bytes to lowercase hex string.
     pub fn encode(bytes: impl AsRef<[u8]>) -> String {
@@ -82,9 +83,12 @@ mod hex {
         if s.len() % 2 != 0 {
             return Err("odd-length hex string".to_string());
         }
-        (0..s.len())
-            .step_by(2)
-            .map(|i| u8::from_str_radix(&s[i..i + 2], 16).map_err(|e| e.to_string()))
+        s.as_bytes()
+            .chunks(2)
+            .map(|pair| {
+                let hex_str = std::str::from_utf8(pair).map_err(|e| e.to_string())?;
+                u8::from_str_radix(hex_str, 16).map_err(|e| e.to_string())
+            })
             .collect()
     }
 }
