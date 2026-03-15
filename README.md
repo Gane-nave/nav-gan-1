@@ -1,1 +1,3 @@
-# AURORA NAV / GMIN\n\nGlobal Mobility Intelligence Network — Navigation Core Platform\n
+# AURORA NAV / GMIN
+
+Global Mobility Intelligence Network — Navigation Core Platform
