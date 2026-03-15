@@ -23,6 +23,10 @@ members = [
     "crates/aurora-anti-manipulation",
     "crates/aurora-traffic",
     "crates/aurora-stability",
+    "crates/aurora-ux",
+    "crates/aurora-micro-nav",
+    "crates/aurora-parking",
+    "crates/aurora-charging",
 ]
 
 [workspace.package]

@@ -86,6 +86,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-charging"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -244,6 +257,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-micro-nav"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-offline"
 version = "0.1.0"
 dependencies = [
@@ -256,6 +282,19 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
+]
+
+[[package]]
+name = "aurora-parking"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
@@ -361,6 +400,19 @@ dependencies = [
  "aurora-core",
  "chrono",
  "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-ux"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]
