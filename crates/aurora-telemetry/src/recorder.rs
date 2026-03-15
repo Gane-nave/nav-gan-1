@@ -71,12 +71,7 @@ impl TelemetryRecorder {
     }
 
     /// Record a mode transition.
-    pub fn record_mode_transition(
-        &self,
-        from: ContinuityMode,
-        to: ContinuityMode,
-        reason: &str,
-    ) {
+    pub fn record_mode_transition(&self, from: ContinuityMode, to: ContinuityMode, reason: &str) {
         self.record(TelemetrySample {
             timestamp: Utc::now(),
             sample_type: TelemetrySampleType::ModeTransition,
@@ -130,11 +125,7 @@ impl TelemetryRecorder {
     }
 
     /// Get samples within a time range.
-    pub fn samples_in_range(
-        &self,
-        from: DateTime<Utc>,
-        to: DateTime<Utc>,
-    ) -> Vec<TelemetrySample> {
+    pub fn samples_in_range(&self, from: DateTime<Utc>, to: DateTime<Utc>) -> Vec<TelemetrySample> {
         self.buffer
             .lock()
             .iter()

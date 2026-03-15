@@ -77,23 +77,24 @@ impl ContinuityManager {
         }
 
         // Degradation: only degrade, never upgrade without re-validation.
-        if mode_rank(achievable) < mode_rank(self.current_mode) {
-            // Degradation — apply immediately.
-            let reason = format!(
-                "degradation: {} → {}",
-                self.current_mode, achievable
-            );
-            self.transition_to(achievable, &reason);
-        } else if mode_rank(achievable) > mode_rank(self.current_mode) {
-            // Recovery — requires re-validation.
-            if !self.recovery_pending {
-                info!(
-                    from = %self.current_mode,
-                    to = %achievable,
-                    "recovery possible — pending re-validation"
-                );
-                self.recovery_pending = true;
+        match mode_rank(achievable).cmp(&mode_rank(self.current_mode)) {
+            std::cmp::Ordering::Less => {
+                // Degradation — apply immediately.
+                let reason = format!("degradation: {} → {}", self.current_mode, achievable);
+                self.transition_to(achievable, &reason);
             }
+            std::cmp::Ordering::Greater => {
+                // Recovery — requires re-validation.
+                if !self.recovery_pending {
+                    info!(
+                        from = %self.current_mode,
+                        to = %achievable,
+                        "recovery possible — pending re-validation"
+                    );
+                    self.recovery_pending = true;
+                }
+            }
+            std::cmp::Ordering::Equal => {}
         }
     }
 
@@ -101,10 +102,7 @@ impl ContinuityManager {
     pub fn confirm_recovery(&mut self) {
         if self.recovery_pending {
             let achievable = self.health.max_achievable_mode();
-            let reason = format!(
-                "recovery validated: {} → {}",
-                self.current_mode, achievable
-            );
+            let reason = format!("recovery validated: {} → {}", self.current_mode, achievable);
             self.transition_to(achievable, &reason);
             self.recovery_pending = false;
         }
@@ -115,10 +113,7 @@ impl ContinuityManager {
         match level {
             IntegrityLevel::Alert => {
                 if self.current_mode != ContinuityMode::ModeE {
-                    self.transition_to(
-                        ContinuityMode::ModeE,
-                        "integrity alert — emergency mode",
-                    );
+                    self.transition_to(ContinuityMode::ModeE, "integrity alert — emergency mode");
                 }
             }
             IntegrityLevel::Warning => {

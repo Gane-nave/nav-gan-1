@@ -102,8 +102,8 @@ impl AnomalyDetector {
         // Check CN0 variance — spoofed signals often have very similar CN0.
         let cn0_values: Vec<f64> = measurements.iter().map(|m| m.cn0_dbhz).collect();
         let mean = cn0_values.iter().sum::<f64>() / cn0_values.len() as f64;
-        let variance = cn0_values.iter().map(|v| (v - mean).powi(2)).sum::<f64>()
-            / cn0_values.len() as f64;
+        let variance =
+            cn0_values.iter().map(|v| (v - mean).powi(2)).sum::<f64>() / cn0_values.len() as f64;
 
         // Very low CN0 variance across many satellites is suspicious.
         if variance < 1.0 && measurements.len() >= 6 {
@@ -119,7 +119,10 @@ impl AnomalyDetector {
                 severity: ThreatSeverity::Suspected,
                 affected_constellation: None,
                 affected_satellites: measurements.iter().map(|m| m.satellite).collect(),
-                reason: format!("CN0 variance = {variance:.2} across {} satellites", measurements.len()),
+                reason: format!(
+                    "CN0 variance = {variance:.2} across {} satellites",
+                    measurements.len()
+                ),
                 mitigated: false,
             });
         }
@@ -143,10 +146,7 @@ impl AnomalyDetector {
                         severity: ThreatSeverity::Suspected,
                         affected_constellation: Some(meas.satellite.constellation),
                         affected_satellites: vec![meas.satellite],
-                        reason: format!(
-                            "CN0 jump of {jump:.1} dB-Hz on {}",
-                            meas.satellite
-                        ),
+                        reason: format!("CN0 jump of {jump:.1} dB-Hz on {}", meas.satellite),
                         mitigated: false,
                     });
                 }

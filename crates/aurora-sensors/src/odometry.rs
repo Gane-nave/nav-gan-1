@@ -51,10 +51,8 @@ impl OdometryProcessor {
 
     /// Process a visual odometry delta.
     pub fn process_visual(&self, sample: &VisualOdometry) -> OdometryOutput {
-        let delta = (sample.delta_x_m.powi(2)
-            + sample.delta_y_m.powi(2)
-            + sample.delta_z_m.powi(2))
-        .sqrt();
+        let delta =
+            (sample.delta_x_m.powi(2) + sample.delta_y_m.powi(2) + sample.delta_z_m.powi(2)).sqrt();
 
         OdometryOutput {
             timestamp: sample.timestamp,

@@ -2,10 +2,10 @@
 //!
 //! IMU, odometry, vehicle CAN signal ingestion and dead reckoning.
 
-pub mod imu;
-pub mod odometry;
 pub mod dead_reckoning;
 pub mod health;
+pub mod imu;
+pub mod odometry;
 
 pub use dead_reckoning::DeadReckoningEngine;
 pub use health::SensorHealthMonitor;

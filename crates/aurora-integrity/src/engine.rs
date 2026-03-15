@@ -67,7 +67,8 @@ impl IntegrityEngine {
         for meas in measurements {
             let source = meas.signal.to_nav_source();
             if outlier_sats.contains(&meas.satellite) {
-                self.trust_manager.report_anomaly(source, "outlier residual");
+                self.trust_manager
+                    .report_anomaly(source, "outlier residual");
             } else {
                 self.trust_manager.report_clean(source);
             }

@@ -10,8 +10,8 @@
 //!   D — INS + Odometry + Map Matching (dead reckoning)
 //!   E — Emergency bounded localization
 
-pub mod manager;
 pub mod health;
+pub mod manager;
 
-pub use manager::ContinuityManager;
 pub use health::HealthStateMachine;
+pub use manager::ContinuityManager;

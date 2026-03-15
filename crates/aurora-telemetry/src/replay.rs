@@ -59,7 +59,11 @@ impl ReplayController {
 
     /// Start playback of a session.
     pub fn play(&mut self, session_id: EntityId) -> bool {
-        if let Some(state) = self.sessions.iter_mut().find(|s| s.session.id == session_id) {
+        if let Some(state) = self
+            .sessions
+            .iter_mut()
+            .find(|s| s.session.id == session_id)
+        {
             state.playing = true;
             state.current_index = 0;
             true
@@ -87,15 +91,23 @@ impl ReplayController {
 
     /// Stop playback.
     pub fn stop(&mut self, session_id: EntityId) {
-        if let Some(state) = self.sessions.iter_mut().find(|s| s.session.id == session_id) {
+        if let Some(state) = self
+            .sessions
+            .iter_mut()
+            .find(|s| s.session.id == session_id)
+        {
             state.playing = false;
         }
     }
 
     /// Set playback speed (1.0 = real-time, 2.0 = 2x, etc.).
     pub fn set_speed(&mut self, session_id: EntityId, speed: f64) {
-        if let Some(state) = self.sessions.iter_mut().find(|s| s.session.id == session_id) {
-            state.playback_speed = speed.max(0.1).min(100.0);
+        if let Some(state) = self
+            .sessions
+            .iter_mut()
+            .find(|s| s.session.id == session_id)
+        {
+            state.playback_speed = speed.clamp(0.1, 100.0);
         }
     }
 

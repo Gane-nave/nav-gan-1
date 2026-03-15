@@ -4,9 +4,9 @@
 //! map matching, and visual constraints into a unified navigation solution.
 
 pub mod ekf;
-pub mod state;
-pub mod measurement;
 pub mod engine;
+pub mod measurement;
+pub mod state;
 
 pub use engine::FusionEngine;
 pub use state::FusionState;

@@ -67,9 +67,11 @@ impl SignalType {
             Self::GpsL1CA | Self::GpsL2C | Self::GpsL5 => Constellation::Gps,
             Self::GalileoE1 | Self::GalileoE5a | Self::GalileoE5b => Constellation::Galileo,
             Self::GlonassL1OF | Self::GlonassL2OF => Constellation::Glonass,
-            Self::BeidouB1I | Self::BeidouB1C | Self::BeidouB2a | Self::BeidouB2b | Self::BeidouB3I => {
-                Constellation::BeiDou
-            }
+            Self::BeidouB1I
+            | Self::BeidouB1C
+            | Self::BeidouB2a
+            | Self::BeidouB2b
+            | Self::BeidouB3I => Constellation::BeiDou,
         }
     }
 
