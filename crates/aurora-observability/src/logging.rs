@@ -4,20 +4,15 @@ use tracing_subscriber::fmt;
 use tracing_subscriber::EnvFilter;
 
 /// Log output format.
-#[derive(Debug, Clone, Copy, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
+#[derive(Debug, Clone, Copy, Default, PartialEq, Eq, serde::Serialize, serde::Deserialize)]
 pub enum LogFormat {
     /// Human-readable, colored output (default for development).
+    #[default]
     Pretty,
     /// Compact single-line output.
     Compact,
     /// JSON-structured output (recommended for production).
     Json,
-}
-
-impl Default for LogFormat {
-    fn default() -> Self {
-        Self::Pretty
-    }
 }
 
 /// Logging configuration.

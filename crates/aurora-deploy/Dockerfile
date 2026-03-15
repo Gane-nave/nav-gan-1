@@ -37,8 +37,7 @@ WORKDIR /app
 # Copy the compiled binary
 COPY --from=builder /build/target/release/aurora-nav /app/aurora-nav
 
-# Copy default configuration (if present)
-RUN cp -r /build/crates/aurora-config/defaults/ /app/config/ 2>/dev/null || true
+# Defaults are generated programmatically by aurora-config; no config files needed.
 
 # Set ownership
 RUN chown -R aurora:aurora /app
