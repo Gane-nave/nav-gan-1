@@ -3,7 +3,7 @@
 use axum::extract::State;
 use axum::http::StatusCode;
 use axum::response::Json;
-use serde::Serialize;
+use serde::{Deserialize, Serialize};
 use std::sync::Arc;
 
 use crate::state::AppState;
@@ -242,4 +242,69 @@ pub async fn get_liveness(
         status,
         Json(serde_json::to_value(response).unwrap_or_default()),
     )
+}
+
+// ---------------------------------------------------------------------------
+// Auth & Security endpoints
+// ---------------------------------------------------------------------------
+
+#[derive(Debug, Serialize)]
+pub struct AuthStatusResponse {
+    pub jwt_enabled: bool,
+    pub api_key_count: usize,
+    pub active_sessions: usize,
+    pub rbac_roles: Vec<String>,
+    pub rate_limiter_clients: usize,
+    pub security_headers_count: usize,
+}
+
+/// GET /auth/status — Authentication & security subsystem status.
+pub async fn get_auth_status(State(state): State<Arc<AppState>>) -> Json<AuthStatusResponse> {
+    let api_key_store = state.api_key_store.read();
+    let policy_engine = state.policy_engine.read();
+    let session_manager = state.session_manager.read();
+
+    Json(AuthStatusResponse {
+        jwt_enabled: true,
+        api_key_count: api_key_store.active_key_count(),
+        active_sessions: session_manager.active_session_count(),
+        rbac_roles: policy_engine.role_names(),
+        rate_limiter_clients: state.rate_limiter.tracked_client_count(),
+        security_headers_count: state.security_headers.header_count(),
+    })
+}
+
+#[derive(Debug, Deserialize)]
+pub struct TokenRequest {
+    pub subject: String,
+    pub role: String,
+    pub scopes: Vec<String>,
+}
+
+#[derive(Debug, Serialize)]
+pub struct TokenResponse {
+    pub token: String,
+    pub expires_in_s: u64,
+}
+
+/// POST /auth/token — Generate a JWT token.
+pub async fn post_auth_token(
+    State(state): State<Arc<AppState>>,
+    Json(req): Json<TokenRequest>,
+) -> Json<TokenResponse> {
+    let scopes_str = req.scopes.join(",");
+    let token = state
+        .jwt_manager
+        .generate_token(&req.subject, &req.role, &scopes_str);
+    let config = state.jwt_manager.config();
+    Json(TokenResponse {
+        token,
+        expires_in_s: config.token_lifetime.num_seconds() as u64,
+    })
+}
+
+/// GET /security/headers — List configured security headers.
+pub async fn get_security_headers(State(state): State<Arc<AppState>>) -> Json<serde_json::Value> {
+    let headers = state.security_headers.to_header_map();
+    Json(serde_json::to_value(headers).unwrap_or_default())
 }

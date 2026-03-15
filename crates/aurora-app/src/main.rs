@@ -11,10 +11,16 @@
 use aurora_app::cli::CliArgs;
 use aurora_app::health::build_health_report;
 use aurora_app::pipeline::{print_banner, NavigationPipeline};
+use aurora_auth::api_key::ApiKeyStore;
+use aurora_auth::jwt::JwtManager;
+use aurora_auth::rbac::PolicyEngine;
+use aurora_auth::session::SessionManager;
 use aurora_config::loader::apply_env_overrides;
 use aurora_config::{load_config, AuroraConfig, ConfigBuilder};
 use aurora_metrics::registry::MetricRegistry;
 use aurora_observability::probes::ProbeManager;
+use aurora_security::headers::SecurityHeadersConfig;
+use aurora_security::rate_limit::RateLimiter;
 use std::net::SocketAddr;
 use std::sync::Arc;
 use tracing::info;
@@ -78,6 +84,12 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
         last_position: pipeline.last_position.clone(),
         metrics,
         probes: probes.clone(),
+        jwt_manager: Arc::new(JwtManager::default()),
+        api_key_store: Arc::new(parking_lot::RwLock::new(ApiKeyStore::new())),
+        policy_engine: Arc::new(parking_lot::RwLock::new(PolicyEngine::new())),
+        session_manager: Arc::new(parking_lot::RwLock::new(SessionManager::default())),
+        rate_limiter: Arc::new(RateLimiter::default()),
+        security_headers: Arc::new(SecurityHeadersConfig::default()),
     });
 
     // Mark probes as started and ready
