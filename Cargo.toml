@@ -34,6 +34,8 @@ members = [
     "crates/aurora-satellite",
     "crates/aurora-city",
     "crates/aurora-twin",
+    "crates/aurora-sdk",
+    "crates/aurora-developer",
 ]
 
 [workspace.package]

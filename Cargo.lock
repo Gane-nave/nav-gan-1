@@ -167,6 +167,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-developer"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-events",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-edge"
 version = "0.1.0"
 dependencies = [
@@ -407,6 +421,20 @@ name = "aurora-satellite"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-sdk"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-events",
  "chrono",
  "serde",
  "serde_json",
