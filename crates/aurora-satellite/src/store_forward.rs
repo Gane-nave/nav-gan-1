@@ -552,7 +552,10 @@ mod tests {
 
         // Store a 10-byte Emergency message. Needs to evict 2 of 3 Bulk messages.
         let result = engine.store(ForwardPriority::Emergency, b"emergency!", "srv", 3600); // 10 bytes
-        assert!(result.is_some(), "Emergency message should be stored after multi-eviction");
+        assert!(
+            result.is_some(),
+            "Emergency message should be stored after multi-eviction"
+        );
         // At least the Emergency message is in the buffer.
         assert!(engine.buffer_count() >= 1);
         // The Emergency message's 10 bytes are accounted for.
