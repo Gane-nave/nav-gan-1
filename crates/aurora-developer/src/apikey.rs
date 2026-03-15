@@ -17,7 +17,7 @@ pub struct ApiKey {
     pub id: EntityId,
     /// The key string (prefix + hash). Only the prefix is stored in plain text.
     pub key_prefix: String,
-    /// SHA-256 hash of the full key for validation.
+    /// FNV-1a hash of the full key for validation.
     pub key_hash: String,
     pub name: String,
     pub owner_id: EntityId,
