@@ -6,7 +6,7 @@ use aurora_core::incident::{
 };
 use aurora_core::types::{EntityId, GeoPosition};
 use chrono::Utc;
-use std::collections::HashMap;
+use std::collections::{HashMap, HashSet};
 use tracing::{debug, info};
 
 /// Request to create a new incident report.
@@ -37,6 +37,8 @@ pub struct IncidentReporter {
     incidents: HashMap<EntityId, Incident>,
     timelines: HashMap<EntityId, IncidentTimeline>,
     evidence: HashMap<EntityId, Evidence>,
+    /// Tracks which users have already validated each incident.
+    validated_by: HashMap<EntityId, HashSet<EntityId>>,
     /// Minimum validations before an incident is promoted to Active.
     validation_threshold: u32,
 }
@@ -47,6 +49,7 @@ impl IncidentReporter {
             incidents: HashMap::new(),
             timelines: HashMap::new(),
             evidence: HashMap::new(),
+            validated_by: HashMap::new(),
             validation_threshold: 3,
         }
     }
@@ -148,6 +151,12 @@ impl IncidentReporter {
 
         // Cannot validate your own incident.
         if incident.reporter_id == validator_id {
+            return Some(incident.status);
+        }
+
+        // Reject duplicate validations from the same user.
+        let validators = self.validated_by.entry(incident_id).or_default();
+        if !validators.insert(validator_id) {
             return Some(incident.status);
         }
 
@@ -363,6 +372,36 @@ mod tests {
         reporter.validate_incident(id, v2);
         let incident = reporter.get_incident(&id).unwrap();
         assert_eq!(incident.status, IncidentStatus::Validated);
+    }
+
+    #[test]
+    fn duplicate_validation_rejected() {
+        let mut reporter = IncidentReporter::new().with_validation_threshold(2);
+        let user = EntityId::new();
+        let id = reporter.create_incident(report(user));
+
+        let validator = EntityId::new();
+
+        // First validation counts.
+        reporter.validate_incident(id, validator);
+        assert_eq!(reporter.get_incident(&id).unwrap().validation_count, 1);
+
+        // Same validator again — should be rejected (no increment).
+        reporter.validate_incident(id, validator);
+        assert_eq!(reporter.get_incident(&id).unwrap().validation_count, 1);
+        assert_eq!(
+            reporter.get_incident(&id).unwrap().status,
+            IncidentStatus::Reported
+        ); // not promoted
+
+        // Different validator promotes.
+        let v2 = EntityId::new();
+        reporter.validate_incident(id, v2);
+        assert_eq!(reporter.get_incident(&id).unwrap().validation_count, 2);
+        assert_eq!(
+            reporter.get_incident(&id).unwrap().status,
+            IncidentStatus::Validated
+        );
     }
 
     #[test]

@@ -114,9 +114,7 @@ impl TransparencyLogger {
         reason: &str,
     ) -> Option<EntityId> {
         // Verify the log entry exists.
-        if self.get(&log_id).is_none() {
-            return None;
-        }
+        self.get(&log_id)?;
 
         let appeal_id = EntityId::new();
         let appeal = Appeal {

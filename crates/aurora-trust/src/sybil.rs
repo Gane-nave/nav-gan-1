@@ -187,7 +187,7 @@ impl SybilDetector {
             by_incident.entry(r.incident_id).or_default().push(r);
         }
 
-        for (_incident_id, incident_reports) in &by_incident {
+        for incident_reports in by_incident.values() {
             if incident_reports.len() < self.config.min_cluster_size {
                 continue;
             }

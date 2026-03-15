@@ -200,7 +200,7 @@ impl ReputationEngine {
         let config = &self.config;
 
         for score in self.scores.values_mut() {
-            let days_since = (now - score.computed_at).num_hours() as f64 / 24.0;
+            let days_since = (now - score.computed_at).num_seconds() as f64 / 86400.0;
             if days_since > 0.0 {
                 let decay = config.decay_rate_per_day * days_since;
                 score.score = (score.score - decay).max(config.min_trust);
