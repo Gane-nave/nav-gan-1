@@ -176,7 +176,11 @@ impl InferenceEngine {
             return false;
         }
 
-        self.memory_used_bytes = self.memory_used_bytes.saturating_sub(model.size_bytes);
+        // Only subtract memory if the model was actually loaded (loaded_at is set).
+        // A model can reach UpdateAvailable without ever being loaded.
+        if model.loaded_at.is_some() {
+            self.memory_used_bytes = self.memory_used_bytes.saturating_sub(model.size_bytes);
+        }
         model.status = ModelStatus::Unloaded;
         info!(model = %model_id, "model unloaded");
         true
