@@ -21,6 +21,8 @@ members = [
     "crates/aurora-evidence",
     "crates/aurora-trust",
     "crates/aurora-anti-manipulation",
+    "crates/aurora-traffic",
+    "crates/aurora-stability",
 ]
 
 [workspace.package]

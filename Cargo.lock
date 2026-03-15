@@ -314,6 +314,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-stability"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -324,6 +337,19 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-traffic"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]
