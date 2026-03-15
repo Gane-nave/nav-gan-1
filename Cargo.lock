@@ -74,6 +74,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-confidence"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-continuity"
 version = "0.1.0"
 dependencies = [
@@ -221,6 +232,33 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
+]
+
+[[package]]
+name = "aurora-probabilistic"
+version = "0.1.0"
+dependencies = [
+ "aurora-confidence",
+ "aurora-core",
+ "aurora-map",
+ "aurora-risk",
+ "aurora-routing",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-risk"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-map",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
