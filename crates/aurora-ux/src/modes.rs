@@ -266,6 +266,11 @@ impl ModeManager {
             }
         }
 
+        // Emergency mode always stays minimal — checked before cognitive load.
+        if ctx.usage_mode == UsageMode::EmergencyResponse {
+            return InterfaceComplexity::Minimal;
+        }
+
         // High cognitive load → simplify.
         if ctx.cognitive_load > 0.8 {
             return InterfaceComplexity::Minimal;
@@ -277,11 +282,6 @@ impl ModeManager {
                 InterfaceComplexity::Detailed => InterfaceComplexity::Standard,
                 other => other,
             };
-        }
-
-        // Emergency mode always stays minimal.
-        if ctx.usage_mode == UsageMode::EmergencyResponse {
-            return InterfaceComplexity::Minimal;
         }
 
         self.active_preset.complexity

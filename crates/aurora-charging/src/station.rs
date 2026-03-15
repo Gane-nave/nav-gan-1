@@ -136,6 +136,8 @@ impl StationManager {
             {
                 conn.status = status;
                 station.updated_at = Utc::now();
+                // Invalidate cached congestion so next query recalculates.
+                self.congestion_cache.remove(station_id);
                 return true;
             }
         }

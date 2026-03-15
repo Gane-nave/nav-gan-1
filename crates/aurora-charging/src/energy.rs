@@ -87,15 +87,21 @@ pub enum RouteEnergyStrategy {
 /// Energy model engine — estimates consumption and scores routes.
 pub struct EnergyModel {
     profiles: Vec<EnergyProfile>,
-    /// CO₂ emission factor (g/kWh for grid electricity, g/L for fuel).
-    co2_factor: f64,
+    /// CO₂ emission factor for electric vehicles (g/kWh for grid electricity).
+    co2_factor_electric: f64,
+    /// CO₂ emission factor for gasoline vehicles (g/L).
+    co2_factor_gasoline: f64,
+    /// CO₂ emission factor for diesel vehicles (g/L).
+    co2_factor_diesel: f64,
 }
 
 impl EnergyModel {
     pub fn new() -> Self {
         Self {
             profiles: Vec::new(),
-            co2_factor: 400.0, // Average grid: 400 g CO₂/kWh
+            co2_factor_electric: 400.0,   // Average grid: 400 g CO₂/kWh
+            co2_factor_gasoline: 2_310.0, // ~2310 g CO₂/litre gasoline
+            co2_factor_diesel: 2_680.0,   // ~2680 g CO₂/litre diesel
         }
     }
 
@@ -212,7 +218,13 @@ impl EnergyModel {
         };
 
         // Environmental score (0 = clean, 1 = dirty).
-        let co2_grams = consumption * self.co2_factor;
+        let co2_factor = match profile.energy_type {
+            EnergyType::Electric => self.co2_factor_electric,
+            EnergyType::Hybrid => self.co2_factor_electric, // Simplified: use electric factor
+            EnergyType::Diesel => self.co2_factor_diesel,
+            _ => self.co2_factor_gasoline, // Gasoline, Hydrogen, Other
+        };
+        let co2_grams = consumption * co2_factor;
         let environmental_score = (co2_grams / (distance_km.max(0.1) * 200.0)).clamp(0.0, 1.0);
 
         ConsumptionEstimate {
