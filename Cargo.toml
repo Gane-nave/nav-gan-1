@@ -39,6 +39,9 @@ members = [
     "crates/aurora-marketplace",
     "crates/aurora-payments",
     "crates/aurora-vehicle",
+    "crates/aurora-config",
+    "crates/aurora-app",
+    "crates/aurora-integration-tests",
 ]
 
 [workspace.package]

@@ -1,0 +1,55 @@
+[package]
+name = "aurora-integration-tests"
+version.workspace = true
+edition.workspace = true
+description = "Cross-crate end-to-end integration tests for AURORA NAV / GMIN"
+
+[dependencies]
+aurora-config = { path = "../aurora-config" }
+aurora-core = { path = "../aurora-core" }
+aurora-events = { path = "../aurora-events" }
+aurora-gnss = { path = "../aurora-gnss" }
+aurora-corrections = { path = "../aurora-corrections" }
+aurora-sensors = { path = "../aurora-sensors" }
+aurora-fusion = { path = "../aurora-fusion" }
+aurora-integrity = { path = "../aurora-integrity" }
+aurora-continuity = { path = "../aurora-continuity" }
+aurora-telemetry = { path = "../aurora-telemetry" }
+aurora-api = { path = "../aurora-api" }
+aurora-app = { path = "../aurora-app" }
+aurora-map = { path = "../aurora-map" }
+aurora-routing = { path = "../aurora-routing" }
+aurora-lane = { path = "../aurora-lane" }
+aurora-offline = { path = "../aurora-offline" }
+aurora-risk = { path = "../aurora-risk" }
+aurora-confidence = { path = "../aurora-confidence" }
+aurora-probabilistic = { path = "../aurora-probabilistic" }
+aurora-evidence = { path = "../aurora-evidence" }
+aurora-trust = { path = "../aurora-trust" }
+aurora-anti-manipulation = { path = "../aurora-anti-manipulation" }
+aurora-traffic = { path = "../aurora-traffic" }
+aurora-stability = { path = "../aurora-stability" }
+aurora-ux = { path = "../aurora-ux" }
+aurora-micro-nav = { path = "../aurora-micro-nav" }
+aurora-parking = { path = "../aurora-parking" }
+aurora-charging = { path = "../aurora-charging" }
+aurora-fleet = { path = "../aurora-fleet" }
+aurora-emergency = { path = "../aurora-emergency" }
+aurora-resilience = { path = "../aurora-resilience" }
+aurora-edge = { path = "../aurora-edge" }
+aurora-satellite = { path = "../aurora-satellite" }
+aurora-city = { path = "../aurora-city" }
+aurora-twin = { path = "../aurora-twin" }
+aurora-sdk = { path = "../aurora-sdk" }
+aurora-developer = { path = "../aurora-developer" }
+aurora-marketplace = { path = "../aurora-marketplace" }
+aurora-payments = { path = "../aurora-payments" }
+aurora-vehicle = { path = "../aurora-vehicle" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+parking_lot = { workspace = true }
+toml = "0.8"
