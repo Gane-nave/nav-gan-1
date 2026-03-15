@@ -421,11 +421,11 @@ mod tests {
     fn probability_sorted_by_highest_first() {
         let mut engine = ParkingEngine::new();
 
-        let mut high_avail = make_zone("High", 32.0001, 34.0, 100, ParkingZoneType::ParkingLot);
+        let high_avail = make_zone("High", 32.0001, 34.0, 100, ParkingZoneType::ParkingLot);
         let hid = high_avail.id;
         engine.add_zone(high_avail);
 
-        let mut low_avail = make_zone("Low", 32.0002, 34.0, 100, ParkingZoneType::ParkingLot);
+        let low_avail = make_zone("Low", 32.0002, 34.0, 100, ParkingZoneType::ParkingLot);
         let lid = low_avail.id;
         engine.add_zone(low_avail);
 
@@ -446,7 +446,7 @@ mod tests {
         });
 
         let results = engine.estimate_near(&pos(32.0, 34.0), false);
-        assert!(results.len() >= 1);
+        assert!(!results.is_empty());
         // First result should have higher probability.
         if results.len() >= 2 {
             assert!(results[0].probability >= results[1].probability);

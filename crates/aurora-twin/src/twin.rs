@@ -507,13 +507,12 @@ mod tests {
 
     #[test]
     fn drift_detection_marks_drifted() {
-        let mut reg = TwinRegistry::new();
         let config = TwinRegistryConfig {
             drift_threshold_s: 0.0, // Immediate drift
             staleness_threshold_s: 0.0,
             ..Default::default()
         };
-        reg = TwinRegistry::with_config(config);
+        let mut reg = TwinRegistry::with_config(config);
 
         let phys = EntityId::new();
         let twin_id = reg.create_twin(phys, TwinKind::Sensor, "S1");
