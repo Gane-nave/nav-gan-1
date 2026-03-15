@@ -111,7 +111,7 @@
 //! |---|---|
 //! | [`aurora_app`] | Main application with pipeline wiring and health aggregation |
 //! | [`aurora_telemetry`] | Ring-buffer recorder, audit log, replay engine |
-//! | [`aurora_api`] | Axum REST API server with CORS and tracing |
+//! | `aurora_api` | Axum REST API server with CORS and tracing |
 //!
 //! ## Data Flow
 //!

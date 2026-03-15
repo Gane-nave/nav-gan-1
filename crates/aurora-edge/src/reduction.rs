@@ -110,6 +110,7 @@ impl DataReducer {
         }
     }
 
+    #[allow(clippy::manual_is_multiple_of)]
     fn time_sampling(&mut self, sample: &DataSample) -> Option<ReducedOutput> {
         let rate = (self.config.sampling_rate as u64).max(1);
         if self.sample_counter % rate == 0 {
