@@ -18,6 +18,9 @@ members = [
     "crates/aurora-risk",
     "crates/aurora-confidence",
     "crates/aurora-probabilistic",
+    "crates/aurora-evidence",
+    "crates/aurora-trust",
+    "crates/aurora-anti-manipulation",
 ]
 
 [workspace.package]
