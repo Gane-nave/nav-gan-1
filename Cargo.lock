@@ -154,6 +154,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-emergency"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-events"
 version = "0.1.0"
 dependencies = [
@@ -173,6 +186,19 @@ dependencies = [
 name = "aurora-evidence"
 version = "0.1.0"
 dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-fleet"
+version = "0.1.0"
+dependencies = [
+ "approx",
  "aurora-core",
  "chrono",
  "serde",
