@@ -29,6 +29,9 @@ members = [
     "crates/aurora-charging",
     "crates/aurora-fleet",
     "crates/aurora-emergency",
+    "crates/aurora-resilience",
+    "crates/aurora-edge",
+    "crates/aurora-satellite",
 ]
 
 [workspace.package]

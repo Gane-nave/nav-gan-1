@@ -154,6 +154,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-edge"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-emergency"
 version = "0.1.0"
 dependencies = [
@@ -339,6 +352,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-resilience"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-risk"
 version = "0.1.0"
 dependencies = [
@@ -361,6 +387,19 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "aurora-satellite"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
