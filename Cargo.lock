@@ -185,6 +185,58 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-lane"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-map",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "aurora-map"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-events",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "aurora-offline"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-events",
+ "aurora-map",
+ "aurora-routing",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "aurora-routing"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-events",
+ "aurora-map",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
 name = "aurora-sensors"
 version = "0.1.0"
 dependencies = [

@@ -365,8 +365,8 @@ mod tests {
         };
 
         let mut ts = Utc::now();
-        for i in 0..10 {
-            ts = ts + chrono::Duration::seconds(1);
+        for _i in 0..10 {
+            ts += chrono::Duration::seconds(1);
             let meas =
                 FusionMeasurement::gnss_position(pos, 3.0, 6.0, NavigationSource::GpsL1, 1.0, ts);
             engine.process_measurement(&meas);

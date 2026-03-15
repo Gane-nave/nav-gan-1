@@ -11,6 +11,10 @@ members = [
     "crates/aurora-continuity",
     "crates/aurora-telemetry",
     "crates/aurora-api",
+    "crates/aurora-map",
+    "crates/aurora-routing",
+    "crates/aurora-lane",
+    "crates/aurora-offline",
 ]
 
 [workspace.package]
