@@ -263,12 +263,16 @@ impl SignalController {
             return false;
         }
 
-        // Promote next queued request for this signal.
-        if let Some(pos) = self
+        // Promote the highest-priority queued request for this signal.
+        let best = self
             .preemption_queue
             .iter()
-            .position(|r| r.signal_id == *signal_id)
-        {
+            .enumerate()
+            .filter(|(_, r)| r.signal_id == *signal_id)
+            .max_by_key(|(_, r)| r.priority)
+            .map(|(i, _)| i);
+
+        if let Some(pos) = best {
             let next = self.preemption_queue.remove(pos);
             info!(signal = %signal_id, priority = ?next.priority, "promoted queued preemption");
             self.active_preemptions.insert(*signal_id, next);
