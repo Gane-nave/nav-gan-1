@@ -1,0 +1,35 @@
+# =============================================================================
+# AURORA NAV / GMIN — Kubernetes Service
+# =============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: aurora-nav
+  labels:
+    app: aurora-nav
+    component: navigation
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: aurora-nav
+---
+# Service Monitor for Prometheus Operator
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: aurora-nav
+  labels:
+    app: aurora-nav
+spec:
+  selector:
+    matchLabels:
+      app: aurora-nav
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

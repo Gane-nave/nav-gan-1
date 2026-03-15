@@ -39,6 +39,14 @@ members = [
     "crates/aurora-marketplace",
     "crates/aurora-payments",
     "crates/aurora-vehicle",
+    "crates/aurora-config",
+    "crates/aurora-app",
+    "crates/aurora-integration-tests",
+    "crates/aurora-bench",
+    "crates/aurora-docs",
+    "crates/aurora-metrics",
+    "crates/aurora-observability",
+    "crates/aurora-deploy",
 ]
 
 [workspace.package]
