@@ -47,6 +47,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1505bd5d3d116872e7271a6d4e16d81d0c8570876c8de68093a09ac269d8aac0"
 
 [[package]]
+name = "aurora-anti-manipulation"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-api"
 version = "0.1.0"
 dependencies = [
@@ -70,6 +82,30 @@ dependencies = [
  "tower-http",
  "tracing",
  "tracing-subscriber",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-charging"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-confidence"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "tracing",
  "uuid",
 ]
 
@@ -118,6 +154,32 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-edge"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-emergency"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-events"
 version = "0.1.0"
 dependencies = [
@@ -129,6 +191,31 @@ dependencies = [
  "serde_json",
  "thiserror",
  "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-evidence"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-fleet"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]
@@ -209,6 +296,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-micro-nav"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-offline"
 version = "0.1.0"
 dependencies = [
@@ -224,6 +324,59 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-parking"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-probabilistic"
+version = "0.1.0"
+dependencies = [
+ "aurora-confidence",
+ "aurora-core",
+ "aurora-map",
+ "aurora-risk",
+ "aurora-routing",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-resilience"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-risk"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-map",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-routing"
 version = "0.1.0"
 dependencies = [
@@ -234,6 +387,19 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "aurora-satellite"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
 ]
 
 [[package]]
@@ -252,6 +418,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-stability"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -262,6 +441,43 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-traffic"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-trust"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-ux"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]

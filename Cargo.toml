@@ -15,6 +15,23 @@ members = [
     "crates/aurora-routing",
     "crates/aurora-lane",
     "crates/aurora-offline",
+    "crates/aurora-risk",
+    "crates/aurora-confidence",
+    "crates/aurora-probabilistic",
+    "crates/aurora-evidence",
+    "crates/aurora-trust",
+    "crates/aurora-anti-manipulation",
+    "crates/aurora-traffic",
+    "crates/aurora-stability",
+    "crates/aurora-ux",
+    "crates/aurora-micro-nav",
+    "crates/aurora-parking",
+    "crates/aurora-charging",
+    "crates/aurora-fleet",
+    "crates/aurora-emergency",
+    "crates/aurora-resilience",
+    "crates/aurora-edge",
+    "crates/aurora-satellite",
 ]
 
 [workspace.package]
