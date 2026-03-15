@@ -283,7 +283,7 @@ fn detect_turn(from: &RoadSegment, to: &RoadSegment) -> ManeuverType {
         a if (-15.0..15.0).contains(&a) => ManeuverType::Continue,
         a if (15.0..45.0).contains(&a) => ManeuverType::TurnSlightRight,
         a if (45.0..135.0).contains(&a) => ManeuverType::TurnRight,
-        a if (135.0..180.0).contains(&a) => ManeuverType::TurnSharpRight,
+        a if (135.0..=180.0).contains(&a) => ManeuverType::TurnSharpRight,
         a if (-45.0..-15.0).contains(&a) => ManeuverType::TurnSlightLeft,
         a if (-135.0..-45.0).contains(&a) => ManeuverType::TurnLeft,
         a if a <= -135.0 => ManeuverType::TurnSharpLeft,
