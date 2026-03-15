@@ -1,6 +1,6 @@
 //! HTTP server setup and configuration.
 
-use axum::routing::get;
+use axum::routing::{get, post};
 use axum::Router;
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -25,6 +25,9 @@ pub fn build_router(state: Arc<AppState>) -> Router {
         .route("/swagger-ui", get(routes::get_swagger_ui))
         .route("/readiness", get(routes::get_readiness))
         .route("/liveness", get(routes::get_liveness))
+        .route("/auth/status", get(routes::get_auth_status))
+        .route("/auth/token", post(routes::post_auth_token))
+        .route("/security/headers", get(routes::get_security_headers))
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
         .with_state(state)

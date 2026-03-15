@@ -51,6 +51,8 @@ aurora-vehicle = { path = "../aurora-vehicle" }
 aurora-metrics = { path = "../aurora-metrics" }
 aurora-observability = { path = "../aurora-observability" }
 aurora-deploy = { path = "../aurora-deploy" }
+aurora-auth = { path = "../aurora-auth" }
+aurora-security = { path = "../aurora-security" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }
