@@ -47,6 +47,18 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "1505bd5d3d116872e7271a6d4e16d81d0c8570876c8de68093a09ac269d8aac0"
 
 [[package]]
+name = "aurora-anti-manipulation"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-api"
 version = "0.1.0"
 dependencies = [
@@ -140,6 +152,18 @@ dependencies = [
  "serde_json",
  "thiserror",
  "tokio",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-evidence"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]
@@ -300,6 +324,17 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-trust"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
  "tracing",
  "uuid",
 ]
