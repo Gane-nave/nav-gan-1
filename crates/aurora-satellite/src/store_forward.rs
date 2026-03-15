@@ -169,26 +169,31 @@ impl StoreForwardEngine {
 
     /// Try to evict lowest-priority messages to free space.
     /// Only evicts messages with strictly lower priority than `incoming`.
+    /// Keeps evicting until enough space is freed or no more evictable messages remain.
     fn evict_lowest_priority(&mut self, needed_bytes: u64, incoming: ForwardPriority) -> bool {
-        // Find the lowest-priority Stored message that is strictly below incoming.
-        let idx = self
-            .buffer
-            .iter()
-            .enumerate()
-            .filter(|(_, m)| m.status == MessageStatus::Stored && m.priority < incoming)
-            .min_by_key(|(_, m)| m.priority)
-            .map(|(i, _)| i);
-
-        if let Some(i) = idx {
-            let evicted = self.buffer.remove(i).unwrap();
-            self.used_bytes = self.used_bytes.saturating_sub(evicted.size_bytes as u64);
-            info!(id = %evicted.id, priority = ?evicted.priority, "evicted message to make room");
-
+        loop {
+            // Check if we already have enough space.
             if self.max_buffer_bytes - self.used_bytes >= needed_bytes {
                 return true;
             }
+
+            // Find the lowest-priority Stored message that is strictly below incoming.
+            let idx = self
+                .buffer
+                .iter()
+                .enumerate()
+                .filter(|(_, m)| m.status == MessageStatus::Stored && m.priority < incoming)
+                .min_by_key(|(_, m)| m.priority)
+                .map(|(i, _)| i);
+
+            let Some(i) = idx else {
+                return false; // No more evictable messages.
+            };
+
+            let evicted = self.buffer.remove(i).unwrap();
+            self.used_bytes = self.used_bytes.saturating_sub(evicted.size_bytes as u64);
+            info!(id = %evicted.id, priority = ?evicted.priority, "evicted message to make room");
         }
-        false
     }
 
     /// Expire messages that have exceeded their TTL.
@@ -533,5 +538,24 @@ mod tests {
     fn default_engine() {
         let engine = StoreForwardEngine::default();
         assert_eq!(engine.buffer_capacity(), 10 * 1024 * 1024);
+    }
+
+    #[test]
+    fn multi_eviction_frees_enough_space() {
+        // Buffer: 15 bytes. Fill with 3× 5-byte Bulk messages (15 bytes total).
+        let mut engine = StoreForwardEngine::new(15);
+        engine.store(ForwardPriority::Bulk, b"aaaaa", "srv", 3600); // 5 bytes
+        engine.store(ForwardPriority::Bulk, b"bbbbb", "srv", 3600); // 5 bytes
+        engine.store(ForwardPriority::Bulk, b"ccccc", "srv", 3600); // 5 bytes
+        assert_eq!(engine.buffer_count(), 3);
+        assert_eq!(engine.buffer_used_bytes(), 15);
+
+        // Store a 10-byte Emergency message. Needs to evict 2 of 3 Bulk messages.
+        let result = engine.store(ForwardPriority::Emergency, b"emergency!", "srv", 3600); // 10 bytes
+        assert!(result.is_some(), "Emergency message should be stored after multi-eviction");
+        // At least the Emergency message is in the buffer.
+        assert!(engine.buffer_count() >= 1);
+        // The Emergency message's 10 bytes are accounted for.
+        assert!(engine.buffer_used_bytes() <= 15);
     }
 }
