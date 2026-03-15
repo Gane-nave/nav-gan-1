@@ -57,9 +57,10 @@ impl TileManager {
 
         let tile_size = tile.data_hash.len() as u64 + 128; // approximate
 
-        // Subtract old tile's size BEFORE the eviction check so the budget
-        // calculation reflects the space that will be freed by the replacement.
-        if let Some(old_tile) = self.tiles.get(&key) {
+        // Remove the old tile (if any) BEFORE the eviction loop so that
+        // (a) the budget check reflects the freed space, and
+        // (b) evict_oldest() cannot pick the stale entry and double-subtract.
+        if let Some(old_tile) = self.tiles.remove(&key) {
             let old_size = old_tile.data_hash.len() as u64 + 128;
             self.total_bytes = self.total_bytes.saturating_sub(old_size);
         }

@@ -268,7 +268,11 @@ fn estimate_emissions(total_distance: f64, segments: &[RoadSegment]) -> f64 {
         .iter()
         .filter_map(|s| s.speed_limit_kmh)
         .sum::<f64>()
-        / segments.len().max(1) as f64;
+        / segments
+            .iter()
+            .filter(|s| s.speed_limit_kmh.is_some())
+            .count()
+            .max(1) as f64;
 
     let speed_factor = if avg_speed > 100.0 {
         1.2
