@@ -65,6 +65,19 @@ impl TileManager {
             self.total_bytes = self.total_bytes.saturating_sub(old_size);
         }
 
+        // Reject tiles that exceed the entire cache budget.
+        if tile_size > self.max_bytes {
+            debug!(
+                zoom = key.zoom,
+                x = key.x,
+                y = key.y,
+                size = tile_size,
+                budget = self.max_bytes,
+                "tile exceeds cache budget — rejected"
+            );
+            return;
+        }
+
         // Evict if over budget.
         while self.total_bytes + tile_size > self.max_bytes && !self.tiles.is_empty() {
             self.evict_oldest();

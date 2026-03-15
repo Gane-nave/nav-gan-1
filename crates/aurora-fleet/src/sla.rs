@@ -238,7 +238,8 @@ impl SlaMonitor {
                 // Higher is better: target >= warning >= critical.
                 if value >= sla.target_value {
                     SlaStatus::Met
-                } else if value >= sla.warning_threshold {
+                } else if value >= sla.critical_threshold {
+                    // Between target and critical (inclusive) → Warning.
                     SlaStatus::Warning
                 } else {
                     SlaStatus::Critical
@@ -249,7 +250,8 @@ impl SlaMonitor {
                 // Lower is better: target <= warning <= critical.
                 if value <= sla.target_value {
                     SlaStatus::Met
-                } else if value <= sla.warning_threshold {
+                } else if value <= sla.critical_threshold {
+                    // Between target and critical (inclusive) → Warning.
                     SlaStatus::Warning
                 } else {
                     SlaStatus::Critical
@@ -423,9 +425,9 @@ mod tests {
         }
 
         let measurements = monitor.evaluate_all();
-        // 8/10 = 80% → Critical (below 90% warning threshold, 80 < 90).
-        assert_eq!(measurements[0].status, SlaStatus::Critical);
-        // Note: the warning_threshold is 90%, and 80% < 90%, so this is Critical.
+        // 8/10 = 80% → Warning (below 90% warning, at 80% critical threshold).
+        assert_eq!(measurements[0].status, SlaStatus::Warning);
+        // Note: 80% is at the critical_threshold boundary (>=), so it's Warning, not Critical.
     }
 
     #[test]
@@ -451,15 +453,15 @@ mod tests {
         // target=90, warning=80, critical=70
         monitor.add_sla(make_sla(SlaMetric::OnTimeDeliveryPct, 90.0, 80.0, 70.0));
 
-        // 75% on time → below warning(80) → Critical.
+        // 75% on time → below warning(80) but above critical(70) → Warning.
         for r in make_records(20, 0.75) {
             monitor.record_task(r);
         }
         let measurements = monitor.evaluate_all();
         assert_eq!(
             measurements[0].status,
-            SlaStatus::Critical,
-            "75% is below warning(80), should be Critical"
+            SlaStatus::Warning,
+            "75% is below warning(80) but above critical(70), should be Warning"
         );
 
         // Now test truly critical: 60% → below critical(70) → Critical.

@@ -153,14 +153,15 @@ impl StorageBudget {
         };
 
         let freed = bytes_to_free.min(alloc.used_bytes);
+        let actual_items_evicted = items_to_evict.min(alloc.item_count);
         alloc.used_bytes = alloc.used_bytes.saturating_sub(freed);
-        alloc.item_count = alloc.item_count.saturating_sub(items_to_evict);
+        alloc.item_count = alloc.item_count.saturating_sub(actual_items_evicted);
 
         let event = EvictionEvent {
             id: EntityId::new(),
             category,
             bytes_freed: freed,
-            items_evicted: items_to_evict,
+            items_evicted: actual_items_evicted,
             triggered_at: Utc::now(),
             reason: format!(
                 "usage exceeded threshold ({:.0}%)",

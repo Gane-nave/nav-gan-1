@@ -111,7 +111,8 @@ impl DataReducer {
     }
 
     fn time_sampling(&mut self, sample: &DataSample) -> Option<ReducedOutput> {
-        if self.sample_counter % self.config.sampling_rate as u64 == 0 {
+        let rate = (self.config.sampling_rate as u64).max(1);
+        if self.sample_counter % rate == 0 {
             self.total_emitted += 1;
             Some(ReducedOutput {
                 value: sample.value,

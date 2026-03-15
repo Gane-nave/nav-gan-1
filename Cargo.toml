@@ -32,6 +32,8 @@ members = [
     "crates/aurora-resilience",
     "crates/aurora-edge",
     "crates/aurora-satellite",
+    "crates/aurora-city",
+    "crates/aurora-twin",
 ]
 
 [workspace.package]

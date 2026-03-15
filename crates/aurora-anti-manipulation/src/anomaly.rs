@@ -382,9 +382,13 @@ fn compute_observation_hash(obs: &Observation) -> u64 {
     let bytes_speed = obs.speed_mps.to_bits();
     let bytes_heading = obs.heading_deg.to_bits();
 
-    for b in bytes_lat
-        .to_le_bytes()
+    // Include source_id to avoid cross-source false positives.
+    for b in obs
+        .source_id
+        .0
+        .as_bytes()
         .iter()
+        .chain(bytes_lat.to_le_bytes().iter())
         .chain(bytes_lon.to_le_bytes().iter())
         .chain(bytes_speed.to_le_bytes().iter())
         .chain(bytes_heading.to_le_bytes().iter())

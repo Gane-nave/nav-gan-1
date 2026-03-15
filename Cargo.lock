@@ -99,6 +99,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-city"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -465,6 +478,19 @@ dependencies = [
  "aurora-core",
  "chrono",
  "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-twin"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
  "tracing",
  "uuid",
 ]
