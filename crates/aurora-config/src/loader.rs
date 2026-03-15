@@ -23,9 +23,11 @@ pub fn load_from_str(toml_str: &str) -> Result<(AuroraConfig, ValidationResult),
     Ok((config, result))
 }
 
-/// Load the default configuration (no file needed).
+/// Load the default configuration (no file needed), applying any
+/// `AURORA_*` environment variable overrides.
 pub fn load_default() -> Result<(AuroraConfig, ValidationResult), ConfigError> {
-    let config = AuroraConfig::default();
+    let mut config = AuroraConfig::default();
+    apply_env_overrides(&mut config)?;
     let result = validate::validate(&config)?;
     Ok((config, result))
 }
@@ -40,7 +42,7 @@ pub fn load_default() -> Result<(AuroraConfig, ValidationResult), ConfigError> {
 /// - `AURORA_INSTANCE_NAME` → `system.instance_name`
 /// - `AURORA_GNSS_MIN_SATELLITES` → `gnss.min_satellites`
 /// - `AURORA_TELEMETRY_BUFFER` → `telemetry.buffer_capacity`
-fn apply_env_overrides(config: &mut AuroraConfig) -> Result<(), ConfigError> {
+pub fn apply_env_overrides(config: &mut AuroraConfig) -> Result<(), ConfigError> {
     if let Ok(val) = std::env::var("AURORA_API_PORT") {
         config.api.port = val
             .parse()

@@ -11,6 +11,7 @@
 use aurora_app::cli::CliArgs;
 use aurora_app::health::build_health_report;
 use aurora_app::pipeline::{print_banner, NavigationPipeline};
+use aurora_config::loader::apply_env_overrides;
 use aurora_config::{load_config, AuroraConfig, ConfigBuilder};
 use aurora_metrics::registry::MetricRegistry;
 use aurora_observability::probes::ProbeManager;
@@ -144,9 +145,11 @@ fn load_configuration(args: &CliArgs) -> Result<AuroraConfig, Box<dyn std::error
         if let Some(ref level) = args.log_level {
             builder = builder.log_level(level);
         }
-        let (cfg, result) = builder
+        let (mut cfg, result) = builder
             .build()
             .map_err(|e| -> Box<dyn std::error::Error> { Box::new(e) })?;
+        // Apply AURORA_* env overrides (Dockerfile/k8s env vars)
+        apply_env_overrides(&mut cfg).map_err(|e| -> Box<dyn std::error::Error> { Box::new(e) })?;
         for w in &result.warnings {
             eprintln!("config warning: {}", w);
         }
