@@ -134,9 +134,15 @@ impl InferenceEngine {
         // If the model is already in memory (e.g. UpdateAvailable), just re-mark as Ready
         // without adding to memory_used_bytes again.
         if model.status == ModelStatus::UpdateAvailable {
-            model.status = ModelStatus::Ready;
-            model.loaded_at = Some(Utc::now());
-            return true;
+            // Only skip memory accounting if the model was previously loaded
+            // (i.e., its memory is already counted). If it was never loaded,
+            // we need to go through the normal load path.
+            if model.loaded_at.is_some() {
+                model.status = ModelStatus::Ready;
+                model.loaded_at = Some(Utc::now());
+                return true;
+            }
+            // Fall through to normal load path (budget check + memory accounting)
         }
 
         if self.memory_used_bytes + model.size_bytes > self.memory_budget_bytes {
