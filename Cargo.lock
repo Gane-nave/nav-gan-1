@@ -398,6 +398,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-emergency-sat"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "hmac",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-events"
 version = "0.1.0"
 dependencies = [
@@ -470,6 +486,31 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-immersive"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-instruments"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
 ]
 
 [[package]]
@@ -798,6 +839,19 @@ dependencies = [
  "aurora-events",
  "chrono",
  "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-temporal"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
  "serde",
  "serde_json",
  "thiserror",
