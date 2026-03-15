@@ -1,0 +1,18 @@
+[package]
+name = "aurora-continuity"
+version.workspace = true
+edition.workspace = true
+description = "Continuity manager with automatic failover for AURORA NAV / GMIN"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-events = { path = "../aurora-events" }
+aurora-gnss = { path = "../aurora-gnss" }
+aurora-fusion = { path = "../aurora-fusion" }
+aurora-integrity = { path = "../aurora-integrity" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
