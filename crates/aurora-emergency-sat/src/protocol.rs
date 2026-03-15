@@ -163,10 +163,11 @@ impl SatMessage {
         }
         let max_payload = MAX_PAYLOAD_BYTES - overhead;
         if self.payload.len() > max_payload {
-            // Truncate at a valid UTF-8 boundary
-            let truncated = &self.payload[..max_payload];
-            let end = truncated
+            // Truncate at a valid UTF-8 char boundary (never slice mid-character)
+            let end = self
+                .payload
                 .char_indices()
+                .take_while(|(i, _)| *i < max_payload)
                 .last()
                 .map(|(i, c)| i + c.len_utf8())
                 .unwrap_or(0);

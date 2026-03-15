@@ -175,7 +175,8 @@ impl TimeAwareEngine {
     pub fn compute_adjustment(&self, utc: DateTime<Utc>) -> TimeAdjustment {
         let period = self.current_period(utc);
         let season = self.current_season(utc);
-        let weekday = utc.weekday();
+        let local_dt = utc + chrono::Duration::hours(self.utc_offset_hours as i64);
+        let weekday = local_dt.weekday();
 
         // Weekend factor
         let is_weekend = matches!(weekday, chrono::Weekday::Sat | chrono::Weekday::Sun);
