@@ -6,9 +6,10 @@ use aurora_map::graph::haversine_m;
 use tracing::{debug, info, warn};
 
 /// Navigation state.
-#[derive(Debug, Clone, Copy, PartialEq, Eq)]
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Default)]
 pub enum NavState {
     /// Not navigating.
+    #[default]
     Idle,
     /// Actively navigating a route.
     Navigating,
@@ -263,13 +264,6 @@ pub struct NavUpdate {
     pub should_reroute: bool,
     pub current_instruction: Option<String>,
 }
-
-impl Default for NavState {
-    fn default() -> Self {
-        Self::Idle
-    }
-}
-
 #[cfg(test)]
 mod tests {
     use super::*;
