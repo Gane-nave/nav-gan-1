@@ -1,3 +1,4 @@
+#![allow(clippy::manual_is_multiple_of)]
 //! AURORA NAV — Edge Processing
 //!
 //! Local computation pipeline, data reduction, edge inference,

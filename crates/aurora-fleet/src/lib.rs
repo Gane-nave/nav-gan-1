@@ -1,3 +1,4 @@
+#![allow(clippy::unnecessary_map_or)]
 //! AURORA NAV — Fleet Operations Engine
 //!
 //! Task management, assignment, dispatch, SLA monitoring, proof of visit/delivery,

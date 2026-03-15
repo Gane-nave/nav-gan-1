@@ -244,7 +244,6 @@ impl TrafficForecaster {
             .history
             .values()
             .filter(|samples| {
-                #[allow(clippy::unnecessary_map_or)]
                 samples.last().map_or(false, |s| {
                     s.free_flow_speed_kmh > 0.0
                         && (1.0 - s.speed_kmh / s.free_flow_speed_kmh)

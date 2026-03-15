@@ -1,3 +1,4 @@
+#![allow(clippy::unnecessary_map_or)]
 //! Aurora Traffic — traffic flow control, demand forecasting, congestion prediction,
 //! flow balancing, and herd behaviour suppression.
 //!
