@@ -303,6 +303,13 @@ impl ApiKeyManager {
             .ok_or(ApiKeyError::KeyNotFound(*key_id))?
             .clone();
 
+        // Reject rotation of expired keys.
+        if let Some(expires_at) = old_key.expires_at {
+            if Utc::now() > expires_at {
+                return Err(ApiKeyError::KeyExpired);
+            }
+        }
+
         // Revoke old key.
         self.revoke_key(key_id)?;
 
@@ -364,6 +371,8 @@ pub enum ApiKeyError {
     AlreadyRevoked,
     #[error("invalid state transition from {from:?} to {to:?}")]
     InvalidStateTransition { from: KeyStatus, to: KeyStatus },
+    #[error("key has expired and cannot be rotated")]
+    KeyExpired,
 }
 
 // ---------------------------------------------------------------------------

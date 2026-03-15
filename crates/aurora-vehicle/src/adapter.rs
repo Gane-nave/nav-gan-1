@@ -101,6 +101,9 @@ impl Calibration {
     pub fn map_axes(&self, input: [f64; 3]) -> [f64; 3] {
         let mut output = [0.0; 3];
         for (i, &axis) in self.axis_map.iter().enumerate() {
+            if axis == 0 {
+                continue;
+            }
             let idx = (axis.unsigned_abs() as usize).saturating_sub(1);
             let sign = if axis < 0 { -1.0 } else { 1.0 };
             if idx < 3 {
