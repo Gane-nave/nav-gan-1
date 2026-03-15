@@ -288,19 +288,33 @@ pub struct TokenResponse {
 }
 
 /// POST /auth/token — Generate a JWT token.
+///
+/// NOTE: This endpoint is currently unauthenticated — it is a development/
+/// foundation endpoint. Production deployment MUST add auth middleware
+/// (e.g. require an admin API key) before exposing this externally.
 pub async fn post_auth_token(
     State(state): State<Arc<AppState>>,
     Json(req): Json<TokenRequest>,
-) -> Json<TokenResponse> {
+) -> Result<Json<TokenResponse>, (StatusCode, Json<serde_json::Value>)> {
+    // Validate that the requested role exists in the RBAC system
+    let policy_engine = state.policy_engine.read();
+    if !policy_engine.role_names().iter().any(|r| r == &req.role) {
+        return Err((
+            StatusCode::BAD_REQUEST,
+            Json(serde_json::json!({ "error": format!("unknown role: {}", req.role) })),
+        ));
+    }
+    drop(policy_engine);
+
     let scopes_str = req.scopes.join(",");
     let token = state
         .jwt_manager
         .generate_token(&req.subject, &req.role, &scopes_str);
     let config = state.jwt_manager.config();
-    Json(TokenResponse {
+    Ok(Json(TokenResponse {
         token,
-        expires_in_s: config.token_lifetime.num_seconds() as u64,
-    })
+        expires_in_s: config.token_lifetime.num_seconds().max(0) as u64,
+    }))
 }
 
 /// GET /security/headers — List configured security headers.
