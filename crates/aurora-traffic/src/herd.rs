@@ -64,8 +64,8 @@ pub struct HerdSuppressor {
     config: HerdConfig,
     /// Recent allocation counts per route.
     route_allocations: HashMap<EntityId, Vec<DateTime<Utc>>>,
-    /// Recent allocation counts per segment (for load awareness).
-    segment_load: HashMap<EntityId, u32>,
+    /// Recent allocation timestamps per segment (for time-windowed load awareness).
+    segment_load: HashMap<EntityId, Vec<DateTime<Utc>>>,
     /// Total allocations in the current window.
     total_allocations: u32,
 }
@@ -113,7 +113,7 @@ impl HerdSuppressor {
         // Deterministic selection based on user_id hash for reproducibility.
         let hash = simple_hash(&request.user_id) as f64 / u64::MAX as f64;
         let mut cumulative = 0.0;
-        let mut selected_idx = 0;
+        let mut selected_idx = probabilities.len() - 1;
 
         for (i, &prob) in probabilities.iter().enumerate() {
             cumulative += prob;
@@ -196,7 +196,7 @@ impl HerdSuppressor {
         self.total_allocations += 1;
 
         for seg in &option.segment_ids {
-            *self.segment_load.entry(*seg).or_insert(0) += 1;
+            self.segment_load.entry(*seg).or_default().push(now);
         }
     }
 
@@ -215,6 +215,12 @@ impl HerdSuppressor {
 
         // Remove empty entries.
         self.route_allocations.retain(|_, v| !v.is_empty());
+
+        // Prune segment load timestamps as well so they stay accurate.
+        for timestamps in self.segment_load.values_mut() {
+            timestamps.retain(|t| *t >= cutoff);
+        }
+        self.segment_load.retain(|_, v| !v.is_empty());
 
         if total_removed > 0 {
             info!(removed = total_removed, "pruned old herd allocations");
@@ -244,9 +250,12 @@ impl HerdSuppressor {
         share > self.config.max_route_share
     }
 
-    /// Get the load on a specific segment.
+    /// Get the load on a specific segment (count of recent allocations).
     pub fn segment_load(&self, segment_id: &EntityId) -> u32 {
-        self.segment_load.get(segment_id).copied().unwrap_or(0)
+        self.segment_load
+            .get(segment_id)
+            .map(|v| v.len() as u32)
+            .unwrap_or(0)
     }
 
     /// Total number of allocations tracked.
