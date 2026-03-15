@@ -147,16 +147,15 @@ impl JwtManager {
             ));
         }
 
-        // Verify signature
+        // Verify signature using constant-time comparison
         let message = format!("{}.{}", parts[0], parts[1]);
         let provided_sig = URL_SAFE_NO_PAD
             .decode(parts[2])
             .map_err(|e| JwtError::Base64Error(e.to_string()))?;
-        let expected_sig = self.compute_signature(message.as_bytes());
-
-        if provided_sig != expected_sig {
-            return Err(JwtError::InvalidSignature);
-        }
+        let mut mac = HmacSha256::new_from_slice(&self.config.secret).expect("HMAC key init");
+        mac.update(message.as_bytes());
+        mac.verify_slice(&provided_sig)
+            .map_err(|_| JwtError::InvalidSignature)?;
 
         // Decode claims
         let claims_json = URL_SAFE_NO_PAD

@@ -185,7 +185,7 @@ impl ApiKeyStore {
         self.keys
             .read()
             .values()
-            .filter(|r| !r.revoked && r.expires_at.map_or(true, |exp| exp > now))
+            .filter(|r| !r.revoked && r.expires_at.is_none_or(|exp| exp > now))
             .count()
     }
 }

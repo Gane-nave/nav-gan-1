@@ -130,18 +130,12 @@ impl RateLimiter {
     }
 
     /// Check if a request from the given client is allowed.
+    ///
+    /// Checks per-client limit first, then global limit. Both tokens are
+    /// consumed only when both checks pass, preventing an abusive client
+    /// from draining the global bucket on rejected requests.
     pub fn check_rate_limit(&self, client_id: &str) -> Result<(), RateLimitError> {
-        // Check global limit first
-        {
-            let mut global = self.global.write();
-            if !global.try_consume() {
-                return Err(RateLimitError::Exceeded {
-                    retry_after_ms: global.retry_after_ms(),
-                });
-            }
-        }
-
-        // Check per-client limit
+        // Check per-client limit first (before touching global bucket)
         let mut clients = self.clients.write();
         let entry = clients.entry(client_id.to_string()).or_insert_with(|| {
             let bucket =
@@ -155,6 +149,18 @@ impl RateLimiter {
             return Err(RateLimitError::Exceeded {
                 retry_after_ms: entry.0.retry_after_ms(),
             });
+        }
+
+        // Per-client passed — now check global limit
+        {
+            let mut global = self.global.write();
+            if !global.try_consume() {
+                // Refund the per-client token since global rejected
+                entry.0.tokens += 1.0;
+                return Err(RateLimitError::Exceeded {
+                    retry_after_ms: global.retry_after_ms(),
+                });
+            }
         }
 
         Ok(())
