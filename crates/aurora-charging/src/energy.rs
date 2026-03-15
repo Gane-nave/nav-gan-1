@@ -492,6 +492,31 @@ mod tests {
     }
 
     #[test]
+    fn adversarial_ice_dirtier_than_ev() {
+        let model = EnergyModel::new();
+        let ev = ev_profile();
+        let ice = ice_profile();
+        let factors = flat_highway_factors();
+
+        let ev_est = model.estimate_consumption(&ev, &factors);
+        let ice_est = model.estimate_consumption(&ice, &factors);
+
+        // With old bug (single 400 factor): ICE score would be LOW (clean-looking)
+        // With fix (2310 g/L for gasoline): ICE score must be HIGH (dirty)
+        assert!(
+            ice_est.environmental_score > ev_est.environmental_score,
+            "ICE ({}) must be dirtier than EV ({})",
+            ice_est.environmental_score,
+            ev_est.environmental_score
+        );
+        assert!(
+            ice_est.environmental_score > 0.5,
+            "ICE score ({}) must be > 0.5 with correct 2310 g/L factor",
+            ice_est.environmental_score
+        );
+    }
+
+    #[test]
     fn stops_increase_consumption() {
         let model = EnergyModel::new();
         let profile = ev_profile();

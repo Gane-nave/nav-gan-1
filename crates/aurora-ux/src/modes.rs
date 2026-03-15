@@ -490,6 +490,28 @@ mod tests {
     }
 
     #[test]
+    fn adversarial_emergency_at_moderate_cognitive_load() {
+        // This test WOULD FAIL with the old code where emergency check was after
+        // moderate cognitive load (0.6-0.8) check. At load=0.7, the moderate check
+        // would fire first and return Standard/Detailed instead of Minimal.
+        let mut mgr = ModeManager::new();
+        let ctx = CognitiveContext {
+            speed_kmh: 30.0,
+            cognitive_load: 0.7, // The adversarial value — 0.6-0.8 range was broken
+            is_night: false,
+            is_raining: false,
+            usage_mode: UsageMode::EmergencyResponse,
+        };
+        assert!(mgr.adapt(&ctx));
+        assert_eq!(
+            mgr.effective_complexity(),
+            InterfaceComplexity::Minimal,
+            "BUG: Emergency at load=0.7 must be Minimal, not {:?}",
+            mgr.effective_complexity()
+        );
+    }
+
+    #[test]
     fn day_night_auto_resolves() {
         let mgr = ModeManager::new();
         assert_eq!(mgr.day_night_mode(false), DayNightMode::Day);
