@@ -13,6 +13,7 @@ use aurora_integrity::IntegrityEngine;
 use aurora_sensors::imu::ImuProcessor;
 use aurora_telemetry::TelemetryRecorder;
 use parking_lot::RwLock;
+use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
 use tracing::debug;
 
@@ -27,6 +28,8 @@ pub struct NavigationPipeline {
     pub event_bus: Arc<EventBus>,
     pub last_position: Arc<RwLock<Option<FusedPosition>>>,
     config: AuroraConfig,
+    /// Whether any GNSS data has ever been received by this pipeline.
+    has_received_gnss: AtomicBool,
 }
 
 impl NavigationPipeline {
@@ -43,6 +46,7 @@ impl NavigationPipeline {
             event_bus: Arc::new(EventBus::new()),
             last_position: Arc::new(RwLock::new(None)),
             config,
+            has_received_gnss: AtomicBool::new(false),
         }
     }
 
@@ -58,7 +62,21 @@ impl NavigationPipeline {
 
     /// Returns the number of tracked satellites.
     pub fn tracked_satellites(&self) -> usize {
-        self.gnss.read().receiver().tracked_count()
+        let count = self.gnss.read().receiver().tracked_count();
+        if count > 0 {
+            self.has_received_gnss.store(true, Ordering::Relaxed);
+        }
+        count
+    }
+
+    /// Returns whether any GNSS data has ever been received.
+    pub fn has_received_gnss_data(&self) -> bool {
+        self.has_received_gnss.load(Ordering::Relaxed)
+    }
+
+    /// Mark that GNSS data has been received (e.g. after observing satellites).
+    pub fn mark_gnss_received(&self) {
+        self.has_received_gnss.store(true, Ordering::Relaxed);
     }
 
     /// Returns the current integrity level as a string.

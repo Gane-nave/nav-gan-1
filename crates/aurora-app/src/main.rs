@@ -15,6 +15,9 @@ use aurora_config::{load_config, AuroraConfig, ConfigBuilder};
 use std::net::SocketAddr;
 use tracing::info;
 
+// Re-export validate for post-override re-validation.
+use aurora_config::validate;
+
 #[tokio::main]
 async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let args = CliArgs::parse();
@@ -92,7 +95,13 @@ fn load_configuration(args: &CliArgs) -> Result<AuroraConfig, Box<dyn std::error
         if let Some(ref level) = args.log_level {
             builder = builder.log_level(level);
         }
-        builder.build_unchecked()
+        let (cfg, result) = builder
+            .build()
+            .map_err(|e| -> Box<dyn std::error::Error> { Box::new(e) })?;
+        for w in &result.warnings {
+            eprintln!("config warning: {}", w);
+        }
+        cfg
     };
 
     // CLI overrides take precedence over file values
@@ -102,6 +111,9 @@ fn load_configuration(args: &CliArgs) -> Result<AuroraConfig, Box<dyn std::error
     if let Some(ref level) = args.log_level {
         config.system.log_level = level.clone();
     }
+
+    // Re-validate after CLI overrides to catch invalid override values.
+    validate::validate(&config).map_err(|e| -> Box<dyn std::error::Error> { Box::new(e) })?;
 
     Ok(config)
 }

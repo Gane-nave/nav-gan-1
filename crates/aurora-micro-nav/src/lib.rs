@@ -1,3 +1,5 @@
+#![allow(unknown_lints)]
+#![allow(clippy::unnecessary_map_or)]
 //! Aurora Micro Navigation — last-metre guidance, gate-level arrival,
 //! pickup/dropoff routing, and indoor navigation handoff.
 //!
