@@ -303,6 +303,7 @@ impl TaskManager {
     }
 
     /// Get overdue tasks (past their time window latest).
+    #[allow(clippy::unnecessary_map_or)]
     pub fn overdue_tasks(&self) -> Vec<&FleetTask> {
         let now = Utc::now();
         self.tasks

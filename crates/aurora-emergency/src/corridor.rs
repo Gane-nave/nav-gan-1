@@ -268,6 +268,7 @@ impl CorridorRouter {
     }
 
     /// Check if there are blocked segments in a corridor.
+    #[allow(clippy::unnecessary_map_or)]
     pub fn has_blocked_segments(&self, corridor_id: &EntityId) -> bool {
         self.corridor(corridor_id).map_or(false, |c| {
             c.segments

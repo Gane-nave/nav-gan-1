@@ -1,4 +1,5 @@
 //! Benchmarks for the EKF fusion engine — predict/update cycles.
+#![allow(clippy::manual_is_multiple_of)]
 
 use aurora_fusion::ekf::NavigationEkf;
 use criterion::{black_box, criterion_group, criterion_main, Criterion};
