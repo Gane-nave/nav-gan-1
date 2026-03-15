@@ -43,10 +43,12 @@ impl FusionEngine {
     /// Process a measurement through the fusion filter.
     pub fn process_measurement(&mut self, meas: &FusionMeasurement) {
         // Predict to measurement time.
-        if let Some(_last_ts) = self.state.timestamp.checked_add_signed(chrono::Duration::zero()) {
-            let dt = (meas.timestamp - self.state.timestamp)
-                .num_milliseconds() as f64
-                / 1000.0;
+        if let Some(_last_ts) = self
+            .state
+            .timestamp
+            .checked_add_signed(chrono::Duration::zero())
+        {
+            let dt = (meas.timestamp - self.state.timestamp).num_milliseconds() as f64 / 1000.0;
             if dt > 0.0 && dt < 10.0 {
                 self.ekf.predict(dt);
             }
@@ -59,7 +61,12 @@ impl FusionEngine {
                 accuracy_m,
                 vertical_accuracy_m: _,
             } => {
-                self.process_gnss_position(position, *accuracy_m, meas.trust_weight, meas.timestamp);
+                self.process_gnss_position(
+                    position,
+                    *accuracy_m,
+                    meas.trust_weight,
+                    meas.timestamp,
+                );
             }
             MeasurementType::GnssVelocity {
                 east_mps,
@@ -68,15 +75,15 @@ impl FusionEngine {
                 accuracy_mps,
             } => {
                 let sigma = accuracy_mps / meas.trust_weight.max(0.01);
-                self.ekf.update_velocity(*east_mps, *north_mps, *up_mps, sigma);
+                self.ekf
+                    .update_velocity(*east_mps, *north_mps, *up_mps, sigma);
             }
             MeasurementType::GnssHeading {
                 heading_deg,
                 accuracy_deg,
             } => {
                 let sigma_rad = accuracy_deg.to_radians() / meas.trust_weight.max(0.01);
-                self.ekf
-                    .update_heading(heading_deg.to_radians(), sigma_rad);
+                self.ekf.update_heading(heading_deg.to_radians(), sigma_rad);
             }
             MeasurementType::InertialDelta {
                 delta_east_m,
@@ -91,12 +98,12 @@ impl FusionEngine {
                 let new_e = current_pos.x + delta_east_m;
                 let new_n = current_pos.y + delta_north_m;
                 let new_u = current_pos.z + delta_up_m;
-                self.ekf.update_position(new_e, new_n, new_u, *uncertainty_m);
+                self.ekf
+                    .update_position(new_e, new_n, new_u, *uncertainty_m);
 
                 if delta_heading_rad.abs() > 1e-6 {
                     let new_heading = self.ekf.heading_rad() + delta_heading_rad;
-                    self.ekf
-                        .update_heading(new_heading, 0.1); // ~6° uncertainty
+                    self.ekf.update_heading(new_heading, 0.1); // ~6° uncertainty
                 }
             }
             MeasurementType::OdometrySpeed {
@@ -119,9 +126,13 @@ impl FusionEngine {
                 accuracy_m,
                 road_heading_deg,
             } => {
-                self.process_gnss_position(position, *accuracy_m, meas.trust_weight, meas.timestamp);
-                self.ekf
-                    .update_heading(road_heading_deg.to_radians(), 0.17); // ~10°
+                self.process_gnss_position(
+                    position,
+                    *accuracy_m,
+                    meas.trust_weight,
+                    meas.timestamp,
+                );
+                self.ekf.update_heading(road_heading_deg.to_radians(), 0.17); // ~10°
             }
             MeasurementType::MagneticHeading {
                 heading_deg,
@@ -187,7 +198,10 @@ impl FusionEngine {
                 lon_rad: position.longitude_deg.to_radians(),
                 alt_m: position.altitude_m.unwrap_or(0.0),
             });
-            info!("ENU origin established at ({}, {})", position.latitude_deg, position.longitude_deg);
+            info!(
+                "ENU origin established at ({}, {})",
+                position.latitude_deg, position.longitude_deg
+            );
         }
 
         let origin = self.origin.unwrap();
@@ -353,14 +367,8 @@ mod tests {
         let mut ts = Utc::now();
         for i in 0..10 {
             ts = ts + chrono::Duration::seconds(1);
-            let meas = FusionMeasurement::gnss_position(
-                pos,
-                3.0,
-                6.0,
-                NavigationSource::GpsL1,
-                1.0,
-                ts,
-            );
+            let meas =
+                FusionMeasurement::gnss_position(pos, 3.0, 6.0, NavigationSource::GpsL1, 1.0, ts);
             engine.process_measurement(&meas);
         }
 

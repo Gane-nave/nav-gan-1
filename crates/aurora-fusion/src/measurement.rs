@@ -29,10 +29,7 @@ pub enum MeasurementType {
         accuracy_mps: f64,
     },
     /// Heading from GNSS course-over-ground.
-    GnssHeading {
-        heading_deg: f64,
-        accuracy_deg: f64,
-    },
+    GnssHeading { heading_deg: f64, accuracy_deg: f64 },
     /// Inertial delta from IMU dead reckoning.
     InertialDelta {
         delta_east_m: f64,
@@ -43,15 +40,9 @@ pub enum MeasurementType {
         uncertainty_m: f64,
     },
     /// Speed from wheel odometry.
-    OdometrySpeed {
-        speed_mps: f64,
-        accuracy_mps: f64,
-    },
+    OdometrySpeed { speed_mps: f64, accuracy_mps: f64 },
     /// Barometric altitude.
-    BarometricAltitude {
-        altitude_m: f64,
-        accuracy_m: f64,
-    },
+    BarometricAltitude { altitude_m: f64, accuracy_m: f64 },
     /// Map-matched position constraint.
     MapMatchPosition {
         position: GeoPosition,
@@ -59,10 +50,7 @@ pub enum MeasurementType {
         road_heading_deg: f64,
     },
     /// Heading from magnetometer.
-    MagneticHeading {
-        heading_deg: f64,
-        accuracy_deg: f64,
-    },
+    MagneticHeading { heading_deg: f64, accuracy_deg: f64 },
 }
 
 impl FusionMeasurement {

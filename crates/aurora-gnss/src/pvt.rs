@@ -157,11 +157,7 @@ impl PvtSolver {
             state += &delta;
 
             let correction_norm = delta.fixed_rows::<3>(0).norm();
-            debug!(
-                iteration,
-                correction_m = correction_norm,
-                "PVT iteration"
-            );
+            debug!(iteration, correction_m = correction_norm, "PVT iteration");
 
             if correction_norm < self.convergence_threshold_m {
                 // Compute final residuals.

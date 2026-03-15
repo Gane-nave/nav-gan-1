@@ -40,7 +40,12 @@ impl DeadReckoningEngine {
     }
 
     /// Set the initial position and heading from GNSS.
-    pub fn initialize(&mut self, position: GeoPosition, heading_deg: f64, timestamp: DateTime<Utc>) {
+    pub fn initialize(
+        &mut self,
+        position: GeoPosition,
+        heading_deg: f64,
+        timestamp: DateTime<Utc>,
+    ) {
         self.position = Some(position);
         self.heading_rad = heading_deg.to_radians();
         self.drift_uncertainty_m = 0.0;
@@ -50,7 +55,12 @@ impl DeadReckoningEngine {
     }
 
     /// Reset drift uncertainty when GNSS fix is restored.
-    pub fn gnss_update(&mut self, position: GeoPosition, heading_deg: f64, timestamp: DateTime<Utc>) {
+    pub fn gnss_update(
+        &mut self,
+        position: GeoPosition,
+        heading_deg: f64,
+        timestamp: DateTime<Utc>,
+    ) {
         self.position = Some(position);
         self.heading_rad = heading_deg.to_radians();
         self.drift_uncertainty_m = 0.0;
@@ -80,10 +90,10 @@ impl DeadReckoningEngine {
             + imu.specific_force.y * self.heading_rad.cos();
 
         // Position deltas in ENU (East, North, Up).
-        let delta_east = self.speed_mps * self.heading_rad.sin() * dt
-            + 0.5 * accel_lateral * dt * dt;
-        let delta_north = self.speed_mps * self.heading_rad.cos() * dt
-            + 0.5 * accel_forward * dt * dt;
+        let delta_east =
+            self.speed_mps * self.heading_rad.sin() * dt + 0.5 * accel_lateral * dt * dt;
+        let delta_north =
+            self.speed_mps * self.heading_rad.cos() * dt + 0.5 * accel_forward * dt * dt;
         let delta_up = imu.specific_force.z * dt * dt * 0.5;
 
         // Update speed.

@@ -1,10 +1,7 @@
 //! Constellation manager — orchestrates independent acquisition, joint solution,
 //! selective exclusion, and continuous re-entry across all constellations.
 
-use aurora_core::gnss::{
-    Constellation, GnssMeasurement, PvtSolution,
-    SatelliteMeasurement,
-};
+use aurora_core::gnss::{Constellation, GnssMeasurement, PvtSolution, SatelliteMeasurement};
 use std::collections::HashMap;
 use tracing::{info, warn};
 
@@ -117,7 +114,11 @@ impl ConstellationManager {
     fn best_single_constellation_pvt(&self) -> Option<PvtSolution> {
         self.per_constellation_pvt
             .values()
-            .min_by(|a, b| a.pdop.partial_cmp(&b.pdop).unwrap_or(std::cmp::Ordering::Equal))
+            .min_by(|a, b| {
+                a.pdop
+                    .partial_cmp(&b.pdop)
+                    .unwrap_or(std::cmp::Ordering::Equal)
+            })
             .cloned()
     }
 }

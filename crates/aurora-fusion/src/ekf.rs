@@ -168,8 +168,7 @@ impl NavigationEkf {
     /// Measurement update for speed-only (scalar).
     pub fn update_speed(&mut self, speed_mps: f64, sigma_mps: f64) {
         // Speed constrains the magnitude of horizontal velocity.
-        let predicted_speed =
-            (self.x[3].powi(2) + self.x[4].powi(2)).sqrt().max(1e-6);
+        let predicted_speed = (self.x[3].powi(2) + self.x[4].powi(2)).sqrt().max(1e-6);
 
         let meas_dim = 1;
         let mut h = DMatrix::zeros(meas_dim, STATE_DIM);

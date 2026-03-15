@@ -117,7 +117,14 @@ pub struct ModelVersion {
 
 impl std::fmt::Display for ModelVersion {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(f, "{}.{}.{}-{}", self.major, self.minor, self.patch, &self.hash[..8.min(self.hash.len())])
+        write!(
+            f,
+            "{}.{}.{}-{}",
+            self.major,
+            self.minor,
+            self.patch,
+            &self.hash[..8.min(self.hash.len())]
+        )
     }
 }
 

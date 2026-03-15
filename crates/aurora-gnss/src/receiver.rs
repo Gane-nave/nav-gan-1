@@ -129,8 +129,7 @@ impl GnssReceiver {
     /// Exclude an entire constellation.
     pub fn exclude_constellation(&mut self, constellation: Constellation, reason: String) {
         warn!(constellation = %constellation, reason = %reason, "excluding constellation");
-        self.excluded_constellations
-            .insert(constellation, reason);
+        self.excluded_constellations.insert(constellation, reason);
         self.measurements
             .retain(|k, _| k.constellation != constellation);
     }
@@ -174,8 +173,7 @@ impl GnssReceiver {
                 sats.iter().map(|s| s.cn0_dbhz).sum::<f64>() / sats.len() as f64
             };
 
-            let health = if self.excluded_constellations.contains_key(constellation)
-                || visible == 0
+            let health = if self.excluded_constellations.contains_key(constellation) || visible == 0
             {
                 ConstellationHealth::Unavailable
             } else if visible < 4 {

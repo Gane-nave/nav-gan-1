@@ -80,10 +80,7 @@ impl ContinuityManager {
         match mode_rank(achievable).cmp(&mode_rank(self.current_mode)) {
             std::cmp::Ordering::Less => {
                 // Degradation — apply immediately.
-                let reason = format!(
-                    "degradation: {} → {}",
-                    self.current_mode, achievable
-                );
+                let reason = format!("degradation: {} → {}", self.current_mode, achievable);
                 self.transition_to(achievable, &reason);
             }
             std::cmp::Ordering::Greater => {
@@ -105,10 +102,7 @@ impl ContinuityManager {
     pub fn confirm_recovery(&mut self) {
         if self.recovery_pending {
             let achievable = self.health.max_achievable_mode();
-            let reason = format!(
-                "recovery validated: {} → {}",
-                self.current_mode, achievable
-            );
+            let reason = format!("recovery validated: {} → {}", self.current_mode, achievable);
             self.transition_to(achievable, &reason);
             self.recovery_pending = false;
         }
@@ -119,10 +113,7 @@ impl ContinuityManager {
         match level {
             IntegrityLevel::Alert => {
                 if self.current_mode != ContinuityMode::ModeE {
-                    self.transition_to(
-                        ContinuityMode::ModeE,
-                        "integrity alert — emergency mode",
-                    );
+                    self.transition_to(ContinuityMode::ModeE, "integrity alert — emergency mode");
                 }
             }
             IntegrityLevel::Warning => {

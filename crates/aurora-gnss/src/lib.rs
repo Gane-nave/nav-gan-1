@@ -4,12 +4,12 @@
 //! Independent acquisition per constellation with quality scoring,
 //! selective exclusion, joint solution, and continuous re-entry.
 
-pub mod receiver;
-pub mod quality;
-pub mod pvt;
 pub mod constellation_manager;
+pub mod pvt;
+pub mod quality;
+pub mod receiver;
 
-pub use receiver::GnssReceiver;
-pub use quality::QualityScorer;
-pub use pvt::PvtSolver;
 pub use constellation_manager::ConstellationManager;
+pub use pvt::PvtSolver;
+pub use quality::QualityScorer;
+pub use receiver::GnssReceiver;

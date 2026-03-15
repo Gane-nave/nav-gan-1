@@ -84,11 +84,7 @@ impl CorrectionManager {
 
     /// Get all provider states for diagnostics.
     pub fn provider_states(&self) -> Vec<CorrectionState> {
-        let mut states: Vec<CorrectionState> = self
-            .providers
-            .iter()
-            .map(|p| p.state())
-            .collect();
+        let mut states: Vec<CorrectionState> = self.providers.iter().map(|p| p.state()).collect();
         states.push(self.cache.state());
         states
     }

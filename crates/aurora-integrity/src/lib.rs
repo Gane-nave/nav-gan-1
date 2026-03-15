@@ -4,8 +4,8 @@
 //! cross-checks, and alarm generation per Section 12.
 
 pub mod detector;
-pub mod trust;
 pub mod engine;
+pub mod trust;
 
 pub use engine::IntegrityEngine;
 pub use trust::TrustManager;

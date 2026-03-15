@@ -6,7 +6,6 @@ use axum::response::Json;
 use serde::Serialize;
 use std::sync::Arc;
 
-
 use crate::state::AppState;
 
 // ---------------------------------------------------------------------------
@@ -86,9 +85,7 @@ pub async fn get_position(
     let pos = state.last_position.read();
     match pos.as_ref() {
         Some(fused) => {
-            let speed = (fused.velocity.east_mps.powi(2)
-                + fused.velocity.north_mps.powi(2))
-            .sqrt();
+            let speed = (fused.velocity.east_mps.powi(2) + fused.velocity.north_mps.powi(2)).sqrt();
 
             Ok(Json(PositionResponse {
                 latitude_deg: fused.position.latitude_deg,
