@@ -174,9 +174,9 @@ impl GnssReceiver {
                 sats.iter().map(|s| s.cn0_dbhz).sum::<f64>() / sats.len() as f64
             };
 
-            let health = if self.excluded_constellations.contains_key(constellation) {
-                ConstellationHealth::Unavailable
-            } else if visible == 0 {
+            let health = if self.excluded_constellations.contains_key(constellation)
+                || visible == 0
+            {
                 ConstellationHealth::Unavailable
             } else if visible < 4 {
                 ConstellationHealth::Degraded

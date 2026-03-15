@@ -77,23 +77,27 @@ impl ContinuityManager {
         }
 
         // Degradation: only degrade, never upgrade without re-validation.
-        if mode_rank(achievable) < mode_rank(self.current_mode) {
-            // Degradation — apply immediately.
-            let reason = format!(
-                "degradation: {} → {}",
-                self.current_mode, achievable
-            );
-            self.transition_to(achievable, &reason);
-        } else if mode_rank(achievable) > mode_rank(self.current_mode) {
-            // Recovery — requires re-validation.
-            if !self.recovery_pending {
-                info!(
-                    from = %self.current_mode,
-                    to = %achievable,
-                    "recovery possible — pending re-validation"
+        match mode_rank(achievable).cmp(&mode_rank(self.current_mode)) {
+            std::cmp::Ordering::Less => {
+                // Degradation — apply immediately.
+                let reason = format!(
+                    "degradation: {} → {}",
+                    self.current_mode, achievable
                 );
-                self.recovery_pending = true;
+                self.transition_to(achievable, &reason);
             }
+            std::cmp::Ordering::Greater => {
+                // Recovery — requires re-validation.
+                if !self.recovery_pending {
+                    info!(
+                        from = %self.current_mode,
+                        to = %achievable,
+                        "recovery possible — pending re-validation"
+                    );
+                    self.recovery_pending = true;
+                }
+            }
+            std::cmp::Ordering::Equal => {}
         }
     }
 

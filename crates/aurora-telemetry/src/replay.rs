@@ -95,7 +95,7 @@ impl ReplayController {
     /// Set playback speed (1.0 = real-time, 2.0 = 2x, etc.).
     pub fn set_speed(&mut self, session_id: EntityId, speed: f64) {
         if let Some(state) = self.sessions.iter_mut().find(|s| s.session.id == session_id) {
-            state.playback_speed = speed.max(0.1).min(100.0);
+            state.playback_speed = speed.clamp(0.1, 100.0);
         }
     }
 
