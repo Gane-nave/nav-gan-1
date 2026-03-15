@@ -210,6 +210,9 @@ impl CorridorRouter {
         let prev_status = corridor.segments[segment_index].clearance_status;
         corridor.segments[segment_index].clearance_status = ClearanceStatus::Clear;
         if prev_status != ClearanceStatus::Clear {
+        let prev_status = corridor.segments[segment_index].clearance_status;
+        corridor.segments[segment_index].clearance_status = ClearanceStatus::Clear;
+        if prev_status != ClearanceStatus::Clear {
             corridor.segments_cleared += 1;
 
             if corridor.segments[segment_index].signal_preemption {
