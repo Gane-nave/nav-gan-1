@@ -148,7 +148,7 @@ impl ApiKeyManager {
         let owner_count = self
             .keys
             .values()
-            .filter(|k| k.owner_id == owner_id)
+            .filter(|k| k.owner_id == owner_id && k.status != KeyStatus::Revoked)
             .count();
         if owner_count >= self.max_keys_per_owner {
             return Err(ApiKeyError::TooManyKeys {

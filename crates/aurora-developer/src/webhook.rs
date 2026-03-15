@@ -24,7 +24,10 @@ pub struct Webhook {
     pub created_at: DateTime<Utc>,
     pub last_triggered_at: Option<DateTime<Utc>>,
     pub success_count: u64,
+    /// Consecutive failure count (reset on success) — used for auto-disable.
     pub failure_count: u64,
+    /// Total lifetime failure count — used for health reporting.
+    pub total_failure_count: u64,
 }
 
 /// Webhook status.
@@ -175,6 +178,7 @@ impl WebhookManager {
             last_triggered_at: None,
             success_count: 0,
             failure_count: 0,
+            total_failure_count: 0,
         };
 
         info!(webhook_id = %webhook.id, name = %webhook.name, "webhook registered");
@@ -257,6 +261,7 @@ impl WebhookManager {
 
                 if let Some(wh) = self.webhooks.get_mut(&webhook_id) {
                     wh.failure_count += 1;
+                    wh.total_failure_count += 1;
                     // Auto-disable after too many consecutive failures.
                     if wh.failure_count >= self.consecutive_failure_threshold {
                         wh.status = WebhookStatus::Disabled;
@@ -354,7 +359,7 @@ impl WebhookManager {
     /// Get webhook health status.
     pub fn health(&self, webhook_id: &EntityId) -> Option<WebhookHealth> {
         let wh = self.webhooks.get(webhook_id)?;
-        let total = wh.success_count + wh.failure_count;
+        let total = wh.success_count + wh.total_failure_count;
         let success_rate = if total > 0 {
             wh.success_count as f64 / total as f64
         } else {
