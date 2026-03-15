@@ -131,6 +131,14 @@ impl InferenceEngine {
             return true; // Already loaded.
         }
 
+        // If the model is already in memory (e.g. UpdateAvailable), just re-mark as Ready
+        // without adding to memory_used_bytes again.
+        if model.status == ModelStatus::UpdateAvailable {
+            model.status = ModelStatus::Ready;
+            model.loaded_at = Some(Utc::now());
+            return true;
+        }
+
         if self.memory_used_bytes + model.size_bytes > self.memory_budget_bytes {
             warn!(
                 model = %model_id,
@@ -155,7 +163,10 @@ impl InferenceEngine {
             return false;
         };
 
-        if model.status != ModelStatus::Ready && model.status != ModelStatus::Busy {
+        if model.status != ModelStatus::Ready
+            && model.status != ModelStatus::Busy
+            && model.status != ModelStatus::UpdateAvailable
+        {
             return false;
         }
 
