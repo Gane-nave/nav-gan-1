@@ -53,3 +53,73 @@ Endpoints: `/health` (200), `/position` (503 — no GNSS fix), `/integrity` (200
 
 ## Devin Secrets Needed
 No secrets required for testing — all tests run locally via cargo.
+# Testing AURORA NAV
+
+Rust workspace with 39 crates. All testing is done via shell commands.
+
+## Build Pipeline (run in order)
+
+```bash
+cargo build                                    # compile all crates
+cargo clippy --all-targets -- -D warnings      # lint with zero warnings
+cargo fmt --check                              # formatting check
+cargo test                                     # run all tests
+```
+
+## Expected Test Counts (as of Phase 11)
+
+Total: 808 tests, 0 failures
+
+Key per-crate counts:
+- aurora-marketplace: 37 unit + 1 adversarial = 38
+- aurora-payments: 41 unit + 1 adversarial = 42
+- aurora-vehicle: 40 unit + 6 adversarial = 46
+- aurora-sdk: 41 unit + 3 adversarial = 44
+- aurora-developer: 53 unit + 3 adversarial = 56
+- aurora-city: 52
+- aurora-twin: 46
+- aurora-fleet: 42
+- aurora-emergency: 41
+- aurora-resilience: 45
+- aurora-edge: 43
+- aurora-satellite: 44
+- aurora-api: 4 (tower::oneshot endpoint tests)
+
+## Per-Crate Testing
+
+```bash
+cargo test -p aurora-marketplace               # run tests for one crate
+cargo test -p aurora-vehicle --test adversarial_phase11  # run specific test file
+cargo test -p aurora-developer -- rotate_key   # run tests matching name
+```
+
+## API Server Testing
+
+The API server (aurora-api) uses tower::oneshot for endpoint tests. No need to start a live server — tests run in-process.
+
+Endpoints: `/health` (200), `/position` (503 when no fix), `/integrity` (200), `/status` (200)
+
+## Adversarial Test Patterns
+
+Adversarial tests are in `crates/<crate>/tests/adversarial_phase*.rs`. They test:
+1. Full lifecycle flows (publish→approve→search→version for marketplace)
+2. Bug regression guards (map_axes axis=0, rotate_key expired)
+3. Formula verification (OBD-II decode with known byte inputs)
+4. State machine correctness (client connect() → Failed on plugin error)
+
+## Common Compilation Issues
+
+- Enum variant names: Check actual source for variant names (e.g., `Category::Traffic` not `Category::TrafficAndRouting`, `ListingStatus::Published` not `ListingStatus::Approved`)
+- API parameter order: Always check function signatures in source before writing test calls (e.g., `add_version` takes version, changelog, stability, min_sdk, size_bytes, checksum)
+- Import paths: Phase 11 crates export from submodules (e.g., `aurora_marketplace::listing::MarketplaceStore`)
+
+## Bug Fix Verification
+
+When verifying bug fixes, always:
+1. Read the fixed code lines to confirm the change is present
+2. Run the adversarial test that guards against regression
+3. Verify the test would fail with the old (broken) code
+
+## Devin Secrets Needed
+
+No secrets required for testing — all tests run locally via cargo.
