@@ -491,6 +491,6 @@ mod tests {
         let a = pos(32.0, 34.0);
         let b = pos(33.0, 34.0); // Due north.
         let brng = bearing(&a, &b);
-        assert!(brng < 1.0 || brng > 359.0); // ~0 degrees.
+        assert!(!(1.0..=359.0).contains(&brng)); // ~0 degrees.
     }
 }

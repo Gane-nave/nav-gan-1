@@ -36,6 +36,9 @@ members = [
     "crates/aurora-twin",
     "crates/aurora-sdk",
     "crates/aurora-developer",
+    "crates/aurora-marketplace",
+    "crates/aurora-payments",
+    "crates/aurora-vehicle",
 ]
 
 [workspace.package]

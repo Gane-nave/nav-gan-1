@@ -323,6 +323,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-marketplace"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-micro-nav"
 version = "0.1.0"
 dependencies = [
@@ -359,6 +372,19 @@ dependencies = [
  "chrono",
  "serde",
  "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-payments"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
  "tracing",
  "uuid",
 ]
@@ -532,6 +558,20 @@ dependencies = [
  "chrono",
  "serde",
  "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-vehicle"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-sensors",
+ "chrono",
+ "serde",
+ "serde_json",
+ "thiserror",
  "tracing",
  "uuid",
 ]

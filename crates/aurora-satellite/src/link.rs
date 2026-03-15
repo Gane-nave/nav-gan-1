@@ -325,8 +325,10 @@ mod tests {
 
     #[test]
     fn history_capped() {
-        let mut link = LinkBudget::default();
-        link.max_history = 5;
+        let mut link = LinkBudget {
+            max_history: 5,
+            ..Default::default()
+        };
         for i in 0..10 {
             link.assess(LinkType::Iridium, 45.0, 0.0, 10.0 + i as f64);
         }
