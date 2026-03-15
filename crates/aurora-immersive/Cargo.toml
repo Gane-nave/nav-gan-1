@@ -1,0 +1,14 @@
+[package]
+name = "aurora-immersive"
+version.workspace = true
+edition.workspace = true
+description = "Immersive visual navigation — 3D scene rendering, AR overlay, landmark recognition, and visual route guidance"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
