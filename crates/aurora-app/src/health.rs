@@ -40,9 +40,12 @@ pub fn build_health_report(pipeline: &NavigationPipeline) -> HealthReport {
     let mut subsystems = Vec::new();
     let config = pipeline.config();
 
-    // GNSS health
+    // GNSS health — sat_count == 0 is only healthy if no GNSS data has
+    // ever been received (fresh pipeline). Once satellites have been tracked,
+    // losing all of them is a real failure.
     let sat_count = pipeline.tracked_satellites();
-    let gnss_healthy = sat_count >= config.gnss.min_satellites || sat_count == 0; // 0 = no data yet, not unhealthy
+    let gnss_healthy = sat_count >= config.gnss.min_satellites
+        || (sat_count == 0 && !pipeline.has_received_gnss_data());
     subsystems.push(SubsystemHealth {
         name: "gnss".into(),
         healthy: gnss_healthy,
