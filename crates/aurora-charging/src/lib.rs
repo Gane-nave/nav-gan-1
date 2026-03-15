@@ -1,3 +1,4 @@
+#![allow(unknown_lints)]
 #![allow(clippy::unnecessary_map_or)]
 //! Aurora Charging — vehicle energy model, consumption prediction,
 //! charging station integration, and eco/fast/stable routing.

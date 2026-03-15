@@ -1,4 +1,5 @@
 //! Benchmarks for the EKF fusion engine — predict/update cycles.
+#![allow(unknown_lints)]
 #![allow(clippy::manual_is_multiple_of)]
 
 use aurora_fusion::ekf::NavigationEkf;

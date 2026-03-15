@@ -1,3 +1,4 @@
+#![allow(unknown_lints)]
 #![allow(clippy::unnecessary_map_or)]
 //! AURORA NAV — Emergency Systems Engine
 //!

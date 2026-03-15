@@ -1,4 +1,5 @@
 //! API and event system example for AURORA NAV.
+#![allow(unknown_lints)]
 #![allow(clippy::manual_is_multiple_of)]
 //!
 //! Demonstrates the event bus, EKF fusion engine, and GNSS receiver APIs.
