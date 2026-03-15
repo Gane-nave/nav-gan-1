@@ -15,6 +15,9 @@ members = [
     "crates/aurora-routing",
     "crates/aurora-lane",
     "crates/aurora-offline",
+    "crates/aurora-risk",
+    "crates/aurora-confidence",
+    "crates/aurora-probabilistic",
 ]
 
 [workspace.package]
