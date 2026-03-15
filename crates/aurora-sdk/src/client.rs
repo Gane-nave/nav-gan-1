@@ -243,9 +243,10 @@ impl AuroraClient {
         }
 
         // Initialise all plugins.
-        self.plugin_manager
-            .initialise_all()
-            .map_err(|e| ClientError::PluginError(e.to_string()))?;
+        if let Err(e) = self.plugin_manager.initialise_all() {
+            self.state = ClientState::Failed;
+            return Err(ClientError::PluginError(e.to_string()));
+        }
 
         self.state = ClientState::Connected;
         info!(endpoint = %self.endpoint, "SDK client connected");
