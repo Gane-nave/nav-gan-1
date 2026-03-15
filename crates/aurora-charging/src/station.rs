@@ -136,6 +136,8 @@ impl StationManager {
             {
                 conn.status = status;
                 station.updated_at = Utc::now();
+                // Invalidate cached congestion so next query recalculates.
+                self.congestion_cache.remove(station_id);
                 return true;
             }
         }
@@ -477,5 +479,34 @@ mod tests {
         // The cached congestion should be used.
         let congestion = mgr.estimate_congestion(s);
         assert_eq!(congestion, CongestionLevel::Full);
+    }
+
+    #[test]
+    fn adversarial_cache_invalidated_on_connector_update() {
+        let mut mgr = StationManager::new();
+        let station = make_station("CacheTest", 32.0, 34.0, 2);
+        let sid = station.id;
+        let conn_ids: Vec<EntityId> = station.connectors.iter().map(|c| c.id).collect();
+        mgr.add_station(station);
+
+        // Step 1: Set congestion cache to Low
+        mgr.set_congestion(sid, CongestionLevel::Low);
+        let s = mgr.station(&sid).unwrap();
+        assert_eq!(mgr.estimate_congestion(s), CongestionLevel::Low);
+
+        // Step 2: Mark all connectors InUse — this should invalidate the cache
+        for cid in &conn_ids {
+            assert!(mgr.update_connector_status(&sid, cid, ConnectorStatus::InUse));
+        }
+
+        // Step 3: Cache should be invalidated, recalculate → Full
+        let s = mgr.station(&sid).unwrap();
+        let congestion = mgr.estimate_congestion(s);
+        assert_eq!(
+            congestion,
+            CongestionLevel::Full,
+            "BUG: Expected Full after all connectors InUse, got {:?} (stale cache!)",
+            congestion
+        );
     }
 }

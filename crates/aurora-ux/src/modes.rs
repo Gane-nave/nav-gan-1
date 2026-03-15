@@ -266,6 +266,11 @@ impl ModeManager {
             }
         }
 
+        // Emergency mode always stays minimal — checked before cognitive load.
+        if ctx.usage_mode == UsageMode::EmergencyResponse {
+            return InterfaceComplexity::Minimal;
+        }
+
         // High cognitive load → simplify.
         if ctx.cognitive_load > 0.8 {
             return InterfaceComplexity::Minimal;
@@ -277,11 +282,6 @@ impl ModeManager {
                 InterfaceComplexity::Detailed => InterfaceComplexity::Standard,
                 other => other,
             };
-        }
-
-        // Emergency mode always stays minimal.
-        if ctx.usage_mode == UsageMode::EmergencyResponse {
-            return InterfaceComplexity::Minimal;
         }
 
         self.active_preset.complexity
@@ -487,6 +487,28 @@ mod tests {
         };
         assert!(mgr.adapt(&ctx));
         assert_eq!(mgr.effective_complexity(), InterfaceComplexity::Minimal);
+    }
+
+    #[test]
+    fn adversarial_emergency_at_moderate_cognitive_load() {
+        // This test WOULD FAIL with the old code where emergency check was after
+        // moderate cognitive load (0.6-0.8) check. At load=0.7, the moderate check
+        // would fire first and return Standard/Detailed instead of Minimal.
+        let mut mgr = ModeManager::new();
+        let ctx = CognitiveContext {
+            speed_kmh: 30.0,
+            cognitive_load: 0.7, // The adversarial value — 0.6-0.8 range was broken
+            is_night: false,
+            is_raining: false,
+            usage_mode: UsageMode::EmergencyResponse,
+        };
+        assert!(mgr.adapt(&ctx));
+        assert_eq!(
+            mgr.effective_complexity(),
+            InterfaceComplexity::Minimal,
+            "BUG: Emergency at load=0.7 must be Minimal, not {:?}",
+            mgr.effective_complexity()
+        );
     }
 
     #[test]

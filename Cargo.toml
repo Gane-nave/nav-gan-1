@@ -27,6 +27,8 @@ members = [
     "crates/aurora-micro-nav",
     "crates/aurora-parking",
     "crates/aurora-charging",
+    "crates/aurora-fleet",
+    "crates/aurora-emergency",
 ]
 
 [workspace.package]

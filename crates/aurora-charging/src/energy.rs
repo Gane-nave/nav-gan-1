@@ -87,15 +87,21 @@ pub enum RouteEnergyStrategy {
 /// Energy model engine — estimates consumption and scores routes.
 pub struct EnergyModel {
     profiles: Vec<EnergyProfile>,
-    /// CO₂ emission factor (g/kWh for grid electricity, g/L for fuel).
-    co2_factor: f64,
+    /// CO₂ emission factor for electric vehicles (g/kWh for grid electricity).
+    co2_factor_electric: f64,
+    /// CO₂ emission factor for gasoline vehicles (g/L).
+    co2_factor_gasoline: f64,
+    /// CO₂ emission factor for diesel vehicles (g/L).
+    co2_factor_diesel: f64,
 }
 
 impl EnergyModel {
     pub fn new() -> Self {
         Self {
             profiles: Vec::new(),
-            co2_factor: 400.0, // Average grid: 400 g CO₂/kWh
+            co2_factor_electric: 400.0,   // Average grid: 400 g CO₂/kWh
+            co2_factor_gasoline: 2_310.0, // ~2310 g CO₂/litre gasoline
+            co2_factor_diesel: 2_680.0,   // ~2680 g CO₂/litre diesel
         }
     }
 
@@ -212,7 +218,13 @@ impl EnergyModel {
         };
 
         // Environmental score (0 = clean, 1 = dirty).
-        let co2_grams = consumption * self.co2_factor;
+        let co2_factor = match profile.energy_type {
+            EnergyType::Electric => self.co2_factor_electric,
+            EnergyType::Hybrid => self.co2_factor_electric, // Simplified: use electric factor
+            EnergyType::Diesel => self.co2_factor_diesel,
+            _ => self.co2_factor_gasoline, // Gasoline, Hydrogen, Other
+        };
+        let co2_grams = consumption * co2_factor;
         let environmental_score = (co2_grams / (distance_km.max(0.1) * 200.0)).clamp(0.0, 1.0);
 
         ConsumptionEstimate {
@@ -477,6 +489,31 @@ mod tests {
         model.add_profile(profile);
         assert_eq!(model.profile_count(), 1);
         assert!(model.profile_for_vehicle(&vid).is_some());
+    }
+
+    #[test]
+    fn adversarial_ice_dirtier_than_ev() {
+        let model = EnergyModel::new();
+        let ev = ev_profile();
+        let ice = ice_profile();
+        let factors = flat_highway_factors();
+
+        let ev_est = model.estimate_consumption(&ev, &factors);
+        let ice_est = model.estimate_consumption(&ice, &factors);
+
+        // With old bug (single 400 factor): ICE score would be LOW (clean-looking)
+        // With fix (2310 g/L for gasoline): ICE score must be HIGH (dirty)
+        assert!(
+            ice_est.environmental_score > ev_est.environmental_score,
+            "ICE ({}) must be dirtier than EV ({})",
+            ice_est.environmental_score,
+            ev_est.environmental_score
+        );
+        assert!(
+            ice_est.environmental_score > 0.5,
+            "ICE score ({}) must be > 0.5 with correct 2310 g/L factor",
+            ice_est.environmental_score
+        );
     }
 
     #[test]
