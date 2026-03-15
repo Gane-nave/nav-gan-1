@@ -235,9 +235,10 @@ impl SlaMonitor {
             | SlaMetric::CustomerSatisfaction
             | SlaMetric::ProofCompliancePct
             | SlaMetric::StopsPerHour => {
+                // Higher is better: target >= warning >= critical.
                 if value >= sla.target_value {
                     SlaStatus::Met
-                } else if value >= sla.warning_threshold {
+                } else if value >= sla.critical_threshold {
                     SlaStatus::Warning
                 } else {
                     SlaStatus::Critical
@@ -245,9 +246,10 @@ impl SlaMonitor {
             }
             // Lower is better metrics.
             SlaMetric::AvgResponseTimeMin => {
+                // Lower is better: target <= warning <= critical.
                 if value <= sla.target_value {
                     SlaStatus::Met
-                } else if value <= sla.warning_threshold {
+                } else if value <= sla.critical_threshold {
                     SlaStatus::Warning
                 } else {
                     SlaStatus::Critical
@@ -421,8 +423,8 @@ mod tests {
         }
 
         let measurements = monitor.evaluate_all();
-        // 8/10 = 80% → Critical (below 90% warning).
-        assert_eq!(measurements[0].status, SlaStatus::Critical);
+        // 8/10 = 80% → Warning (below 90% warning, at 80% critical threshold).
+        assert_eq!(measurements[0].status, SlaStatus::Warning);
     }
 
     #[test]
@@ -439,6 +441,39 @@ mod tests {
         let measurements = monitor.evaluate_all();
         // Avg rating 4.0 → Warning (below 4.5, above 4.0).
         assert_eq!(measurements[0].status, SlaStatus::Warning);
+    }
+
+    #[test]
+    fn critical_threshold_distinguishes_warning_from_critical() {
+        let mut monitor = SlaMonitor::new();
+        monitor.set_min_samples(3);
+        // target=90, warning=80, critical=70
+        monitor.add_sla(make_sla(SlaMetric::OnTimeDeliveryPct, 90.0, 80.0, 70.0));
+
+        // 75% on time → between warning(80) and critical(70) → Warning.
+        for r in make_records(20, 0.75) {
+            monitor.record_task(r);
+        }
+        let measurements = monitor.evaluate_all();
+        assert_eq!(
+            measurements[0].status,
+            SlaStatus::Warning,
+            "75% is between warning(80) and critical(70), should be Warning"
+        );
+
+        // Now test truly critical: 60% → below critical(70) → Critical.
+        let mut monitor2 = SlaMonitor::new();
+        monitor2.set_min_samples(3);
+        monitor2.add_sla(make_sla(SlaMetric::OnTimeDeliveryPct, 90.0, 80.0, 70.0));
+        for r in make_records(20, 0.60) {
+            monitor2.record_task(r);
+        }
+        let measurements2 = monitor2.evaluate_all();
+        assert_eq!(
+            measurements2[0].status,
+            SlaStatus::Critical,
+            "60% is below critical(70), should be Critical"
+        );
     }
 
     #[test]

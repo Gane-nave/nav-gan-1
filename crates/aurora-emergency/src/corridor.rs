@@ -207,11 +207,14 @@ impl CorridorRouter {
             return false;
         }
 
+        let prev_status = corridor.segments[segment_index].clearance_status;
         corridor.segments[segment_index].clearance_status = ClearanceStatus::Clear;
-        corridor.segments_cleared += 1;
+        if prev_status != ClearanceStatus::Clear {
+            corridor.segments_cleared += 1;
 
-        if corridor.segments[segment_index].signal_preemption {
-            corridor.signals_preempted += 1;
+            if corridor.segments[segment_index].signal_preemption {
+                corridor.signals_preempted += 1;
+            }
         }
 
         true
@@ -505,5 +508,32 @@ mod tests {
         router.activate_corridor(&id);
         router.complete_corridor(&id);
         assert!(!router.activate_corridor(&id));
+    }
+
+    #[test]
+    fn clear_segment_idempotent_no_double_count() {
+        let mut router = CorridorRouter::new();
+        let id = router.plan_corridor(
+            EmergencyVehicleType::Ambulance,
+            EmergencyPriority::Elevated,
+            pos(32.0, 34.0),
+            pos(32.05, 34.05),
+            &[],
+        );
+        router.activate_corridor(&id);
+
+        // Clear same segment twice.
+        assert!(router.clear_segment(&id, 0));
+        assert!(router.clear_segment(&id, 0));
+
+        let corridor = router.corridor(&id).unwrap();
+        assert_eq!(
+            corridor.segments_cleared, 1,
+            "double clear must not double-count"
+        );
+        assert_eq!(
+            corridor.signals_preempted, 1,
+            "double clear must not double-count preemption"
+        );
     }
 }
