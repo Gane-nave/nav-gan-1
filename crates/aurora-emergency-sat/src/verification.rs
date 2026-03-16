@@ -27,8 +27,8 @@ pub enum VerificationError {
 
 /// Sign a satellite message using HMAC-SHA256.
 ///
-/// Computes the HMAC over `sender_id|msg_type|lat|lon|created_at|payload`
-/// and stores the hex-encoded signature in `msg.signature`.
+/// Computes the HMAC over all security-relevant fields and stores the
+/// hex-encoded signature in `msg.signature`.
 pub fn sign_message(msg: &mut SatMessage, key: &[u8]) -> Result<(), VerificationError> {
     let data = signing_data(msg);
     let mut mac = HmacSha256::new_from_slice(key).map_err(|_| VerificationError::KeyError)?;
@@ -57,10 +57,23 @@ pub fn verify_message(msg: &SatMessage, key: &[u8]) -> Result<(), VerificationEr
 }
 
 /// Construct the canonical signing data from a message.
+///
+/// Covers ALL security-relevant fields: id, sender, type, priority,
+/// coordinates, hop_count, max_hops, ttl, timestamp, and payload.
 fn signing_data(msg: &SatMessage) -> String {
     format!(
-        "{}|{:?}|{:.8}|{:.8}|{}|{}",
-        msg.sender_id, msg.msg_type, msg.lat, msg.lon, msg.created_at, msg.payload
+        "{}|{}|{:?}|{:?}|{:.8}|{:.8}|{}|{}|{}|{}|{}",
+        msg.id,
+        msg.sender_id,
+        msg.msg_type,
+        msg.priority,
+        msg.lat,
+        msg.lon,
+        msg.hop_count,
+        msg.max_hops,
+        msg.ttl_s,
+        msg.created_at,
+        msg.payload
     )
 }
 

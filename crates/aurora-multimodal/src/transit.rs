@@ -97,13 +97,12 @@ pub struct TransitJourney {
 }
 
 impl TransitJourney {
-    /// Total journey time from first boarding to last alighting + transfers.
+    /// Total journey time including ride time and transfer walks.
     pub fn total_time_s(&self) -> u64 {
         if self.legs.is_empty() {
             return 0;
         }
-        let ride =
-            self.legs.last().unwrap().alight_time_s - self.legs.first().unwrap().board_time_s;
+        let ride: u64 = self.legs.iter().map(|l| l.duration_s()).sum();
         let walks: u64 = self.transfer_walks_s.iter().sum();
         ride + walks
     }
@@ -292,11 +291,12 @@ mod tests {
 
     #[test]
     fn test_journey_total_time() {
-        let j = make_journey(vec![
+        let mut j = make_journey(vec![
             (TransitMode::Bus, 1000, 1600, 250),
             (TransitMode::Metro, 1700, 2200, 350),
         ]);
-        // 2200 - 1000 = 1200s ride, 0 walks
+        // ride = 600 + 500 = 1100s, transfer walk = 100s, total = 1200s
+        j.transfer_walks_s = vec![100];
         assert_eq!(j.total_time_s(), 1200);
     }
 
