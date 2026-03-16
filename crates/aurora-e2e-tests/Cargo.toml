@@ -5,6 +5,3 @@ edition = "2021"
 description = "End-to-end integration tests — cross-crate pipeline verification, system-level test scenarios"
 
 [dependencies]
-aurora-core = { path = "../aurora-core" }
-aurora-simulation = { path = "../aurora-simulation" }
-aurora-diagnostics = { path = "../aurora-diagnostics" }

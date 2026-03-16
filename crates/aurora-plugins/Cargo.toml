@@ -5,4 +5,3 @@ edition = "2021"
 description = "Plugin architecture — dynamic extension points, plugin registry, lifecycle management, hook system"
 
 [dependencies]
-aurora-core = { path = "../aurora-core" }

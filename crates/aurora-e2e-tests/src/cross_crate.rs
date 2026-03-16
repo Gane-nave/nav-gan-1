@@ -109,22 +109,52 @@ impl IntegrationVerifier {
             .unwrap_or_default()
     }
 
-    /// Check for circular dependencies.
+    /// Check for circular dependencies using proper DFS with ancestor tracking.
+    /// Unlike a simple visited-set approach, this correctly handles diamond DAGs
+    /// (e.g., A→B, A→C, B→D, C→D) without false positives.
     pub fn has_circular_dependency(&self) -> bool {
+        let mut global_visited = std::collections::HashSet::new();
         for start in self.crate_dependencies.keys() {
-            let mut visited = std::collections::HashSet::new();
-            let mut stack = vec![start.as_str()];
-            while let Some(current) = stack.pop() {
-                if !visited.insert(current) {
+            if global_visited.contains(start.as_str()) {
+                continue;
+            }
+            // DFS with ancestor (recursion stack) tracking
+            let mut ancestors = std::collections::HashSet::new();
+            if Self::dfs_has_cycle(
+                start,
+                &self.crate_dependencies,
+                &mut ancestors,
+                &mut global_visited,
+            ) {
+                return true;
+            }
+        }
+        false
+    }
+
+    /// Recursive DFS helper — returns true if a cycle is found.
+    fn dfs_has_cycle(
+        node: &str,
+        graph: &HashMap<String, Vec<String>>,
+        ancestors: &mut std::collections::HashSet<String>,
+        visited: &mut std::collections::HashSet<String>,
+    ) -> bool {
+        if ancestors.contains(node) {
+            return true; // back-edge → cycle
+        }
+        if visited.contains(node) {
+            return false; // already fully explored, no cycle through here
+        }
+        ancestors.insert(node.to_string());
+        visited.insert(node.to_string());
+        if let Some(deps) = graph.get(node) {
+            for dep in deps {
+                if Self::dfs_has_cycle(dep, graph, ancestors, visited) {
                     return true;
-                }
-                if let Some(deps) = self.crate_dependencies.get(current) {
-                    for dep in deps {
-                        stack.push(dep.as_str());
-                    }
                 }
             }
         }
+        ancestors.remove(node);
         false
     }
 
@@ -228,6 +258,17 @@ mod tests {
 
         v.add_dependency("c", "a");
         assert!(v.has_circular_dependency());
+    }
+
+    #[test]
+    fn test_diamond_dag_no_false_positive() {
+        // Diamond: A→B, A→C, B→D, C→D — NOT a cycle
+        let mut v = IntegrationVerifier::new();
+        v.add_dependency("a", "b");
+        v.add_dependency("a", "c");
+        v.add_dependency("b", "d");
+        v.add_dependency("c", "d");
+        assert!(!v.has_circular_dependency());
     }
 
     #[test]
