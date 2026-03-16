@@ -239,7 +239,11 @@ impl ExperimentManager {
 
     fn hash_user(experiment: &str, user_id: &str) -> u64 {
         let mut hash: u64 = 14695981039346656037;
-        for byte in experiment.bytes().chain(user_id.bytes()) {
+        for byte in experiment
+            .bytes()
+            .chain(b"\0".iter().copied())
+            .chain(user_id.bytes())
+        {
             hash ^= byte as u64;
             hash = hash.wrapping_mul(1099511628211);
         }

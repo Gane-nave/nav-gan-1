@@ -146,7 +146,11 @@ impl RolloutManager {
     /// Deterministic hash for user bucketing.
     fn hash_user(feature: &str, user_id: &str) -> u64 {
         let mut hash: u64 = 5381;
-        for byte in feature.bytes().chain(user_id.bytes()) {
+        for byte in feature
+            .bytes()
+            .chain(b"\0".iter().copied())
+            .chain(user_id.bytes())
+        {
             hash = hash.wrapping_mul(33).wrapping_add(byte as u64);
         }
         hash

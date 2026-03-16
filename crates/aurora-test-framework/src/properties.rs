@@ -15,7 +15,10 @@ impl TestRng {
 
     /// Generate the next pseudo-random u64.
     pub fn next_u64(&mut self) -> u64 {
-        // xorshift64
+        // xorshift64 — state must never be 0
+        if self.state == 0 {
+            self.state = 1;
+        }
         self.state ^= self.state << 13;
         self.state ^= self.state >> 7;
         self.state ^= self.state << 17;
