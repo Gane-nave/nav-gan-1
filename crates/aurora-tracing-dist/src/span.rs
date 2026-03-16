@@ -142,11 +142,7 @@ impl Span {
 
     /// Duration in microseconds (0 if still active).
     pub fn duration_us(&self) -> u64 {
-        if self.end_us > self.start_us {
-            self.end_us - self.start_us
-        } else {
-            0
-        }
+        self.end_us.saturating_sub(self.start_us)
     }
 
     /// Whether this span is a root span.
