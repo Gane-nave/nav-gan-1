@@ -163,7 +163,8 @@ impl TimeAwareEngine {
 
     /// Get the current season.
     pub fn current_season(&self, utc: DateTime<Utc>) -> Season {
-        let month = utc.month();
+        let local_dt = utc + chrono::Duration::hours(self.utc_offset_hours as i64);
+        let month = local_dt.month();
         if self.northern_hemisphere {
             Season::from_month_north(month)
         } else {
