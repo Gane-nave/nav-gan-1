@@ -327,7 +327,7 @@ mod tests {
     #[test]
     fn test_format_distance_imperial() {
         let config = LocaleConfig::for_locale(&Locale::new("en-US"));
-        assert_eq!(config.format_distance(1609.344), "1.0 mi");  // en-US uses '.'
+        assert_eq!(config.format_distance(1609.344), "1.0 mi"); // en-US uses '.'
         assert!(config.format_distance(10.0).contains("ft"));
     }
 
