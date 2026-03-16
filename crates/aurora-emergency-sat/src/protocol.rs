@@ -5,10 +5,12 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-/// Maximum payload size for satellite messages (bytes).
-/// Satellite links are extremely bandwidth-constrained; messages must fit in
-/// a single burst transmission.
-pub const MAX_PAYLOAD_BYTES: usize = 340;
+/// Maximum encoded message size (bytes).
+/// Satellite links are bandwidth-constrained; messages must fit in a single
+/// burst transmission.  The budget accounts for JSON-encoded metadata
+/// (~350-400 bytes of overhead for UUIDs, timestamps, field names) plus
+/// the user payload.
+pub const MAX_PAYLOAD_BYTES: usize = 1024;
 
 /// Emergency message priority levels.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
@@ -143,20 +145,29 @@ impl SatMessage {
         Ok(())
     }
 
-    /// Estimate the on-wire size of this message in bytes.
+    /// Estimate the on-wire (JSON-encoded) size of this message in bytes.
+    ///
+    /// Measures actual overhead by serializing a clone with an empty payload,
+    /// then adds the real payload length.  This is accurate for JSON encoding.
     pub fn estimated_size(&self) -> usize {
-        // Fixed fields: id(16) + sender(16) + type(1) + priority(1)
-        //   + lat(8) + lon(8) + optional floats(4*4=16) + hop(1) + max_hops(1)
-        //   + created_at(8) + ttl(4) = ~80 bytes
-        // Variable: payload length + signature (64 hex chars = 64 bytes)
-        let fixed = 80;
-        let sig_len = self.signature.as_ref().map_or(0, |s| s.len());
-        fixed + self.payload.len() + sig_len
+        let mut probe = self.clone();
+        probe.payload = String::new();
+        let overhead = serde_json::to_vec(&probe).map(|v| v.len()).unwrap_or(0);
+        // The empty-payload JSON has `"payload":""` — the actual payload adds
+        // its character count to the total.
+        overhead + self.payload.len()
     }
 
     /// Truncate payload to ensure the message fits within `MAX_PAYLOAD_BYTES`.
+    ///
+    /// Uses actual JSON serialization to measure overhead, then truncates
+    /// the payload at a valid UTF-8 boundary to fit.
     pub fn truncate_to_fit(&mut self) {
-        let overhead = self.estimated_size() - self.payload.len();
+        // Measure actual JSON overhead with empty payload
+        let saved = std::mem::take(&mut self.payload);
+        let overhead = serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0);
+        self.payload = saved;
+
         if overhead >= MAX_PAYLOAD_BYTES {
             self.payload.clear();
             return;
@@ -289,11 +300,13 @@ mod tests {
             EmergencyPriority::Warning,
             32.0,
             34.0,
-            &"A".repeat(500),
+            &"A".repeat(2000),
         );
         assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
         msg.truncate_to_fit();
         assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
+        // The real invariant: encode_message must succeed after truncation
+        assert!(encode_message(&msg).is_ok());
     }
 
     #[test]
