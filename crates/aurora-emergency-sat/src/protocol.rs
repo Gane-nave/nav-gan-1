@@ -145,25 +145,22 @@ impl SatMessage {
         Ok(())
     }
 
-    /// Estimate the on-wire (JSON-encoded) size of this message in bytes.
-    ///
-    /// Measures actual overhead by serializing a clone with an empty payload,
-    /// then adds the real payload length.  This is accurate for JSON encoding.
+    /// Exact on-wire (JSON-encoded) size of this message in bytes.
     pub fn estimated_size(&self) -> usize {
-        let mut probe = self.clone();
-        probe.payload = String::new();
-        let overhead = serde_json::to_vec(&probe).map(|v| v.len()).unwrap_or(0);
-        // The empty-payload JSON has `"payload":""` — the actual payload adds
-        // its character count to the total.
-        overhead + self.payload.len()
+        serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0)
     }
 
     /// Truncate payload to ensure the message fits within `MAX_PAYLOAD_BYTES`.
     ///
-    /// Uses actual JSON serialization to measure overhead, then truncates
-    /// the payload at a valid UTF-8 boundary to fit.
+    /// Uses actual JSON serialization to verify the result, handling
+    /// JSON-escaped characters (quotes, backslashes, control chars) correctly.
     pub fn truncate_to_fit(&mut self) {
-        // Measure actual JSON overhead with empty payload
+        // Fast path: already fits
+        if self.estimated_size() <= MAX_PAYLOAD_BYTES {
+            return;
+        }
+
+        // Measure JSON overhead with empty payload
         let saved = std::mem::take(&mut self.payload);
         let overhead = serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0);
         self.payload = saved;
@@ -172,9 +169,10 @@ impl SatMessage {
             self.payload.clear();
             return;
         }
+
+        // Initial conservative truncation based on raw byte budget
         let max_payload = MAX_PAYLOAD_BYTES - overhead;
         if self.payload.len() > max_payload {
-            // Truncate at a valid UTF-8 char boundary (never slice mid-character)
             let end = self
                 .payload
                 .char_indices()
@@ -183,6 +181,12 @@ impl SatMessage {
                 .map(|(i, c)| i + c.len_utf8())
                 .unwrap_or(0);
             self.payload = self.payload[..end].to_string();
+        }
+
+        // If JSON escaping made the message still too large, shave chars
+        // off the end until the serialized size fits.
+        while self.estimated_size() > MAX_PAYLOAD_BYTES && !self.payload.is_empty() {
+            self.payload.pop();
         }
     }
 }
@@ -306,6 +310,25 @@ mod tests {
         msg.truncate_to_fit();
         assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
         // The real invariant: encode_message must succeed after truncation
+        assert!(encode_message(&msg).is_ok());
+    }
+
+    #[test]
+    fn test_truncate_to_fit_escaped_chars() {
+        // Payload with JSON-escaped characters: quotes, backslashes, newlines.
+        // Each becomes 2+ bytes in JSON, so raw len() != serialized len().
+        let payload: String = "\"hello\"\n\\world\\".repeat(200);
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::SosBeacon,
+            EmergencyPriority::Distress,
+            32.0,
+            34.0,
+            &payload,
+        );
+        assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
+        msg.truncate_to_fit();
+        assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
         assert!(encode_message(&msg).is_ok());
     }
 
