@@ -117,16 +117,21 @@ impl TraceCollector {
 
     /// Record a span.
     pub fn record_span(&mut self, span: Span) {
+        let inserted_id = span.trace_id;
         let trace = self
             .traces
             .entry(span.trace_id)
             .or_insert_with(|| Trace::new(span.trace_id));
         trace.add_span(span);
 
-        // Evict oldest traces if over limit
+        // Evict oldest traces if over limit, but never evict the just-inserted trace
         if self.traces.len() > self.max_traces {
-            // Remove trace with smallest trace_id.1 as a simple eviction
-            if let Some(&key) = self.traces.keys().min_by_key(|k| k.1) {
+            if let Some(&key) = self
+                .traces
+                .keys()
+                .filter(|k| **k != inserted_id)
+                .min_by_key(|k| k.1)
+            {
                 self.traces.remove(&key);
                 self.completed_count += 1;
             }
