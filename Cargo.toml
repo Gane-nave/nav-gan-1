@@ -69,6 +69,9 @@ members = [
     "crates/aurora-errors",
     "crates/aurora-test-framework",
     "crates/aurora-rollout",
+    "crates/aurora-wellness",
+    "crates/aurora-autonomous",
+    "crates/aurora-social",
 ]
 
 [workspace.package]
