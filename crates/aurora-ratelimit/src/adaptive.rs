@@ -135,7 +135,7 @@ impl AdaptiveThrottle {
 
         // Decay EMA for intermediate empty windows (no requests)
         for _ in 1..windows_elapsed {
-            self.error_rate_ema = (1.0 - alpha) * self.error_rate_ema;
+            self.error_rate_ema *= 1.0 - alpha;
             self.adjust_rps();
         }
 
