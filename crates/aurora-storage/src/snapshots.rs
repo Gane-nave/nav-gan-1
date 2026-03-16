@@ -115,7 +115,7 @@ impl SnapshotManager {
         self.snapshots
             .read()
             .iter()
-            .filter(|s| s.tags.get(key).map_or(false, |v| v == value))
+            .filter(|s| s.tags.get(key).is_some_and(|v| v == value))
             .cloned()
             .collect()
     }

@@ -44,13 +44,13 @@ impl KvStore {
         let now = Utc::now();
         let mut store = self.namespaces.write();
         let ns = store.entry(namespace.to_string()).or_default();
-        let version = ns.get(key).map_or(1, |v| v.version + 1);
+        let version = ns.get(key).map(|v| v.version + 1).unwrap_or(1);
         let expires_at = ttl_secs.map(|s| now + Duration::seconds(s));
         ns.insert(
             key.to_string(),
             StoredValue {
                 data: value,
-                created_at: ns.get(key).map_or(now, |v| v.created_at),
+                created_at: ns.get(key).map(|v| v.created_at).unwrap_or(now),
                 updated_at: now,
                 expires_at,
                 version,
@@ -89,7 +89,7 @@ impl KvStore {
             .get(namespace)
             .map(|ns| {
                 ns.iter()
-                    .filter(|(_, v)| v.expires_at.map_or(true, |exp| now <= exp))
+                    .filter(|(_, v)| v.expires_at.is_none_or(|exp| now <= exp))
                     .map(|(k, _)| k.clone())
                     .collect()
             })
@@ -108,7 +108,7 @@ impl KvStore {
         let mut purged = 0;
         for ns in store.values_mut() {
             let before = ns.len();
-            ns.retain(|_, v| v.expires_at.map_or(true, |exp| now <= exp));
+            ns.retain(|_, v| v.expires_at.is_none_or(|exp| now <= exp));
             purged += before - ns.len();
         }
         purged
