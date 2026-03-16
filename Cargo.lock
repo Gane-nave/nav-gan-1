@@ -420,11 +420,6 @@ dependencies = [
 [[package]]
 name = "aurora-e2e-tests"
 version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-diagnostics",
- "aurora-simulation",
-]
 
 [[package]]
 name = "aurora-edge"
@@ -840,9 +835,6 @@ dependencies = [
 [[package]]
 name = "aurora-plugins"
 version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
 
 [[package]]
 name = "aurora-probabilistic"
@@ -930,9 +922,6 @@ dependencies = [
 [[package]]
 name = "aurora-scheduler"
 version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
 
 [[package]]
 name = "aurora-sdk"

@@ -162,7 +162,10 @@ impl LifecycleManager {
     pub fn destroy(&mut self) -> TransitionResult {
         // Try deactivating first if active
         if self.state == LifecycleState::Active {
-            let _ = self.transition(LifecycleState::Deactivating);
+            let r = self.transition(LifecycleState::Deactivating);
+            if !r.valid {
+                return r;
+            }
         }
         self.transition(LifecycleState::Destroying)
     }
