@@ -188,7 +188,7 @@ impl NotificationDispatcher {
                 delivered_list.push(notif);
                 delivered_count += 1;
             } else {
-                notif.status = DeliveryStatus::Expired;
+                // Keep status as Pending — notification will be retried later
                 skipped_count += 1;
                 remaining.push(notif);
             }

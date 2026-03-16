@@ -146,10 +146,15 @@ impl GeoFenceManager {
             };
 
             if triggered {
-                let trigger_type = if inside {
-                    TriggerType::Enter
-                } else {
-                    TriggerType::Exit
+                let trigger_type = match fence.trigger {
+                    TriggerType::Dwell => TriggerType::Dwell,
+                    _ => {
+                        if inside {
+                            TriggerType::Enter
+                        } else {
+                            TriggerType::Exit
+                        }
+                    }
                 };
                 events.push(FenceEvent {
                     fence_id: fence.id,
@@ -332,11 +337,13 @@ mod tests {
         fence.cooldown_secs = 0;
         mgr.add_fence(fence);
         let now = Utc::now();
-        // Inside — triggers every update
+        // Inside — triggers every update with Dwell type
         let e1 = mgr.update_position(32.0, 34.0, now);
         let e2 = mgr.update_position(32.0, 34.0, now);
         assert_eq!(e1.len(), 1);
+        assert_eq!(e1[0].trigger, TriggerType::Dwell);
         assert_eq!(e2.len(), 1);
+        assert_eq!(e2[0].trigger, TriggerType::Dwell);
         // Outside — no trigger
         let e3 = mgr.update_position(30.0, 30.0, now);
         assert!(e3.is_empty());
