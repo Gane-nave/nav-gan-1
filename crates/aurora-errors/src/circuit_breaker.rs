@@ -39,18 +39,23 @@ impl Default for CircuitBreakerConfig {
     }
 }
 
+/// All mutable circuit breaker state, protected by a single lock to prevent TOCTOU races.
+struct CircuitBreakerInner {
+    state: CircuitState,
+    failure_count: u32,
+    success_count: u32,
+    half_open_requests: u32,
+    last_failure_time: Option<Instant>,
+    total_requests: u64,
+    total_failures: u64,
+    total_rejections: u64,
+}
+
 /// Circuit breaker — tracks failures and manages state transitions.
 pub struct CircuitBreaker {
     name: String,
     config: CircuitBreakerConfig,
-    state: RwLock<CircuitState>,
-    failure_count: RwLock<u32>,
-    success_count: RwLock<u32>,
-    half_open_requests: RwLock<u32>,
-    last_failure_time: RwLock<Option<Instant>>,
-    total_requests: RwLock<u64>,
-    total_failures: RwLock<u64>,
-    total_rejections: RwLock<u64>,
+    inner: RwLock<CircuitBreakerInner>,
 }
 
 impl CircuitBreaker {
@@ -59,14 +64,16 @@ impl CircuitBreaker {
         Self {
             name: name.to_string(),
             config,
-            state: RwLock::new(CircuitState::Closed),
-            failure_count: RwLock::new(0),
-            success_count: RwLock::new(0),
-            half_open_requests: RwLock::new(0),
-            last_failure_time: RwLock::new(None),
-            total_requests: RwLock::new(0),
-            total_failures: RwLock::new(0),
-            total_rejections: RwLock::new(0),
+            inner: RwLock::new(CircuitBreakerInner {
+                state: CircuitState::Closed,
+                failure_count: 0,
+                success_count: 0,
+                half_open_requests: 0,
+                last_failure_time: None,
+                total_requests: 0,
+                total_failures: 0,
+                total_rejections: 0,
+            }),
         }
     }
 
@@ -82,41 +89,40 @@ impl CircuitBreaker {
 
     /// Get the current state.
     pub fn state(&self) -> CircuitState {
-        *self.state.read()
+        self.inner.read().state
     }
 
     /// Check if a request is allowed. Returns true if the request can proceed.
     pub fn allow_request(&self) -> bool {
-        *self.total_requests.write() += 1;
+        let mut inner = self.inner.write();
+        inner.total_requests += 1;
 
-        let current_state = *self.state.read();
-        match current_state {
+        match inner.state {
             CircuitState::Closed => true,
             CircuitState::Open => {
                 // Check if recovery timeout has elapsed
-                if let Some(last_failure) = *self.last_failure_time.read() {
+                if let Some(last_failure) = inner.last_failure_time {
                     if last_failure.elapsed() >= self.config.recovery_timeout {
                         // Transition to half-open
-                        *self.state.write() = CircuitState::HalfOpen;
-                        *self.half_open_requests.write() = 1; // This request counts
-                        *self.success_count.write() = 0;
+                        inner.state = CircuitState::HalfOpen;
+                        inner.half_open_requests = 1; // This request counts
+                        inner.success_count = 0;
                         true
                     } else {
-                        *self.total_rejections.write() += 1;
+                        inner.total_rejections += 1;
                         false
                     }
                 } else {
-                    *self.total_rejections.write() += 1;
+                    inner.total_rejections += 1;
                     false
                 }
             }
             CircuitState::HalfOpen => {
-                let mut requests = self.half_open_requests.write();
-                if *requests < self.config.half_open_max_requests {
-                    *requests += 1;
+                if inner.half_open_requests < self.config.half_open_max_requests {
+                    inner.half_open_requests += 1;
                     true
                 } else {
-                    *self.total_rejections.write() += 1;
+                    inner.total_rejections += 1;
                     false
                 }
             }
@@ -125,18 +131,17 @@ impl CircuitBreaker {
 
     /// Record a successful operation.
     pub fn record_success(&self) {
-        let current_state = *self.state.read();
-        match current_state {
+        let mut inner = self.inner.write();
+        match inner.state {
             CircuitState::Closed => {
-                *self.failure_count.write() = 0;
+                inner.failure_count = 0;
             }
             CircuitState::HalfOpen => {
-                let mut successes = self.success_count.write();
-                *successes += 1;
-                if *successes >= self.config.success_threshold {
+                inner.success_count += 1;
+                if inner.success_count >= self.config.success_threshold {
                     // Recovery successful — close the circuit
-                    *self.state.write() = CircuitState::Closed;
-                    *self.failure_count.write() = 0;
+                    inner.state = CircuitState::Closed;
+                    inner.failure_count = 0;
                 }
             }
             CircuitState::Open => {}
@@ -145,22 +150,21 @@ impl CircuitBreaker {
 
     /// Record a failed operation.
     pub fn record_failure(&self) {
-        *self.total_failures.write() += 1;
-        *self.last_failure_time.write() = Some(Instant::now());
+        let mut inner = self.inner.write();
+        inner.total_failures += 1;
+        inner.last_failure_time = Some(Instant::now());
 
-        let current_state = *self.state.read();
-        match current_state {
+        match inner.state {
             CircuitState::Closed => {
-                let mut failures = self.failure_count.write();
-                *failures += 1;
-                if *failures >= self.config.failure_threshold {
-                    *self.state.write() = CircuitState::Open;
+                inner.failure_count += 1;
+                if inner.failure_count >= self.config.failure_threshold {
+                    inner.state = CircuitState::Open;
                 }
             }
             CircuitState::HalfOpen => {
                 // Recovery failed — re-open the circuit
-                *self.state.write() = CircuitState::Open;
-                *self.success_count.write() = 0;
+                inner.state = CircuitState::Open;
+                inner.success_count = 0;
             }
             CircuitState::Open => {}
         }
@@ -168,22 +172,24 @@ impl CircuitBreaker {
 
     /// Force the circuit to a specific state (for testing/admin).
     pub fn force_state(&self, state: CircuitState) {
-        *self.state.write() = state;
+        let mut inner = self.inner.write();
+        inner.state = state;
         if state == CircuitState::Closed {
-            *self.failure_count.write() = 0;
-            *self.success_count.write() = 0;
+            inner.failure_count = 0;
+            inner.success_count = 0;
         }
     }
 
     /// Get circuit breaker statistics.
     pub fn stats(&self) -> CircuitBreakerStats {
+        let inner = self.inner.read();
         CircuitBreakerStats {
             name: self.name.clone(),
-            state: *self.state.read(),
-            failure_count: *self.failure_count.read(),
-            total_requests: *self.total_requests.read(),
-            total_failures: *self.total_failures.read(),
-            total_rejections: *self.total_rejections.read(),
+            state: inner.state,
+            failure_count: inner.failure_count,
+            total_requests: inner.total_requests,
+            total_failures: inner.total_failures,
+            total_rejections: inner.total_rejections,
         }
     }
 }
