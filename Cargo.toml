@@ -80,6 +80,9 @@ members = [
     "crates/aurora-pipeline",
     "crates/aurora-cache",
     "crates/aurora-mesh",
+    "crates/aurora-ratelimit",
+    "crates/aurora-features",
+    "crates/aurora-audit",
 ]
 
 [workspace.package]
