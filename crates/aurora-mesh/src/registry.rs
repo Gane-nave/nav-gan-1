@@ -57,7 +57,7 @@ impl ServiceInstance {
 
 /// Service registry — manages service instances.
 pub struct ServiceRegistry {
-    /// service_name → Vec<ServiceInstance>
+    /// service_name → Vec of [`ServiceInstance`]
     services: HashMap<String, Vec<ServiceInstance>>,
     /// Heartbeat timeout in milliseconds.
     heartbeat_timeout_ms: u64,

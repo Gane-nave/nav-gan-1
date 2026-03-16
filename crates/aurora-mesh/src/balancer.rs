@@ -136,6 +136,7 @@ impl LoadBalancer {
 
                     if self.instances[idx].weight > self.weighted_counter {
                         // Every full cycle, increment counter
+                        #[allow(unknown_lints, clippy::manual_is_multiple_of)]
                         if self.round_robin_index % self.instances.len() == 0 {
                             self.weighted_counter += 1;
                             if self.weighted_counter >= self.weighted_max {
