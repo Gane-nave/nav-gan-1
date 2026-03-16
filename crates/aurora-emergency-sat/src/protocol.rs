@@ -5,10 +5,12 @@ use chrono::{DateTime, Utc};
 use serde::{Deserialize, Serialize};
 use uuid::Uuid;
 
-/// Maximum payload size for satellite messages (bytes).
-/// Satellite links are extremely bandwidth-constrained; messages must fit in
-/// a single burst transmission.
-pub const MAX_PAYLOAD_BYTES: usize = 340;
+/// Maximum encoded message size (bytes).
+/// Satellite links are bandwidth-constrained; messages must fit in a single
+/// burst transmission.  The budget accounts for JSON-encoded metadata
+/// (~350-400 bytes of overhead for UUIDs, timestamps, field names) plus
+/// the user payload.
+pub const MAX_PAYLOAD_BYTES: usize = 1024;
 
 /// Emergency message priority levels.
 #[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
@@ -143,27 +145,34 @@ impl SatMessage {
         Ok(())
     }
 
-    /// Estimate the on-wire size of this message in bytes.
+    /// Exact on-wire (JSON-encoded) size of this message in bytes.
     pub fn estimated_size(&self) -> usize {
-        // Fixed fields: id(16) + sender(16) + type(1) + priority(1)
-        //   + lat(8) + lon(8) + optional floats(4*4=16) + hop(1) + max_hops(1)
-        //   + created_at(8) + ttl(4) = ~80 bytes
-        // Variable: payload length + signature (64 hex chars = 64 bytes)
-        let fixed = 80;
-        let sig_len = self.signature.as_ref().map_or(0, |s| s.len());
-        fixed + self.payload.len() + sig_len
+        serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0)
     }
 
     /// Truncate payload to ensure the message fits within `MAX_PAYLOAD_BYTES`.
+    ///
+    /// Uses actual JSON serialization to verify the result, handling
+    /// JSON-escaped characters (quotes, backslashes, control chars) correctly.
     pub fn truncate_to_fit(&mut self) {
-        let overhead = self.estimated_size() - self.payload.len();
+        // Fast path: already fits
+        if self.estimated_size() <= MAX_PAYLOAD_BYTES {
+            return;
+        }
+
+        // Measure JSON overhead with empty payload
+        let saved = std::mem::take(&mut self.payload);
+        let overhead = serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0);
+        self.payload = saved;
+
         if overhead >= MAX_PAYLOAD_BYTES {
             self.payload.clear();
             return;
         }
+
+        // Initial conservative truncation based on raw byte budget
         let max_payload = MAX_PAYLOAD_BYTES - overhead;
         if self.payload.len() > max_payload {
-            // Truncate at a valid UTF-8 char boundary (never slice mid-character)
             let end = self
                 .payload
                 .char_indices()
@@ -172,6 +181,12 @@ impl SatMessage {
                 .map(|(i, c)| i + c.len_utf8())
                 .unwrap_or(0);
             self.payload = self.payload[..end].to_string();
+        }
+
+        // If JSON escaping made the message still too large, shave chars
+        // off the end until the serialized size fits.
+        while self.estimated_size() > MAX_PAYLOAD_BYTES && !self.payload.is_empty() {
+            self.payload.pop();
         }
     }
 }
@@ -289,11 +304,32 @@ mod tests {
             EmergencyPriority::Warning,
             32.0,
             34.0,
-            &"A".repeat(500),
+            &"A".repeat(2000),
         );
         assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
         msg.truncate_to_fit();
         assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
+        // The real invariant: encode_message must succeed after truncation
+        assert!(encode_message(&msg).is_ok());
+    }
+
+    #[test]
+    fn test_truncate_to_fit_escaped_chars() {
+        // Payload with JSON-escaped characters: quotes, backslashes, newlines.
+        // Each becomes 2+ bytes in JSON, so raw len() != serialized len().
+        let payload: String = "\"hello\"\n\\world\\".repeat(200);
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::SosBeacon,
+            EmergencyPriority::Distress,
+            32.0,
+            34.0,
+            &payload,
+        );
+        assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
+        msg.truncate_to_fit();
+        assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
+        assert!(encode_message(&msg).is_ok());
     }
 
     #[test]
