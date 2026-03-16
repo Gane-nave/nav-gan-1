@@ -86,6 +86,9 @@ members = [
     "crates/aurora-graphdb",
     "crates/aurora-streaming",
     "crates/aurora-consensus",
+    "crates/aurora-structured-log",
+    "crates/aurora-histogram",
+    "crates/aurora-tracing-dist",
 ]
 
 [workspace.package]

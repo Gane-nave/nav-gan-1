@@ -1,0 +1,8 @@
+[package]
+name = "aurora-structured-log"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Structured logging engine for AURORA NAV"
+
+[dependencies]
