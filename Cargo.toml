@@ -66,6 +66,9 @@ members = [
     "crates/aurora-i18n",
     "crates/aurora-a11y",
     "crates/aurora-perf",
+    "crates/aurora-errors",
+    "crates/aurora-test-framework",
+    "crates/aurora-rollout",
 ]
 
 [workspace.package]
