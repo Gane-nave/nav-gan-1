@@ -361,6 +361,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-diagnostics"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
 name = "aurora-docs"
 version = "0.1.0"
 dependencies = [
@@ -942,6 +949,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-simulation"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
 ]
 
 [[package]]

@@ -1,0 +1,8 @@
+[package]
+name = "aurora-diagnostics"
+version = "0.1.0"
+edition = "2021"
+description = "System diagnostics and self-healing — health checks, auto-repair, degradation detection, introspection"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
