@@ -160,8 +160,10 @@ impl NavGraph {
         self.reverse_adjacency.entry(to).or_default().push(eid);
 
         if bidi {
+            let rev_eid = self.next_edge_id;
+            self.next_edge_id += 1;
             let reverse = GraphEdge {
-                id: eid,
+                id: rev_eid,
                 from: to,
                 to: from,
                 weight: edge.weight,
@@ -169,8 +171,12 @@ impl NavGraph {
                 edge_type: edge.edge_type,
                 properties: edge.properties,
             };
+            self.edges.insert(rev_eid, reverse.clone());
             self.adjacency.entry(to).or_default().push(reverse);
-            self.reverse_adjacency.entry(from).or_default().push(eid);
+            self.reverse_adjacency
+                .entry(from)
+                .or_default()
+                .push(rev_eid);
         }
 
         eid
@@ -368,5 +374,30 @@ mod tests {
         assert_eq!(g.node_count(), 0);
         assert_eq!(g.edge_count(), 0);
         assert!(g.node_ids().is_empty());
+    }
+
+    #[test]
+    fn test_incoming_neighbors_bidirectional() {
+        // Regression: bidirectional edge A->B should make incoming_neighbors(A) return B
+        let mut g = NavGraph::new();
+        g.add_node(GraphNode::new(1, 0.0, 0.0));
+        g.add_node(GraphNode::new(2, 1.0, 1.0));
+        g.add_edge(GraphEdge::new(0, 1, 2, 5.0).bidirectional());
+
+        let mut inc_1 = g.incoming_neighbors(1);
+        inc_1.sort();
+        assert_eq!(
+            inc_1,
+            vec![2],
+            "incoming_neighbors(1) should be [2] for bidi edge 1<->2"
+        );
+
+        let mut inc_2 = g.incoming_neighbors(2);
+        inc_2.sort();
+        assert_eq!(
+            inc_2,
+            vec![1],
+            "incoming_neighbors(2) should be [1] for bidi edge 1<->2"
+        );
     }
 }
