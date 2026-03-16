@@ -74,6 +74,9 @@ members = [
     "crates/aurora-social",
     "crates/aurora-simulation",
     "crates/aurora-diagnostics",
+    "crates/aurora-e2e-tests",
+    "crates/aurora-plugins",
+    "crates/aurora-scheduler",
 ]
 
 [workspace.package]

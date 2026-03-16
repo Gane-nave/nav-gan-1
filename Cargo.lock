@@ -418,6 +418,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-e2e-tests"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-diagnostics",
+ "aurora-simulation",
+]
+
+[[package]]
 name = "aurora-edge"
 version = "0.1.0"
 dependencies = [
@@ -829,6 +838,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-plugins"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
 name = "aurora-probabilistic"
 version = "0.1.0"
 dependencies = [
@@ -909,6 +925,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-scheduler"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
 ]
 
 [[package]]
