@@ -1,0 +1,8 @@
+[package]
+name = "aurora-autonomous"
+version = "0.1.0"
+edition = "2021"
+description = "Autonomous and semi-autonomous driving support — ADAS, lane keeping, handoff protocols"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
