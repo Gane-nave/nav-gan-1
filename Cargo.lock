@@ -64,6 +64,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-analytics"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-anti-manipulation"
 version = "0.1.0"
 dependencies = [
@@ -474,6 +486,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-gateway"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -642,6 +666,19 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-ml"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "nalgebra",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
  "uuid",
 ]
 
