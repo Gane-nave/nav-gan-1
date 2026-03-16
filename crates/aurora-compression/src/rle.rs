@@ -66,10 +66,14 @@ pub fn encode_bytes(data: &[u8]) -> Vec<u8> {
     let runs = encode(data);
     let mut result = Vec::with_capacity(runs.len() * 3);
     for run in &runs {
-        let count = run.count.min(65535) as u16;
-        result.push(run.value);
-        result.push((count >> 8) as u8);
-        result.push((count & 0xFF) as u8);
+        let mut remaining = run.count;
+        while remaining > 0 {
+            let count = remaining.min(65535) as u16;
+            result.push(run.value);
+            result.push((count >> 8) as u8);
+            result.push((count & 0xFF) as u8);
+            remaining -= count as u32;
+        }
     }
     result
 }
@@ -184,6 +188,16 @@ mod tests {
         let encoded = encode_bytes(&data);
         assert!(encoded.len() < data.len());
         let decoded = decode_bytes(&encoded);
+        assert_eq!(decoded, data);
+    }
+
+    #[test]
+    fn test_byte_encoding_large_run() {
+        // Verify runs > 65535 are split correctly
+        let data = vec![0xABu8; 100_000];
+        let encoded = encode_bytes(&data);
+        let decoded = decode_bytes(&encoded);
+        assert_eq!(decoded.len(), 100_000);
         assert_eq!(decoded, data);
     }
 }
