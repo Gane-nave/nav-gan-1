@@ -102,7 +102,7 @@ impl EventCollector {
     pub fn track(&self, event: AnalyticsEvent) {
         let mut events = self.events.write();
         if events.len() >= self.max_events {
-            let drain_count = self.max_events / 10; // evict 10%
+            let drain_count = (self.max_events / 10).max(1); // evict 10%, minimum 1
             events.drain(..drain_count);
         }
         events.push(event);
