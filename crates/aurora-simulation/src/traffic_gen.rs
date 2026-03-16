@@ -304,7 +304,10 @@ mod tests {
         gen.generate_segment((32.0, 34.0), (32.01, 34.01), TrafficDensity::Light, 1.0);
         // With seed=0 bug, all vehicles would have identical speeds
         let speeds: Vec<f64> = gen.vehicles.iter().map(|v| v.speed_mps).collect();
-        assert!(speeds.len() > 1, "Need multiple vehicles to verify variance");
+        assert!(
+            speeds.len() > 1,
+            "Need multiple vehicles to verify variance"
+        );
         let all_same = speeds.windows(2).all(|w| (w[0] - w[1]).abs() < 1e-10);
         assert!(!all_same, "Zero seed should not produce identical speeds");
     }
