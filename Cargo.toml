@@ -50,6 +50,13 @@ members = [
     "crates/aurora-auth",
     "crates/aurora-security",
     "crates/aurora-monitoring",
+    "crates/aurora-emergency-sat",
+    "crates/aurora-immersive",
+    "crates/aurora-instruments",
+    "crates/aurora-temporal",
+    "crates/aurora-multimodal",
+    "crates/aurora-voice",
+    "crates/aurora-profile",
 ]
 
 [workspace.package]
