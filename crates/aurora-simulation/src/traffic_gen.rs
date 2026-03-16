@@ -89,6 +89,9 @@ impl TrafficGenerator {
 
     /// Simple deterministic PRNG (xorshift64).
     fn next_random(&mut self) -> f64 {
+        if self.rng_state == 0 {
+            self.rng_state = 1;
+        }
         self.rng_state ^= self.rng_state << 13;
         self.rng_state ^= self.rng_state >> 7;
         self.rng_state ^= self.rng_state << 17;
@@ -289,6 +292,21 @@ mod tests {
         assert!(TrafficDensity::Light < TrafficDensity::Moderate);
         assert!(TrafficDensity::Moderate < TrafficDensity::Heavy);
         assert!(TrafficDensity::Heavy < TrafficDensity::Gridlock);
+    }
+
+    #[test]
+    fn test_zero_seed_not_stuck() {
+        // Regression: xorshift64 absorbing state when seed == 0
+        let mut gen = TrafficGenerator::new(TrafficGenConfig {
+            seed: 0,
+            ..Default::default()
+        });
+        gen.generate_segment((32.0, 34.0), (32.01, 34.01), TrafficDensity::Light, 1.0);
+        // With seed=0 bug, all vehicles would have identical speeds
+        let speeds: Vec<f64> = gen.vehicles.iter().map(|v| v.speed_mps).collect();
+        assert!(speeds.len() > 1, "Need multiple vehicles to verify variance");
+        let all_same = speeds.windows(2).all(|w| (w[0] - w[1]).abs() < 1e-10);
+        assert!(!all_same, "Zero seed should not produce identical speeds");
     }
 
     #[test]
