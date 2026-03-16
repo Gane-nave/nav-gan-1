@@ -161,13 +161,17 @@ impl MemoryManager {
     }
 
     /// Allocate memory for a subsystem.
+    /// Both global and subsystem budget checks happen under a single write lock
+    /// to prevent TOCTOU races.
     pub fn allocate(&self, subsystem: &str, bytes: usize) -> bool {
-        // Check global budget
-        if self.total_used() + bytes > self.global_budget {
+        let mut budgets = self.budgets.write();
+
+        // Check global budget under the same lock
+        let total_used: usize = budgets.values().map(|b| b.used_bytes).sum();
+        if total_used + bytes > self.global_budget {
             return false;
         }
 
-        let mut budgets = self.budgets.write();
         if let Some(budget) = budgets.get_mut(subsystem) {
             budget.allocate(bytes)
         } else {

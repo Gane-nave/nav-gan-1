@@ -9,6 +9,8 @@ use std::collections::{HashMap, VecDeque};
 pub enum LoadState {
     /// Not yet requested.
     Unloaded,
+    /// Queued for loading but not yet started.
+    Queued,
     /// Loading in progress.
     Loading,
     /// Loaded successfully.
@@ -116,7 +118,7 @@ impl LazyLoadManager {
         let mut resources = self.resources.write();
         if let Some(res) = resources.get_mut(id) {
             if res.state == LoadState::Unloaded || res.state == LoadState::Evicted {
-                res.state = LoadState::Loading;
+                res.state = LoadState::Queued;
                 let mut queue = self.load_queue.write();
                 if !queue.contains(&id.to_string()) {
                     queue.push_back(id.to_string());
@@ -166,29 +168,41 @@ impl LazyLoadManager {
     }
 
     /// Get the next batch of resources to load (respecting concurrency limit).
+    /// Returns queued resource IDs that are ready to start loading, and
+    /// promotes their state from Queued to Loading.
     pub fn next_batch(&self) -> Vec<String> {
-        let resources = self.resources.read();
+        let mut resources = self.resources.write();
         let loaded_ids = self.loaded_ids.read();
         let queue = self.load_queue.read();
         let loaded_strings: Vec<String> = loaded_ids.clone();
 
+        // Only count resources actually in Loading state (not Queued)
         let currently_loading = resources
             .values()
             .filter(|r| r.state == LoadState::Loading)
             .count();
         let slots = self.max_concurrent.saturating_sub(currently_loading);
 
-        queue
+        let batch: Vec<String> = queue
             .iter()
             .filter(|id| {
                 resources
                     .get(id.as_str())
-                    .map(|r| r.dependencies_met(&loaded_strings))
+                    .map(|r| r.state == LoadState::Queued && r.dependencies_met(&loaded_strings))
                     .unwrap_or(false)
             })
             .take(slots)
             .cloned()
-            .collect()
+            .collect();
+
+        // Promote selected items from Queued to Loading
+        for id in &batch {
+            if let Some(res) = resources.get_mut(id.as_str()) {
+                res.state = LoadState::Loading;
+            }
+        }
+
+        batch
     }
 
     /// Get the state of a resource.
@@ -266,7 +280,7 @@ mod tests {
         mgr.register(LazyResource::new("tile_a", ResourceType::MapTile));
 
         assert!(mgr.request_load("tile_a"));
-        assert_eq!(mgr.state("tile_a"), Some(LoadState::Loading));
+        assert_eq!(mgr.state("tile_a"), Some(LoadState::Queued));
 
         mgr.mark_loaded("tile_a", 1024);
         assert_eq!(mgr.state("tile_a"), Some(LoadState::Loaded));
@@ -304,8 +318,18 @@ mod tests {
             mgr.request_load(&id);
         }
 
-        let batch = mgr.next_batch();
-        assert!(batch.len() <= 2);
+        // First batch: exactly 2 items promoted from Queued to Loading
+        let batch1 = mgr.next_batch();
+        assert_eq!(batch1.len(), 2);
+
+        // Second batch: still 2 Loading, so 0 slots available
+        let batch2 = mgr.next_batch();
+        assert_eq!(batch2.len(), 0);
+
+        // Complete one item — frees a slot
+        mgr.mark_loaded(&batch1[0], 100);
+        let batch3 = mgr.next_batch();
+        assert_eq!(batch3.len(), 1);
     }
 
     #[test]
@@ -333,7 +357,7 @@ mod tests {
 
         let count = mgr.prefetch_by_type(ResourceType::MapTile);
         assert_eq!(count, 2);
-        assert_eq!(mgr.state("tile_1"), Some(LoadState::Loading));
+        assert_eq!(mgr.state("tile_1"), Some(LoadState::Queued));
         assert_eq!(mgr.state("route"), Some(LoadState::Unloaded));
     }
 
@@ -357,6 +381,6 @@ mod tests {
 
         // Re-request load
         assert!(mgr.request_load("tile"));
-        assert_eq!(mgr.state("tile"), Some(LoadState::Loading));
+        assert_eq!(mgr.state("tile"), Some(LoadState::Queued));
     }
 }
