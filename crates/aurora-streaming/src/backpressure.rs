@@ -73,6 +73,10 @@ impl BackpressureController {
     pub fn try_admit(&mut self) -> bool {
         // Check sampling strategy first
         if let BackpressureStrategy::Sample(n) = self.strategy {
+            if n == 0 {
+                self.dropped += 1;
+                return false;
+            }
             self.sample_counter += 1;
             if self.sample_counter % n != 0 {
                 self.dropped += 1;
@@ -308,5 +312,15 @@ mod tests {
         let mut ctrl = BackpressureController::new(0, BackpressureStrategy::DropNewest);
         assert!((ctrl.fill_ratio() - 1.0).abs() < f64::EPSILON);
         assert!(!ctrl.try_admit());
+    }
+
+    #[test]
+    fn test_sample_zero_no_panic() {
+        // Regression: Sample(0) must not panic from division by zero.
+        let mut ctrl = BackpressureController::new(100, BackpressureStrategy::Sample(0));
+        assert!(!ctrl.try_admit());
+        assert!(!ctrl.try_admit());
+        assert_eq!(ctrl.dropped_count(), 2);
+        assert_eq!(ctrl.accepted_count(), 0);
     }
 }

@@ -196,6 +196,19 @@ impl NavGraph {
         self.outgoing_edges(node).iter().map(|e| e.to).collect()
     }
 
+    /// Get incoming neighbors of a node (nodes with edges pointing to this node).
+    pub fn incoming_neighbors(&self, node: NodeId) -> Vec<NodeId> {
+        self.reverse_adjacency
+            .get(&node)
+            .map(|edge_ids| {
+                edge_ids
+                    .iter()
+                    .filter_map(|eid| self.edges.get(eid).map(|e| e.from))
+                    .collect()
+            })
+            .unwrap_or_default()
+    }
+
     /// Number of nodes.
     pub fn node_count(&self) -> usize {
         self.nodes.len()

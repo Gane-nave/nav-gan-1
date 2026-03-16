@@ -135,10 +135,13 @@ impl SpatialIndex {
                     }
                 }
             }
-            // If we found something within this ring and the ring is big enough
-            // to guarantee no closer point exists in the next ring, stop.
-            if best.is_some() && radius > 0 {
-                break;
+            // Only stop if the best distance found is less than the minimum
+            // possible distance from the next ring of cells.
+            if let Some((_, best_dist)) = best {
+                let min_next_ring_dist = (radius as f64) * self.cell_size * 111_320.0 * 0.5;
+                if best_dist <= min_next_ring_dist {
+                    break;
+                }
             }
         }
         best

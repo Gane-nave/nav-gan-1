@@ -125,6 +125,9 @@ pub fn dfs(graph: &NavGraph, start: NodeId) -> DfsResult {
 }
 
 /// Find connected components (treating edges as undirected).
+///
+/// Uses undirected BFS that follows both outgoing and incoming edges,
+/// producing weakly-connected components for directed graphs.
 pub fn connected_components(graph: &NavGraph) -> Vec<Vec<NodeId>> {
     let mut seen = HashSet::new();
     let mut components = Vec::new();
@@ -133,11 +136,28 @@ pub fn connected_components(graph: &NavGraph) -> Vec<Vec<NodeId>> {
         if seen.contains(&node_id) {
             continue;
         }
-        let result = bfs(graph, node_id);
-        let mut component: Vec<NodeId> = result.visited.to_vec();
-        for &n in &component {
-            seen.insert(n);
+        // Undirected BFS: follow both outgoing and incoming edges
+        let mut queue = VecDeque::new();
+        let mut component = Vec::new();
+        seen.insert(node_id);
+        queue.push_back(node_id);
+
+        while let Some(current) = queue.pop_front() {
+            component.push(current);
+            // Follow outgoing edges
+            for neighbor in graph.neighbors(current) {
+                if seen.insert(neighbor) {
+                    queue.push_back(neighbor);
+                }
+            }
+            // Follow incoming edges (treat as undirected)
+            for neighbor in graph.incoming_neighbors(current) {
+                if seen.insert(neighbor) {
+                    queue.push_back(neighbor);
+                }
+            }
         }
+
         component.sort();
         components.push(component);
     }
@@ -276,6 +296,29 @@ mod tests {
         // Node 3 is isolated
         let comps = connected_components(&g);
         assert!(comps.len() >= 2);
+    }
+
+    #[test]
+    fn test_connected_components_directed_edge_undirected() {
+        // Regression: A->B as directed edge should still put A and B
+        // in the same weakly-connected component.
+        let mut g = NavGraph::new();
+        g.add_node(GraphNode::new(1, 0.0, 0.0));
+        g.add_node(GraphNode::new(2, 1.0, 1.0));
+        g.add_node(GraphNode::new(3, 2.0, 2.0));
+        g.add_edge(GraphEdge::new(0, 1, 2, 1.0)); // directed 1->2
+                                                  // Node 3 isolated
+        let comps = connected_components(&g);
+        // Nodes 1 and 2 must be in the SAME component
+        let comp_with_1 = comps.iter().find(|c| c.contains(&1)).unwrap();
+        assert!(
+            comp_with_1.contains(&2),
+            "directed edge 1->2 should form one undirected component"
+        );
+        // Node 3 must be in its own component
+        let comp_with_3 = comps.iter().find(|c| c.contains(&3)).unwrap();
+        assert_eq!(comp_with_3.len(), 1);
+        assert_eq!(comps.len(), 2);
     }
 
     #[test]
