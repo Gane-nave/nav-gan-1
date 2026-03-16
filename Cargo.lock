@@ -286,6 +286,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-compression"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -561,6 +565,10 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-geo"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-gnss"
@@ -1157,6 +1165,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-websocket"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-wellness"
