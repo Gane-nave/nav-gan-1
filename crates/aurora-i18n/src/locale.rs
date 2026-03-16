@@ -142,18 +142,18 @@ impl LocaleConfig {
         match self.distance_unit {
             DistanceUnit::Metric => {
                 if meters >= 1000.0 {
-                    format!("{:.1} km", meters / 1000.0)
+                    format!("{} km", self.format_number(meters / 1000.0, 1))
                 } else {
-                    format!("{:.0} m", meters)
+                    format!("{} m", self.format_number(meters, 0))
                 }
             }
             DistanceUnit::Imperial => {
                 let miles = meters / 1609.344;
                 if miles >= 0.1 {
-                    format!("{:.1} mi", miles)
+                    format!("{} mi", self.format_number(miles, 1))
                 } else {
                     let feet = meters * 3.28084;
-                    format!("{:.0} ft", feet)
+                    format!("{} ft", self.format_number(feet, 0))
                 }
             }
         }
@@ -162,8 +162,8 @@ impl LocaleConfig {
     /// Format a speed value according to locale settings.
     pub fn format_speed(&self, mps: f64) -> String {
         match self.speed_unit {
-            SpeedUnit::Kmh => format!("{:.0} km/h", mps * 3.6),
-            SpeedUnit::Mph => format!("{:.0} mph", mps * 2.23694),
+            SpeedUnit::Kmh => format!("{} km/h", self.format_number(mps * 3.6, 0)),
+            SpeedUnit::Mph => format!("{} mph", self.format_number(mps * 2.23694, 0)),
         }
     }
 
@@ -321,13 +321,13 @@ mod tests {
     fn test_format_distance_metric() {
         let config = LocaleConfig::for_locale(&Locale::new("de-DE"));
         assert_eq!(config.format_distance(500.0), "500 m");
-        assert_eq!(config.format_distance(2500.0), "2.5 km");
+        assert_eq!(config.format_distance(2500.0), "2,5 km");
     }
 
     #[test]
     fn test_format_distance_imperial() {
         let config = LocaleConfig::for_locale(&Locale::new("en-US"));
-        assert_eq!(config.format_distance(1609.344), "1.0 mi");
+        assert_eq!(config.format_distance(1609.344), "1.0 mi");  // en-US uses '.'
         assert!(config.format_distance(10.0).contains("ft"));
     }
 

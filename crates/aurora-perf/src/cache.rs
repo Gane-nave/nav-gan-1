@@ -59,6 +59,8 @@ impl<V: Clone> LruCache<V> {
         while entries.len() >= self.capacity {
             if let Some(evicted) = order.pop_front() {
                 entries.remove(&evicted);
+            } else {
+                break;
             }
         }
 
