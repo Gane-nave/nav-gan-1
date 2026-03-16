@@ -116,7 +116,7 @@ impl GraphEdge {
 /// Navigation graph — adjacency list representation.
 pub struct NavGraph {
     nodes: HashMap<NodeId, GraphNode>,
-    /// Outgoing edges per node: node_id -> Vec<edge>
+    /// Outgoing edges per node: node_id -> `Vec<GraphEdge>`
     adjacency: HashMap<NodeId, Vec<GraphEdge>>,
     /// Reverse adjacency for incoming edges.
     reverse_adjacency: HashMap<NodeId, Vec<EdgeId>>,
