@@ -658,6 +658,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-multimodal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-observability"
 version = "0.1.0"
 dependencies = [
@@ -725,6 +729,13 @@ dependencies = [
  "serde",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-profile"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
 ]
 
 [[package]]
@@ -921,6 +932,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-voice"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
 ]
 
 [[package]]

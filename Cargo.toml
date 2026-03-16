@@ -54,6 +54,9 @@ members = [
     "crates/aurora-immersive",
     "crates/aurora-instruments",
     "crates/aurora-temporal",
+    "crates/aurora-multimodal",
+    "crates/aurora-voice",
+    "crates/aurora-profile",
 ]
 
 [workspace.package]

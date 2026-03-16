@@ -1,0 +1,8 @@
+[package]
+name = "aurora-profile"
+version = "0.1.0"
+edition = "2021"
+description = "User profiles, preferences, and personalization engine"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
