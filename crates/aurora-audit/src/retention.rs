@@ -182,7 +182,7 @@ impl RetentionManager {
             .iter()
             .filter(|r| {
                 self.find_policy(&r.category)
-                    .map_or(false, |p| p.is_expired(r.created_ms, now_ms))
+                    .is_some_and(|p| p.is_expired(r.created_ms, now_ms))
             })
             .collect()
     }

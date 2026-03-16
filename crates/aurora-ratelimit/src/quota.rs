@@ -147,10 +147,13 @@ impl QuotaManager {
             }
         }
 
-        // Phase 2: All hard limits passed — now increment all counters
+        // Phase 2: All hard limits passed — now increment all counters (once per period)
+        let mut incremented_periods = std::collections::HashSet::new();
         for rule in &rules {
-            if let Some(counter) = self.usage.get_mut(&(key.to_string(), rule.period)) {
-                counter.increment(now_ms);
+            if incremented_periods.insert(rule.period) {
+                if let Some(counter) = self.usage.get_mut(&(key.to_string(), rule.period)) {
+                    counter.increment(now_ms);
+                }
             }
         }
         result
