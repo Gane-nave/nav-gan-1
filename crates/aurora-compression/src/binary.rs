@@ -292,7 +292,7 @@ mod tests {
 
     #[test]
     fn test_f64_roundtrip() {
-        let val = BinValue::F64(3.14159);
+        let val = BinValue::F64(1.23456789);
         let data = serialize(&val);
         assert_eq!(deserialize(&data), Some(val));
     }
