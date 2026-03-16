@@ -64,6 +64,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-analytics"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-anti-manipulation"
 version = "0.1.0"
 dependencies = [
@@ -235,6 +247,17 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-compliance"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
  "uuid",
 ]
 
@@ -474,6 +497,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-gateway"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -646,6 +681,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ml"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "nalgebra",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
 name = "aurora-monitoring"
 version = "0.1.0"
 dependencies = [
@@ -660,6 +708,17 @@ dependencies = [
 [[package]]
 name = "aurora-multimodal"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-notifications"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "uuid",
+]
 
 [[package]]
 name = "aurora-observability"
@@ -839,6 +898,17 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "aurora-storage"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
  "uuid",
 ]
 
