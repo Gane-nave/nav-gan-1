@@ -81,7 +81,7 @@ pub fn wcag_level(ratio: f64) -> WcagLevel {
     if ratio >= 7.0 {
         WcagLevel::Aaa
     } else if ratio >= 4.5 {
-        WcagLevel::Aa
+        WcagLevel::AaaLarge
     } else if ratio >= 3.0 {
         WcagLevel::AaLarge
     } else {
@@ -261,8 +261,8 @@ mod tests {
     fn test_wcag_levels() {
         assert_eq!(wcag_level(21.0), WcagLevel::Aaa);
         assert_eq!(wcag_level(7.0), WcagLevel::Aaa);
-        assert_eq!(wcag_level(5.0), WcagLevel::Aa);
-        assert_eq!(wcag_level(4.5), WcagLevel::Aa);
+        assert_eq!(wcag_level(5.0), WcagLevel::AaaLarge);
+        assert_eq!(wcag_level(4.5), WcagLevel::AaaLarge);
         assert_eq!(wcag_level(3.5), WcagLevel::AaLarge);
         assert_eq!(wcag_level(2.0), WcagLevel::Fail);
     }
@@ -272,7 +272,7 @@ mod tests {
         let result = analyze_contrast(&Color::new(0, 0, 0), &Color::new(255, 255, 255));
         assert!(result.passes_aa_normal);
         assert!(result.passes_aaa_normal);
-        assert_eq!(result.level, WcagLevel::Aaa);
+        assert_eq!(result.level, WcagLevel::Aaa); // 21:1 ratio
     }
 
     #[test]

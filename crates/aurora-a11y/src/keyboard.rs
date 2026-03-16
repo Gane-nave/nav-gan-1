@@ -58,8 +58,18 @@ impl FocusManager {
 
     /// Register a focusable element.
     pub fn register(&mut self, element: FocusableElement) {
+        // Preserve focus on the currently focused element across re-sort
+        let focused_id = self
+            .current_index
+            .and_then(|i| self.elements.get(i))
+            .map(|e| e.id.clone());
+
         self.elements.push(element);
         self.sort_elements();
+
+        // Restore current_index to the new position of the previously focused element
+        self.current_index =
+            focused_id.and_then(|id| self.elements.iter().position(|e| e.id == id));
     }
 
     /// Sort elements by tab index.
