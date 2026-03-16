@@ -30,6 +30,7 @@ pub fn median(sorted: &[f64]) -> Option<f64> {
 
 /// Compute standard percentile set: p50, p75, p90, p95, p99.
 pub struct PercentileSet {
+    pub p25: f64,
     pub p50: f64,
     pub p75: f64,
     pub p90: f64,
@@ -41,6 +42,7 @@ impl PercentileSet {
     /// Compute from a sorted slice.
     pub fn from_sorted(sorted: &[f64]) -> Option<Self> {
         Some(Self {
+            p25: percentile(sorted, 25.0)?,
             p50: percentile(sorted, 50.0)?,
             p75: percentile(sorted, 75.0)?,
             p90: percentile(sorted, 90.0)?,
@@ -49,9 +51,9 @@ impl PercentileSet {
         })
     }
 
-    /// Inter-quartile range (p75 - p50).
+    /// Inter-quartile range (p75 - p25).
     pub fn iqr(&self) -> f64 {
-        self.p75 - self.p50
+        self.p75 - self.p25
     }
 }
 
