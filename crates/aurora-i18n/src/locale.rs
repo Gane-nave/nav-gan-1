@@ -183,6 +183,7 @@ impl LocaleConfig {
         }
 
         for (i, ch) in digits.iter().enumerate() {
+            #[allow(unknown_lints, clippy::manual_is_multiple_of)]
             if i > 0 && (digits.len() - i) % 3 == 0 {
                 result.push(self.number_format.thousands_separator);
             }
