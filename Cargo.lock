@@ -64,6 +64,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-a11y"
+version = "0.1.0"
+dependencies = [
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-analytics"
 version = "0.1.0"
 dependencies = [
@@ -524,6 +533,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-i18n"
+version = "0.1.0"
+dependencies = [
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-immersive"
 version = "0.1.0"
 dependencies = [
@@ -773,6 +791,16 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-perf"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

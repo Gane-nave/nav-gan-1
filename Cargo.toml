@@ -63,6 +63,9 @@ members = [
     "crates/aurora-storage",
     "crates/aurora-notifications",
     "crates/aurora-compliance",
+    "crates/aurora-i18n",
+    "crates/aurora-a11y",
+    "crates/aurora-perf",
 ]
 
 [workspace.package]
