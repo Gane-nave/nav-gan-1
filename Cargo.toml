@@ -92,6 +92,9 @@ members = [
     "crates/aurora-structured-log",
     "crates/aurora-histogram",
     "crates/aurora-tracing-dist",
+    "crates/aurora-circuit",
+    "crates/aurora-serialization",
+    "crates/aurora-health",
 ]
 
 [workspace.package]

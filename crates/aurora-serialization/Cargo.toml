@@ -1,0 +1,7 @@
+[package]
+name = "aurora-serialization"
+version = "0.1.0"
+edition = "2021"
+description = "Advanced serialization and schema evolution for AURORA NAV"
+
+[dependencies]
