@@ -149,21 +149,23 @@ impl RetentionManager {
                         RetentionAction::Delete => {
                             to_delete.push(i);
                             self.deleted_count += 1;
+                            affected += 1;
                         }
                         RetentionAction::Archive => {
                             if !record.archived {
                                 record.archived = true;
                                 self.archived_count += 1;
+                                affected += 1;
                             }
                         }
                         RetentionAction::Anonymize => {
                             if !record.anonymized {
                                 record.anonymized = true;
                                 self.anonymized_count += 1;
+                                affected += 1;
                             }
                         }
                     }
-                    affected += 1;
                     break;
                 }
             }
