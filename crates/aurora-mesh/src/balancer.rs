@@ -81,6 +81,7 @@ impl LoadBalancer {
     pub fn set_available(&mut self, id: &str, available: bool) -> bool {
         if let Some(inst) = self.instances.iter_mut().find(|i| i.id == id) {
             inst.available = available;
+            self.recalc_max_weight();
             true
         } else {
             false
@@ -119,11 +120,17 @@ impl LoadBalancer {
             }
             BalancerStrategy::WeightedRoundRobin => {
                 // Weighted round-robin: cycle through, skipping if counter > weight
+                let mut iterations = 0usize;
                 loop {
+                    iterations += 1;
                     let idx = self.round_robin_index % self.instances.len();
                     self.round_robin_index = self.round_robin_index.wrapping_add(1);
 
                     if !self.instances[idx].available {
+                        // Safety: prevent infinite loop if all weights are 0
+                        if iterations > self.instances.len() * (self.weighted_max as usize + 2) {
+                            break available[0];
+                        }
                         continue;
                     }
 
@@ -139,9 +146,7 @@ impl LoadBalancer {
                     }
 
                     // Safety: prevent infinite loop if all weights are 0
-                    if self.round_robin_index
-                        > self.instances.len() * (self.weighted_max as usize + 2)
-                    {
+                    if iterations > self.instances.len() * (self.weighted_max as usize + 2) {
                         break available[0];
                     }
                 }

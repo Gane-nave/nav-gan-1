@@ -51,6 +51,8 @@ impl InvalidationManager {
 
     /// Register a key with a set of tags.
     pub fn register(&mut self, key: &str, tags: &[&str]) {
+        // Clean up old tags if key already exists to avoid stale reverse-index entries
+        self.unregister(key);
         let tag_set: HashSet<String> = tags.iter().map(|t| t.to_string()).collect();
         for tag in &tag_set {
             self.tag_keys
