@@ -355,7 +355,11 @@ mod tests {
         broker.clear_topic("t");
         broker.publish("t", b"c".to_vec(), 3000);
         let msgs = broker.poll(sub, 10);
-        assert_eq!(msgs.len(), 1, "subscriber must see messages after clear_topic");
+        assert_eq!(
+            msgs.len(),
+            1,
+            "subscriber must see messages after clear_topic"
+        );
         assert_eq!(msgs[0].payload, b"c");
     }
 
