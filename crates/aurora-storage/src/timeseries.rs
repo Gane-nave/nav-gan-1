@@ -148,7 +148,11 @@ impl TimeSeriesStore {
 
     /// Count total points in a series.
     pub fn len(&self, series_name: &str) -> usize {
-        self.series.read().get(series_name).map(|s| s.len()).unwrap_or(0)
+        self.series
+            .read()
+            .get(series_name)
+            .map(|s| s.len())
+            .unwrap_or(0)
     }
 
     /// Check if a series exists.
