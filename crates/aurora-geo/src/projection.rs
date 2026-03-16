@@ -14,7 +14,7 @@ pub struct UtmZone {
 impl UtmZone {
     /// Determine UTM zone from geographic coordinates.
     pub fn from_geo(lat: f64, lon: f64) -> Self {
-        let number = ((lon + 180.0) / 6.0).floor() as u8 + 1;
+        let number = (((lon + 180.0).rem_euclid(360.0)) / 6.0).floor() as u8 + 1;
         Self {
             number,
             northern: lat >= 0.0,
