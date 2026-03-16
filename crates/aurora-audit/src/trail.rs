@@ -71,6 +71,8 @@ impl AuditEntry {
         let mut hash: u64 = self.prev_hash;
         hash = hash.wrapping_mul(31).wrapping_add(self.id);
         hash = hash.wrapping_mul(31).wrapping_add(self.timestamp_ms);
+        hash = hash.wrapping_mul(31).wrapping_add(self.category as u64);
+        hash = hash.wrapping_mul(31).wrapping_add(self.severity as u64);
         for b in self.actor.bytes() {
             hash = hash.wrapping_mul(31).wrapping_add(b as u64);
         }
@@ -79,6 +81,23 @@ impl AuditEntry {
         }
         for b in self.resource.bytes() {
             hash = hash.wrapping_mul(31).wrapping_add(b as u64);
+        }
+        for b in self.outcome.bytes() {
+            hash = hash.wrapping_mul(31).wrapping_add(b as u64);
+        }
+        hash = hash.wrapping_mul(31).wrapping_add(self.success as u64);
+        // Include sorted metadata keys for deterministic hashing
+        let mut meta_keys: Vec<&String> = self.metadata.keys().collect();
+        meta_keys.sort();
+        for k in meta_keys {
+            for b in k.bytes() {
+                hash = hash.wrapping_mul(31).wrapping_add(b as u64);
+            }
+            if let Some(v) = self.metadata.get(k) {
+                for b in v.bytes() {
+                    hash = hash.wrapping_mul(31).wrapping_add(b as u64);
+                }
+            }
         }
         hash
     }

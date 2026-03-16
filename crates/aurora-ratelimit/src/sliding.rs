@@ -122,14 +122,19 @@ impl SlidingWindowLimiter {
         counter.try_acquire(max, now_ms)
     }
 
-    /// Get the current count for a key.
-    pub fn current_count(&self, key: &str) -> u64 {
-        self.counters.get(key).map_or(0, |c| c.count())
+    /// Get the current count for a key (advances window to clear expired sub-windows).
+    pub fn current_count(&mut self, key: &str, now_ms: u64) -> u64 {
+        if let Some(counter) = self.counters.get_mut(key) {
+            counter.advance(now_ms);
+            counter.count()
+        } else {
+            0
+        }
     }
 
-    /// Get remaining capacity for a key.
-    pub fn remaining(&self, key: &str) -> u64 {
-        let used = self.current_count(key);
+    /// Get remaining capacity for a key (advances window to clear expired sub-windows).
+    pub fn remaining(&mut self, key: &str, now_ms: u64) -> u64 {
+        let used = self.current_count(key, now_ms);
         self.config.max_requests.saturating_sub(used)
     }
 
@@ -172,8 +177,8 @@ mod tests {
             assert!(limiter.try_acquire("k1", 0));
         }
         assert!(!limiter.try_acquire("k1", 0));
-        assert_eq!(limiter.current_count("k1"), 5);
-        assert_eq!(limiter.remaining("k1"), 0);
+        assert_eq!(limiter.current_count("k1", 0), 5);
+        assert_eq!(limiter.remaining("k1", 0), 0);
     }
 
     #[test]
@@ -188,7 +193,7 @@ mod tests {
 
         // After full window passes, should allow again
         assert!(limiter.try_acquire("k1", 1100));
-        assert_eq!(limiter.remaining("k1"), 4);
+        assert_eq!(limiter.remaining("k1", 1100), 4);
     }
 
     #[test]
@@ -227,13 +232,13 @@ mod tests {
         for _ in 0..5 {
             limiter.try_acquire("k1", 0);
         }
-        assert_eq!(limiter.current_count("k1"), 5);
+        assert_eq!(limiter.current_count("k1", 0), 5);
 
         // After one sub-window (250ms), old counts should slide out
         for _ in 0..3 {
             limiter.try_acquire("k1", 300);
         }
-        assert!(limiter.current_count("k1") <= 10);
+        assert!(limiter.current_count("k1", 300) <= 10);
     }
 
     #[test]
