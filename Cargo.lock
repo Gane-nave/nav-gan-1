@@ -446,6 +446,17 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-errors"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
 name = "aurora-events"
 version = "0.1.0"
 dependencies = [
@@ -851,6 +862,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-rollout"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-routing"
 version = "0.1.0"
 dependencies = [
@@ -966,6 +987,16 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-test-framework"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
