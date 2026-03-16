@@ -123,24 +123,34 @@ impl QuotaManager {
     }
 
     /// Check and consume quota for a key. Returns the strictest result.
+    /// Only increments counters if no hard limit is exceeded.
     pub fn check_and_consume(&mut self, key: &str, now_ms: u64) -> QuotaResult {
         let rules = match self.rules.get(key) {
             Some(r) => r.clone(),
             None => return QuotaResult::Allowed,
         };
 
+        // Phase 1: Check all rules WITHOUT incrementing
         let mut result = QuotaResult::Allowed;
         for rule in &rules {
             let counter = self
                 .usage
                 .entry((key.to_string(), rule.period))
                 .or_insert_with(|| UsageCounter::new(rule.period.duration_ms(), now_ms));
-            let count = counter.increment(now_ms);
-            if count > rule.limit {
+            let count = counter.current(now_ms);
+            // After increment, count would be count+1
+            if count + 1 > rule.limit {
                 if rule.hard_limit {
                     return QuotaResult::Exceeded;
                 }
                 result = QuotaResult::Warning;
+            }
+        }
+
+        // Phase 2: All hard limits passed — now increment all counters
+        for rule in &rules {
+            if let Some(counter) = self.usage.get_mut(&(key.to_string(), rule.period)) {
+                counter.increment(now_ms);
             }
         }
         result
