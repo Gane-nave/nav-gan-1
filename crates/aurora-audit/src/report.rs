@@ -175,7 +175,7 @@ impl ComplianceReport {
 
     /// Get reporting period duration in days.
     pub fn period_days(&self) -> f64 {
-        (self.period_end_ms - self.period_start_ms) as f64 / 86_400_000.0
+        self.period_end_ms.saturating_sub(self.period_start_ms) as f64 / 86_400_000.0
     }
 }
 

@@ -119,18 +119,25 @@ impl AdaptiveThrottle {
         if now_ms < self.window_start_ms + self.window_duration_ms {
             return;
         }
-        // Calculate error rate for the closing window
+        // Calculate how many windows have elapsed
+        let elapsed = now_ms - self.window_start_ms;
+        let windows_elapsed = (elapsed / self.window_duration_ms) as u32;
+
+        // Process the first window with actual data
         let window_error_rate = if self.window_requests > 0 {
             self.window_errors as f64 / self.window_requests as f64
         } else {
             0.0
         };
-        // Update EMA
         let alpha = self.config.ema_alpha;
         self.error_rate_ema = alpha * window_error_rate + (1.0 - alpha) * self.error_rate_ema;
-
-        // Adjust RPS based on error rate
         self.adjust_rps();
+
+        // Decay EMA for intermediate empty windows (no requests)
+        for _ in 1..windows_elapsed {
+            self.error_rate_ema = (1.0 - alpha) * self.error_rate_ema;
+            self.adjust_rps();
+        }
 
         // Reset window
         self.window_requests = 0;
