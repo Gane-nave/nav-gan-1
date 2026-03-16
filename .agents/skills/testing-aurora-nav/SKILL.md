@@ -1,7 +1,9 @@
 # Testing AURORA NAV
 
 ## Overview
-AURORA NAV is a Rust workspace with 30+ crates implementing a global navigation system. Testing is done via cargo commands — there is no UI or frontend.
+AURORA NAV is a Rust workspace with 14 crates implementing a global navigation system. Testing is done via cargo commands — there is no UI or frontend.
+
+Workspace crates: `aurora-core`, `aurora-events`, `aurora-gnss`, `aurora-corrections`, `aurora-sensors`, `aurora-fusion`, `aurora-integrity`, `aurora-continuity`, `aurora-telemetry`, `aurora-api`, `aurora-map`, `aurora-routing`, `aurora-lane`, `aurora-offline`.
 
 ## Prerequisites
 - Rust toolchain (1.83.0+)
@@ -19,15 +21,18 @@ cargo fmt --check
 ## Per-Crate Testing
 To verify specific crates:
 ```bash
-cargo test -p aurora-resilience  # 44 tests
-cargo test -p aurora-edge        # 42 tests
-cargo test -p aurora-satellite    # 44 tests
-cargo test -p aurora-fleet        # 42 tests
+cargo test -p aurora-core
+cargo test -p aurora-gnss
+cargo test -p aurora-fusion
+cargo test -p aurora-integrity
+cargo test -p aurora-continuity
+cargo test -p aurora-offline
+cargo test -p aurora-api
 # etc.
 ```
 
 ## API Server Testing
-The API server (`aurora-api`) has 4 built-in tower::oneshot tests:
+The API server (`aurora-api`) has 4 built-in `ServiceExt::oneshot` tests (in `crates/aurora-api/src/server.rs`):
 - `/health` → 200, `status: "operational"`
 - `/position` → 503 (no GNSS fix expected)
 - `/integrity` → 200 with `continuity_mode` field
@@ -35,29 +40,32 @@ The API server (`aurora-api`) has 4 built-in tower::oneshot tests:
 
 Run: `cargo test -p aurora-api`
 
-To test the live server: `cargo run -p aurora-api` then curl `http://localhost:9876/health`
+To test the live server: `cargo run -p aurora-api` then curl `http://localhost:3000/health`
 
 ## Adversarial Testing Patterns
 When Devin Review finds bugs, write adversarial tests targeting the exact trigger sequence. Common bug categories:
 
-### Memory Accounting Bugs (inference.rs)
-- Test the load→update→reload cycle to catch double-counting
-- Test register→update→load for never-loaded models (loaded_at guard)
-- Test unload of never-loaded models (should not subtract memory)
-- Key invariant: `loaded_at.is_some()` indicates memory was counted
+### Offline Cache & Sync Bugs (aurora-offline)
+- Test region lifecycle: create → mark ready → query coverage → delete
+- Test `is_covered` boundary conditions (position exactly on region edge)
+- Test `missing_tiles` returns all tiles for a newly created region
+- Test sync engine FIFO ordering: operations must be processed in enqueue order
+- Test offline-to-online transition: operations queued while offline should flush when `set_online(true)`
 
-### Threshold Logic Bugs (sla.rs)
-- Test boundary values at exactly the threshold (e.g., value == warning_threshold)
-- Verify three-tier classification: Met ≥ target, Warning ≥ warning_threshold, Critical < warning_threshold
-- Check both higher-is-better and lower-is-better metric branches
+### Integrity & Trust Bugs (aurora-integrity)
+- Test integrity level transitions under source score changes
+- Test trust manager score tracking across multiple sources
+- Test fault detection with conflicting source data
 
-### State Management Bugs (policy.rs)
-- Test overlapping constraints: apply two constraints that shed the same tier, clear one, verify features stay shed
-- Test constraint idempotency: applying same constraint twice should shed 0 on second call
+### Continuity Mode Bugs (aurora-continuity)
+- Test mode transitions: Full GNSS (A) → Degraded (C) → Dead Reckoning (D) → Emergency (E)
+- Test recovery logic: verify re-entry conditions when GNSS signal returns
+- Test `is_recovery_pending` state machine correctness
 
-### Priority Eviction Bugs (store_forward.rs)
-- Test strict priority ordering: higher priority evicts lower, same priority is rejected
-- Use tight buffer sizes to force eviction (buffer_size < sum of message sizes)
+### Policy Data Model Bugs (aurora-core/src/policy.rs)
+- Test `ModelVersion` display formatting (especially short hash edge case where hash length < 8)
+- Test `AlertCondition` with all `ComparisonOperator` variants
+- Test `Policy` serialization/deserialization round-trips
 
 ## Test Count Verification
 After any changes, verify total test count hasn't decreased. Count with:
