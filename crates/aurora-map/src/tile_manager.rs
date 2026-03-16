@@ -57,17 +57,33 @@ impl TileManager {
 
         let tile_size = tile.data_hash.len() as u64 + 128; // approximate
 
+        // Remove the old tile (if any) BEFORE the eviction loop so that
+        // (a) the budget check reflects the freed space, and
+        // (b) evict_oldest() cannot pick the stale entry and double-subtract.
+        if let Some(old_tile) = self.tiles.remove(&key) {
+            let old_size = old_tile.data_hash.len() as u64 + 128;
+            self.total_bytes = self.total_bytes.saturating_sub(old_size);
+        }
+
+        // Reject tiles that exceed the entire cache budget.
+        if tile_size > self.max_bytes {
+            debug!(
+                zoom = key.zoom,
+                x = key.x,
+                y = key.y,
+                size = tile_size,
+                budget = self.max_bytes,
+                "tile exceeds cache budget — rejected"
+            );
+            return;
+        }
+
         // Evict if over budget.
         while self.total_bytes + tile_size > self.max_bytes && !self.tiles.is_empty() {
             self.evict_oldest();
         }
 
         debug!(zoom = key.zoom, x = key.x, y = key.y, "storing tile");
-        // Subtract old tile's size if replacing an existing entry.
-        if let Some(old_tile) = self.tiles.get(&key) {
-            let old_size = old_tile.data_hash.len() as u64 + 128;
-            self.total_bytes = self.total_bytes.saturating_sub(old_size);
-        }
         self.total_bytes += tile_size;
         self.tiles.insert(key, tile);
     }

@@ -1,0 +1,7 @@
+[package]
+name = "aurora-multimodal"
+version = "0.1.0"
+edition = "2021"
+description = "Multi-modal transport routing — pedestrian, bicycle, public transit"
+
+[dependencies]

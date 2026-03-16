@@ -1,0 +1,62 @@
+[package]
+name = "aurora-bench"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Performance benchmarks for AURORA NAV critical paths"
+publish = false
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-gnss = { path = "../aurora-gnss" }
+aurora-fusion = { path = "../aurora-fusion" }
+aurora-integrity = { path = "../aurora-integrity" }
+aurora-continuity = { path = "../aurora-continuity" }
+aurora-routing = { path = "../aurora-routing" }
+aurora-map = { path = "../aurora-map" }
+aurora-events = { path = "../aurora-events" }
+aurora-config = { path = "../aurora-config" }
+aurora-app = { path = "../aurora-app" }
+aurora-telemetry = { path = "../aurora-telemetry" }
+aurora-corrections = { path = "../aurora-corrections" }
+aurora-sensors = { path = "../aurora-sensors" }
+aurora-risk = { path = "../aurora-risk" }
+aurora-confidence = { path = "../aurora-confidence" }
+aurora-traffic = { path = "../aurora-traffic" }
+aurora-stability = { path = "../aurora-stability" }
+aurora-edge = { path = "../aurora-edge" }
+aurora-resilience = { path = "../aurora-resilience" }
+aurora-city = { path = "../aurora-city" }
+aurora-twin = { path = "../aurora-twin" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+nalgebra = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+
+[[bench]]
+name = "gnss_bench"
+harness = false
+
+[[bench]]
+name = "fusion_bench"
+harness = false
+
+[[bench]]
+name = "routing_bench"
+harness = false
+
+[[bench]]
+name = "pipeline_bench"
+harness = false
+
+[[bench]]
+name = "config_bench"
+harness = false
+
+[[bench]]
+name = "event_bus_bench"
+harness = false

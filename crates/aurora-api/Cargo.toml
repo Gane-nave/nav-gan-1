@@ -14,6 +14,10 @@ aurora-fusion = { path = "../aurora-fusion" }
 aurora-integrity = { path = "../aurora-integrity" }
 aurora-continuity = { path = "../aurora-continuity" }
 aurora-telemetry = { path = "../aurora-telemetry" }
+aurora-metrics = { path = "../aurora-metrics" }
+aurora-observability = { path = "../aurora-observability" }
+aurora-auth = { path = "../aurora-auth" }
+aurora-security = { path = "../aurora-security" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 chrono = { workspace = true }

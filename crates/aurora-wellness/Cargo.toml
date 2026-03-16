@@ -1,0 +1,8 @@
+[package]
+name = "aurora-wellness"
+version = "0.1.0"
+edition = "2021"
+description = "Driver wellness monitoring — fatigue detection, health tracking, break recommendations"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }

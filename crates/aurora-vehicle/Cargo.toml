@@ -1,0 +1,15 @@
+[package]
+name = "aurora-vehicle"
+version.workspace = true
+edition.workspace = true
+description = "Vehicle manufacturer integrations for AURORA NAV / GMIN — OEM protocols, sensor adapters, CAN bus"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-sensors = { path = "../aurora-sensors" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }

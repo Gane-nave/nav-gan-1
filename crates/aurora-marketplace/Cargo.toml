@@ -1,0 +1,14 @@
+[package]
+name = "aurora-marketplace"
+version.workspace = true
+edition.workspace = true
+description = "Plugin marketplace for AURORA NAV / GMIN — listings, reviews, installation, versioning"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }

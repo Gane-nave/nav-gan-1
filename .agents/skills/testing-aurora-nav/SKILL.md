@@ -1,51 +1,77 @@
 # Testing AURORA NAV
 
 ## Overview
-AURORA NAV is a multi-crate Rust workspace for a global navigation system. Testing involves building all crates, running unit tests, verifying API endpoints, and running adversarial tests against bug fixes.
+AURORA NAV is a Rust workspace with 80 crates. All testing is done via shell commands.
 
-## Prerequisites
-- Rust toolchain (1.83.0+)
-- Cargo workspace at repo root
+## Build Pipeline (run in order)
 
-## Build Pipeline
-Run these commands in order from the repo root:
 ```bash
-cargo build          # Compile all crates
-cargo clippy --all-targets  # Lint check (zero warnings expected)
-cargo test           # Run all unit tests
-cargo fmt --check    # Format check
+cargo build                                    # compile all crates
+cargo clippy --all-targets -- -D warnings      # lint with zero warnings
+cargo fmt --check                              # formatting check
+cargo test                                     # run all tests
 ```
 
-## Per-Crate Test Counts
-To verify test counts per crate:
+## Test Count Verification
 ```bash
+cargo test 2>&1 | rg "^test result:" | awk '{sum += $4} END {print "Total tests:", sum}'
 cargo test -p <crate-name> 2>&1 | rg "^test result:"
 ```
-To get total count across all crates:
+
+## Per-Crate Testing
+
 ```bash
-cargo test 2>&1 | rg "^test result:" | awk '{sum += $4; fail += $6} END {print "Passed:", sum, "Failed:", fail}'
+cargo test -p aurora-marketplace               # run tests for one crate
+cargo test -p aurora-vehicle --test adversarial_phase11  # run specific test file
+cargo test -p aurora-developer -- rotate_key   # run tests matching name
 ```
 
 ## API Server Testing
-The `aurora-api` crate is a **library crate** (no `main.rs`). It cannot be run with `cargo run`. Instead:
-- Use the built-in endpoint tests: `cargo test -p aurora-api`
-- These use `tower::ServiceExt::oneshot` to test endpoints without starting a real server
-- Endpoints: `/health`, `/position`, `/integrity`, `/status`, `/telemetry`, `/constellation`
 
-## Adversarial Bug Fix Testing
-When testing bug fixes, run the specific regression test with `--nocapture` to see output:
-```bash
-cargo test -p <crate> <test_name> -- --nocapture
-```
-Key adversarial patterns:
+The API server (aurora-api) uses tower::oneshot for endpoint tests. No need to start a live server — tests run in-process.
+
+Endpoints: `/health` (200), `/position` (503 when no fix), `/integrity` (200), `/status` (200)
+
+## API Conventions to Watch
+- `RateLimiter::new(capacity: u64, refill_per_second: u64)` — both args are `u64`, not `f64`
+- `RateLimiter::try_acquire(&mut self, key_id: &EntityId)` — requires a key ID, returns `Result<RateLimitResult, RateLimitResult>`, not `bool`
+- `ApiKeyManager::rotate_key(&mut self, key_id: &EntityId)` — takes only key_id, no second arg
+- `AuroraClient::disconnect(&mut self)` — returns `()`, not `Result`
+- `AuroraClient::connect(&mut self)` — returns `Result<(), ClientError>`
+
+## Webhook Dual-Counter Design
+The `Webhook` struct has two failure counters:
+- `failure_count` — consecutive failures, reset to 0 on success (used for auto-disable)
+- `total_failure_count` — lifetime total, never reset (used by `health()` for accurate stats)
+
+When testing `health()`, verify that `success_rate` uses `total_failure_count`, not `failure_count`.
+
+## Adversarial Test Patterns
+
+Adversarial tests are in `crates/<crate>/tests/adversarial_phase*.rs`. They test:
+1. Full lifecycle flows (publish→approve→search→version for marketplace)
+2. Bug regression guards (map_axes axis=0, rotate_key expired)
+3. Formula verification (OBD-II decode with known byte inputs)
+4. State machine correctness (client connect() → Failed on plugin error)
 - **Idempotency tests**: Call the same operation twice, verify counters don't double-count
 - **Threshold classification tests**: Test values at boundaries (above target, between target and threshold, below threshold)
 - **Priority/scoring tests**: Verify that higher-priority items rank above lower-priority ones regardless of distance
 
-## Common Issues
-- `aurora-api` has no binary target — don't try `cargo run -p aurora-api`
-- Copy-paste errors in bug fix commits can introduce duplicate lines that shadow variables — always verify the diff after committing fixes
-- Clippy warnings like `if_same_then_else` often indicate real logic bugs (duplicate branches)
+## Bug Fix Verification
 
-## Workspace Structure
-As of Phase 7, the workspace has 30 crates across 8 phases. New crates are added as workspace members in the root `Cargo.toml`.
+When verifying bug fixes, always:
+1. Read the fixed code lines to confirm the change is present
+2. Run the adversarial test that guards against regression
+3. Verify the test would fail with the old (broken) code
+
+## Common Issues
+- Structs containing `Box<dyn Trait>` cannot auto-derive `Debug` — need manual `impl fmt::Debug`
+- Unused imports flagged by `clippy -D warnings` — check after adding new modules
+- `cargo fmt` may reformat newly created files — always run before committing
+- Enum variant names: Check actual source for variant names (e.g., `Category::Traffic` not `Category::TrafficAndRouting`)
+- API parameter order: Always check function signatures in source before writing test calls
+- `aurora-api` has no binary target — don't try `cargo run -p aurora-api`
+
+## Devin Secrets Needed
+
+No secrets required for testing — all tests run locally via cargo.

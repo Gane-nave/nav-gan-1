@@ -1,0 +1,12 @@
+[package]
+name = "aurora-security"
+version.workspace = true
+edition.workspace = true
+description = "Security middleware, rate limiting, input validation, and TLS for AURORA NAV"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+parking_lot = { workspace = true }

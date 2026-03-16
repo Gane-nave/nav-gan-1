@@ -1,6 +1,6 @@
 //! HTTP server setup and configuration.
 
-use axum::routing::get;
+use axum::routing::{get, post};
 use axum::Router;
 use std::net::SocketAddr;
 use std::sync::Arc;
@@ -20,6 +20,14 @@ pub fn build_router(state: Arc<AppState>) -> Router {
         .route("/status", get(routes::get_status))
         .route("/telemetry", get(routes::get_telemetry))
         .route("/constellation", get(routes::get_constellations))
+        .route("/metrics", get(routes::get_metrics))
+        .route("/openapi.json", get(routes::get_openapi))
+        .route("/swagger-ui", get(routes::get_swagger_ui))
+        .route("/readiness", get(routes::get_readiness))
+        .route("/liveness", get(routes::get_liveness))
+        .route("/auth/status", get(routes::get_auth_status))
+        .route("/auth/token", post(routes::post_auth_token))
+        .route("/security/headers", get(routes::get_security_headers))
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
@@ -110,6 +118,105 @@ mod tests {
             .oneshot(
                 Request::builder()
                     .uri("/integrity")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn metrics_endpoint_returns_200() {
+        let app = test_app();
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/metrics")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn openapi_endpoint_returns_json() {
+        let app = test_app();
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/openapi.json")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn swagger_ui_endpoint_returns_html() {
+        let app = test_app();
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/swagger-ui")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn readiness_returns_503_before_mark_ready() {
+        let state = Arc::new(AppState::new());
+        let app = build_router(state.clone());
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/readiness")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::SERVICE_UNAVAILABLE);
+    }
+
+    #[tokio::test]
+    async fn readiness_returns_200_after_mark_ready() {
+        let state = Arc::new(AppState::new());
+        state.probes.mark_ready();
+        let app = build_router(state);
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/readiness")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn liveness_returns_200() {
+        let app = test_app();
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/liveness")
                     .body(Body::empty())
                     .unwrap(),
             )
