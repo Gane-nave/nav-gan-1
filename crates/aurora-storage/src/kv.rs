@@ -89,7 +89,7 @@ impl KvStore {
             .get(namespace)
             .map(|ns| {
                 ns.iter()
-                    .filter(|(_, v)| v.expires_at.map_or(true, |exp| now <= exp))
+                    .filter(|(_, v)| v.expires_at.is_none_or(|exp| now <= exp))
                     .map(|(k, _)| k.clone())
                     .collect()
             })
@@ -108,7 +108,7 @@ impl KvStore {
         let mut purged = 0;
         for ns in store.values_mut() {
             let before = ns.len();
-            ns.retain(|_, v| v.expires_at.map_or(true, |exp| now <= exp));
+            ns.retain(|_, v| v.expires_at.is_none_or(|exp| now <= exp));
             purged += before - ns.len();
         }
         purged

@@ -174,7 +174,7 @@ impl AlertEngine {
     pub fn purge_expired(&self, now: DateTime<Utc>) -> usize {
         let mut alerts = self.alerts.write();
         let before = alerts.len();
-        alerts.retain(|a| a.valid_until.map_or(true, |vu| now <= vu));
+        alerts.retain(|a| a.valid_until.is_none_or(|vu| now <= vu));
         before - alerts.len()
     }
 }

@@ -174,7 +174,7 @@ impl MigrationManager {
             .read()
             .iter()
             .find(|m| m.version == version)
-            .map_or(false, |m| m.checksum == expected)
+            .is_some_and(|m| m.checksum == expected)
     }
 }
 
