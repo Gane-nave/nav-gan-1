@@ -201,6 +201,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-autonomous"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
 name = "aurora-bench"
 version = "0.1.0"
 dependencies = [
@@ -351,6 +358,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-diagnostics"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
 ]
 
 [[package]]
@@ -938,6 +952,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-simulation"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
+name = "aurora-social"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
 name = "aurora-stability"
 version = "0.1.0"
 dependencies = [
@@ -1065,6 +1093,13 @@ dependencies = [
 
 [[package]]
 name = "aurora-voice"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+]
+
+[[package]]
+name = "aurora-wellness"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
