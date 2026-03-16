@@ -221,6 +221,11 @@ impl TopicBroker {
 
     /// Clear all messages from a topic (retention).
     pub fn clear_topic(&mut self, topic: &str) -> usize {
+        // Reset subscriber offsets for this topic so they don't skip
+        // new messages if the topic is re-populated.
+        for sub in self.subscribers.values_mut() {
+            sub.offsets.remove(topic);
+        }
         self.topics.remove(topic).map_or(0, |m| m.len())
     }
 }
@@ -333,6 +338,25 @@ mod tests {
         broker.publish("t", b"b".to_vec(), 2000);
         assert_eq!(broker.clear_topic("t"), 2);
         assert_eq!(broker.topic_size("t"), 0);
+    }
+
+    #[test]
+    fn test_clear_topic_resets_offsets() {
+        // Regression: after clear_topic, subscribers must see new messages
+        let mut broker = TopicBroker::new();
+        let sub = broker.subscribe(TopicFilter::Exact("t".into()));
+
+        broker.publish("t", b"a".to_vec(), 1000);
+        broker.publish("t", b"b".to_vec(), 2000);
+        let msgs = broker.poll(sub, 10);
+        assert_eq!(msgs.len(), 2);
+
+        // Clear and re-publish
+        broker.clear_topic("t");
+        broker.publish("t", b"c".to_vec(), 3000);
+        let msgs = broker.poll(sub, 10);
+        assert_eq!(msgs.len(), 1, "subscriber must see messages after clear_topic");
+        assert_eq!(msgs[0].payload, b"c");
     }
 
     #[test]
