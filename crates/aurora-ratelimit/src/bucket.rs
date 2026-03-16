@@ -72,10 +72,10 @@ impl TokenBucket {
         let cost = n as f64;
         if self.tokens >= cost {
             self.tokens -= cost;
-            self.accepted += n;
+            self.accepted += 1;
             true
         } else {
-            self.rejected += n;
+            self.rejected += 1;
             false
         }
     }
