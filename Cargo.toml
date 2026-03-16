@@ -83,6 +83,9 @@ members = [
     "crates/aurora-ratelimit",
     "crates/aurora-features",
     "crates/aurora-audit",
+    "crates/aurora-graphdb",
+    "crates/aurora-streaming",
+    "crates/aurora-consensus",
 ]
 
 [workspace.package]

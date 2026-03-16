@@ -307,6 +307,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-consensus"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-continuity"
 version = "0.1.0"
 dependencies = [
@@ -572,6 +576,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-graphdb"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-i18n"
@@ -1024,6 +1032,10 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-streaming"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-telemetry"
