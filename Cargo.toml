@@ -57,6 +57,9 @@ members = [
     "crates/aurora-multimodal",
     "crates/aurora-voice",
     "crates/aurora-profile",
+    "crates/aurora-analytics",
+    "crates/aurora-ml",
+    "crates/aurora-gateway",
 ]
 
 [workspace.package]
