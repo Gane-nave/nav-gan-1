@@ -143,7 +143,7 @@ impl GdprManager {
             c.user_id == user_id
                 && c.purpose == purpose
                 && c.status == ConsentStatus::Granted
-                && c.expires_at.map_or(true, |exp| now <= exp)
+                && c.expires_at.is_none_or(|exp| now <= exp)
         })
     }
 

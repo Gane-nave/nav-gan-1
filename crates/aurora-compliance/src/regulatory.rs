@@ -113,7 +113,8 @@ impl RegulatoryManager {
                     .iter()
                     .filter(|c| c.regulation_id == r.id)
                     .max_by_key(|c| c.checked_at)
-                    .map_or(ComplianceStatus::UnderReview, |c| c.status);
+                    .map(|c| c.status)
+                    .unwrap_or(ComplianceStatus::UnderReview);
                 (r.clone(), status)
             })
             .collect()
@@ -173,7 +174,7 @@ impl RegulatoryManager {
                     .iter()
                     .filter(|c| c.regulation_id == r.id)
                     .max_by_key(|c| c.checked_at)
-                    .map_or(false, |c| c.status == ComplianceStatus::NonCompliant)
+                    .is_some_and(|c| c.status == ComplianceStatus::NonCompliant)
             })
             .count()
     }
