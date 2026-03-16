@@ -1,0 +1,7 @@
+[package]
+name = "aurora-cache"
+version = "0.1.0"
+edition = "2021"
+description = "Multi-level caching layer — TTL, LRU eviction, cache invalidation"
+
+[dependencies]

@@ -241,6 +241,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-cache"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-charging"
 version = "0.1.0"
 dependencies = [
@@ -704,6 +708,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-mesh"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-metrics"
 version = "0.1.0"
 dependencies = [
@@ -831,6 +839,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-pipeline"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-plugins"
