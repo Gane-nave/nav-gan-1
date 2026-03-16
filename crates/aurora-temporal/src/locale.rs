@@ -70,6 +70,7 @@ impl NumberFormat {
 
         let mut with_seps = String::new();
         for (i, ch) in digits.chars().rev().enumerate() {
+            #[allow(unknown_lints, clippy::manual_is_multiple_of)]
             if i > 0 && i % 3 == 0 {
                 with_seps.push(self.thousands_sep);
             }
