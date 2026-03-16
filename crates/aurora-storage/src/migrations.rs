@@ -68,7 +68,7 @@ impl MigrationManager {
 
     /// Apply a migration by version. Requires all prior versions to be applied.
     pub fn apply(&self, version: u64) -> MigrationResult {
-        let applied = self.applied_versions.read();
+        // Acquire migrations lock first to match rollback() lock ordering
         let mut migrations = self.migrations.write();
 
         let idx = match migrations.iter().position(|m| m.version == version) {
@@ -80,14 +80,12 @@ impl MigrationManager {
             return MigrationResult::AlreadyApplied;
         }
 
-        // Check dependencies: all prior versions must be applied
+        // Check dependencies using migration status (no separate lock needed)
         for m in migrations.iter().take(idx) {
-            if m.status != MigrationStatus::Applied && !applied.contains_key(&m.version) {
+            if m.status != MigrationStatus::Applied {
                 return MigrationResult::DependencyMissing(m.version);
             }
         }
-
-        drop(applied);
 
         let now = Utc::now();
         migrations[idx].status = MigrationStatus::Applied;

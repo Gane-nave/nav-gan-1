@@ -60,6 +60,7 @@ pub struct DataRecord {
     pub owner_id: Option<Uuid>,
     pub size_bytes: u64,
     pub metadata: std::collections::HashMap<String, String>,
+    pub anonymised: bool,
 }
 
 /// Result of a retention sweep.
@@ -112,6 +113,26 @@ impl RetentionManager {
 
         let active_policies: Vec<&RetentionPolicy> = policies.iter().filter(|p| p.active).collect();
 
+        // First pass: anonymise records in-place (needs &mut)
+        for record in records.iter_mut() {
+            if record.anonymised {
+                continue; // already anonymised, skip
+            }
+            for policy in &active_policies {
+                if record.data_category == policy.data_category
+                    && policy.is_expired(record.created_at, now)
+                    && policy.action == RetentionAction::Anonymise
+                {
+                    record.owner_id = None;
+                    record.metadata.clear();
+                    record.anonymised = true;
+                    result.anonymised += 1;
+                    break;
+                }
+            }
+        }
+
+        // Second pass: remove deleted/archived records
         records.retain(|record| {
             for policy in &active_policies {
                 if record.data_category == policy.data_category
@@ -121,16 +142,13 @@ impl RetentionManager {
                         RetentionAction::Delete => {
                             result.deleted += 1;
                             result.bytes_freed += record.size_bytes;
-                            return false; // remove
+                            return false;
                         }
                         RetentionAction::Archive => {
                             result.archived += 1;
-                            return false; // remove from active
+                            return false;
                         }
-                        RetentionAction::Anonymise => {
-                            result.anonymised += 1;
-                            // Keep record but it would be anonymised
-                        }
+                        RetentionAction::Anonymise => {} // handled above
                     }
                 }
             }
@@ -203,6 +221,7 @@ mod tests {
             owner_id: None,
             size_bytes: size,
             metadata: std::collections::HashMap::new(),
+            anonymised: false,
         }
     }
 
@@ -316,9 +335,24 @@ mod tests {
             7,
             RetentionAction::Anonymise,
         ));
-        mgr.register_record(make_record("pii", 10, 500));
+        let mut rec = make_record("pii", 10, 500);
+        rec.owner_id = Some(Uuid::new_v4());
+        rec.metadata.insert("name".to_string(), "John".to_string());
+        mgr.register_record(rec);
+
         let result = mgr.sweep(Utc::now());
         assert_eq!(result.anonymised, 1);
-        assert_eq!(mgr.record_count(), 1); // record kept (anonymised in place)
+        assert_eq!(mgr.record_count(), 1); // record kept
+
+        // Verify data was actually anonymised
+        let records = mgr.records.read();
+        assert!(records[0].anonymised);
+        assert!(records[0].owner_id.is_none());
+        assert!(records[0].metadata.is_empty());
+
+        // Subsequent sweep should NOT re-count
+        drop(records);
+        let result2 = mgr.sweep(Utc::now());
+        assert_eq!(result2.anonymised, 0);
     }
 }
