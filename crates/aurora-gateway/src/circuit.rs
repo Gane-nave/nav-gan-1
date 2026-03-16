@@ -46,6 +46,7 @@ struct CircuitInner {
     state: CircuitState,
     failures: Vec<DateTime<Utc>>,
     half_open_successes: u32,
+    half_open_allowed: u32,
     last_state_change: DateTime<Utc>,
     total_rejected: u64,
 }
@@ -88,6 +89,7 @@ impl CircuitBreaker {
                 state: CircuitState::Closed,
                 failures: Vec::new(),
                 half_open_successes: 0,
+                half_open_allowed: 0,
                 last_state_change: now,
                 total_rejected: 0,
             });
@@ -100,6 +102,7 @@ impl CircuitBreaker {
                 if elapsed >= self.config.recovery_timeout_s as i64 {
                     circuit.state = CircuitState::HalfOpen;
                     circuit.half_open_successes = 0;
+                    circuit.half_open_allowed = self.config.success_threshold;
                     circuit.last_state_change = now;
                     CircuitResult::Allowed
                 } else {
@@ -107,7 +110,16 @@ impl CircuitBreaker {
                     CircuitResult::Rejected
                 }
             }
-            CircuitState::HalfOpen => CircuitResult::Allowed,
+            CircuitState::HalfOpen => {
+                // Limit probe traffic in half-open state
+                if circuit.half_open_allowed > 0 {
+                    circuit.half_open_allowed -= 1;
+                    CircuitResult::Allowed
+                } else {
+                    circuit.total_rejected += 1;
+                    CircuitResult::Rejected
+                }
+            }
         }
     }
 
@@ -153,6 +165,7 @@ impl CircuitBreaker {
                 state: CircuitState::Closed,
                 failures: Vec::new(),
                 half_open_successes: 0,
+                half_open_allowed: 0,
                 last_state_change: now,
                 total_rejected: 0,
             });

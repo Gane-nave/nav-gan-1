@@ -89,9 +89,7 @@ impl CohortEngine {
                     false
                 }
             }
-            CohortCriterion::Property { key, value } => {
-                user.properties.get(key).map_or(false, |v| v == value)
-            }
+            CohortCriterion::Property { key, value } => user.properties.get(key) == Some(value),
             CohortCriterion::HighActivity { min_events } => user.event_count >= *min_events,
         }
     }

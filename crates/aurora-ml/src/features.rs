@@ -66,17 +66,18 @@ impl FeatureVector {
         self
     }
 
-    /// Convert to a flat numeric vector, encoding categoricals as hashes.
+    /// Convert to a flat numeric vector, encoding categoricals as hashes
+    /// and flattening vector features into individual elements.
     pub fn to_numeric_vec(&self) -> Vec<f64> {
         self.features
             .iter()
-            .map(|f| match &f.value {
-                FeatureValue::Numeric(v) => *v,
+            .flat_map(|f| match &f.value {
+                FeatureValue::Numeric(v) => vec![*v],
                 FeatureValue::Boolean(b) => {
                     if *b {
-                        1.0
+                        vec![1.0]
                     } else {
-                        0.0
+                        vec![0.0]
                     }
                 }
                 FeatureValue::Categorical(s) => {
@@ -84,9 +85,9 @@ impl FeatureVector {
                     let hash: u32 = s
                         .bytes()
                         .fold(0u32, |acc, b| acc.wrapping_mul(31).wrapping_add(b as u32));
-                    (hash % 1000) as f64 / 1000.0
+                    vec![(hash % 1000) as f64 / 1000.0]
                 }
-                FeatureValue::Vector(v) => v.first().copied().unwrap_or(0.0),
+                FeatureValue::Vector(v) => v.clone(),
             })
             .collect()
     }
