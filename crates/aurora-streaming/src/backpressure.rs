@@ -78,6 +78,7 @@ impl BackpressureController {
                 return false;
             }
             self.sample_counter += 1;
+            #[allow(unknown_lints, clippy::manual_is_multiple_of)]
             if self.sample_counter % n != 0 {
                 self.dropped += 1;
                 return false;
