@@ -1,5 +1,5 @@
 [package]
-name = "aurora-evaporator"
+name = "aurora-receiver-drier"
 version = "0.1.0"
 edition = "2021"
 

@@ -93,6 +93,14 @@ name = "aurora-ac-charge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ac-compressor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ac-line"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-accel-sensor"
 version = "0.1.0"
 
@@ -512,6 +520,10 @@ name = "aurora-bitset"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-blend-door"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-blind-spot"
 version = "0.1.0"
 
@@ -617,6 +629,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cabin-press"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cabin-temp"
 version = "0.1.0"
 
 [[package]]
@@ -781,6 +797,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-compressor-vib"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-condenser"
 version = "0.1.0"
 
 [[package]]
@@ -1586,6 +1606,10 @@ name = "aurora-fuel-pump"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-pump-elec"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-rail"
 version = "0.1.0"
 
@@ -1781,11 +1805,19 @@ name = "aurora-heap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-heat-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-heat-shield"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-heater-core"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-heater-valve"
 version = "0.1.0"
 
 [[package]]
@@ -1850,6 +1882,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hvac-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hvac-duct"
 version = "0.1.0"
 
 [[package]]
@@ -2699,6 +2735,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-pollen-filter"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-power"
 version = "0.1.0"
 dependencies = [
@@ -2777,6 +2817,10 @@ name = "aurora-prop-shaft"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ptc-heater"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pto-unit"
 version = "0.1.0"
 
@@ -2845,6 +2889,14 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rear-camera"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-receiver-drier"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-recirc-door"
 version = "0.1.0"
 
 [[package]]
@@ -3673,6 +3725,10 @@ name = "aurora-v2x-comm"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-vacuum-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-valve-cover"
 version = "0.1.0"
 
@@ -3774,6 +3830,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-water-pump"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-water-pump-elec"
 version = "0.1.0"
 
 [[package]]

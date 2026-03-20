@@ -1,13 +1,13 @@
-/// Oil pump: variable displacement, pressure regulation, flow control
-/// Phase 302
+/// Oil pump: gears, pressure relief, pickup tube
+/// Phase 619
 
 #[derive(Debug, Clone)]
 pub struct OilPump {
-    pub pressure_bar: f64,
-    pub min_pressure_bar: f64,
-    pub flow_lpm: f64,
-    pub oil_temp_c: f64,
-    pub pump_ok: bool,
+    pub gears_ok: bool,
+    pub relief_ok: bool,
+    pub pickup_ok: bool,
+    pub pressure_ok: bool,
+    pub seal_ok: bool,
 }
 
 impl Default for OilPump {
@@ -19,40 +19,32 @@ impl Default for OilPump {
 impl OilPump {
     pub fn new() -> Self {
         Self {
-            pressure_bar: 3.5,
-            min_pressure_bar: 1.0,
-            flow_lpm: 15.0,
-            oil_temp_c: 90.0,
-            pump_ok: true,
+            gears_ok: true,
+            relief_ok: true,
+            pickup_ok: true,
+            pressure_ok: true,
+            seal_ok: true,
         }
     }
 
-    pub fn pressure_ok(&self) -> bool {
-        self.pressure_bar >= self.min_pressure_bar
+    pub fn mechanical_ok(&self) -> bool {
+        self.gears_ok && self.pickup_ok
     }
 
-    pub fn oil_temp_ok(&self) -> bool {
-        self.oil_temp_c > 20.0 && self.oil_temp_c < 130.0
+    pub fn pressure_good(&self) -> bool {
+        self.pressure_ok && self.relief_ok
     }
 
-    pub fn low_pressure(&self) -> bool {
-        self.pressure_bar < self.min_pressure_bar
+    pub fn all_ok(&self) -> bool {
+        self.mechanical_ok() && self.pressure_good() && self.seal_ok
     }
 
-    pub fn overheating(&self) -> bool {
-        self.oil_temp_c > 120.0
+    pub fn needs_replacement(&self) -> bool {
+        !self.gears_ok || !self.pickup_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.pump_ok {
-            return 0.0;
-        }
-        if self.low_pressure() {
-            return 20.0;
-        }
-        if self.overheating() {
-            return 40.0;
-        }
+        if !self.gears_ok { return 5.0; }
         100.0
     }
 }
@@ -62,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_pressure_ok() {
-        let o = OilPump::new();
-        assert!(o.pressure_ok());
+    fn test_mechanical() {
+        let c = OilPump::new();
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_temp_ok() {
-        let o = OilPump::new();
-        assert!(o.oil_temp_ok());
+    fn test_pressure() {
+        let c = OilPump::new();
+        assert!(c.pressure_good());
     }
 
     #[test]
-    fn test_no_low() {
-        let o = OilPump::new();
-        assert!(!o.low_pressure());
+    fn test_all_ok() {
+        let c = OilPump::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_overheating() {
-        let o = OilPump::new();
-        assert!(!o.overheating());
+    fn test_no_replace() {
+        let c = OilPump::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_low() {
-        let mut o = OilPump::new();
-        o.pressure_bar = 0.5;
-        assert!(o.low_pressure());
+    fn test_gears() {
+        let mut c = OilPump::new();
+        c.gears_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let o = OilPump::new();
-        assert!((o.health_score() - 100.0).abs() < 0.1);
+        let c = OilPump::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

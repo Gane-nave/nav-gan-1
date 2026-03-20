@@ -1,14 +1,13 @@
-/// Blower motor: fan speed control, resistor pack, noise monitoring
-/// Phase 238
+/// Blower motor: fan speed, resistor, relay
+/// Phase 627
 
 #[derive(Debug, Clone)]
 pub struct BlowerMotor {
-    pub speed_level: u8,
-    pub max_speed: u8,
-    pub current_draw_a: f64,
-    pub noise_db: f64,
-    pub resistor_ok: bool,
     pub motor_ok: bool,
+    pub resistor_ok: bool,
+    pub relay_ok: bool,
+    pub fan_ok: bool,
+    pub noise_ok: bool,
 }
 
 impl Default for BlowerMotor {
@@ -20,53 +19,33 @@ impl Default for BlowerMotor {
 impl BlowerMotor {
     pub fn new() -> Self {
         Self {
-            speed_level: 3,
-            max_speed: 5,
-            current_draw_a: 8.0,
-            noise_db: 35.0,
-            resistor_ok: true,
             motor_ok: true,
+            resistor_ok: true,
+            relay_ok: true,
+            fan_ok: true,
+            noise_ok: true,
         }
     }
 
-    pub fn is_running(&self) -> bool {
-        self.speed_level > 0 && self.motor_ok
+    pub fn motor_good(&self) -> bool {
+        self.motor_ok && self.fan_ok
     }
 
-    pub fn speed_pct(&self) -> f64 {
-        if self.max_speed == 0 {
-            return 0.0;
-        }
-        self.speed_level as f64 / self.max_speed as f64 * 100.0
+    pub fn electronics_ok(&self) -> bool {
+        self.resistor_ok && self.relay_ok
     }
 
-    pub fn noise_ok(&self) -> bool {
-        self.noise_db < 50.0
+    pub fn all_ok(&self) -> bool {
+        self.motor_good() && self.electronics_ok() && self.noise_ok
     }
 
-    pub fn current_ok(&self) -> bool {
-        self.current_draw_a < 20.0
-    }
-
-    pub fn needs_service(&self) -> bool {
-        !self.motor_ok || !self.resistor_ok || !self.noise_ok()
+    pub fn needs_replacement(&self) -> bool {
+        !self.motor_ok || !self.resistor_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motor_ok {
-            return 0.0;
-        }
-        let mut score: f64 = 100.0;
-        if !self.resistor_ok {
-            score -= 30.0;
-        }
-        if !self.noise_ok() {
-            score -= 20.0;
-        }
-        if !self.current_ok() {
-            score -= 15.0;
-        }
-        score.max(0.0)
+        if !self.motor_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -75,38 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_running() {
-        let b = BlowerMotor::new();
-        assert!(b.is_running());
+    fn test_motor() {
+        let c = BlowerMotor::new();
+        assert!(c.motor_good());
     }
 
     #[test]
-    fn test_speed_pct() {
-        let b = BlowerMotor::new();
-        assert!((b.speed_pct() - 60.0).abs() < 0.1);
+    fn test_electronics() {
+        let c = BlowerMotor::new();
+        assert!(c.electronics_ok());
     }
 
     #[test]
-    fn test_noise_ok() {
-        let b = BlowerMotor::new();
-        assert!(b.noise_ok());
+    fn test_all_ok() {
+        let c = BlowerMotor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_current_ok() {
-        let b = BlowerMotor::new();
-        assert!(b.current_ok());
+    fn test_no_replace() {
+        let c = BlowerMotor::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_no_service() {
-        let b = BlowerMotor::new();
-        assert!(!b.needs_service());
+    fn test_motor_fail() {
+        let mut c = BlowerMotor::new();
+        c.motor_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let b = BlowerMotor::new();
-        assert!((b.health_score() - 100.0).abs() < 0.1);
+        let c = BlowerMotor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
