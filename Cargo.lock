@@ -229,6 +229,10 @@ name = "aurora-amplifier-mon"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-amqp-client"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics"
 version = "0.1.0"
 dependencies = [
@@ -1097,6 +1101,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-config-srv"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-conflict-res"
 version = "0.1.0"
 dependencies = [
@@ -1509,6 +1517,10 @@ name = "aurora-dlp-engine"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dns-resolver"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-doc-store"
 version = "0.1.0"
 
@@ -1729,6 +1741,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-elastic-client"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-elec-diff"
@@ -2102,6 +2118,10 @@ name = "aurora-fsm"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ftp-client"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-cap"
 version = "0.1.0"
 
@@ -2313,6 +2333,10 @@ name = "aurora-graphdb"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-graphql-srv"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-grille-shut"
 version = "0.1.0"
 
@@ -2322,6 +2346,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-ground-strap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-grpc-server"
 version = "0.1.0"
 
 [[package]]
@@ -2780,6 +2808,10 @@ name = "aurora-jumphash"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-kafka-client"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-key-fob"
 version = "0.1.0"
 
@@ -2856,6 +2888,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-launch-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ldap-client"
 version = "0.1.0"
 
 [[package]]
@@ -3147,6 +3183,10 @@ name = "aurora-motor-resolver"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mqtt-broker"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-muffler"
 version = "0.1.0"
 
@@ -3173,6 +3213,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-nats-client"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-nav-antenna"
@@ -3661,6 +3705,10 @@ name = "aurora-prop-valve"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-proxy-lb"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ptc-heater"
 version = "0.1.0"
 
@@ -3788,6 +3836,10 @@ name = "aurora-recycl-plan"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-redis-client"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-reducer"
 version = "0.1.0"
 
@@ -3834,6 +3886,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-resonator"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rest-client"
 version = "0.1.0"
 
 [[package]]
@@ -3996,6 +4052,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rust-protect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-s3-client"
 version = "0.1.0"
 
 [[package]]
@@ -4214,6 +4274,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-smtp-client"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-snapshot"
 version = "0.1.0"
 
@@ -4326,6 +4390,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sre"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ssh-tunnel"
 version = "0.1.0"
 
 [[package]]
@@ -4469,6 +4537,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-suspension-test"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-svc-disc"
 version = "0.1.0"
 
 [[package]]
