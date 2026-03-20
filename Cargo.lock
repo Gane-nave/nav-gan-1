@@ -212,6 +212,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-backpressure"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bench"
 version = "0.1.0"
 dependencies = [
@@ -907,6 +911,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-quota"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
@@ -1025,6 +1033,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-snapshot"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-social"
