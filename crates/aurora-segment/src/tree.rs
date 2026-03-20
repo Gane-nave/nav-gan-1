@@ -56,14 +56,7 @@ impl SegmentTree {
         self.update_internal(1, 0, self.n - 1, idx, val);
     }
 
-    fn update_internal(
-        &mut self,
-        node: usize,
-        start: usize,
-        end: usize,
-        idx: usize,
-        val: i64,
-    ) {
+    fn update_internal(&mut self, node: usize, start: usize, end: usize, idx: usize, val: i64) {
         if start == end {
             self.tree[node] = val;
             return;
@@ -79,19 +72,18 @@ impl SegmentTree {
 
     /// Range sum query over [l, r] (inclusive).
     pub fn query(&mut self, l: usize, r: usize) -> i64 {
-        assert!(l <= r && r < self.n, "range [{}, {}] out of bounds (n={})", l, r, self.n);
+        assert!(
+            l <= r && r < self.n,
+            "range [{}, {}] out of bounds (n={})",
+            l,
+            r,
+            self.n
+        );
         self.queries = self.queries.saturating_add(1);
         self.query_internal(1, 0, self.n - 1, l, r)
     }
 
-    fn query_internal(
-        &self,
-        node: usize,
-        start: usize,
-        end: usize,
-        l: usize,
-        r: usize,
-    ) -> i64 {
+    fn query_internal(&self, node: usize, start: usize, end: usize, l: usize, r: usize) -> i64 {
         if r < start || end < l {
             return 0;
         }
@@ -171,9 +163,9 @@ mod tests {
     #[test]
     fn test_range_query() {
         let mut st = SegmentTree::from_slice(&[1, 3, 5, 7, 9, 11]);
-        assert_eq!(st.query(0, 2), 9);   // 1+3+5
-        assert_eq!(st.query(1, 4), 24);  // 3+5+7+9
-        assert_eq!(st.query(0, 5), 36);  // total
+        assert_eq!(st.query(0, 2), 9); // 1+3+5
+        assert_eq!(st.query(1, 4), 24); // 3+5+7+9
+        assert_eq!(st.query(0, 5), 36); // total
     }
 
     #[test]
@@ -215,7 +207,7 @@ mod tests {
     fn test_negative_values() {
         let mut st = SegmentTree::from_slice(&[-5, 10, -3, 8]);
         assert_eq!(st.query(0, 3), 10); // -5+10-3+8
-        assert_eq!(st.query(0, 1), 5);  // -5+10
+        assert_eq!(st.query(0, 1), 5); // -5+10
     }
 
     #[test]
@@ -227,8 +219,8 @@ mod tests {
     #[test]
     fn test_find_prefix() {
         let mut st = SegmentTree::from_slice(&[1, 2, 3, 4, 5]);
-        assert_eq!(st.find_prefix(6), Some(2));  // 1+2+3=6
-        assert_eq!(st.find_prefix(1), Some(0));  // 1>=1
+        assert_eq!(st.find_prefix(6), Some(2)); // 1+2+3=6
+        assert_eq!(st.find_prefix(1), Some(0)); // 1>=1
         assert_eq!(st.find_prefix(100), None);
     }
 

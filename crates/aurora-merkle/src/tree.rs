@@ -69,10 +69,7 @@ impl MerkleTree {
                 let left = level[i];
                 if i + 1 < level.len() {
                     let right = level[i + 1];
-                    let hash = Self::combine_hashes(
-                        tree.nodes[left].hash,
-                        tree.nodes[right].hash,
-                    );
+                    let hash = Self::combine_hashes(tree.nodes[left].hash, tree.nodes[right].hash);
                     let idx = tree.nodes.len();
                     tree.nodes.push(MerkleNode {
                         hash,
@@ -82,16 +79,13 @@ impl MerkleTree {
                     next_level.push(idx);
                     i += 2;
                 } else {
-                    // Odd node — promote directly
-                    let hash = Self::combine_hashes(
-                        tree.nodes[left].hash,
-                        tree.nodes[left].hash,
-                    );
+                    // Odd node — duplicate as right child for a fully binary tree
+                    let hash = Self::combine_hashes(tree.nodes[left].hash, tree.nodes[left].hash);
                     let idx = tree.nodes.len();
                     tree.nodes.push(MerkleNode {
                         hash,
                         left: Some(left),
-                        right: None,
+                        right: Some(left),
                     });
                     next_level.push(idx);
                     i += 1;

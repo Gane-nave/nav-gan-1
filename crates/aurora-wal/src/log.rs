@@ -68,8 +68,8 @@ impl WriteAheadLog {
         };
 
         // Estimate bytes
-        let size = entry.op.len() + entry.key.len()
-            + entry.value.as_ref().map_or(0, |v| v.len()) + 24;
+        let size =
+            entry.op.len() + entry.key.len() + entry.value.as_ref().map_or(0, |v| v.len()) + 24;
         self.bytes_written = self.bytes_written.saturating_add(size as u64);
 
         self.key_index.insert(key.to_string(), lsn);
@@ -117,9 +117,9 @@ impl WriteAheadLog {
 
     /// Get the latest entry for a key.
     pub fn latest_for_key(&self, key: &str) -> Option<&WalEntry> {
-        self.key_index.get(key).and_then(|lsn| {
-            self.entries.iter().rev().find(|e| e.lsn == *lsn)
-        })
+        self.key_index
+            .get(key)
+            .and_then(|lsn| self.entries.iter().rev().find(|e| e.lsn == *lsn))
     }
 
     /// Get entry by LSN.

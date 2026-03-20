@@ -107,7 +107,9 @@ impl<T> ObjectPool<T> {
     }
 
     /// Clear all available objects from the pool.
+    /// Decrements `created` by the number of cleared objects so new ones can be created.
     pub fn clear(&mut self) {
+        self.created = self.created.saturating_sub(self.available.len());
         self.available.clear();
     }
 

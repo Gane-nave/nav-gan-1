@@ -61,7 +61,10 @@ fn adversarial_pop_all_sorted() {
     }
     assert_eq!(results.len(), 4);
     for i in 1..results.len() {
-        assert!(results[i].1 >= results[i - 1].1, "should be sorted by priority");
+        assert!(
+            results[i].1 >= results[i - 1].1,
+            "should be sorted by priority"
+        );
     }
 }
 

@@ -64,7 +64,10 @@ fn adversarial_drain_and_reuse() {
 fn adversarial_zero_capacity() {
     let mut pool: ObjectPool<u32> = ObjectPool::new(0);
     let result = pool.checkout(|| 1);
-    assert!(result.is_none(), "zero capacity should never produce objects");
+    assert!(
+        result.is_none(),
+        "zero capacity should never produce objects"
+    );
 }
 
 #[test]

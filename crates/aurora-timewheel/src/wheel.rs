@@ -54,11 +54,13 @@ impl TimerWheel {
     }
 
     /// Schedule a timer to fire after `delay` ticks.
+    /// A delay of 0 fires on the very next tick.
     /// Returns the timer ID.
     pub fn schedule(&mut self, delay: u64, label: &str) -> u64 {
         let id = self.next_id;
         self.next_id = self.next_id.saturating_add(1);
-        let expires_at = self.current_tick.saturating_add(delay);
+        let effective_delay = delay.max(1);
+        let expires_at = self.current_tick.saturating_add(effective_delay);
         let slot = (expires_at as usize) % self.num_slots;
         let entry = TimerEntry {
             id,
@@ -268,11 +270,10 @@ mod tests {
     fn test_delay_zero() {
         let mut w = TimerWheel::new(16);
         w.schedule(0, "immediate");
-        // tick 0 -> current_tick becomes 1, slot 0 checked
-        // But expires_at is 0 and current_tick is 0, so slot is 0
-        // After tick(), current becomes 1, slot 1 checked — won't find it there
-        // Actually delay 0 means expires_at = 0 which is current_tick
-        // Need to handle this edge case
+        // delay=0 is treated as delay=1 (fires on very next tick)
+        let fired = w.tick();
+        assert_eq!(fired.len(), 1);
+        assert_eq!(fired[0].label, "immediate");
     }
 
     #[test]

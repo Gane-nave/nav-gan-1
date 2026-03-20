@@ -44,7 +44,15 @@ impl Rope {
             while start < bytes.len() {
                 let end = (start + chunk_size).min(bytes.len());
                 // Ensure we don't split in the middle of a UTF-8 character
-                let end = Self::adjust_boundary(s, end);
+                let mut end = Self::adjust_boundary(s, end);
+                // If adjust_boundary moved end back to start (chunk_size < char byte length),
+                // advance to the next char boundary to avoid an infinite loop.
+                if end == start {
+                    end = start + 1;
+                    while end < s.len() && !s.is_char_boundary(end) {
+                        end += 1;
+                    }
+                }
                 rope.chunks.push(s[start..end].to_string());
                 start = end;
             }
@@ -71,7 +79,12 @@ impl Rope {
 
     /// Insert a string at the given byte position.
     pub fn insert(&mut self, pos: usize, s: &str) {
-        assert!(pos <= self.total_len, "position {} out of bounds (len={})", pos, self.total_len);
+        assert!(
+            pos <= self.total_len,
+            "position {} out of bounds (len={})",
+            pos,
+            self.total_len
+        );
         self.edits = self.edits.saturating_add(1);
 
         if self.chunks.is_empty() {
@@ -102,7 +115,12 @@ impl Rope {
     /// Delete bytes in the range [start, end).
     pub fn delete(&mut self, start: usize, end: usize) {
         assert!(start <= end, "start ({}) must be <= end ({})", start, end);
-        assert!(end <= self.total_len, "end ({}) out of bounds (len={})", end, self.total_len);
+        assert!(
+            end <= self.total_len,
+            "end ({}) out of bounds (len={})",
+            end,
+            self.total_len
+        );
         self.edits = self.edits.saturating_add(1);
 
         if start == end {
@@ -204,8 +222,9 @@ impl Rope {
     pub fn replace_all(&mut self, from: &str, to: &str) {
         let full = self.collect_string().replace(from, to);
         let chunk_size = self.chunk_size;
+        let edits = self.edits;
         *self = Self::from_str(&full, chunk_size);
-        self.edits = self.edits.saturating_add(1);
+        self.edits = edits.saturating_add(1);
     }
 
     /// Split the rope at a byte position into two ropes.
