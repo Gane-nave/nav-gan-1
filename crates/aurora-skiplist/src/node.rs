@@ -1,4 +1,4 @@
-/// A node in the skip list with forward pointers at multiple levels.
+/// A node in the skip list that stores a key, value, and level.
 #[derive(Debug, Clone)]
 pub struct SkipNode<V: Clone> {
     key: u64,
