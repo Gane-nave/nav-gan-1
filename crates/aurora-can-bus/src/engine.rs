@@ -1,12 +1,12 @@
-/// CAN bus: communication, termination, error frames
-/// Phase 524
+/// CAN bus: termination, baud rate, error frame, load
+/// Phase 727
 
 #[derive(Debug, Clone)]
 pub struct CanBus {
-    pub baud_rate_kbps: u32,
-    pub error_count: u32,
     pub termination_ok: bool,
-    pub bus_load_pct: f64,
+    pub baud_ok: bool,
+    pub error_free: bool,
+    pub load_ok: bool,
     pub shielding_ok: bool,
 }
 
@@ -19,32 +19,32 @@ impl Default for CanBus {
 impl CanBus {
     pub fn new() -> Self {
         Self {
-            baud_rate_kbps: 500,
-            error_count: 0,
             termination_ok: true,
-            bus_load_pct: 35.0,
+            baud_ok: true,
+            error_free: true,
+            load_ok: true,
             shielding_ok: true,
         }
     }
 
-    pub fn no_errors(&self) -> bool {
-        self.error_count == 0
+    pub fn signal_ok(&self) -> bool {
+        self.termination_ok && self.baud_ok && self.shielding_ok
     }
 
-    pub fn load_ok(&self) -> bool {
-        self.bus_load_pct < 70.0
+    pub fn health_ok(&self) -> bool {
+        self.error_free && self.load_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.no_errors() && self.load_ok() && self.termination_ok && self.shielding_ok
+        self.signal_ok() && self.health_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        self.error_count > 10 || !self.termination_ok
+        !self.termination_ok || !self.error_free
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.error_count > 10 { return 20.0; }
+        if !self.termination_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_errors() {
+    fn test_signal() {
         let c = CanBus::new();
-        assert!(c.no_errors());
+        assert!(c.signal_ok());
     }
 
     #[test]
-    fn test_load() {
+    fn test_health_chk() {
         let c = CanBus::new();
-        assert!(c.load_ok());
+        assert!(c.health_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_errors() {
+    fn test_termination() {
         let mut c = CanBus::new();
-        c.error_count = 15;
+        c.termination_ok = false;
         assert!(c.needs_service());
     }
 

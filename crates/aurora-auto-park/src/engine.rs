@@ -1,30 +1,13 @@
-/// Auto parking: space detection, automated steering, parallel/perpendicular
-/// Phase 268
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum ParkType {
-    Parallel,
-    Perpendicular,
-    Angled,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum ParkPhase {
-    Scanning,
-    SpaceFound,
-    Maneuvering,
-    Complete,
-    Idle,
-}
+/// Automatic parking: ultrasonic, camera, steering, braking
+/// Phase 739
 
 #[derive(Debug, Clone)]
 pub struct AutoPark {
-    pub park_type: ParkType,
-    pub phase: ParkPhase,
-    pub space_length_m: f64,
-    pub vehicle_length_m: f64,
-    pub progress_pct: f64,
-    pub system_ok: bool,
+    pub ultrasonic_ok: bool,
+    pub camera_ok: bool,
+    pub steering_ok: bool,
+    pub braking_ok: bool,
+    pub calibrated: bool,
 }
 
 impl Default for AutoPark {
@@ -36,31 +19,32 @@ impl Default for AutoPark {
 impl AutoPark {
     pub fn new() -> Self {
         Self {
-            park_type: ParkType::Parallel,
-            phase: ParkPhase::Idle,
-            space_length_m: 0.0,
-            vehicle_length_m: 4.5,
-            progress_pct: 0.0,
-            system_ok: true,
+            ultrasonic_ok: true,
+            camera_ok: true,
+            steering_ok: true,
+            braking_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn space_adequate(&self) -> bool {
-        self.space_length_m > self.vehicle_length_m * 1.3
+    pub fn perception_ok(&self) -> bool {
+        self.ultrasonic_ok && self.camera_ok && self.calibrated
     }
 
-    pub fn is_active(&self) -> bool {
-        self.phase != ParkPhase::Idle && self.phase != ParkPhase::Complete
+    pub fn actuation_ok(&self) -> bool {
+        self.steering_ok && self.braking_ok
     }
 
-    pub fn is_complete(&self) -> bool {
-        self.phase == ParkPhase::Complete
+    pub fn all_ok(&self) -> bool {
+        self.perception_ok() && self.actuation_ok()
+    }
+
+    pub fn needs_calibration(&self) -> bool {
+        !self.calibrated || !self.ultrasonic_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.system_ok {
-            return 0.0;
-        }
+        if !self.ultrasonic_ok { return 10.0; }
         100.0
     }
 }
@@ -70,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_active() {
-        let a = AutoPark::new();
-        assert!(!a.is_active());
+    fn test_perception() {
+        let c = AutoPark::new();
+        assert!(c.perception_ok());
     }
 
     #[test]
-    fn test_not_complete() {
-        let a = AutoPark::new();
-        assert!(!a.is_complete());
+    fn test_actuation() {
+        let c = AutoPark::new();
+        assert!(c.actuation_ok());
     }
 
     #[test]
-    fn test_space_too_small() {
-        let a = AutoPark::new();
-        assert!(!a.space_adequate());
+    fn test_all_ok() {
+        let c = AutoPark::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_space_ok() {
-        let mut a = AutoPark::new();
-        a.space_length_m = 7.0;
-        assert!(a.space_adequate());
+    fn test_no_cal() {
+        let c = AutoPark::new();
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_scanning() {
-        let mut a = AutoPark::new();
-        a.phase = ParkPhase::Scanning;
-        assert!(a.is_active());
+    fn test_cal() {
+        let mut c = AutoPark::new();
+        c.calibrated = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]
     fn test_health() {
-        let a = AutoPark::new();
-        assert!((a.health_score() - 100.0).abs() < 0.1);
+        let c = AutoPark::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

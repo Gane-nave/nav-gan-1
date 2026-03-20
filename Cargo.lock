@@ -169,6 +169,10 @@ name = "aurora-airbag-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-airbag-ecu"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alerts"
 version = "0.1.0"
 dependencies = [
@@ -560,6 +564,10 @@ name = "aurora-body-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-body-ecu"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-body-fit"
 version = "0.1.0"
 
@@ -781,6 +789,10 @@ name = "aurora-climate-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-climate-ecu"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-climate-zone"
 version = "0.1.0"
 
@@ -793,6 +805,10 @@ name = "aurora-clock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cluster-ecu"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-clutch-ctrl"
 version = "0.1.0"
 
@@ -802,6 +818,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-coil-spring"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-collision-warn"
 version = "0.1.0"
 
 [[package]]
@@ -1069,6 +1089,10 @@ name = "aurora-data-network"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dc-converter"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dc-dc-conv"
 version = "0.1.0"
 
@@ -1166,6 +1190,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-diffuser"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-digital-mirror"
 version = "0.1.0"
 
 [[package]]
@@ -1299,6 +1327,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-e-motor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-e2e-tests"
 version = "0.1.0"
 
@@ -1401,6 +1433,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-engine-cover"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-engine-ecu"
 version = "0.1.0"
 
 [[package]]
@@ -1578,6 +1614,10 @@ name = "aurora-flex-pipe"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-flexray"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-flexray-bus"
 version = "0.1.0"
 
@@ -1709,6 +1749,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-gateway-ecu"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gauge-cluster"
 version = "0.1.0"
 
@@ -1826,6 +1870,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-head-gasket"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-head-up"
 version = "0.1.0"
 
 [[package]]
@@ -2350,6 +2398,10 @@ name = "aurora-lumbar-adj"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lv-battery"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-maf-sensor"
 version = "0.1.0"
 
@@ -2505,6 +2557,10 @@ dependencies = [
  "serde_json",
  "thiserror",
 ]
+
+[[package]]
+name = "aurora-most-bus"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-motion-data"
@@ -2674,6 +2730,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-oil-temp-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-onboard-charger"
 version = "0.1.0"
 
 [[package]]
@@ -3658,6 +3718,10 @@ name = "aurora-tire-press"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tire-pressure"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tire-tread"
 version = "0.1.0"
 
@@ -3727,6 +3791,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trans-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-ecu"
 version = "0.1.0"
 
 [[package]]
@@ -4086,6 +4154,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-motor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wiring-harness"
 version = "0.1.0"
 
 [[package]]

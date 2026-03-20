@@ -1,57 +1,50 @@
-/// Automotive Ethernet: high-bandwidth vehicle network, 100BASE-T1
-/// Phase 280
+/// Automotive Ethernet: PHY, switch, VLAN, QoS
+/// Phase 730
 
 #[derive(Debug, Clone)]
-pub struct AutomotiveEthernet {
-    pub link_up: bool,
-    pub speed_mbps: u32,
-    pub packet_loss_pct: f64,
-    pub latency_us: u32,
-    pub switch_ok: bool,
+pub struct EthernetAuto {
     pub phy_ok: bool,
+    pub switch_ok: bool,
+    pub vlan_ok: bool,
+    pub qos_ok: bool,
+    pub link_ok: bool,
 }
 
-impl Default for AutomotiveEthernet {
+impl Default for EthernetAuto {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl AutomotiveEthernet {
+impl EthernetAuto {
     pub fn new() -> Self {
         Self {
-            link_up: true,
-            speed_mbps: 100,
-            packet_loss_pct: 0.0,
-            latency_us: 50,
-            switch_ok: true,
             phy_ok: true,
+            switch_ok: true,
+            vlan_ok: true,
+            qos_ok: true,
+            link_ok: true,
         }
     }
 
-    pub fn connected(&self) -> bool {
-        self.link_up && self.phy_ok
+    pub fn network_ok(&self) -> bool {
+        self.phy_ok && self.switch_ok && self.link_ok
     }
 
     pub fn quality_ok(&self) -> bool {
-        self.packet_loss_pct < 0.1 && self.latency_us < 1000
+        self.vlan_ok && self.qos_ok
     }
 
-    pub fn gigabit(&self) -> bool {
-        self.speed_mbps >= 1000
+    pub fn all_ok(&self) -> bool {
+        self.network_ok() && self.quality_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.link_up || !self.switch_ok || !self.phy_ok
+        !self.phy_ok || !self.link_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.link_up {
-            return 0.0;
-        }
-        if !self.quality_ok() {
-            return 50.0;
-        }
+        if !self.phy_ok { return 10.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_connected() {
-        let e = AutomotiveEthernet::new();
-        assert!(e.connected());
+    fn test_network() {
+        let c = EthernetAuto::new();
+        assert!(c.network_ok());
     }
 
     #[test]
     fn test_quality() {
-        let e = AutomotiveEthernet::new();
-        assert!(e.quality_ok());
+        let c = EthernetAuto::new();
+        assert!(c.quality_ok());
     }
 
     #[test]
-    fn test_not_gigabit() {
-        let e = AutomotiveEthernet::new();
-        assert!(!e.gigabit());
+    fn test_all_ok() {
+        let c = EthernetAuto::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_service() {
-        let e = AutomotiveEthernet::new();
-        assert!(!e.needs_service());
+        let c = EthernetAuto::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_link_down() {
-        let mut e = AutomotiveEthernet::new();
-        e.link_up = false;
-        assert!(e.needs_service());
+    fn test_phy() {
+        let mut c = EthernetAuto::new();
+        c.phy_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let e = AutomotiveEthernet::new();
-        assert!((e.health_score() - 100.0).abs() < 0.1);
+        let c = EthernetAuto::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

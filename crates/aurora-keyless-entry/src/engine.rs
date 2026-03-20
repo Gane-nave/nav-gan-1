@@ -1,13 +1,13 @@
-/// Keyless entry: RF receiver, proximity sensor, antenna
-/// Phase 543
+/// Keyless entry: transponder, antenna, rolling code, range
+/// Phase 732
 
 #[derive(Debug, Clone)]
 pub struct KeylessEntry {
-    pub rf_ok: bool,
-    pub proximity_ok: bool,
+    pub transponder_ok: bool,
     pub antenna_ok: bool,
+    pub rolling_code_ok: bool,
+    pub range_ok: bool,
     pub battery_ok: bool,
-    pub range_m: f64,
 }
 
 impl Default for KeylessEntry {
@@ -19,32 +19,32 @@ impl Default for KeylessEntry {
 impl KeylessEntry {
     pub fn new() -> Self {
         Self {
-            rf_ok: true,
-            proximity_ok: true,
+            transponder_ok: true,
             antenna_ok: true,
+            rolling_code_ok: true,
+            range_ok: true,
             battery_ok: true,
-            range_m: 10.0,
         }
     }
 
-    pub fn comm_ok(&self) -> bool {
-        self.rf_ok && self.antenna_ok
+    pub fn security_ok(&self) -> bool {
+        self.transponder_ok && self.rolling_code_ok
     }
 
-    pub fn detection_ok(&self) -> bool {
-        self.proximity_ok && self.range_m > 2.0
+    pub fn signal_ok(&self) -> bool {
+        self.antenna_ok && self.range_ok && self.battery_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.comm_ok() && self.detection_ok() && self.battery_ok
+        self.security_ok() && self.signal_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.rf_ok || !self.battery_ok
+        !self.transponder_ok || !self.battery_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.rf_ok { return 15.0; }
+        if !self.transponder_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_comm() {
+    fn test_security() {
         let c = KeylessEntry::new();
-        assert!(c.comm_ok());
+        assert!(c.security_ok());
     }
 
     #[test]
-    fn test_detection() {
+    fn test_signal() {
         let c = KeylessEntry::new();
-        assert!(c.detection_ok());
+        assert!(c.signal_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_rf() {
+    fn test_transponder() {
         let mut c = KeylessEntry::new();
-        c.rf_ok = false;
+        c.transponder_ok = false;
         assert!(c.needs_service());
     }
 

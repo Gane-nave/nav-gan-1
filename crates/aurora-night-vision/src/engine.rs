@@ -1,62 +1,50 @@
-/// Night vision: infrared camera, thermal imaging, pedestrian highlight
-/// Phase 230
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum NvMode {
-    Off,
-    NearInfrared,
-    FarInfrared,
-    Thermal,
-}
+/// Night vision: IR camera, pedestrian detect, overlay
+/// Phase 741
 
 #[derive(Debug, Clone)]
-pub struct NightVisionSystem {
-    pub mode: NvMode,
-    pub active: bool,
-    pub range_m: f64,
-    pub objects_detected: u32,
-    pub ambient_light_lux: f64,
-    pub camera_temp_c: f64,
+pub struct NightVision {
+    pub ir_camera_ok: bool,
+    pub pedestrian_ok: bool,
+    pub overlay_ok: bool,
+    pub heater_ok: bool,
+    pub calibrated: bool,
 }
 
-impl Default for NightVisionSystem {
+impl Default for NightVision {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl NightVisionSystem {
+impl NightVision {
     pub fn new() -> Self {
         Self {
-            mode: NvMode::FarInfrared,
-            active: false,
-            range_m: 300.0,
-            objects_detected: 0,
-            ambient_light_lux: 50.0,
-            camera_temp_c: 35.0,
+            ir_camera_ok: true,
+            pedestrian_ok: true,
+            overlay_ok: true,
+            heater_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn should_activate(&self) -> bool {
-        self.ambient_light_lux < 10.0
+    pub fn imaging_ok(&self) -> bool {
+        self.ir_camera_ok && self.heater_ok && self.calibrated
     }
 
-    pub fn is_active(&self) -> bool {
-        self.active && self.mode != NvMode::Off
+    pub fn detection_ok(&self) -> bool {
+        self.pedestrian_ok && self.overlay_ok
     }
 
-    pub fn has_detections(&self) -> bool {
-        self.objects_detected > 0
+    pub fn all_ok(&self) -> bool {
+        self.imaging_ok() && self.detection_ok()
     }
 
-    pub fn camera_overheated(&self) -> bool {
-        self.camera_temp_c > 80.0
+    pub fn needs_service(&self) -> bool {
+        !self.ir_camera_ok || !self.calibrated
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.camera_overheated() {
-            return 30.0;
-        }
+        if !self.ir_camera_ok { return 10.0; }
         100.0
     }
 }
@@ -66,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_active() {
-        let n = NightVisionSystem::new();
-        assert!(!n.is_active());
+    fn test_imaging() {
+        let c = NightVision::new();
+        assert!(c.imaging_ok());
     }
 
     #[test]
-    fn test_should_not_activate() {
-        let n = NightVisionSystem::new();
-        assert!(!n.should_activate());
+    fn test_detection() {
+        let c = NightVision::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_no_detections() {
-        let n = NightVisionSystem::new();
-        assert!(!n.has_detections());
+    fn test_all_ok() {
+        let c = NightVision::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_overheated() {
-        let n = NightVisionSystem::new();
-        assert!(!n.camera_overheated());
+    fn test_no_service() {
+        let c = NightVision::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_dark_activate() {
-        let mut n = NightVisionSystem::new();
-        n.ambient_light_lux = 2.0;
-        assert!(n.should_activate());
+    fn test_ir() {
+        let mut c = NightVision::new();
+        c.ir_camera_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let n = NightVisionSystem::new();
-        assert!((n.health_score() - 100.0).abs() < 0.1);
+        let c = NightVision::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,13 +1,13 @@
-/// Immobilizer: transponder, antenna, ECU authorization
-/// Phase 527
+/// Immobilizer: transponder, ECU match, relay, antenna ring
+/// Phase 733
 
 #[derive(Debug, Clone)]
 pub struct Immobilizer {
-    pub key_detected: bool,
     pub transponder_ok: bool,
-    pub antenna_ok: bool,
-    pub authorized: bool,
-    pub ecu_ok: bool,
+    pub ecu_match_ok: bool,
+    pub relay_ok: bool,
+    pub antenna_ring_ok: bool,
+    pub enabled: bool,
 }
 
 impl Default for Immobilizer {
@@ -19,32 +19,32 @@ impl Default for Immobilizer {
 impl Immobilizer {
     pub fn new() -> Self {
         Self {
-            key_detected: true,
             transponder_ok: true,
-            antenna_ok: true,
-            authorized: true,
-            ecu_ok: true,
+            ecu_match_ok: true,
+            relay_ok: true,
+            antenna_ring_ok: true,
+            enabled: true,
         }
     }
 
-    pub fn key_ok(&self) -> bool {
-        self.key_detected && self.transponder_ok
+    pub fn authentication_ok(&self) -> bool {
+        self.transponder_ok && self.ecu_match_ok
     }
 
-    pub fn comm_ok(&self) -> bool {
-        self.antenna_ok && self.ecu_ok
+    pub fn hardware_ok(&self) -> bool {
+        self.relay_ok && self.antenna_ring_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.key_ok() && self.comm_ok() && self.authorized
+        self.authentication_ok() && self.hardware_ok() && self.enabled
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.ecu_ok || !self.antenna_ok
+        !self.transponder_ok || !self.ecu_match_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ecu_ok { return 10.0; }
+        if !self.transponder_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_key() {
+    fn test_authentication() {
         let c = Immobilizer::new();
-        assert!(c.key_ok());
+        assert!(c.authentication_ok());
     }
 
     #[test]
-    fn test_comm() {
+    fn test_hardware() {
         let c = Immobilizer::new();
-        assert!(c.comm_ok());
+        assert!(c.hardware_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_ecu_fail() {
+    fn test_transponder() {
         let mut c = Immobilizer::new();
-        c.ecu_ok = false;
+        c.transponder_ok = false;
         assert!(c.needs_service());
     }
 

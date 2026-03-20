@@ -1,61 +1,50 @@
-/// Blind spot monitoring: radar detection, mirror indicator, audible alert
-/// Phase 265
+/// Blind spot monitoring: radar, indicator, cross traffic
+/// Phase 737
 
 #[derive(Debug, Clone)]
-pub struct BlindSpotMonitor {
-    pub active: bool,
-    pub left_detected: bool,
-    pub right_detected: bool,
-    pub left_radar_ok: bool,
-    pub right_radar_ok: bool,
-    pub alert_volume: u8,
+pub struct BlindSpot {
+    pub radar_ok: bool,
+    pub indicator_ok: bool,
+    pub cross_traffic_ok: bool,
+    pub range_ok: bool,
+    pub calibrated: bool,
 }
 
-impl Default for BlindSpotMonitor {
+impl Default for BlindSpot {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl BlindSpotMonitor {
+impl BlindSpot {
     pub fn new() -> Self {
         Self {
-            active: true,
-            left_detected: false,
-            right_detected: false,
-            left_radar_ok: true,
-            right_radar_ok: true,
-            alert_volume: 5,
+            radar_ok: true,
+            indicator_ok: true,
+            cross_traffic_ok: true,
+            range_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn any_detected(&self) -> bool {
-        self.left_detected || self.right_detected
+    pub fn detection_ok(&self) -> bool {
+        self.radar_ok && self.range_ok && self.calibrated
     }
 
-    pub fn all_clear(&self) -> bool {
-        !self.left_detected && !self.right_detected
+    pub fn alert_ok(&self) -> bool {
+        self.indicator_ok && self.cross_traffic_ok
     }
 
-    pub fn sensors_ok(&self) -> bool {
-        self.left_radar_ok && self.right_radar_ok
+    pub fn all_ok(&self) -> bool {
+        self.detection_ok() && self.alert_ok()
     }
 
-    pub fn safe_to_change_left(&self) -> bool {
-        !self.left_detected
-    }
-
-    pub fn safe_to_change_right(&self) -> bool {
-        !self.right_detected
+    pub fn needs_calibration(&self) -> bool {
+        !self.calibrated || !self.radar_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.left_radar_ok && !self.right_radar_ok {
-            return 0.0;
-        }
-        if !self.sensors_ok() {
-            return 50.0;
-        }
+        if !self.radar_ok { return 5.0; }
         100.0
     }
 }
@@ -65,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_none_detected() {
-        let b = BlindSpotMonitor::new();
-        assert!(!b.any_detected());
+    fn test_detection() {
+        let c = BlindSpot::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_all_clear() {
-        let b = BlindSpotMonitor::new();
-        assert!(b.all_clear());
+    fn test_alert() {
+        let c = BlindSpot::new();
+        assert!(c.alert_ok());
     }
 
     #[test]
-    fn test_sensors_ok() {
-        let b = BlindSpotMonitor::new();
-        assert!(b.sensors_ok());
+    fn test_all_ok() {
+        let c = BlindSpot::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_safe_left() {
-        let b = BlindSpotMonitor::new();
-        assert!(b.safe_to_change_left());
+    fn test_no_cal() {
+        let c = BlindSpot::new();
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_vehicle_left() {
-        let mut b = BlindSpotMonitor::new();
-        b.left_detected = true;
-        assert!(!b.safe_to_change_left());
+    fn test_cal() {
+        let mut c = BlindSpot::new();
+        c.calibrated = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]
     fn test_health() {
-        let b = BlindSpotMonitor::new();
-        assert!((b.health_score() - 100.0).abs() < 0.1);
+        let c = BlindSpot::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

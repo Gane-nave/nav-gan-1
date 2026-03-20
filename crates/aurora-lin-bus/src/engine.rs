@@ -1,13 +1,13 @@
-/// LIN bus: low-speed communication, master/slave
-/// Phase 525
+/// LIN bus: master, slave, checksum, wakeup
+/// Phase 728
 
 #[derive(Debug, Clone)]
 pub struct LinBus {
-    pub baud_rate_kbps: u32,
-    pub error_count: u32,
     pub master_ok: bool,
-    pub slave_count: u32,
+    pub slave_ok: bool,
     pub checksum_ok: bool,
+    pub wakeup_ok: bool,
+    pub timing_ok: bool,
 }
 
 impl Default for LinBus {
@@ -19,28 +19,28 @@ impl Default for LinBus {
 impl LinBus {
     pub fn new() -> Self {
         Self {
-            baud_rate_kbps: 20,
-            error_count: 0,
             master_ok: true,
-            slave_count: 8,
+            slave_ok: true,
             checksum_ok: true,
+            wakeup_ok: true,
+            timing_ok: true,
         }
     }
 
-    pub fn no_errors(&self) -> bool {
-        self.error_count == 0
+    pub fn communication_ok(&self) -> bool {
+        self.master_ok && self.slave_ok && self.timing_ok
     }
 
-    pub fn master_functional(&self) -> bool {
-        self.master_ok && self.checksum_ok
+    pub fn integrity_ok(&self) -> bool {
+        self.checksum_ok && self.wakeup_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.no_errors() && self.master_functional()
+        self.communication_ok() && self.integrity_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.master_ok || self.error_count > 5
+        !self.master_ok || !self.checksum_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_errors() {
+    fn test_communication() {
         let c = LinBus::new();
-        assert!(c.no_errors());
+        assert!(c.communication_ok());
     }
 
     #[test]
-    fn test_master() {
+    fn test_integrity() {
         let c = LinBus::new();
-        assert!(c.master_functional());
+        assert!(c.integrity_ok());
     }
 
     #[test]
@@ -78,7 +78,7 @@ mod tests {
     }
 
     #[test]
-    fn test_master_fail() {
+    fn test_master() {
         let mut c = LinBus::new();
         c.master_ok = false;
         assert!(c.needs_service());

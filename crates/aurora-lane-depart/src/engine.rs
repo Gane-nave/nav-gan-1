@@ -1,57 +1,50 @@
-/// Lane departure warning: boundary detection, vibration alert, visual warning
-/// Phase 264
+/// Lane departure warning: camera, lane model, haptic, audio
+/// Phase 736
 
 #[derive(Debug, Clone)]
-pub struct LaneDepartureWarning {
-    pub active: bool,
-    pub left_line_detected: bool,
-    pub right_line_detected: bool,
-    pub departing_left: bool,
-    pub departing_right: bool,
+pub struct LaneDepart {
     pub camera_ok: bool,
+    pub lane_model_ok: bool,
+    pub haptic_ok: bool,
+    pub audio_ok: bool,
+    pub calibrated: bool,
 }
 
-impl Default for LaneDepartureWarning {
+impl Default for LaneDepart {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LaneDepartureWarning {
+impl LaneDepart {
     pub fn new() -> Self {
         Self {
-            active: true,
-            left_line_detected: true,
-            right_line_detected: true,
-            departing_left: false,
-            departing_right: false,
             camera_ok: true,
+            lane_model_ok: true,
+            haptic_ok: true,
+            audio_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn lines_detected(&self) -> bool {
-        self.left_line_detected || self.right_line_detected
+    pub fn detection_ok(&self) -> bool {
+        self.camera_ok && self.lane_model_ok && self.calibrated
     }
 
-    pub fn warning_active(&self) -> bool {
-        self.departing_left || self.departing_right
+    pub fn feedback_ok(&self) -> bool {
+        self.haptic_ok && self.audio_ok
     }
 
-    pub fn can_operate(&self) -> bool {
-        self.camera_ok && self.lines_detected()
+    pub fn all_ok(&self) -> bool {
+        self.detection_ok() && self.feedback_ok()
     }
 
-    pub fn safe_in_lane(&self) -> bool {
-        !self.departing_left && !self.departing_right
+    pub fn needs_calibration(&self) -> bool {
+        !self.calibrated || !self.camera_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.camera_ok {
-            return 0.0;
-        }
-        if !self.lines_detected() {
-            return 40.0;
-        }
+        if !self.camera_ok { return 5.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_lines_detected() {
-        let l = LaneDepartureWarning::new();
-        assert!(l.lines_detected());
+    fn test_detection() {
+        let c = LaneDepart::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_no_warning() {
-        let l = LaneDepartureWarning::new();
-        assert!(!l.warning_active());
+    fn test_feedback() {
+        let c = LaneDepart::new();
+        assert!(c.feedback_ok());
     }
 
     #[test]
-    fn test_can_operate() {
-        let l = LaneDepartureWarning::new();
-        assert!(l.can_operate());
+    fn test_all_ok() {
+        let c = LaneDepart::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_safe() {
-        let l = LaneDepartureWarning::new();
-        assert!(l.safe_in_lane());
+    fn test_no_cal() {
+        let c = LaneDepart::new();
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_departing() {
-        let mut l = LaneDepartureWarning::new();
-        l.departing_left = true;
-        assert!(l.warning_active());
+    fn test_cal() {
+        let mut c = LaneDepart::new();
+        c.calibrated = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]
     fn test_health() {
-        let l = LaneDepartureWarning::new();
-        assert!((l.health_score() - 100.0).abs() < 0.1);
+        let c = LaneDepart::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
