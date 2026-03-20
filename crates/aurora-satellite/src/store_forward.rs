@@ -81,7 +81,7 @@ impl TransmissionWindow {
 
     /// Whether the window is currently active.
     pub fn is_active(&self, now: DateTime<Utc>) -> bool {
-        now >= self.start && now <= self.end
+        (self.start..=self.end).contains(&now)
     }
 }
 

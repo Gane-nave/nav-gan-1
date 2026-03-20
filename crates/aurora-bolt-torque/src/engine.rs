@@ -30,7 +30,7 @@ impl BoltTorque {
     pub fn in_spec(&self) -> bool {
         let min = self.target_nm * (1.0 - self.tolerance_pct / 100.0);
         let max = self.target_nm * (1.0 + self.tolerance_pct / 100.0);
-        self.torque_nm >= min && self.torque_nm <= max
+        (min..=max).contains(&self.torque_nm)
     }
 
     pub fn needs_retorque(&self) -> bool {

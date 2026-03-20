@@ -113,7 +113,7 @@ impl DeliveryStop {
     }
 
     pub fn is_within_window(&self, hour: f64) -> bool {
-        hour >= self.time_window_start && hour <= self.time_window_end
+        (self.time_window_start..=self.time_window_end).contains(&hour)
     }
 }
 

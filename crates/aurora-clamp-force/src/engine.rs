@@ -30,7 +30,7 @@ impl ClampForce {
     pub fn in_spec(&self) -> bool {
         let min = self.target_kn * (1.0 - self.tolerance_pct / 100.0);
         let max = self.target_kn * (1.0 + self.tolerance_pct / 100.0);
-        self.force_kn >= min && self.force_kn <= max
+        (min..=max).contains(&self.force_kn)
     }
 
     pub fn needs_retorque(&self) -> bool {

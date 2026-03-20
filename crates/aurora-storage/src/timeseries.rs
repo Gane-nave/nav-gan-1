@@ -72,7 +72,7 @@ impl TimeSeriesStore {
             .get(series_name)
             .map(|pts| {
                 pts.iter()
-                    .filter(|p| p.timestamp >= from && p.timestamp <= to)
+                    .filter(|p| (from..=to).contains(&p.timestamp))
                     .cloned()
                     .collect()
             })

@@ -45,13 +45,13 @@ impl FuelInjector {
     pub fn pressure_ok(&self) -> bool {
         match self.injector_type {
             InjectorType::PortFuel => {
-                self.fuel_pressure_bar >= 2.5 && self.fuel_pressure_bar <= 4.5
+                (2.5..=4.5).contains(&self.fuel_pressure_bar)
             }
             InjectorType::DirectGasoline => {
-                self.fuel_pressure_bar >= 50.0 && self.fuel_pressure_bar <= 200.0
+                (50.0..=200.0).contains(&self.fuel_pressure_bar)
             }
             InjectorType::DirectDiesel => {
-                self.fuel_pressure_bar >= 200.0 && self.fuel_pressure_bar <= 2500.0
+                (200.0..=2500.0).contains(&self.fuel_pressure_bar)
             }
         }
     }

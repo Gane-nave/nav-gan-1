@@ -79,7 +79,7 @@ pub struct TimeWindow {
 
 impl TimeWindow {
     pub fn contains(&self, time: &DateTime<Utc>) -> bool {
-        time >= &self.earliest && time <= &self.latest
+        (&self.earliest..=&self.latest).contains(&time)
     }
 
     pub fn duration_minutes(&self) -> f64 {

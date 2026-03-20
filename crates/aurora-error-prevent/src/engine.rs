@@ -52,7 +52,7 @@ pub struct ActionValidator {
 }
 impl ActionValidator {
     pub fn is_valid_heading(&self, heading: f64) -> bool {
-        heading >= self.valid_heading_range.0 && heading <= self.valid_heading_range.1
+        (self.valid_heading_range.0..=self.valid_heading_range.1).contains(&heading)
     }
     pub fn is_safe_speed(&self, speed: f64) -> bool {
         speed <= self.max_speed_mps

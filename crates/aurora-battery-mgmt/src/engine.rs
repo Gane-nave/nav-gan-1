@@ -82,7 +82,7 @@ impl BatteryPack {
     }
 
     pub fn temp_ok(&self) -> bool {
-        self.temperature_c >= -10.0 && self.temperature_c <= 45.0
+        (-10.0..=45.0).contains(&self.temperature_c)
     }
 
     pub fn needs_cooling(&self) -> bool {

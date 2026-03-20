@@ -130,7 +130,7 @@ mod tests {
     fn test_merge_difficulty_range() {
         let mz = MergeZone::new(MergeType::OnRamp, 100.0);
         let d = mz.merge_difficulty();
-        assert!(d >= 0.0 && d <= 100.0);
+        assert!((0.0..=100.0).contains(&d));
     }
 
     #[test]

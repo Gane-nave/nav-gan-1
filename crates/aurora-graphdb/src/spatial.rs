@@ -33,7 +33,7 @@ impl BoundingBox {
 
     /// Check if a point is inside this bounding box.
     pub fn contains(&self, lat: f64, lon: f64) -> bool {
-        lat >= self.min_lat && lat <= self.max_lat && lon >= self.min_lon && lon <= self.max_lon
+        (self.min_lat..=self.max_lat).contains(&lat) && (self.min_lon..=self.max_lon).contains(&lon)
     }
 
     /// Check if this bounding box intersects another.

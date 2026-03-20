@@ -3,7 +3,7 @@ use aurora_gnss_quality::scorer::*;
 fn range() {
     let mut s = QualityScorer::new();
     let m = s.evaluate(20, 18, &[45.0; 20], 0.8, 1.0, 20);
-    assert!(m.overall_score >= 0.0 && m.overall_score <= 1.0);
+    assert!((0.0..=1.0).contains(&m.overall_score));
 }
 #[test]
 fn poor_geo() {

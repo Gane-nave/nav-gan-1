@@ -38,7 +38,7 @@ impl Preconditioning {
     }
 
     pub fn battery_at_target(&self) -> bool {
-        (self.current_battery_temp_c - self.target_battery_temp_c).abs() < 3.0
+        (self.current_battery_temp_c - self.target_battery_temp_c).abs() < 6.0
     }
 
     pub fn needs_heating(&self) -> bool {

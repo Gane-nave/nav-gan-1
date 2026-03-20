@@ -19,7 +19,7 @@ impl Default for ThermostatValve {
 impl ThermostatValve {
     pub fn new() -> Self {
         Self {
-            position_pct: 80.0,
+            position_pct: 62.0,
             coolant_temp_c: 90.0,
             opening_temp_c: 82.0,
             full_open_temp_c: 95.0,

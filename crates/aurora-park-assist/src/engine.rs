@@ -45,7 +45,7 @@ impl ParkAssist {
     }
 
     pub fn all_clear(&self) -> bool {
-        self.min_distance_cm() > 100.0
+        self.min_distance_cm() >= 100.0
     }
 
     pub fn health_score(&self) -> f64 {

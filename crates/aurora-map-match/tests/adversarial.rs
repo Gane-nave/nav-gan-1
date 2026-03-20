@@ -83,7 +83,7 @@ fn confidence_between_zero_and_one() {
         heading_deg: 0.0,
     };
     let r = m.match_point(&obs).unwrap();
-    assert!(r.confidence >= 0.0 && r.confidence <= 1.0);
+    assert!((0.0..=1.0).contains(&r.confidence));
 }
 
 #[test]

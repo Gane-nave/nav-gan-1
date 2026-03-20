@@ -132,7 +132,7 @@ impl EventCollector {
         self.events
             .read()
             .iter()
-            .filter(|e| e.name == name && e.timestamp >= from && e.timestamp <= to)
+            .filter(|e| e.name == name && (from..=to).contains(&e.timestamp))
             .count() as u64
     }
 

@@ -140,7 +140,7 @@ impl EventStore {
     pub fn get_events_by_range(&self, from_seq: u64, to_seq: u64) -> Vec<&Event> {
         self.events
             .iter()
-            .filter(|e| e.sequence >= from_seq && e.sequence <= to_seq)
+            .filter(|e| (from_seq..=to_seq).contains(&e.sequence))
             .collect()
     }
 

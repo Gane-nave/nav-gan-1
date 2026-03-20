@@ -32,7 +32,7 @@ impl ArPoint3D {
         }
         let sx = (self.x * focal_length / self.z) + screen_w / 2.0;
         let sy = (self.y * focal_length / self.z) + screen_h / 2.0;
-        if sx >= 0.0 && sx <= screen_w && sy >= 0.0 && sy <= screen_h {
+        if (0.0..=screen_w).contains(&sx) && (0.0..=screen_h).contains(&sy) {
             Some((sx, sy))
         } else {
             None // off screen

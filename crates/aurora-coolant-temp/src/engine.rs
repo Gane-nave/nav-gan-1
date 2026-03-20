@@ -28,7 +28,7 @@ impl CoolantTempSensor {
     }
 
     pub fn operating_temp(&self) -> bool {
-        self.temp_c >= 80.0 && self.temp_c <= 105.0
+        (80.0..=105.0).contains(&self.temp_c)
     }
 
     pub fn overheating(&self) -> bool {

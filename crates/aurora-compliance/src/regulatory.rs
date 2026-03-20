@@ -54,7 +54,7 @@ pub struct Certification {
 impl Certification {
     /// Check if the certification is currently valid.
     pub fn is_valid(&self, now: DateTime<Utc>) -> bool {
-        now >= self.issued_at && now <= self.expires_at
+        (self.issued_at..=self.expires_at).contains(&now)
     }
 }
 

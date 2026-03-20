@@ -30,7 +30,7 @@ impl TransmissionController {
     }
 
     pub fn in_gear(&self) -> bool {
-        self.current_gear >= 1 && self.current_gear <= self.gear_count
+        (1..=self.gear_count).contains(&self.current_gear)
     }
 
     pub fn shift_quality_ok(&self) -> bool {

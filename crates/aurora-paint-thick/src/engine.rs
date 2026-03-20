@@ -28,7 +28,7 @@ impl PaintThick {
     }
 
     pub fn in_spec(&self) -> bool {
-        self.thickness_um >= self.min_um && self.thickness_um <= self.max_um
+        (self.min_um..=self.max_um).contains(&self.thickness_um)
     }
 
     pub fn quality_ok(&self) -> bool {

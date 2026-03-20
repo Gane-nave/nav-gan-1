@@ -176,7 +176,7 @@ mod tests {
     fn test_safety_score_range() {
         let g = GapAssessment::new(30.0, 30.0, 80.0, 60.0);
         let s = g.safety_score();
-        assert!(s >= 0.0 && s <= 100.0);
+        assert!((0.0..=100.0).contains(&s));
     }
 
     #[test]

@@ -174,7 +174,7 @@ mod tests {
     #[test]
     fn test_brightness_range() {
         let b = LightCondition::Night.display_brightness_pct();
-        assert!(b >= 0.0 && b <= 100.0);
+        assert!((0.0..=100.0).contains(&b));
     }
 
     #[test]

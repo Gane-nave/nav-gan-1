@@ -415,6 +415,10 @@ name = "aurora-axle-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-axle-shaft"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-backpressure"
 version = "0.1.0"
 
@@ -681,6 +685,10 @@ name = "aurora-clutch-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-clutch-wear"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-compliance"
 version = "0.1.0"
 dependencies = [
@@ -882,6 +890,10 @@ name = "aurora-cuckoo"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cv-boot"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cv-joint"
 version = "0.1.0"
 
@@ -1009,6 +1021,10 @@ name = "aurora-diff-lock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-diff-temp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-diffuser"
 version = "0.1.0"
 
@@ -1107,6 +1123,10 @@ name = "aurora-driver-score"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-driveshaft-bal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-drl-led"
 version = "0.1.0"
 
@@ -1173,6 +1193,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-elec-diff"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-elevation"
@@ -1337,6 +1361,10 @@ name = "aurora-features"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-final-drive"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fleet"
 version = "0.1.0"
 dependencies = [
@@ -1363,6 +1391,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-flywheel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-flywheel-mon"
 version = "0.1.0"
 
 [[package]]
@@ -1454,6 +1486,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-gauge-cluster"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-gear-select"
 version = "0.1.0"
 
 [[package]]
@@ -1935,6 +1971,10 @@ name = "aurora-light-adapt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-limited-slip"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lin-bus"
 version = "0.1.0"
 
@@ -2295,6 +2335,10 @@ name = "aurora-park-brake"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-park-pawl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-parking"
 version = "0.1.0"
 dependencies = [
@@ -2465,6 +2509,10 @@ name = "aurora-prop-shaft"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pto-unit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pubsub"
 version = "0.1.0"
 
@@ -2570,6 +2618,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-revenue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-reverse-gear"
 version = "0.1.0"
 
 [[package]]
@@ -2783,6 +2835,10 @@ name = "aurora-serialization"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-shift-fork"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-shock-absorb"
 version = "0.1.0"
 
@@ -2988,6 +3044,10 @@ name = "aurora-sway-bar"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-synchro-ring"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tail-lamp"
 version = "0.1.0"
 
@@ -3117,6 +3177,10 @@ name = "aurora-torque-conv"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-torque-split"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tow-hitch"
 version = "0.1.0"
 
@@ -3159,6 +3223,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trans-shift"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-transfer-case"
 version = "0.1.0"
 
 [[package]]
@@ -3307,6 +3375,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-vin-decode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-viscous-coup"
 version = "0.1.0"
 
 [[package]]

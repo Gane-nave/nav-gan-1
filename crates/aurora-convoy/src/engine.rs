@@ -143,7 +143,7 @@ impl Convoy {
             && self
                 .vehicles
                 .iter()
-                .all(|v| v.is_leader() || (v.gap_m >= self.min_gap_m && v.gap_m <= self.max_gap_m))
+                .all(|v| v.is_leader() || ((self.min_gap_m..=self.max_gap_m).contains(&v.gap_m)))
     }
 
     pub fn convoy_length_m(&self) -> f64 {

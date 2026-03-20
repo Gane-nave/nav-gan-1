@@ -52,7 +52,7 @@ fn score_range() {
             .collect(),
     );
     let f = e.compute_fix().unwrap();
-    assert!(f.quality_score >= 0.0 && f.quality_score <= 1.0);
+    assert!((0.0..=1.0).contains(&f.quality_score));
 }
 #[test]
 fn clamp_weight() {

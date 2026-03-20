@@ -170,7 +170,7 @@ mod tests {
     #[test]
     fn test_risk_score_range() {
         let b = Bridge::new("Test", BridgeType::Beam, 100.0);
-        assert!(b.risk_score() >= 0.0 && b.risk_score() <= 100.0);
+        assert!((0.0..=100.0).contains(&b.risk_score()));
     }
 
     #[test]
