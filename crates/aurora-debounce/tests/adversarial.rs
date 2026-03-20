@@ -33,14 +33,14 @@ fn adversarial_debounce_rapid_suppress_and_fire() {
 fn adversarial_throttle_rate_limiting_with_reset() {
     let mut t = Throttle::new(1000);
 
-    assert!(t.try_allow(100));   // allowed (first)
-    assert!(!t.try_allow(500));  // throttled
-    assert!(!t.try_allow(900));  // throttled
-    assert!(t.try_allow(1100));  // allowed (1000ms since t=100)
+    assert!(t.try_allow(100)); // allowed (first)
+    assert!(!t.try_allow(500)); // throttled
+    assert!(!t.try_allow(900)); // throttled
+    assert!(t.try_allow(1100)); // allowed (1000ms since t=100)
 
     // Reset clears state
     t.reset();
-    assert!(t.try_allow(1200));  // allowed immediately after reset
+    assert!(t.try_allow(1200)); // allowed immediately after reset
 
     assert_eq!(t.total_allowed(), 3);
     assert_eq!(t.total_throttled(), 2);

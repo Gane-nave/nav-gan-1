@@ -8,15 +8,24 @@ fn adversarial_ttl_expiry_closed_reopen() {
     let mut sem = CountingSemaphore::new(2, 3000);
 
     // Fill to capacity
-    assert_eq!(sem.try_acquire(1000), AcquireResult::Acquired { permit_id: 1 });
-    assert_eq!(sem.try_acquire(1000), AcquireResult::Acquired { permit_id: 2 });
+    assert_eq!(
+        sem.try_acquire(1000),
+        AcquireResult::Acquired { permit_id: 1 }
+    );
+    assert_eq!(
+        sem.try_acquire(1000),
+        AcquireResult::Acquired { permit_id: 2 }
+    );
 
     // At capacity — should be unavailable
     assert_eq!(sem.try_acquire(2000), AcquireResult::Unavailable);
     assert_eq!(sem.total_rejected(), 1);
 
     // After TTL expiry (1000 + 3000 = 4000), both expired at t=5000
-    assert_eq!(sem.try_acquire(5000), AcquireResult::Acquired { permit_id: 3 });
+    assert_eq!(
+        sem.try_acquire(5000),
+        AcquireResult::Acquired { permit_id: 3 }
+    );
     assert_eq!(sem.active_count(), 1); // only the new one
 
     // Close blocks all
@@ -25,7 +34,10 @@ fn adversarial_ttl_expiry_closed_reopen() {
 
     // Reopen allows again
     sem.reopen();
-    assert_eq!(sem.try_acquire(7000), AcquireResult::Acquired { permit_id: 4 });
+    assert_eq!(
+        sem.try_acquire(7000),
+        AcquireResult::Acquired { permit_id: 4 }
+    );
 
     assert_eq!(sem.total_acquired(), 4);
     assert_eq!(sem.total_rejected(), 1);
