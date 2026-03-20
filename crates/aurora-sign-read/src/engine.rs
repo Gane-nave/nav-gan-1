@@ -1,13 +1,13 @@
-/// Sign reader: OCR, speed limit, warning, regulatory
-/// Phase 932
+/// sign read: capture, segment, classify, display, log
+/// Phase 1332
 
 #[derive(Debug, Clone)]
 pub struct SignRead {
-    pub ocr_ok: bool,
-    pub speed_ok: bool,
-    pub warning_ok: bool,
-    pub regulatory_ok: bool,
-    pub camera_ok: bool,
+    pub capture_ok: bool,
+    pub segment_ok: bool,
+    pub classify_ok: bool,
+    pub display_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for SignRead {
@@ -19,32 +19,32 @@ impl Default for SignRead {
 impl SignRead {
     pub fn new() -> Self {
         Self {
-            ocr_ok: true,
-            speed_ok: true,
-            warning_ok: true,
-            regulatory_ok: true,
-            camera_ok: true,
+            capture_ok: true,
+            segment_ok: true,
+            classify_ok: true,
+            display_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn recognition_ok(&self) -> bool {
-        self.ocr_ok && self.camera_ok
+    pub fn primary_ok(&self) -> bool {
+        self.capture_ok && self.segment_ok && self.classify_ok
     }
 
-    pub fn classification_ok(&self) -> bool {
-        self.speed_ok && self.warning_ok && self.regulatory_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.display_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.recognition_ok() && self.classification_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_calibration(&self) -> bool {
-        !self.camera_ok || !self.ocr_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.capture_ok || !self.segment_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.camera_ok { return 5.0; }
+        if !self.capture_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_recognition() {
+    fn test_primary() {
         let c = SignRead::new();
-        assert!(c.recognition_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_classification() {
+    fn test_secondary() {
         let c = SignRead::new();
-        assert!(c.classification_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_cal() {
+    fn test_no_attention() {
         let c = SignRead::new();
-        assert!(!c.needs_calibration());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_camera() {
+    fn test_field_toggle() {
         let mut c = SignRead::new();
-        c.camera_ok = false;
-        assert!(c.needs_calibration());
+        c.capture_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

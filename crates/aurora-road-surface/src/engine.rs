@@ -1,13 +1,13 @@
-/// Road surface: friction, wet, ice, gravel, quality
-/// Phase 941
+/// road surface: scan, classify, grip, warn, log
+/// Phase 1337
 
 #[derive(Debug, Clone)]
 pub struct RoadSurface {
-    pub friction_ok: bool,
-    pub wet_ok: bool,
-    pub ice_ok: bool,
-    pub gravel_ok: bool,
-    pub quality_ok: bool,
+    pub scan_ok: bool,
+    pub classify_ok: bool,
+    pub grip_ok: bool,
+    pub warn_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for RoadSurface {
@@ -19,32 +19,32 @@ impl Default for RoadSurface {
 impl RoadSurface {
     pub fn new() -> Self {
         Self {
-            friction_ok: true,
-            wet_ok: true,
-            ice_ok: true,
-            gravel_ok: true,
-            quality_ok: true,
+            scan_ok: true,
+            classify_ok: true,
+            grip_ok: true,
+            warn_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn condition_ok(&self) -> bool {
-        self.friction_ok && self.wet_ok && self.ice_ok
+    pub fn primary_ok(&self) -> bool {
+        self.scan_ok && self.classify_ok && self.grip_ok
     }
 
-    pub fn classification_ok(&self) -> bool {
-        self.gravel_ok && self.quality_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.warn_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.condition_ok() && self.classification_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_calibration(&self) -> bool {
-        !self.friction_ok || !self.wet_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.scan_ok || !self.classify_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.friction_ok { return 5.0; }
+        if !self.scan_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_condition() {
+    fn test_primary() {
         let c = RoadSurface::new();
-        assert!(c.condition_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_classification() {
+    fn test_secondary() {
         let c = RoadSurface::new();
-        assert!(c.classification_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_cal() {
+    fn test_no_attention() {
         let c = RoadSurface::new();
-        assert!(!c.needs_calibration());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_friction() {
+    fn test_field_toggle() {
         let mut c = RoadSurface::new();
-        c.friction_ok = false;
-        assert!(c.needs_calibration());
+        c.scan_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

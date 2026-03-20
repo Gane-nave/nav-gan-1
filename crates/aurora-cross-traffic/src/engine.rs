@@ -1,54 +1,50 @@
-/// Cross traffic alert: rear cross traffic, intersection warning
-/// Phase 266
+/// cross traffic: detect, classify, track, warn, brake
+/// Phase 1325
 
 #[derive(Debug, Clone)]
-pub struct CrossTrafficAlert {
-    pub active: bool,
-    pub left_approaching: bool,
-    pub right_approaching: bool,
-    pub distance_m: f64,
-    pub speed_kmh: f64,
-    pub sensor_ok: bool,
+pub struct CrossTraffic {
+    pub detect_ok: bool,
+    pub classify_ok: bool,
+    pub track_ok: bool,
+    pub warn_ok: bool,
+    pub brake_ok: bool,
 }
 
-impl Default for CrossTrafficAlert {
+impl Default for CrossTraffic {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CrossTrafficAlert {
+impl CrossTraffic {
     pub fn new() -> Self {
         Self {
-            active: true,
-            left_approaching: false,
-            right_approaching: false,
-            distance_m: 50.0,
-            speed_kmh: 0.0,
-            sensor_ok: true,
+            detect_ok: true,
+            classify_ok: true,
+            track_ok: true,
+            warn_ok: true,
+            brake_ok: true,
         }
     }
 
-    pub fn threat_detected(&self) -> bool {
-        self.left_approaching || self.right_approaching
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.classify_ok && self.track_ok
     }
 
-    pub fn imminent_collision(&self) -> bool {
-        self.threat_detected() && self.distance_m < 5.0
+    pub fn secondary_ok(&self) -> bool {
+        self.warn_ok && self.brake_ok
     }
 
-    pub fn all_clear(&self) -> bool {
-        !self.left_approaching && !self.right_approaching
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn should_brake(&self) -> bool {
-        self.imminent_collision() && self.speed_kmh < 20.0
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.classify_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok {
-            return 0.0;
-        }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -58,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_threat() {
-        let c = CrossTrafficAlert::new();
-        assert!(!c.threat_detected());
+    fn test_primary() {
+        let c = CrossTraffic::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_no_collision() {
-        let c = CrossTrafficAlert::new();
-        assert!(!c.imminent_collision());
+    fn test_secondary() {
+        let c = CrossTraffic::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_clear() {
-        let c = CrossTrafficAlert::new();
-        assert!(c.all_clear());
+    fn test_all_ok() {
+        let c = CrossTraffic::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_brake() {
-        let c = CrossTrafficAlert::new();
-        assert!(!c.should_brake());
+    fn test_no_attention() {
+        let c = CrossTraffic::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_approaching() {
-        let mut c = CrossTrafficAlert::new();
-        c.left_approaching = true;
-        assert!(c.threat_detected());
+    fn test_field_toggle() {
+        let mut c = CrossTraffic::new();
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CrossTrafficAlert::new();
+        let c = CrossTraffic::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

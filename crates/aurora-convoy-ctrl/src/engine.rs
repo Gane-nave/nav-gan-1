@@ -1,13 +1,13 @@
-/// Convoy control: form, join, coordinate, separate, emergency
-/// Phase 1121
+/// convoy ctrl: join, follow, adjust, leave, alert
+/// Phase 1324
 
 #[derive(Debug, Clone)]
 pub struct ConvoyCtrl {
-    pub form_ok: bool,
     pub join_ok: bool,
-    pub coordinate_ok: bool,
-    pub separate_ok: bool,
-    pub emergency_ok: bool,
+    pub follow_ok: bool,
+    pub adjust_ok: bool,
+    pub leave_ok: bool,
+    pub alert_ok: bool,
 }
 
 impl Default for ConvoyCtrl {
@@ -19,32 +19,32 @@ impl Default for ConvoyCtrl {
 impl ConvoyCtrl {
     pub fn new() -> Self {
         Self {
-            form_ok: true,
             join_ok: true,
-            coordinate_ok: true,
-            separate_ok: true,
-            emergency_ok: true,
+            follow_ok: true,
+            adjust_ok: true,
+            leave_ok: true,
+            alert_ok: true,
         }
     }
 
-    pub fn formation_ok(&self) -> bool {
-        self.form_ok && self.join_ok && self.coordinate_ok
+    pub fn primary_ok(&self) -> bool {
+        self.join_ok && self.follow_ok && self.adjust_ok
     }
 
-    pub fn safety_ok(&self) -> bool {
-        self.separate_ok && self.emergency_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.leave_ok && self.alert_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.formation_ok() && self.safety_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_reform(&self) -> bool {
-        !self.form_ok || !self.coordinate_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.join_ok || !self.follow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.form_ok { return 5.0; }
+        if !self.join_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_formation() {
+    fn test_primary() {
         let c = ConvoyCtrl::new();
-        assert!(c.formation_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_safety() {
+    fn test_secondary() {
         let c = ConvoyCtrl::new();
-        assert!(c.safety_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_reform() {
+    fn test_no_attention() {
         let c = ConvoyCtrl::new();
-        assert!(!c.needs_reform());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_form() {
+    fn test_field_toggle() {
         let mut c = ConvoyCtrl::new();
-        c.form_ok = false;
-        assert!(c.needs_reform());
+        c.join_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

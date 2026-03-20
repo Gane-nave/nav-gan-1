@@ -1,38 +1,38 @@
-/// summon ctrl: request, route, navigate, arrive, stop
-/// Phase 1323
+/// blind spot: detect, track, warn, inhibit, clear
+/// Phase 1326
 
 #[derive(Debug, Clone)]
-pub struct SummonCtrl {
-    pub request_ok: bool,
-    pub route_ok: bool,
-    pub navigate_ok: bool,
-    pub arrive_ok: bool,
-    pub stop_ok: bool,
+pub struct BlindSpot2 {
+    pub detect_ok: bool,
+    pub track_ok: bool,
+    pub warn_ok: bool,
+    pub inhibit_ok: bool,
+    pub clear_ok: bool,
 }
 
-impl Default for SummonCtrl {
+impl Default for BlindSpot2 {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SummonCtrl {
+impl BlindSpot2 {
     pub fn new() -> Self {
         Self {
-            request_ok: true,
-            route_ok: true,
-            navigate_ok: true,
-            arrive_ok: true,
-            stop_ok: true,
+            detect_ok: true,
+            track_ok: true,
+            warn_ok: true,
+            inhibit_ok: true,
+            clear_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.request_ok && self.route_ok && self.navigate_ok
+        self.detect_ok && self.track_ok && self.warn_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.arrive_ok && self.stop_ok
+        self.inhibit_ok && self.clear_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SummonCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.request_ok || !self.route_ok
+        !self.detect_ok || !self.track_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.request_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SummonCtrl::new();
+        let c = BlindSpot2::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SummonCtrl::new();
+        let c = BlindSpot2::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SummonCtrl::new();
+        let c = BlindSpot2::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SummonCtrl::new();
+        let c = BlindSpot2::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SummonCtrl::new();
-        c.request_ok = false;
+        let mut c = BlindSpot2::new();
+        c.detect_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SummonCtrl::new();
+        let c = BlindSpot2::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,57 +1,50 @@
-/// Lane keeping assist: lane detection, steering correction, centering
-/// Phase 263
+/// lane keep: detect, track, correct, alert, disengage
+/// Phase 1320
 
 #[derive(Debug, Clone)]
-pub struct LaneKeepAssist {
-    pub active: bool,
-    pub lane_detected: bool,
-    pub offset_m: f64,
-    pub correction_torque_nm: f64,
-    pub camera_ok: bool,
-    pub hands_on_wheel: bool,
+pub struct LaneKeep {
+    pub detect_ok: bool,
+    pub track_ok: bool,
+    pub correct_ok: bool,
+    pub alert_ok: bool,
+    pub disengage_ok: bool,
 }
 
-impl Default for LaneKeepAssist {
+impl Default for LaneKeep {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LaneKeepAssist {
+impl LaneKeep {
     pub fn new() -> Self {
         Self {
-            active: true,
-            lane_detected: true,
-            offset_m: 0.0,
-            correction_torque_nm: 0.0,
-            camera_ok: true,
-            hands_on_wheel: true,
+            detect_ok: true,
+            track_ok: true,
+            correct_ok: true,
+            alert_ok: true,
+            disengage_ok: true,
         }
     }
 
-    pub fn centered(&self) -> bool {
-        self.offset_m.abs() < 0.2
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.track_ok && self.correct_ok
     }
 
-    pub fn drifting(&self) -> bool {
-        self.offset_m.abs() > 0.5
+    pub fn secondary_ok(&self) -> bool {
+        self.alert_ok && self.disengage_ok
     }
 
-    pub fn can_operate(&self) -> bool {
-        self.camera_ok && self.lane_detected && self.hands_on_wheel
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn correcting(&self) -> bool {
-        self.correction_torque_nm.abs() > 0.1
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.track_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.camera_ok {
-            return 0.0;
-        }
-        if !self.lane_detected {
-            return 40.0;
-        }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_centered() {
-        let l = LaneKeepAssist::new();
-        assert!(l.centered());
+    fn test_primary() {
+        let c = LaneKeep::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_not_drifting() {
-        let l = LaneKeepAssist::new();
-        assert!(!l.drifting());
+    fn test_secondary() {
+        let c = LaneKeep::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_can_operate() {
-        let l = LaneKeepAssist::new();
-        assert!(l.can_operate());
+    fn test_all_ok() {
+        let c = LaneKeep::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_correcting() {
-        let l = LaneKeepAssist::new();
-        assert!(!l.correcting());
+    fn test_no_attention() {
+        let c = LaneKeep::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_drift() {
-        let mut l = LaneKeepAssist::new();
-        l.offset_m = 0.8;
-        assert!(l.drifting());
+    fn test_field_toggle() {
+        let mut c = LaneKeep::new();
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let l = LaneKeepAssist::new();
-        assert!((l.health_score() - 100.0).abs() < 0.1);
+        let c = LaneKeep::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

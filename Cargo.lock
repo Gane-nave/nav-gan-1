@@ -273,6 +273,10 @@ name = "aurora-android-auto"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-animal-detect"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-anomaly"
 version = "0.1.0"
 dependencies = [
@@ -536,6 +540,10 @@ name = "aurora-auto-park"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auto-park2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auto-pilot"
 version = "0.1.0"
 
@@ -705,6 +713,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-blind-spot"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-blind-spot2"
 version = "0.1.0"
 
 [[package]]
@@ -2358,6 +2370,10 @@ name = "aurora-front-camera"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-front-cross"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-frunk"
 version = "0.1.0"
 
@@ -3965,6 +3981,10 @@ name = "aurora-pedal-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pedes-detect"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pedestrian"
 version = "0.1.0"
 
@@ -4280,6 +4300,10 @@ name = "aurora-rear-camera"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rear-cross"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rear-disp"
 version = "0.1.0"
 
@@ -4446,6 +4470,14 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-road-closure"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-road-edge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-road-mark"
 version = "0.1.0"
 
 [[package]]
@@ -4910,6 +4942,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-speed-cam"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-speed-limit"
 version = "0.1.0"
 
 [[package]]
@@ -5399,6 +5435,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-light"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-traffic-light2"
 version = "0.1.0"
 
 [[package]]

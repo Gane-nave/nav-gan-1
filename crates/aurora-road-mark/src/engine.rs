@@ -1,38 +1,38 @@
-/// summon ctrl: request, route, navigate, arrive, stop
-/// Phase 1323
+/// road mark: detect, classify, track, fade, log
+/// Phase 1335
 
 #[derive(Debug, Clone)]
-pub struct SummonCtrl {
-    pub request_ok: bool,
-    pub route_ok: bool,
-    pub navigate_ok: bool,
-    pub arrive_ok: bool,
-    pub stop_ok: bool,
+pub struct RoadMark {
+    pub detect_ok: bool,
+    pub classify_ok: bool,
+    pub track_ok: bool,
+    pub fade_ok: bool,
+    pub log_ok: bool,
 }
 
-impl Default for SummonCtrl {
+impl Default for RoadMark {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SummonCtrl {
+impl RoadMark {
     pub fn new() -> Self {
         Self {
-            request_ok: true,
-            route_ok: true,
-            navigate_ok: true,
-            arrive_ok: true,
-            stop_ok: true,
+            detect_ok: true,
+            classify_ok: true,
+            track_ok: true,
+            fade_ok: true,
+            log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.request_ok && self.route_ok && self.navigate_ok
+        self.detect_ok && self.classify_ok && self.track_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.arrive_ok && self.stop_ok
+        self.fade_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SummonCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.request_ok || !self.route_ok
+        !self.detect_ok || !self.classify_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.request_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SummonCtrl::new();
+        let c = RoadMark::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SummonCtrl::new();
+        let c = RoadMark::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SummonCtrl::new();
+        let c = RoadMark::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SummonCtrl::new();
+        let c = RoadMark::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SummonCtrl::new();
-        c.request_ok = false;
+        let mut c = RoadMark::new();
+        c.detect_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SummonCtrl::new();
+        let c = RoadMark::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
