@@ -1,0 +1,6 @@
+[package]
+name = "aurora-weather-strip"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

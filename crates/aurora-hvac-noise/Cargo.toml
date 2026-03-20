@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hvac-noise"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

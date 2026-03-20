@@ -1,0 +1,6 @@
+[package]
+name = "aurora-resonator"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

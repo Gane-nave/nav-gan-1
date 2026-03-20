@@ -81,6 +81,10 @@ name = "aurora-abs-system"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-absorber-panel"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ac-charge"
 version = "0.1.0"
 
@@ -407,6 +411,10 @@ name = "aurora-battery-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bearing-noise"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-belt-tension"
 version = "0.1.0"
 
@@ -640,6 +648,10 @@ name = "aurora-compressor-ac"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-compressor-vib"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -826,6 +838,10 @@ name = "aurora-dag"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-damping-mat"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dash-cam"
 version = "0.1.0"
 
@@ -987,6 +1003,10 @@ name = "aurora-door-lock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-door-seal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-downforce"
 version = "0.1.0"
 
@@ -1128,6 +1148,10 @@ name = "aurora-engine-cover"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-engine-sound"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-error-accum"
 version = "0.1.0"
 dependencies = [
@@ -1210,6 +1234,10 @@ name = "aurora-exhaust-monitor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-exhaust-note"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-explain"
 version = "0.1.0"
 dependencies = [
@@ -1227,6 +1255,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-fan-balance"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-features"
@@ -1323,6 +1355,10 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-gear-whine"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-geo"
@@ -1482,6 +1518,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hvac-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hvac-noise"
 version = "0.1.0"
 
 [[package]]
@@ -1911,6 +1951,10 @@ name = "aurora-moat"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-modal-damp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-moderation"
 version = "0.1.0"
 dependencies = [
@@ -2261,6 +2305,10 @@ name = "aurora-pulley-sys"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pump-noise"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-quality-ctrl"
 version = "0.1.0"
 dependencies = [
@@ -2333,6 +2381,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-resonator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-retry"
 version = "0.1.0"
 
@@ -2367,6 +2419,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-road-noise"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-road-surface"
@@ -2794,6 +2850,10 @@ name = "aurora-timing-chain"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tire-cavity"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tire-monitor"
 version = "0.1.0"
 
@@ -3057,6 +3117,10 @@ name = "aurora-weather-nav"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-weather-strip"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-web"
 version = "0.1.0"
 dependencies = [
@@ -3097,7 +3161,15 @@ name = "aurora-wheel-well"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-wind-noise"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-window-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-window-seal"
 version = "0.1.0"
 
 [[package]]

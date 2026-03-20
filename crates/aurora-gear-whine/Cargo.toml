@@ -1,0 +1,6 @@
+[package]
+name = "aurora-gear-whine"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
