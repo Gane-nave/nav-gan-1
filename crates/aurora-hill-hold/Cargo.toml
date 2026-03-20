@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hill-hold"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

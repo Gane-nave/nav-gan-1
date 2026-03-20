@@ -73,6 +73,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-abs-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-abs-system"
 version = "0.1.0"
 
@@ -615,6 +619,10 @@ name = "aurora-coolant-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-coolant-temp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-core"
 version = "0.1.0"
 dependencies = [
@@ -958,6 +966,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-esc-system"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-eta"
 version = "0.1.0"
 dependencies = [
@@ -1054,6 +1066,10 @@ name = "aurora-fuel-opt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fusion"
 version = "0.1.0"
 dependencies = [
@@ -1122,6 +1138,10 @@ name = "aurora-gesture-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-glow-plug"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -1185,6 +1205,10 @@ name = "aurora-highway-merge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hill-hold"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-histogram"
 version = "0.1.0"
 
@@ -1216,6 +1240,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-idle-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-immersive"
@@ -1376,6 +1404,14 @@ name = "aurora-jumphash"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-knock-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lambda-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lane"
 version = "0.1.0"
 dependencies = [
@@ -1397,6 +1433,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-launch-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-lease"
@@ -1438,6 +1478,10 @@ name = "aurora-lru"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-maf-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map"
 version = "0.1.0"
 dependencies = [
@@ -1456,6 +1500,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-map-sensor"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-map-update"
@@ -1658,6 +1706,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-oil-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oil-press"
 version = "0.1.0"
 
 [[package]]
@@ -1878,6 +1930,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-retry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rev-limiter"
 version = "0.1.0"
 
 [[package]]
@@ -2218,6 +2274,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-thermo-valve"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-throttle-map"
 version = "0.1.0"
 
@@ -2425,6 +2485,14 @@ name = "aurora-voice-cmd"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-vvt-system"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-water-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-weather"
 version = "0.1.0"
 dependencies = [
@@ -2462,6 +2530,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-wheel-align"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-speed"
 version = "0.1.0"
 
 [[package]]

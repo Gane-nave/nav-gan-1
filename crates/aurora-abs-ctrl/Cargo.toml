@@ -1,0 +1,6 @@
+[package]
+name = "aurora-abs-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

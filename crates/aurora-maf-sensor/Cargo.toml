@@ -1,0 +1,6 @@
+[package]
+name = "aurora-maf-sensor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
