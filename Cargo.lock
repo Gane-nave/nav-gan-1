@@ -1198,6 +1198,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-cruise-adapt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cruise-ctrl"
 version = "0.1.0"
 
@@ -1207,6 +1211,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cup-holder"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-curb-detect"
 version = "0.1.0"
 
 [[package]]
@@ -1715,6 +1723,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-ev-charger-port"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ev-station"
 version = "0.1.0"
 
 [[package]]
@@ -2620,6 +2632,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-lane-assist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lane-change"
 version = "0.1.0"
 
@@ -3160,6 +3176,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-parking-guide"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-parking-nav"
 version = "0.1.0"
 
@@ -3272,6 +3292,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-post-crash"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-pothole-detect"
 version = "0.1.0"
 
 [[package]]
@@ -3835,6 +3859,10 @@ name = "aurora-side-window"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sign-read"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
@@ -3927,6 +3955,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-speed-bump"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-speed-cam"
@@ -4314,6 +4346,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-traffic-light"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-traffic-predict"
 version = "0.1.0"
 dependencies = [
@@ -4466,6 +4502,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-usb-hub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-uturn-assist"
 version = "0.1.0"
 
 [[package]]

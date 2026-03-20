@@ -1,13 +1,13 @@
-/// Hill start assist: incline detection, brake hold
-/// Phase 491
+/// Hill assist: grade, hold, launch, descent control
+/// Phase 937
 
 #[derive(Debug, Clone)]
 pub struct HillAssist {
-    pub incline_deg: f64,
-    pub brake_hold: bool,
-    pub ha_active: bool,
+    pub grade_ok: bool,
+    pub hold_ok: bool,
+    pub launch_ok: bool,
+    pub descent_ok: bool,
     pub sensor_ok: bool,
-    pub ecu_ok: bool,
 }
 
 impl Default for HillAssist {
@@ -19,32 +19,32 @@ impl Default for HillAssist {
 impl HillAssist {
     pub fn new() -> Self {
         Self {
-            incline_deg: 5.0,
-            brake_hold: true,
-            ha_active: true,
+            grade_ok: true,
+            hold_ok: true,
+            launch_ok: true,
+            descent_ok: true,
             sensor_ok: true,
-            ecu_ok: true,
         }
     }
 
-    pub fn on_hill(&self) -> bool {
-        self.incline_deg.abs() > 3.0
+    pub fn detection_ok(&self) -> bool {
+        self.grade_ok && self.sensor_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.sensor_ok && self.ecu_ok
+    pub fn control_ok(&self) -> bool {
+        self.hold_ok && self.launch_ok && self.descent_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.system_ok() && self.ha_active
+        self.detection_ok() && self.control_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.sensor_ok || !self.ecu_ok
+    pub fn needs_calibration(&self) -> bool {
+        !self.sensor_ok || !self.grade_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ecu_ok { return 15.0; }
+        if !self.sensor_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_on_hill() {
+    fn test_detection() {
         let c = HillAssist::new();
-        assert!(c.on_hill());
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_system() {
+    fn test_control() {
         let c = HillAssist::new();
-        assert!(c.system_ok());
+        assert!(c.control_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_cal() {
         let c = HillAssist::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_ecu_fail() {
+    fn test_sensor() {
         let mut c = HillAssist::new();
-        c.ecu_ok = false;
-        assert!(c.needs_service());
+        c.sensor_ok = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]

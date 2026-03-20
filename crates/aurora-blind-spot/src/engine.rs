@@ -1,13 +1,13 @@
-/// Blind spot monitoring: radar, indicator, cross traffic
-/// Phase 737
+/// Blind spot: radar, alert, cross-traffic, merge assist
+/// Phase 928
 
 #[derive(Debug, Clone)]
 pub struct BlindSpot {
     pub radar_ok: bool,
-    pub indicator_ok: bool,
-    pub cross_traffic_ok: bool,
-    pub range_ok: bool,
-    pub calibrated: bool,
+    pub alert_ok: bool,
+    pub cross_ok: bool,
+    pub merge_ok: bool,
+    pub display_ok: bool,
 }
 
 impl Default for BlindSpot {
@@ -20,27 +20,27 @@ impl BlindSpot {
     pub fn new() -> Self {
         Self {
             radar_ok: true,
-            indicator_ok: true,
-            cross_traffic_ok: true,
-            range_ok: true,
-            calibrated: true,
+            alert_ok: true,
+            cross_ok: true,
+            merge_ok: true,
+            display_ok: true,
         }
     }
 
     pub fn detection_ok(&self) -> bool {
-        self.radar_ok && self.range_ok && self.calibrated
+        self.radar_ok && self.cross_ok
     }
 
-    pub fn alert_ok(&self) -> bool {
-        self.indicator_ok && self.cross_traffic_ok
+    pub fn warning_ok(&self) -> bool {
+        self.alert_ok && self.merge_ok && self.display_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.detection_ok() && self.alert_ok()
+        self.detection_ok() && self.warning_ok()
     }
 
     pub fn needs_calibration(&self) -> bool {
-        !self.calibrated || !self.radar_ok
+        !self.radar_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_alert() {
+    fn test_warning() {
         let c = BlindSpot::new();
-        assert!(c.alert_ok());
+        assert!(c.warning_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_cal() {
+    fn test_radar() {
         let mut c = BlindSpot::new();
-        c.calibrated = false;
+        c.radar_ok = false;
         assert!(c.needs_calibration());
     }
 

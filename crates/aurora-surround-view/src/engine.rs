@@ -1,13 +1,13 @@
-/// Surround view: four cameras, stitching, calibration
-/// Phase 740
+/// Surround view: camera, stitch, 3D, overlay, record
+/// Phase 930
 
 #[derive(Debug, Clone)]
 pub struct SurroundView {
-    pub front_cam_ok: bool,
-    pub rear_cam_ok: bool,
-    pub left_cam_ok: bool,
-    pub right_cam_ok: bool,
-    pub calibrated: bool,
+    pub camera_ok: bool,
+    pub stitch_ok: bool,
+    pub view_3d_ok: bool,
+    pub overlay_ok: bool,
+    pub record_ok: bool,
 }
 
 impl Default for SurroundView {
@@ -19,32 +19,32 @@ impl Default for SurroundView {
 impl SurroundView {
     pub fn new() -> Self {
         Self {
-            front_cam_ok: true,
-            rear_cam_ok: true,
-            left_cam_ok: true,
-            right_cam_ok: true,
-            calibrated: true,
+            camera_ok: true,
+            stitch_ok: true,
+            view_3d_ok: true,
+            overlay_ok: true,
+            record_ok: true,
         }
     }
 
-    pub fn cameras_ok(&self) -> bool {
-        self.front_cam_ok && self.rear_cam_ok && self.left_cam_ok && self.right_cam_ok
+    pub fn capture_ok(&self) -> bool {
+        self.camera_ok && self.stitch_ok
     }
 
-    pub fn stitching_ok(&self) -> bool {
-        self.calibrated
+    pub fn rendering_ok(&self) -> bool {
+        self.view_3d_ok && self.overlay_ok && self.record_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.cameras_ok() && self.stitching_ok()
+        self.capture_ok() && self.rendering_ok()
     }
 
     pub fn needs_calibration(&self) -> bool {
-        !self.calibrated || !self.front_cam_ok
+        !self.camera_ok || !self.stitch_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.front_cam_ok { return 10.0; }
+        if !self.camera_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_cameras() {
+    fn test_capture() {
         let c = SurroundView::new();
-        assert!(c.cameras_ok());
+        assert!(c.capture_ok());
     }
 
     #[test]
-    fn test_stitching() {
+    fn test_rendering() {
         let c = SurroundView::new();
-        assert!(c.stitching_ok());
+        assert!(c.rendering_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_cal() {
+    fn test_camera() {
         let mut c = SurroundView::new();
-        c.calibrated = false;
+        c.camera_ok = false;
         assert!(c.needs_calibration());
     }
 

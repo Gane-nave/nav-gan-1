@@ -1,13 +1,13 @@
-/// Night vision: IR camera, pedestrian detect, overlay
-/// Phase 741
+/// Night vision: infrared, pedestrian, animal, display
+/// Phase 929
 
 #[derive(Debug, Clone)]
 pub struct NightVision {
-    pub ir_camera_ok: bool,
+    pub infrared_ok: bool,
     pub pedestrian_ok: bool,
-    pub overlay_ok: bool,
-    pub heater_ok: bool,
-    pub calibrated: bool,
+    pub animal_ok: bool,
+    pub display_ok: bool,
+    pub thermal_ok: bool,
 }
 
 impl Default for NightVision {
@@ -19,32 +19,32 @@ impl Default for NightVision {
 impl NightVision {
     pub fn new() -> Self {
         Self {
-            ir_camera_ok: true,
+            infrared_ok: true,
             pedestrian_ok: true,
-            overlay_ok: true,
-            heater_ok: true,
-            calibrated: true,
+            animal_ok: true,
+            display_ok: true,
+            thermal_ok: true,
         }
     }
 
-    pub fn imaging_ok(&self) -> bool {
-        self.ir_camera_ok && self.heater_ok && self.calibrated
+    pub fn detection_ok(&self) -> bool {
+        self.infrared_ok && self.pedestrian_ok && self.animal_ok
     }
 
-    pub fn detection_ok(&self) -> bool {
-        self.pedestrian_ok && self.overlay_ok
+    pub fn output_ok(&self) -> bool {
+        self.display_ok && self.thermal_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.imaging_ok() && self.detection_ok()
+        self.detection_ok() && self.output_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.ir_camera_ok || !self.calibrated
+    pub fn needs_calibration(&self) -> bool {
+        !self.infrared_ok || !self.thermal_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ir_camera_ok { return 10.0; }
+        if !self.infrared_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_imaging() {
-        let c = NightVision::new();
-        assert!(c.imaging_ok());
-    }
-
-    #[test]
     fn test_detection() {
         let c = NightVision::new();
         assert!(c.detection_ok());
+    }
+
+    #[test]
+    fn test_output() {
+        let c = NightVision::new();
+        assert!(c.output_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_cal() {
         let c = NightVision::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_ir() {
+    fn test_infrared() {
         let mut c = NightVision::new();
-        c.ir_camera_ok = false;
-        assert!(c.needs_service());
+        c.infrared_ok = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]

@@ -1,42 +1,42 @@
-/// Intersection: detection, right-of-way, conflict, timing
-/// Phase 933
+/// Speed bump: detection, warning, suspension adjust, comfort
+/// Phase 940
 
 #[derive(Debug, Clone)]
-pub struct Intersection {
+pub struct SpeedBump {
     pub detect_ok: bool,
-    pub right_of_way_ok: bool,
-    pub conflict_ok: bool,
-    pub timing_ok: bool,
+    pub warning_ok: bool,
+    pub suspend_ok: bool,
+    pub comfort_ok: bool,
     pub map_ok: bool,
 }
 
-impl Default for Intersection {
+impl Default for SpeedBump {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl Intersection {
+impl SpeedBump {
     pub fn new() -> Self {
         Self {
             detect_ok: true,
-            right_of_way_ok: true,
-            conflict_ok: true,
-            timing_ok: true,
+            warning_ok: true,
+            suspend_ok: true,
+            comfort_ok: true,
             map_ok: true,
         }
     }
 
-    pub fn awareness_ok(&self) -> bool {
+    pub fn detection_ok(&self) -> bool {
         self.detect_ok && self.map_ok
     }
 
-    pub fn safety_ok(&self) -> bool {
-        self.right_of_way_ok && self.conflict_ok && self.timing_ok
+    pub fn response_ok(&self) -> bool {
+        self.warning_ok && self.suspend_ok && self.comfort_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.awareness_ok() && self.safety_ok()
+        self.detection_ok() && self.response_ok()
     }
 
     pub fn needs_update(&self) -> bool {
@@ -44,7 +44,7 @@ impl Intersection {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.detect_ok { return 5.0; }
+        if !self.map_ok { return 10.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_awareness() {
-        let c = Intersection::new();
-        assert!(c.awareness_ok());
+    fn test_detection() {
+        let c = SpeedBump::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_safety() {
-        let c = Intersection::new();
-        assert!(c.safety_ok());
+    fn test_response() {
+        let c = SpeedBump::new();
+        assert!(c.response_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = Intersection::new();
+        let c = SpeedBump::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_update() {
-        let c = Intersection::new();
+        let c = SpeedBump::new();
         assert!(!c.needs_update());
     }
 
     #[test]
     fn test_map() {
-        let mut c = Intersection::new();
+        let mut c = SpeedBump::new();
         c.map_ok = false;
         assert!(c.needs_update());
     }
 
     #[test]
     fn test_health() {
-        let c = Intersection::new();
+        let c = SpeedBump::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
