@@ -1,5 +1,5 @@
 [package]
-name = "aurora-dc-fast-charge"
+name = "aurora-torque-sensor"
 version = "0.1.0"
 edition = "2021"
 

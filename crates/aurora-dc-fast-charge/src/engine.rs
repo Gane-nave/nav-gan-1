@@ -1,22 +1,13 @@
-/// DC fast charging: CCS/CHAdeMO, high-power delivery, thermal management
-/// Phase 290
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum DcConnector {
-    Ccs,
-    Chademo,
-    Tesla,
-    Gbt,
-}
+/// DC fast charge: CCS, CHAdeMO, power stage, cooling
+/// Phase 854
 
 #[derive(Debug, Clone)]
 pub struct DcFastCharge {
-    pub connector: DcConnector,
-    pub power_kw: f64,
-    pub max_power_kw: f64,
-    pub voltage_v: f64,
-    pub current_a: f64,
-    pub temp_ok: bool,
+    pub ccs_ok: bool,
+    pub chademo_ok: bool,
+    pub power_ok: bool,
+    pub cooling_ok: bool,
+    pub comm_ok: bool,
 }
 
 impl Default for DcFastCharge {
@@ -28,38 +19,32 @@ impl Default for DcFastCharge {
 impl DcFastCharge {
     pub fn new() -> Self {
         Self {
-            connector: DcConnector::Ccs,
-            power_kw: 0.0,
-            max_power_kw: 150.0,
-            voltage_v: 400.0,
-            current_a: 0.0,
-            temp_ok: true,
+            ccs_ok: true,
+            chademo_ok: true,
+            power_ok: true,
+            cooling_ok: true,
+            comm_ok: true,
         }
     }
 
-    pub fn is_charging(&self) -> bool {
-        self.power_kw > 1.0
+    pub fn protocol_ok(&self) -> bool {
+        self.ccs_ok && self.chademo_ok && self.comm_ok
     }
 
-    pub fn ultra_fast(&self) -> bool {
-        self.max_power_kw >= 250.0
+    pub fn hardware_ok(&self) -> bool {
+        self.power_ok && self.cooling_ok
     }
 
-    pub fn power_pct(&self) -> f64 {
-        if self.max_power_kw <= 0.0 {
-            return 0.0;
-        }
-        self.power_kw / self.max_power_kw * 100.0
+    pub fn all_ok(&self) -> bool {
+        self.protocol_ok() && self.hardware_ok()
     }
 
-    pub fn throttled(&self) -> bool {
-        !self.temp_ok && self.power_kw < self.max_power_kw * 0.5
+    pub fn needs_service(&self) -> bool {
+        !self.power_ok || !self.cooling_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.temp_ok {
-            return 50.0;
-        }
+        if !self.power_ok { return 5.0; }
         100.0
     }
 }
@@ -69,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_charging() {
-        let d = DcFastCharge::new();
-        assert!(!d.is_charging());
+    fn test_protocol() {
+        let c = DcFastCharge::new();
+        assert!(c.protocol_ok());
     }
 
     #[test]
-    fn test_not_ultra() {
-        let d = DcFastCharge::new();
-        assert!(!d.ultra_fast());
+    fn test_hardware() {
+        let c = DcFastCharge::new();
+        assert!(c.hardware_ok());
     }
 
     #[test]
-    fn test_zero_power() {
-        let d = DcFastCharge::new();
-        assert!(d.power_pct() < 0.1);
+    fn test_all_ok() {
+        let c = DcFastCharge::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_throttled() {
-        let d = DcFastCharge::new();
-        assert!(!d.throttled());
+    fn test_no_service() {
+        let c = DcFastCharge::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_charging() {
-        let mut d = DcFastCharge::new();
-        d.power_kw = 100.0;
-        assert!(d.is_charging());
+    fn test_power() {
+        let mut c = DcFastCharge::new();
+        c.power_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let d = DcFastCharge::new();
-        assert!((d.health_score() - 100.0).abs() < 0.1);
+        let c = DcFastCharge::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

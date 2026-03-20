@@ -511,6 +511,10 @@ name = "aurora-battery-test"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-battery-thermal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-tray"
 version = "0.1.0"
 
@@ -795,6 +799,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-cell-balance"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-center-console"
 version = "0.1.0"
 
@@ -804,6 +812,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-chaos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-cable"
 version = "0.1.0"
 
 [[package]]
@@ -1146,6 +1158,10 @@ name = "aurora-cup-holder"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-current-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cv-boot"
 version = "0.1.0"
 
@@ -1447,6 +1463,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-e-axle"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-e-motor"
 version = "0.1.0"
 
@@ -1623,6 +1643,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-ethernet-auto"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ev-charger-port"
 version = "0.1.0"
 
 [[package]]
@@ -2177,6 +2201,14 @@ name = "aurora-hv-battery"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hv-contactor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hv-interlock"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-hvac-ctrl"
 version = "0.1.0"
 
@@ -2437,6 +2469,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-ip-protect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-iso-monitor"
 version = "0.1.0"
 
 [[package]]
@@ -2764,6 +2800,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-motor-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-motor-resolver"
 version = "0.1.0"
 
 [[package]]
@@ -3304,6 +3344,10 @@ name = "aurora-recirc-flap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-reducer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-regen-brake"
 version = "0.1.0"
 
@@ -3662,11 +3706,19 @@ name = "aurora-snow-plow"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-soc-estimator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-social"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-soh-estimator"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-solar-charge"
@@ -4049,6 +4101,10 @@ name = "aurora-torque-conv"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-torque-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-torque-split"
 version = "0.1.0"
 
@@ -4242,6 +4298,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-v2g"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-v2x"
 version = "0.1.0"
 dependencies = [
@@ -4342,6 +4402,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-voice-cmd"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-voltage-monitor"
 version = "0.1.0"
 
 [[package]]
@@ -4518,6 +4582,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-motor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wireless-charge"
 version = "0.1.0"
 
 [[package]]
