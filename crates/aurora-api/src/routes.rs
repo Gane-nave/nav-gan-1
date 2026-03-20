@@ -344,17 +344,18 @@ pub async fn get_dashboard(State(state): State<Arc<AppState>>) -> Json<aurora_we
             heading_deg: fused.heading.true_heading_deg,
             accuracy_m: fused.uncertainty.semi_major_m,
             fix_type: format!("{:?}", fused.integrity_state),
-            timestamp_ms: fused.timestamp.timestamp_millis() as u64,
+            timestamp_ms: fused.timestamp.timestamp_millis().max(0) as u64,
         }
     } else {
+        // No valid position fix available: use neutral sentinel values
         aurora_web::dashboard::PositionData {
-            latitude: 32.0853,
-            longitude: 34.7818,
-            altitude_m: 25.0,
+            latitude: 0.0,
+            longitude: 0.0,
+            altitude_m: 0.0,
             speed_kmh: 0.0,
             heading_deg: 0.0,
-            accuracy_m: 2.5,
-            fix_type: "Waiting".into(),
+            accuracy_m: 0.0,
+            fix_type: "NoFix".into(),
             timestamp_ms: 0,
         }
     };

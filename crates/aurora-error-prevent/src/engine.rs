@@ -20,7 +20,12 @@ impl ErrorDetector {
         }
     }
     pub fn add_indicator(&mut self, ind: ConfusionIndicator, severity: f64) {
-        self.indicators.push((ind, severity.clamp(0.0, 1.0)));
+        let safe = if severity.is_finite() {
+            severity.clamp(0.0, 1.0)
+        } else {
+            0.0
+        };
+        self.indicators.push((ind, safe));
     }
     pub fn confusion_score(&self) -> f64 {
         if self.indicators.is_empty() {

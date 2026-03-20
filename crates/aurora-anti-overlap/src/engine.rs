@@ -79,15 +79,22 @@ impl AntiOverlapSystem {
         self.find_overlaps().len()
     }
     pub fn resolve_overlaps(&mut self) {
-        let overlaps = self.find_overlaps();
-        for (i, j) in overlaps {
-            let (lo, hi) = if self.elements[i].priority <= self.elements[j].priority {
-                (i, j)
-            } else {
-                (j, i)
-            };
-            if self.elements[hi].moveable {
-                self.elements[hi].bounds.y = self.elements[lo].bounds.bottom() + self.margin;
+        // Iterate until no overlaps remain or we hit a safety guard
+        let max_iterations = 100;
+        for _ in 0..max_iterations {
+            let overlaps = self.find_overlaps();
+            if overlaps.is_empty() {
+                break;
+            }
+            for (i, j) in overlaps {
+                let (lo, hi) = if self.elements[i].priority <= self.elements[j].priority {
+                    (i, j)
+                } else {
+                    (j, i)
+                };
+                if self.elements[hi].moveable {
+                    self.elements[hi].bounds.y = self.elements[lo].bounds.bottom() + self.margin;
+                }
             }
         }
     }
