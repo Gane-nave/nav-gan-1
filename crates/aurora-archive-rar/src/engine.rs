@@ -1,12 +1,12 @@
-/// archive rar: create, extract, list, verify, log
-/// Phase 1729
+/// archive rar: extract, list, test, repair, log
+/// Phase 2323
 
 #[derive(Debug, Clone)]
 pub struct ArchiveRar {
-    pub create_ok: bool,
     pub extract_ok: bool,
     pub list_ok: bool,
-    pub verify_ok: bool,
+    pub test_ok: bool,
+    pub repair_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for ArchiveRar {
 impl ArchiveRar {
     pub fn new() -> Self {
         Self {
-            create_ok: true,
             extract_ok: true,
             list_ok: true,
-            verify_ok: true,
+            test_ok: true,
+            repair_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.create_ok && self.extract_ok && self.list_ok
+        self.extract_ok && self.list_ok && self.test_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.verify_ok && self.log_ok
+        self.repair_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ArchiveRar {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.create_ok || !self.extract_ok
+        !self.extract_ok || !self.list_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.create_ok {
+        if !self.extract_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = ArchiveRar::new();
-        c.create_ok = false;
+        c.extract_ok = false;
         assert!(c.needs_attention());
     }
 

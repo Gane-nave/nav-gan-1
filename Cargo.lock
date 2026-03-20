@@ -693,6 +693,10 @@ name = "aurora-archive-iso"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-archive-pax"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-archive-rar"
 version = "0.1.0"
 
@@ -701,11 +705,23 @@ name = "aurora-archive-sevenz"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-archive-shar"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-archive-tar"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-archive-tar2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-archive-zip"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-zip2"
 version = "0.1.0"
 
 [[package]]
@@ -1770,6 +1786,46 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-columnar-db"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-brotli2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-bzip2v2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-deflate2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-gzip2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-lz4v2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-lzma2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-snappy2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-xz"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-zlib2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comp-zstd2"
 version = "0.1.0"
 
 [[package]]
@@ -3149,6 +3205,78 @@ dependencies = [
 
 [[package]]
 name = "aurora-emission-test"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-ascii2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-avro2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-base64v2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-bson2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-capnp2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-cbor2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-csv2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-flatbuf2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-hex2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-html"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-json4"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-msgpack2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-protobuf3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-thrift2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-url2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-utf16"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-utf8"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-enc-xml2"
 version = "0.1.0"
 
 [[package]]
@@ -5778,6 +5906,10 @@ name = "aurora-net-amqp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-anycast"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-avro2"
 version = "0.1.0"
 
@@ -5786,11 +5918,19 @@ name = "aurora-net-bcast"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-broadcast2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-coap"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-net-dns2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-dns4"
 version = "0.1.0"
 
 [[package]]
@@ -5826,6 +5966,10 @@ name = "aurora-net-imap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-ipsec"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-ldap"
 version = "0.1.0"
 
@@ -5838,7 +5982,19 @@ name = "aurora-net-memcache"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-mesh3"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-mqtt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-multicast2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-nfv"
 version = "0.1.0"
 
 [[package]]
@@ -5846,11 +6002,23 @@ name = "aurora-net-ntp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-p2p2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-pipe"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-proxy2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-quic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-quic2"
 version = "0.1.0"
 
 [[package]]
@@ -5867,6 +6035,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-net-sctp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-sdn"
 version = "0.1.0"
 
 [[package]]
@@ -5894,11 +6066,23 @@ name = "aurora-net-tcp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-tcp2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-thrift"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-tls3"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-tun"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-tunnel2"
 version = "0.1.0"
 
 [[package]]
@@ -5910,11 +6094,23 @@ name = "aurora-net-udp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-udp2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-unix"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-websocket2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-websocket3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-wireguard"
 version = "0.1.0"
 
 [[package]]
@@ -8654,7 +8850,35 @@ name = "aurora-trailing-arm"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-trans-backoff2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-bulkhead2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-cancel2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-circuit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-compress2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-congestion2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trans-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-deadline"
 version = "0.1.0"
 
 [[package]]
@@ -8662,7 +8886,15 @@ name = "aurora-trans-ecu"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-trans-encrypt2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trans-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-flow2"
 version = "0.1.0"
 
 [[package]]
@@ -8670,7 +8902,39 @@ name = "aurora-trans-fluid"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-trans-fragment2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-heartbeat2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-keepalive"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trans-mount"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-multiplex2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-ordered"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-priority2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-reliable"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-session3"
 version = "0.1.0"
 
 [[package]]
@@ -8679,6 +8943,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trans-temp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-timeout2"
 version = "0.1.0"
 
 [[package]]

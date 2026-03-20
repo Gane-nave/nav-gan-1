@@ -1,12 +1,12 @@
-/// archive sevenz: create, extract, list, append, log
-/// Phase 1728
+/// archive sevenz: create, extract, list, encrypt, log
+/// Phase 2322
 
 #[derive(Debug, Clone)]
 pub struct ArchiveSevenz {
     pub create_ok: bool,
     pub extract_ok: bool,
     pub list_ok: bool,
-    pub append_ok: bool,
+    pub encrypt_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl ArchiveSevenz {
             create_ok: true,
             extract_ok: true,
             list_ok: true,
-            append_ok: true,
+            encrypt_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl ArchiveSevenz {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.append_ok && self.log_ok
+        self.encrypt_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {

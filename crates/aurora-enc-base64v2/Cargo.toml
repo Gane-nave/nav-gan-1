@@ -1,0 +1,4 @@
+[package]
+name = "aurora-enc-base64v2"
+version = "0.1.0"
+edition = "2021"

@@ -1,0 +1,4 @@
+[package]
+name = "aurora-archive-zip2"
+version = "0.1.0"
+edition = "2021"

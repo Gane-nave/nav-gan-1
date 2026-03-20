@@ -1,12 +1,12 @@
-/// archive cpio: create, extract, list, append, log
-/// Phase 1730
+/// archive cpio: create, extract, list, convert, log
+/// Phase 2324
 
 #[derive(Debug, Clone)]
 pub struct ArchiveCpio {
     pub create_ok: bool,
     pub extract_ok: bool,
     pub list_ok: bool,
-    pub append_ok: bool,
+    pub convert_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl ArchiveCpio {
             create_ok: true,
             extract_ok: true,
             list_ok: true,
-            append_ok: true,
+            convert_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl ArchiveCpio {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.append_ok && self.log_ok
+        self.convert_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {

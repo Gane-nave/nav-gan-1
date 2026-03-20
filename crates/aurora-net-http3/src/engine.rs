@@ -1,12 +1,12 @@
-/// net http3: connect, request, stream, close, log
-/// Phase 1825
+/// net http3: request, response, stream, push, log
+/// Phase 2260
 
 #[derive(Debug, Clone)]
 pub struct NetHttp3 {
-    pub connect_ok: bool,
     pub request_ok: bool,
+    pub response_ok: bool,
     pub stream_ok: bool,
-    pub close_ok: bool,
+    pub push_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for NetHttp3 {
 impl NetHttp3 {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
             request_ok: true,
+            response_ok: true,
             stream_ok: true,
-            close_ok: true,
+            push_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.request_ok && self.stream_ok
+        self.request_ok && self.response_ok && self.stream_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.close_ok && self.log_ok
+        self.push_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl NetHttp3 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.request_ok
+        !self.request_ok || !self.response_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok {
+        if !self.request_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = NetHttp3::new();
-        c.connect_ok = false;
+        c.request_ok = false;
         assert!(c.needs_attention());
     }
 
