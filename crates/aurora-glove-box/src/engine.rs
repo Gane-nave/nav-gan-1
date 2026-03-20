@@ -1,13 +1,13 @@
-/// Glove box: latch, damper, light, lock
-/// Phase 755
+/// glove box: lock, light, cool, damper, check
+/// Phase 1280
 
 #[derive(Debug, Clone)]
 pub struct GloveBox {
-    pub latch_ok: bool,
-    pub damper_ok: bool,
-    pub light_ok: bool,
     pub lock_ok: bool,
-    pub hinge_ok: bool,
+    pub light_ok: bool,
+    pub cool_ok: bool,
+    pub damper_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for GloveBox {
@@ -19,32 +19,32 @@ impl Default for GloveBox {
 impl GloveBox {
     pub fn new() -> Self {
         Self {
-            latch_ok: true,
-            damper_ok: true,
-            light_ok: true,
             lock_ok: true,
-            hinge_ok: true,
+            light_ok: true,
+            cool_ok: true,
+            damper_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn mechanism_ok(&self) -> bool {
-        self.latch_ok && self.damper_ok && self.hinge_ok
+    pub fn primary_ok(&self) -> bool {
+        self.lock_ok && self.light_ok && self.cool_ok
     }
 
-    pub fn features_ok(&self) -> bool {
-        self.light_ok && self.lock_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.damper_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.mechanism_ok() && self.features_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.latch_ok || !self.hinge_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.lock_ok || !self.light_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.latch_ok { return 20.0; }
+        if !self.lock_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_mechanism() {
+    fn test_primary() {
         let c = GloveBox::new();
-        assert!(c.mechanism_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_features() {
+    fn test_secondary() {
         let c = GloveBox::new();
-        assert!(c.features_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = GloveBox::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_latch() {
+    fn test_field_toggle() {
         let mut c = GloveBox::new();
-        c.latch_ok = false;
-        assert!(c.needs_service());
+        c.lock_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

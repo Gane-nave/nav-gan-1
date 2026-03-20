@@ -1,4 +1,4 @@
 [package]
-name = "aurora-lin-bus"
+name = "aurora-ethernet-gw"
 version = "0.1.0"
 edition = "2021"

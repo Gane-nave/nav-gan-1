@@ -1,13 +1,13 @@
-/// Center console: storage, armrest, USB, wireless charge
-/// Phase 756
+/// center console: switch, dial, usb, storage, check
+/// Phase 1279
 
 #[derive(Debug, Clone)]
 pub struct CenterConsole {
-    pub storage_ok: bool,
-    pub armrest_ok: bool,
+    pub switch_ok: bool,
+    pub dial_ok: bool,
     pub usb_ok: bool,
-    pub wireless_ok: bool,
-    pub hinge_ok: bool,
+    pub storage_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for CenterConsole {
@@ -19,32 +19,32 @@ impl Default for CenterConsole {
 impl CenterConsole {
     pub fn new() -> Self {
         Self {
-            storage_ok: true,
-            armrest_ok: true,
+            switch_ok: true,
+            dial_ok: true,
             usb_ok: true,
-            wireless_ok: true,
-            hinge_ok: true,
+            storage_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn compartment_ok(&self) -> bool {
-        self.storage_ok && self.armrest_ok && self.hinge_ok
+    pub fn primary_ok(&self) -> bool {
+        self.switch_ok && self.dial_ok && self.usb_ok
     }
 
-    pub fn connectivity_ok(&self) -> bool {
-        self.usb_ok && self.wireless_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.storage_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.compartment_ok() && self.connectivity_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.usb_ok || !self.hinge_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.switch_ok || !self.dial_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.hinge_ok { return 20.0; }
+        if !self.switch_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_compartment() {
+    fn test_primary() {
         let c = CenterConsole::new();
-        assert!(c.compartment_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_connectivity() {
+    fn test_secondary() {
         let c = CenterConsole::new();
-        assert!(c.connectivity_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = CenterConsole::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_hinge() {
+    fn test_field_toggle() {
         let mut c = CenterConsole::new();
-        c.hinge_ok = false;
-        assert!(c.needs_service());
+        c.switch_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

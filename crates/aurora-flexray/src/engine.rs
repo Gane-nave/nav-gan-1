@@ -1,46 +1,46 @@
-/// FlexRay bus: sync, cycle, slot, guardian
-/// Phase 729
+/// flexray: sync, static, dynamic, guard, check
+/// Phase 1271
 
 #[derive(Debug, Clone)]
-pub struct FlexRay {
+pub struct Flexray {
     pub sync_ok: bool,
-    pub cycle_ok: bool,
-    pub slot_ok: bool,
-    pub guardian_ok: bool,
-    pub redundancy_ok: bool,
+    pub static_ok: bool,
+    pub dynamic_ok: bool,
+    pub guard_ok: bool,
+    pub check_ok: bool,
 }
 
-impl Default for FlexRay {
+impl Default for Flexray {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl FlexRay {
+impl Flexray {
     pub fn new() -> Self {
         Self {
             sync_ok: true,
-            cycle_ok: true,
-            slot_ok: true,
-            guardian_ok: true,
-            redundancy_ok: true,
+            static_ok: true,
+            dynamic_ok: true,
+            guard_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn timing_ok(&self) -> bool {
-        self.sync_ok && self.cycle_ok && self.slot_ok
+    pub fn primary_ok(&self) -> bool {
+        self.sync_ok && self.static_ok && self.dynamic_ok
     }
 
-    pub fn safety_ok(&self) -> bool {
-        self.guardian_ok && self.redundancy_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.guard_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.timing_ok() && self.safety_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.sync_ok || !self.guardian_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.sync_ok || !self.static_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_timing() {
-        let c = FlexRay::new();
-        assert!(c.timing_ok());
+    fn test_primary() {
+        let c = Flexray::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_safety() {
-        let c = FlexRay::new();
-        assert!(c.safety_ok());
+    fn test_secondary() {
+        let c = Flexray::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = FlexRay::new();
+        let c = Flexray::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_service() {
-        let c = FlexRay::new();
-        assert!(!c.needs_service());
+    fn test_no_attention() {
+        let c = Flexray::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_sync() {
-        let mut c = FlexRay::new();
+    fn test_field_toggle() {
+        let mut c = Flexray::new();
         c.sync_ok = false;
-        assert!(c.needs_service());
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = FlexRay::new();
+        let c = Flexray::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

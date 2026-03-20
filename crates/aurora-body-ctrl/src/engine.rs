@@ -1,50 +1,50 @@
-/// Body control module: lighting, windows, locks, wipers
-/// Phase 526
+/// body ctrl: light, lock, wiper, horn, check
+/// Phase 1274
 
 #[derive(Debug, Clone)]
-pub struct BodyControlModule {
-    pub lighting_ok: bool,
-    pub windows_ok: bool,
-    pub locks_ok: bool,
-    pub wipers_ok: bool,
-    pub ecu_ok: bool,
+pub struct BodyCtrl {
+    pub light_ok: bool,
+    pub lock_ok: bool,
+    pub wiper_ok: bool,
+    pub horn_ok: bool,
+    pub check_ok: bool,
 }
 
-impl Default for BodyControlModule {
+impl Default for BodyCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl BodyControlModule {
+impl BodyCtrl {
     pub fn new() -> Self {
         Self {
-            lighting_ok: true,
-            windows_ok: true,
-            locks_ok: true,
-            wipers_ok: true,
-            ecu_ok: true,
+            light_ok: true,
+            lock_ok: true,
+            wiper_ok: true,
+            horn_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn exterior_ok(&self) -> bool {
-        self.lighting_ok && self.wipers_ok
+    pub fn primary_ok(&self) -> bool {
+        self.light_ok && self.lock_ok && self.wiper_ok
     }
 
-    pub fn interior_ok(&self) -> bool {
-        self.windows_ok && self.locks_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.horn_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.exterior_ok() && self.interior_ok() && self.ecu_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.ecu_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.light_ok || !self.lock_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ecu_ok { return 10.0; }
+        if !self.light_ok { return 5.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_exterior() {
-        let c = BodyControlModule::new();
-        assert!(c.exterior_ok());
+    fn test_primary() {
+        let c = BodyCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_interior() {
-        let c = BodyControlModule::new();
-        assert!(c.interior_ok());
+    fn test_secondary() {
+        let c = BodyCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = BodyControlModule::new();
+        let c = BodyCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_service() {
-        let c = BodyControlModule::new();
-        assert!(!c.needs_service());
+    fn test_no_attention() {
+        let c = BodyCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_ecu_fail() {
-        let mut c = BodyControlModule::new();
-        c.ecu_ok = false;
-        assert!(c.needs_service());
+    fn test_field_toggle() {
+        let mut c = BodyCtrl::new();
+        c.light_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = BodyControlModule::new();
+        let c = BodyCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,38 +1,38 @@
-/// gateway ecu: translate, route, filter, log, check
-/// Phase 1273
+/// roof module: open, close, tilt, shade, check
+/// Phase 1276
 
 #[derive(Debug, Clone)]
-pub struct GatewayEcu {
-    pub translate_ok: bool,
-    pub route_ok: bool,
-    pub filter_ok: bool,
-    pub log_ok: bool,
+pub struct RoofModule {
+    pub open_ok: bool,
+    pub close_ok: bool,
+    pub tilt_ok: bool,
+    pub shade_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for GatewayEcu {
+impl Default for RoofModule {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl GatewayEcu {
+impl RoofModule {
     pub fn new() -> Self {
         Self {
-            translate_ok: true,
-            route_ok: true,
-            filter_ok: true,
-            log_ok: true,
+            open_ok: true,
+            close_ok: true,
+            tilt_ok: true,
+            shade_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.translate_ok && self.route_ok && self.filter_ok
+        self.open_ok && self.close_ok && self.tilt_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.log_ok && self.check_ok
+        self.shade_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl GatewayEcu {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.translate_ok || !self.route_ok
+        !self.open_ok || !self.close_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.translate_ok { return 5.0; }
+        if !self.open_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = GatewayEcu::new();
+        let c = RoofModule::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = GatewayEcu::new();
+        let c = RoofModule::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = GatewayEcu::new();
+        let c = RoofModule::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = GatewayEcu::new();
+        let c = RoofModule::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = GatewayEcu::new();
-        c.translate_ok = false;
+        let mut c = RoofModule::new();
+        c.open_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = GatewayEcu::new();
+        let c = RoofModule::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

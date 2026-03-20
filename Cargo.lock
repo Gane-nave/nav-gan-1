@@ -919,6 +919,10 @@ name = "aurora-can-bus"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-can-bus2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-can-gateway"
 version = "0.1.0"
 
@@ -940,6 +944,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cargo-cover"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cargo-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -1080,6 +1088,10 @@ name = "aurora-circuit"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-circuit-board"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-city"
 version = "0.1.0"
 dependencies = [
@@ -1158,6 +1170,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-collision-warn"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-column-module"
 version = "0.1.0"
 
 [[package]]
@@ -1241,6 +1257,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-conn-rod"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-connector"
 version = "0.1.0"
 
 [[package]]
@@ -1502,6 +1522,10 @@ name = "aurora-dash-display"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dash-module"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dash-pad"
 version = "0.1.0"
 
@@ -1740,6 +1764,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-door-lock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-door-module"
 version = "0.1.0"
 
 [[package]]
@@ -2051,6 +2079,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-ethernet-auto"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ethernet-gw"
 version = "0.1.0"
 
 [[package]]
@@ -4391,6 +4423,10 @@ name = "aurora-rollover-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-roof-module"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-roof-panel"
 version = "0.1.0"
 
@@ -5249,6 +5285,10 @@ name = "aurora-tow-hitch"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tow-module"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tracing-dist"
 version = "0.1.0"
 
@@ -5295,6 +5335,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trailer-brake"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trailer-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -5834,6 +5878,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-motor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wire-harness"
 version = "0.1.0"
 
 [[package]]

@@ -1,13 +1,13 @@
-/// LIN bus: master, slave, checksum, wakeup
-/// Phase 728
+/// lin bus: master, slave, schedule, wake, check
+/// Phase 1270
 
 #[derive(Debug, Clone)]
 pub struct LinBus {
     pub master_ok: bool,
     pub slave_ok: bool,
-    pub checksum_ok: bool,
-    pub wakeup_ok: bool,
-    pub timing_ok: bool,
+    pub schedule_ok: bool,
+    pub wake_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for LinBus {
@@ -21,30 +21,30 @@ impl LinBus {
         Self {
             master_ok: true,
             slave_ok: true,
-            checksum_ok: true,
-            wakeup_ok: true,
-            timing_ok: true,
+            schedule_ok: true,
+            wake_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn communication_ok(&self) -> bool {
-        self.master_ok && self.slave_ok && self.timing_ok
+    pub fn primary_ok(&self) -> bool {
+        self.master_ok && self.slave_ok && self.schedule_ok
     }
 
-    pub fn integrity_ok(&self) -> bool {
-        self.checksum_ok && self.wakeup_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.wake_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.communication_ok() && self.integrity_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.master_ok || !self.checksum_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.master_ok || !self.slave_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.master_ok { return 10.0; }
+        if !self.master_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_communication() {
+    fn test_primary() {
         let c = LinBus::new();
-        assert!(c.communication_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_integrity() {
+    fn test_secondary() {
         let c = LinBus::new();
-        assert!(c.integrity_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = LinBus::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_master() {
+    fn test_field_toggle() {
         let mut c = LinBus::new();
         c.master_ok = false;
-        assert!(c.needs_service());
+        assert!(c.needs_attention());
     }
 
     #[test]
