@@ -1,13 +1,13 @@
-/// Trunk latch: actuator, switch, seal, strut
-/// Phase 554
+/// Trunk latch: striker, actuator, release, switch
+/// Phase 684
 
 #[derive(Debug, Clone)]
 pub struct TrunkLatch {
+    pub striker_ok: bool,
     pub actuator_ok: bool,
+    pub release_ok: bool,
     pub switch_ok: bool,
     pub seal_ok: bool,
-    pub strut_ok: bool,
-    pub locked: bool,
 }
 
 impl Default for TrunkLatch {
@@ -19,32 +19,32 @@ impl Default for TrunkLatch {
 impl TrunkLatch {
     pub fn new() -> Self {
         Self {
+            striker_ok: true,
             actuator_ok: true,
+            release_ok: true,
             switch_ok: true,
             seal_ok: true,
-            strut_ok: true,
-            locked: true,
         }
     }
 
-    pub fn latch_ok(&self) -> bool {
+    pub fn mechanical_ok(&self) -> bool {
+        self.striker_ok && self.release_ok
+    }
+
+    pub fn electronic_ok(&self) -> bool {
         self.actuator_ok && self.switch_ok
     }
 
-    pub fn support_ok(&self) -> bool {
-        self.strut_ok && self.seal_ok
-    }
-
     pub fn all_ok(&self) -> bool {
-        self.latch_ok() && self.support_ok()
+        self.mechanical_ok() && self.electronic_ok() && self.seal_ok
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.actuator_ok || !self.strut_ok
+        !self.striker_ok || !self.actuator_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok { return 15.0; }
+        if !self.striker_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_latch() {
+    fn test_mechanical() {
         let c = TrunkLatch::new();
-        assert!(c.latch_ok());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_support() {
+    fn test_electronic() {
         let c = TrunkLatch::new();
-        assert!(c.support_ok());
+        assert!(c.electronic_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_actuator() {
+    fn test_striker() {
         let mut c = TrunkLatch::new();
-        c.actuator_ok = false;
+        c.striker_ok = false;
         assert!(c.needs_service());
     }
 

@@ -1,22 +1,13 @@
-/// Turn signal: blinker control, hazard lights, lane change assist
-/// Phase 245
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum SignalState {
-    Off,
-    Left,
-    Right,
-    Hazard,
-}
+/// Turn signal: flasher, bulb, lens, relay
+/// Phase 675
 
 #[derive(Debug, Clone)]
 pub struct TurnSignal {
-    pub state: SignalState,
-    pub flash_rate_hz: f64,
-    pub left_front_ok: bool,
-    pub left_rear_ok: bool,
-    pub right_front_ok: bool,
-    pub right_rear_ok: bool,
+    pub flasher_ok: bool,
+    pub bulb_ok: bool,
+    pub lens_ok: bool,
+    pub relay_ok: bool,
+    pub rate_ok: bool,
 }
 
 impl Default for TurnSignal {
@@ -28,35 +19,32 @@ impl Default for TurnSignal {
 impl TurnSignal {
     pub fn new() -> Self {
         Self {
-            state: SignalState::Off,
-            flash_rate_hz: 1.5,
-            left_front_ok: true,
-            left_rear_ok: true,
-            right_front_ok: true,
-            right_rear_ok: true,
+            flasher_ok: true,
+            bulb_ok: true,
+            lens_ok: true,
+            relay_ok: true,
+            rate_ok: true,
         }
     }
 
-    pub fn is_signaling(&self) -> bool {
-        self.state != SignalState::Off
+    pub fn signal_ok(&self) -> bool {
+        self.flasher_ok && self.bulb_ok && self.rate_ok
     }
 
-    pub fn all_bulbs_ok(&self) -> bool {
-        self.left_front_ok && self.left_rear_ok && self.right_front_ok && self.right_rear_ok
+    pub fn housing_ok(&self) -> bool {
+        self.lens_ok && self.relay_ok
     }
 
-    pub fn hyper_flash(&self) -> bool {
-        self.flash_rate_hz > 2.5
+    pub fn all_ok(&self) -> bool {
+        self.signal_ok() && self.housing_ok()
     }
 
-    pub fn bulb_out_detected(&self) -> bool {
-        !self.all_bulbs_ok() || self.hyper_flash()
+    pub fn needs_replacement(&self) -> bool {
+        !self.bulb_ok || !self.flasher_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.all_bulbs_ok() {
-            return 50.0;
-        }
+        if !self.flasher_ok { return 10.0; }
         100.0
     }
 }
@@ -66,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_off() {
-        let t = TurnSignal::new();
-        assert!(!t.is_signaling());
+    fn test_signal() {
+        let c = TurnSignal::new();
+        assert!(c.signal_ok());
     }
 
     #[test]
-    fn test_all_bulbs() {
-        let t = TurnSignal::new();
-        assert!(t.all_bulbs_ok());
+    fn test_housing() {
+        let c = TurnSignal::new();
+        assert!(c.housing_ok());
     }
 
     #[test]
-    fn test_no_hyper() {
-        let t = TurnSignal::new();
-        assert!(!t.hyper_flash());
+    fn test_all_ok() {
+        let c = TurnSignal::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_bulb_out() {
-        let t = TurnSignal::new();
-        assert!(!t.bulb_out_detected());
+    fn test_no_replace() {
+        let c = TurnSignal::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_left() {
-        let mut t = TurnSignal::new();
-        t.state = SignalState::Left;
-        assert!(t.is_signaling());
+    fn test_bulb() {
+        let mut c = TurnSignal::new();
+        c.bulb_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let t = TurnSignal::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TurnSignal::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

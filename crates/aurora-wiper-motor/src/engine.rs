@@ -1,13 +1,13 @@
-/// Wiper motor: speed control, park position, linkage
-/// Phase 534
+/// Wiper motor: linkage, blade, washer, intermittent
+/// Phase 677
 
 #[derive(Debug, Clone)]
 pub struct WiperMotor {
-    pub speed_rpm: f64,
-    pub park_ok: bool,
-    pub linkage_ok: bool,
     pub motor_ok: bool,
+    pub linkage_ok: bool,
+    pub blade_ok: bool,
     pub washer_ok: bool,
+    pub intermittent_ok: bool,
 }
 
 impl Default for WiperMotor {
@@ -19,28 +19,28 @@ impl Default for WiperMotor {
 impl WiperMotor {
     pub fn new() -> Self {
         Self {
-            speed_rpm: 45.0,
-            park_ok: true,
-            linkage_ok: true,
             motor_ok: true,
+            linkage_ok: true,
+            blade_ok: true,
             washer_ok: true,
+            intermittent_ok: true,
         }
     }
 
-    pub fn speed_ok(&self) -> bool {
-        self.speed_rpm > 20.0
+    pub fn drive_ok(&self) -> bool {
+        self.motor_ok && self.linkage_ok
     }
 
-    pub fn mechanical_ok(&self) -> bool {
-        self.park_ok && self.linkage_ok && self.motor_ok
+    pub fn cleaning_ok(&self) -> bool {
+        self.blade_ok && self.washer_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.speed_ok() && self.mechanical_ok() && self.washer_ok
+        self.drive_ok() && self.cleaning_ok() && self.intermittent_ok
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.motor_ok || !self.linkage_ok
+        !self.motor_ok || !self.blade_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_speed() {
+    fn test_drive() {
         let c = WiperMotor::new();
-        assert!(c.speed_ok());
+        assert!(c.drive_ok());
     }
 
     #[test]
-    fn test_mechanical() {
+    fn test_cleaning() {
         let c = WiperMotor::new();
-        assert!(c.mechanical_ok());
+        assert!(c.cleaning_ok());
     }
 
     #[test]

@@ -1,12 +1,12 @@
-/// Fuse box: circuit protection, relay slots, connections
-/// Phase 521
+/// Fuse box: relay, fuse, terminal, cover
+/// Phase 688
 
 #[derive(Debug, Clone)]
 pub struct FuseBox {
-    pub fuse_count: u32,
-    pub blown_count: u32,
-    pub relay_slots_ok: bool,
-    pub connections_ok: bool,
+    pub relay_ok: bool,
+    pub fuse_ok: bool,
+    pub terminal_ok: bool,
+    pub cover_ok: bool,
     pub corrosion_free: bool,
 }
 
@@ -19,32 +19,32 @@ impl Default for FuseBox {
 impl FuseBox {
     pub fn new() -> Self {
         Self {
-            fuse_count: 40,
-            blown_count: 0,
-            relay_slots_ok: true,
-            connections_ok: true,
+            relay_ok: true,
+            fuse_ok: true,
+            terminal_ok: true,
+            cover_ok: true,
             corrosion_free: true,
         }
     }
 
-    pub fn all_fuses_ok(&self) -> bool {
-        self.blown_count == 0
+    pub fn protection_ok(&self) -> bool {
+        self.fuse_ok && self.relay_ok
     }
 
-    pub fn connections_good(&self) -> bool {
-        self.connections_ok && self.corrosion_free
+    pub fn condition_ok(&self) -> bool {
+        self.terminal_ok && self.corrosion_free && self.cover_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.all_fuses_ok() && self.connections_good() && self.relay_slots_ok
+        self.protection_ok() && self.condition_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        self.blown_count > 0 || !self.connections_ok
+        !self.fuse_ok || !self.corrosion_free
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.blown_count > 0 { return 30.0; }
+        if !self.fuse_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_fuses() {
+    fn test_protection() {
         let c = FuseBox::new();
-        assert!(c.all_fuses_ok());
+        assert!(c.protection_ok());
     }
 
     #[test]
-    fn test_connections() {
+    fn test_condition() {
         let c = FuseBox::new();
-        assert!(c.connections_good());
+        assert!(c.condition_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_blown() {
+    fn test_fuse() {
         let mut c = FuseBox::new();
-        c.blown_count = 2;
+        c.fuse_ok = false;
         assert!(c.needs_service());
     }
 

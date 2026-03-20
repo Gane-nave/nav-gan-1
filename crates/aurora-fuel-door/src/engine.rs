@@ -1,13 +1,13 @@
-/// Fuel door: actuator, hinge, spring, seal
-/// Phase 555
+/// Fuel door: actuator, hinge, seal, lock
+/// Phase 685
 
 #[derive(Debug, Clone)]
 pub struct FuelDoor {
     pub actuator_ok: bool,
     pub hinge_ok: bool,
-    pub spring_ok: bool,
     pub seal_ok: bool,
-    pub locked: bool,
+    pub lock_ok: bool,
+    pub spring_ok: bool,
 }
 
 impl Default for FuelDoor {
@@ -21,9 +21,9 @@ impl FuelDoor {
         Self {
             actuator_ok: true,
             hinge_ok: true,
-            spring_ok: true,
             seal_ok: true,
-            locked: true,
+            lock_ok: true,
+            spring_ok: true,
         }
     }
 
@@ -31,12 +31,12 @@ impl FuelDoor {
         self.actuator_ok && self.hinge_ok && self.spring_ok
     }
 
-    pub fn sealed(&self) -> bool {
-        self.seal_ok
+    pub fn sealing_ok(&self) -> bool {
+        self.seal_ok && self.lock_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.mechanism_ok() && self.sealed()
+        self.mechanism_ok() && self.sealing_ok()
     }
 
     pub fn needs_service(&self) -> bool {
@@ -44,7 +44,7 @@ impl FuelDoor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok { return 20.0; }
+        if !self.actuator_ok { return 15.0; }
         100.0
     }
 }
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_sealed() {
+    fn test_sealing() {
         let c = FuelDoor::new();
-        assert!(c.sealed());
+        assert!(c.sealing_ok());
     }
 
     #[test]

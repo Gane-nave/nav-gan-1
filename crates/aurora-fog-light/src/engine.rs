@@ -1,14 +1,13 @@
-/// Fog light: front/rear fog, auto activation, visibility sensing
-/// Phase 244
+/// Fog light: bulb, lens, bracket, switch
+/// Phase 674
 
 #[derive(Debug, Clone)]
 pub struct FogLight {
-    pub front_on: bool,
-    pub rear_on: bool,
-    pub front_ok: bool,
-    pub rear_ok: bool,
-    pub visibility_m: f64,
-    pub auto_mode: bool,
+    pub bulb_ok: bool,
+    pub lens_ok: bool,
+    pub bracket_ok: bool,
+    pub switch_ok: bool,
+    pub aligned: bool,
 }
 
 impl Default for FogLight {
@@ -20,38 +19,32 @@ impl Default for FogLight {
 impl FogLight {
     pub fn new() -> Self {
         Self {
-            front_on: false,
-            rear_on: false,
-            front_ok: true,
-            rear_ok: true,
-            visibility_m: 500.0,
-            auto_mode: true,
+            bulb_ok: true,
+            lens_ok: true,
+            bracket_ok: true,
+            switch_ok: true,
+            aligned: true,
         }
     }
 
-    pub fn fog_conditions(&self) -> bool {
-        self.visibility_m < 100.0
+    pub fn lamp_ok(&self) -> bool {
+        self.bulb_ok && self.lens_ok
     }
 
-    pub fn should_activate(&self) -> bool {
-        self.auto_mode && self.fog_conditions()
+    pub fn mounting_ok(&self) -> bool {
+        self.bracket_ok && self.aligned
     }
 
     pub fn all_ok(&self) -> bool {
-        self.front_ok && self.rear_ok
+        self.lamp_ok() && self.mounting_ok() && self.switch_ok
     }
 
-    pub fn any_on(&self) -> bool {
-        self.front_on || self.rear_on
+    pub fn needs_service(&self) -> bool {
+        !self.bulb_ok || !self.aligned
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.front_ok && !self.rear_ok {
-            return 0.0;
-        }
-        if !self.all_ok() {
-            return 50.0;
-        }
+        if !self.bulb_ok { return 15.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_fog() {
-        let f = FogLight::new();
-        assert!(!f.fog_conditions());
+    fn test_lamp() {
+        let c = FogLight::new();
+        assert!(c.lamp_ok());
     }
 
     #[test]
-    fn test_no_activate() {
-        let f = FogLight::new();
-        assert!(!f.should_activate());
+    fn test_mounting() {
+        let c = FogLight::new();
+        assert!(c.mounting_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let f = FogLight::new();
-        assert!(f.all_ok());
+        let c = FogLight::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_none_on() {
-        let f = FogLight::new();
-        assert!(!f.any_on());
+    fn test_no_service() {
+        let c = FogLight::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_fog() {
-        let mut f = FogLight::new();
-        f.visibility_m = 50.0;
-        assert!(f.should_activate());
+    fn test_bulb() {
+        let mut c = FogLight::new();
+        c.bulb_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let f = FogLight::new();
-        assert!((f.health_score() - 100.0).abs() < 0.1);
+        let c = FogLight::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,5 +1,5 @@
 [package]
-name = "aurora-fog-light"
+name = "aurora-interior-light"
 version = "0.1.0"
 edition = "2021"
 

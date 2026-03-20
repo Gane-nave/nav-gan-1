@@ -1,84 +1,51 @@
-/// Power window control: position tracking, anti-pinch, auto up/down
-/// Phase 175
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum WindowPosition {
-    FrontLeft,
-    FrontRight,
-    RearLeft,
-    RearRight,
-}
+/// Power window: motor, regulator, switch, seal
+/// Phase 679
 
 #[derive(Debug, Clone)]
 pub struct PowerWindow {
-    pub position: WindowPosition,
-    pub open_pct: f64,
-    pub auto_enabled: bool,
-    pub anti_pinch: bool,
-    pub motor_current_a: f64,
+    pub motor_ok: bool,
+    pub regulator_ok: bool,
+    pub switch_ok: bool,
+    pub seal_ok: bool,
+    pub auto_ok: bool,
 }
 
-impl PowerWindow {
-    pub fn new(position: WindowPosition) -> Self {
-        Self {
-            position,
-            open_pct: 0.0,
-            auto_enabled: true,
-            anti_pinch: true,
-            motor_current_a: 0.0,
-        }
-    }
-
-    pub fn is_closed(&self) -> bool {
-        self.open_pct < 1.0
-    }
-
-    pub fn is_fully_open(&self) -> bool {
-        self.open_pct > 99.0
-    }
-
-    pub fn obstruction_detected(&self) -> bool {
-        self.anti_pinch && self.motor_current_a > 8.0
-    }
-
-    pub fn rain_warning(&self) -> bool {
-        self.open_pct > 10.0
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct WindowSystem {
-    pub windows: Vec<PowerWindow>,
-}
-
-impl Default for WindowSystem {
+impl Default for PowerWindow {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl WindowSystem {
+impl PowerWindow {
     pub fn new() -> Self {
         Self {
-            windows: vec![
-                PowerWindow::new(WindowPosition::FrontLeft),
-                PowerWindow::new(WindowPosition::FrontRight),
-                PowerWindow::new(WindowPosition::RearLeft),
-                PowerWindow::new(WindowPosition::RearRight),
-            ],
+            motor_ok: true,
+            regulator_ok: true,
+            switch_ok: true,
+            seal_ok: true,
+            auto_ok: true,
         }
     }
 
-    pub fn all_closed(&self) -> bool {
-        self.windows.iter().all(|w| w.is_closed())
+    pub fn drive_ok(&self) -> bool {
+        self.motor_ok && self.regulator_ok
     }
 
-    pub fn any_open(&self) -> bool {
-        self.windows.iter().any(|w| !w.is_closed())
+    pub fn controls_ok(&self) -> bool {
+        self.switch_ok && self.auto_ok
     }
 
-    pub fn rain_risk(&self) -> bool {
-        self.windows.iter().any(|w| w.rain_warning())
+    pub fn all_ok(&self) -> bool {
+        self.drive_ok() && self.controls_ok() && self.seal_ok
+    }
+
+    pub fn needs_service(&self) -> bool {
+        !self.motor_ok || !self.regulator_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.motor_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -87,48 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_closed() {
-        let w = PowerWindow::new(WindowPosition::FrontLeft);
-        assert!(w.is_closed());
+    fn test_drive() {
+        let c = PowerWindow::new();
+        assert!(c.drive_ok());
     }
 
     #[test]
-    fn test_open() {
-        let mut w = PowerWindow::new(WindowPosition::FrontLeft);
-        w.open_pct = 100.0;
-        assert!(w.is_fully_open());
+    fn test_controls() {
+        let c = PowerWindow::new();
+        assert!(c.controls_ok());
     }
 
     #[test]
-    fn test_obstruction() {
-        let mut w = PowerWindow::new(WindowPosition::RearLeft);
-        w.motor_current_a = 10.0;
-        assert!(w.obstruction_detected());
+    fn test_all_ok() {
+        let c = PowerWindow::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_system_closed() {
-        let s = WindowSystem::new();
-        assert!(s.all_closed());
+    fn test_no_service() {
+        let c = PowerWindow::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_system_open() {
-        let mut s = WindowSystem::new();
-        s.windows[0].open_pct = 50.0;
-        assert!(s.any_open());
+    fn test_motor() {
+        let mut c = PowerWindow::new();
+        c.motor_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
-    fn test_rain_risk() {
-        let mut s = WindowSystem::new();
-        s.windows[1].open_pct = 30.0;
-        assert!(s.rain_risk());
-    }
-
-    #[test]
-    fn test_no_rain_risk() {
-        let s = WindowSystem::new();
-        assert!(!s.rain_risk());
+    fn test_health() {
+        let c = PowerWindow::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
