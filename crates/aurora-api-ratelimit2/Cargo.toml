@@ -1,0 +1,4 @@
+[package]
+name = "aurora-api-ratelimit2"
+version = "0.1.0"
+edition = "2021"

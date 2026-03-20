@@ -433,6 +433,78 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-api-auth2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-cache2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-compress2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-cors"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-csrf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-doc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-gateway2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-graphql2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-grpc3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-openapi"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-pagination"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-ratelimit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-rest2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-sort"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-swagger"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-throttle"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-api-versioning"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-app"
 version = "0.1.0"
 dependencies = [
@@ -2862,6 +2934,78 @@ name = "aurora-evasive-steer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-event-batch2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-bridge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-bus"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-compress"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-cqrs"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-dlq"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-encrypt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-filter2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-hook"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-inbox"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-outbox"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-partition"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-replay"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-saga2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-schedule"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-schema2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-source"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-event-store2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-event-traffic"
 version = "0.1.0"
 
@@ -3890,6 +4034,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-index-bitmap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-index-bloom2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-index-btree"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-index-hash"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-index-inverted"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-index-spatial"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-indoor"
 version = "0.1.0"
 dependencies = [
@@ -4850,11 +5018,23 @@ name = "aurora-net-amqp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-avro2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-bcast"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-coap"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-net-dns2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-dtls"
 version = "0.1.0"
 
 [[package]]
@@ -4866,7 +5046,19 @@ name = "aurora-net-grpc"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-grpc2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-http"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-http3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-ice"
 version = "0.1.0"
 
 [[package]]
@@ -4875,6 +5067,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-net-ldap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-mcast"
 version = "0.1.0"
 
 [[package]]
@@ -4890,7 +5086,27 @@ name = "aurora-net-ntp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-pipe"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-quic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-raw"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-redis"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-rsocket"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-sctp"
 version = "0.1.0"
 
 [[package]]
@@ -4910,11 +5126,35 @@ name = "aurora-net-stomp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-stun"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-tcp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-net-thrift"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-tun"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-turn"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-net-udp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-unix"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-websocket3"
 version = "0.1.0"
 
 [[package]]
@@ -6310,6 +6550,54 @@ dependencies = [
 
 [[package]]
 name = "aurora-sealant-mon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-facet"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-full"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-fuzzy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-geo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-highlight"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-rank"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-spell"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-stem"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-suggest"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-synonym"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-token"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-search-vector"
 version = "0.1.0"
 
 [[package]]
