@@ -1,12 +1,12 @@
-/// ml model: define, compile, optimize, quantize, log
-/// Phase 1468
+/// ml model: create, train, evaluate, deploy, log
+/// Phase 1953
 
 #[derive(Debug, Clone)]
 pub struct MlModel {
-    pub define_ok: bool,
-    pub compile_ok: bool,
-    pub optimize_ok: bool,
-    pub quantize_ok: bool,
+    pub create_ok: bool,
+    pub train_ok: bool,
+    pub evaluate_ok: bool,
+    pub deploy_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MlModel {
 impl MlModel {
     pub fn new() -> Self {
         Self {
-            define_ok: true,
-            compile_ok: true,
-            optimize_ok: true,
-            quantize_ok: true,
+            create_ok: true,
+            train_ok: true,
+            evaluate_ok: true,
+            deploy_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.compile_ok && self.optimize_ok
+        self.create_ok && self.train_ok && self.evaluate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.quantize_ok && self.log_ok
+        self.deploy_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MlModel {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.compile_ok
+        !self.create_ok || !self.train_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.define_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MlModel::new();
-        c.define_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

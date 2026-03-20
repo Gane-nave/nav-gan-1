@@ -1,12 +1,12 @@
-/// ml registry: register, version, stage, promote, log
-/// Phase 1473
+/// ml registry: register, version, stage, deploy, log
+/// Phase 1956
 
 #[derive(Debug, Clone)]
 pub struct MlRegistry {
     pub register_ok: bool,
     pub version_ok: bool,
     pub stage_ok: bool,
-    pub promote_ok: bool,
+    pub deploy_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl MlRegistry {
             register_ok: true,
             version_ok: true,
             stage_ok: true,
-            promote_ok: true,
+            deploy_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl MlRegistry {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.promote_ok && self.log_ok
+        self.deploy_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {

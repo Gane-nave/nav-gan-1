@@ -1,12 +1,12 @@
-/// ml pipeline: orchestrate, schedule, retry, report, log
-/// Phase 1471
+/// ml pipeline2: define, execute, monitor, rollback, log
+/// Phase 1954
 
 #[derive(Debug, Clone)]
 pub struct MlPipeline2 {
-    pub orchestrate_ok: bool,
-    pub schedule_ok: bool,
-    pub retry_ok: bool,
-    pub report_ok: bool,
+    pub define_ok: bool,
+    pub execute_ok: bool,
+    pub monitor_ok: bool,
+    pub rollback_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MlPipeline2 {
 impl MlPipeline2 {
     pub fn new() -> Self {
         Self {
-            orchestrate_ok: true,
-            schedule_ok: true,
-            retry_ok: true,
-            report_ok: true,
+            define_ok: true,
+            execute_ok: true,
+            monitor_ok: true,
+            rollback_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.orchestrate_ok && self.schedule_ok && self.retry_ok
+        self.define_ok && self.execute_ok && self.monitor_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.report_ok && self.log_ok
+        self.rollback_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MlPipeline2 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.orchestrate_ok || !self.schedule_ok
+        !self.define_ok || !self.execute_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.orchestrate_ok {
+        if !self.define_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MlPipeline2::new();
-        c.orchestrate_ok = false;
+        c.define_ok = false;
         assert!(c.needs_attention());
     }
 

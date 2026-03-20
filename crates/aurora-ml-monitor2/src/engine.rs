@@ -1,12 +1,12 @@
-/// ml monitor: drift, accuracy, latency, resource, log
-/// Phase 1470
+/// ml monitor2: track, drift, alert, retrain, log
+/// Phase 1958
 
 #[derive(Debug, Clone)]
 pub struct MlMonitor2 {
+    pub track_ok: bool,
     pub drift_ok: bool,
-    pub accuracy_ok: bool,
-    pub latency_ok: bool,
-    pub resource_ok: bool,
+    pub alert_ok: bool,
+    pub retrain_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MlMonitor2 {
 impl MlMonitor2 {
     pub fn new() -> Self {
         Self {
+            track_ok: true,
             drift_ok: true,
-            accuracy_ok: true,
-            latency_ok: true,
-            resource_ok: true,
+            alert_ok: true,
+            retrain_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.drift_ok && self.accuracy_ok && self.latency_ok
+        self.track_ok && self.drift_ok && self.alert_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.resource_ok && self.log_ok
+        self.retrain_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MlMonitor2 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.drift_ok || !self.accuracy_ok
+        !self.track_ok || !self.drift_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.drift_ok {
+        if !self.track_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MlMonitor2::new();
-        c.drift_ok = false;
+        c.track_ok = false;
         assert!(c.needs_attention());
     }
 

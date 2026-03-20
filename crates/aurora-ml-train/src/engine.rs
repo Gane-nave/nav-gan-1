@@ -1,11 +1,11 @@
-/// ml train: prepare, train, validate, export, log
-/// Phase 1465
+/// ml train: fit, validate, evaluate, export, log
+/// Phase 1950
 
 #[derive(Debug, Clone)]
 pub struct MlTrain {
-    pub prepare_ok: bool,
-    pub train_ok: bool,
+    pub fit_ok: bool,
     pub validate_ok: bool,
+    pub evaluate_ok: bool,
     pub export_ok: bool,
     pub log_ok: bool,
 }
@@ -19,16 +19,16 @@ impl Default for MlTrain {
 impl MlTrain {
     pub fn new() -> Self {
         Self {
-            prepare_ok: true,
-            train_ok: true,
+            fit_ok: true,
             validate_ok: true,
+            evaluate_ok: true,
             export_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.prepare_ok && self.train_ok && self.validate_ok
+        self.fit_ok && self.validate_ok && self.evaluate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MlTrain {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.prepare_ok || !self.train_ok
+        !self.fit_ok || !self.validate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.prepare_ok {
+        if !self.fit_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MlTrain::new();
-        c.prepare_ok = false;
+        c.fit_ok = false;
         assert!(c.needs_attention());
     }
 

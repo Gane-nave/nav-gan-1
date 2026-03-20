@@ -1,0 +1,4 @@
+[package]
+name = "aurora-mem-map"
+version = "0.1.0"
+edition = "2021"

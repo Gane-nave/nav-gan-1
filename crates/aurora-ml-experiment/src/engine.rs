@@ -1,12 +1,12 @@
-/// ml experiment: define, run, track, compare, log
-/// Phase 1472
+/// ml experiment: create, track, compare, archive, log
+/// Phase 1955
 
 #[derive(Debug, Clone)]
 pub struct MlExperiment {
-    pub define_ok: bool,
-    pub run_ok: bool,
+    pub create_ok: bool,
     pub track_ok: bool,
     pub compare_ok: bool,
+    pub archive_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MlExperiment {
 impl MlExperiment {
     pub fn new() -> Self {
         Self {
-            define_ok: true,
-            run_ok: true,
+            create_ok: true,
             track_ok: true,
             compare_ok: true,
+            archive_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.run_ok && self.track_ok
+        self.create_ok && self.track_ok && self.compare_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.compare_ok && self.log_ok
+        self.archive_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MlExperiment {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.run_ok
+        !self.create_ok || !self.track_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.define_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MlExperiment::new();
-        c.define_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

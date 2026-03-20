@@ -1,12 +1,12 @@
-/// ml infer: load, preprocess, predict, postprocess, log
-/// Phase 1464
+/// ml infer: load, predict, batch, stream, log
+/// Phase 1951
 
 #[derive(Debug, Clone)]
 pub struct MlInfer {
     pub load_ok: bool,
-    pub preprocess_ok: bool,
     pub predict_ok: bool,
-    pub postprocess_ok: bool,
+    pub batch_ok: bool,
+    pub stream_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl MlInfer {
     pub fn new() -> Self {
         Self {
             load_ok: true,
-            preprocess_ok: true,
             predict_ok: true,
-            postprocess_ok: true,
+            batch_ok: true,
+            stream_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.load_ok && self.preprocess_ok && self.predict_ok
+        self.load_ok && self.predict_ok && self.batch_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.postprocess_ok && self.log_ok
+        self.stream_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl MlInfer {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.load_ok || !self.preprocess_ok
+        !self.load_ok || !self.predict_ok
     }
 
     pub fn health_score(&self) -> f64 {
