@@ -59,7 +59,7 @@ impl Interval {
 
     /// Get the midpoint of the interval.
     pub fn midpoint(&self) -> i64 {
-        self.low.saturating_add(self.high) / 2
+        self.low + (self.high - self.low) / 2
     }
 }
 

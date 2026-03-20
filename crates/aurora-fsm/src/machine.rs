@@ -102,17 +102,19 @@ impl StateMachine {
             }
         };
 
-        if let Some(t) = transitions.first() {
+        let mut last_rejected: Option<TransitionResult> = None;
+        for t in &transitions {
             if let Some(guard) = t.guard() {
                 if self.blocked_guards.contains(guard) {
-                    return TransitionResult::GuardRejected {
+                    last_rejected = Some(TransitionResult::GuardRejected {
                         from: self.current.clone(),
                         to: t.to().to_string(),
                         reason: format!("guard '{}' is blocked", guard),
-                    };
+                    });
+                    continue;
                 }
             }
-            // Transition succeeds
+            // Transition succeeds — first passable transition wins.
             let from = self.current.clone();
             self.current = t.to().to_string();
             self.sequence = self.sequence.saturating_add(1);
@@ -125,10 +127,11 @@ impl StateMachine {
             return TransitionResult::Success(self.current.clone());
         }
 
-        TransitionResult::NoTransition {
+        // All transitions had blocked guards.
+        last_rejected.unwrap_or(TransitionResult::NoTransition {
             state: self.current.clone(),
             event: event.to_string(),
-        }
+        })
     }
 
     /// Get the current state.
