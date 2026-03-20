@@ -97,6 +97,10 @@ name = "aurora-adaptive-contrast"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-adaptive-cruise"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-agnss"
 version = "0.1.0"
 dependencies = [
@@ -356,6 +360,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-auto-park"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-autonomous"
 version = "0.1.0"
 dependencies = [
@@ -421,6 +429,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-bitset"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-blind-spot"
 version = "0.1.0"
 
 [[package]]
@@ -686,6 +698,10 @@ name = "aurora-crdt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cross-traffic"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crowd-reports"
 version = "0.1.0"
 dependencies = [
@@ -719,6 +735,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-dag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dash-cam"
 version = "0.1.0"
 
 [[package]]
@@ -876,6 +896,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-drive-shaft"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-driver-mon"
 version = "0.1.0"
 
 [[package]]
@@ -1229,11 +1253,19 @@ name = "aurora-haptic-steer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-haptic-wheel"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-hashring"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-hazmat-route"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-head-up-disp"
 version = "0.1.0"
 
 [[package]]
@@ -1357,6 +1389,14 @@ name = "aurora-info-hierarchy"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-infotain-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-instrument-clus"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-instruments"
 version = "0.1.0"
 dependencies = [
@@ -1448,6 +1488,10 @@ name = "aurora-intercooler"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-interior-cam"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-intersection"
 version = "0.1.0"
 
@@ -1497,6 +1541,14 @@ dependencies = [
 
 [[package]]
 name = "aurora-lane-change"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lane-depart"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lane-keep"
 version = "0.1.0"
 
 [[package]]
@@ -1819,6 +1871,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-park-assist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-park-brake"
 version = "0.1.0"
 
@@ -1851,6 +1907,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-pedal-sensor"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-pedestrian"
@@ -2310,6 +2370,10 @@ name = "aurora-steering-col"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-steering-wheel"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-storage"
 version = "0.1.0"
 dependencies = [
@@ -2341,6 +2405,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-sunroof-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-surround-view"
 version = "0.1.0"
 
 [[package]]
@@ -2403,6 +2471,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-throttle-map"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-throttle-pos"
 version = "0.1.0"
 
 [[package]]

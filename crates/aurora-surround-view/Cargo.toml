@@ -1,0 +1,6 @@
+[package]
+name = "aurora-surround-view"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

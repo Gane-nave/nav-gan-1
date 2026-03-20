@@ -1,0 +1,6 @@
+[package]
+name = "aurora-adaptive-cruise"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

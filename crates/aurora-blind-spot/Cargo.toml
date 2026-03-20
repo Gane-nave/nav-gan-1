@@ -1,0 +1,6 @@
+[package]
+name = "aurora-blind-spot"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

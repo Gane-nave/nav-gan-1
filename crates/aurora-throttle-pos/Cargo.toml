@@ -1,0 +1,6 @@
+[package]
+name = "aurora-throttle-pos"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
