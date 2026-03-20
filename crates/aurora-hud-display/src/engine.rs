@@ -1,13 +1,13 @@
-/// HUD display: head-up display, combiner, projection, brightness
-/// Phase 428
+/// hud display: render, overlay, brightness, color, refresh
+/// Phase 1302
 
 #[derive(Debug, Clone)]
 pub struct HudDisplay {
-    pub brightness_pct: f64,
-    pub focus_ok: bool,
-    pub combiner_ok: bool,
-    pub projector_ok: bool,
-    pub auto_brightness: bool,
+    pub render_ok: bool,
+    pub overlay_ok: bool,
+    pub brightness_ok: bool,
+    pub color_ok: bool,
+    pub refresh_ok: bool,
 }
 
 impl Default for HudDisplay {
@@ -19,37 +19,32 @@ impl Default for HudDisplay {
 impl HudDisplay {
     pub fn new() -> Self {
         Self {
-            brightness_pct: 75.0,
-            focus_ok: true,
-            combiner_ok: true,
-            projector_ok: true,
-            auto_brightness: true,
+            render_ok: true,
+            overlay_ok: true,
+            brightness_ok: true,
+            color_ok: true,
+            refresh_ok: true,
         }
     }
 
-    pub fn visible(&self) -> bool {
-        self.brightness_pct > 30.0 && self.projector_ok
+    pub fn primary_ok(&self) -> bool {
+        self.render_ok && self.overlay_ok && self.brightness_ok
+    }
+
+    pub fn secondary_ok(&self) -> bool {
+        self.color_ok && self.refresh_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.visible() && self.focus_ok && self.combiner_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.projector_ok || !self.combiner_ok
-    }
-
-    pub fn readable(&self) -> bool {
-        self.visible() && self.focus_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.render_ok || !self.overlay_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.projector_ok {
-            return 0.0;
-        }
-        if !self.focus_ok {
-            return 40.0;
-        }
+        if !self.render_ok { return 5.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_visible() {
-        let h = HudDisplay::new();
-        assert!(h.visible());
+    fn test_primary() {
+        let c = HudDisplay::new();
+        assert!(c.primary_ok());
+    }
+
+    #[test]
+    fn test_secondary() {
+        let c = HudDisplay::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let h = HudDisplay::new();
-        assert!(h.all_ok());
+        let c = HudDisplay::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_service() {
-        let h = HudDisplay::new();
-        assert!(!h.needs_service());
+    fn test_no_attention() {
+        let c = HudDisplay::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_readable() {
-        let h = HudDisplay::new();
-        assert!(h.readable());
-    }
-
-    #[test]
-    fn test_bad_projector() {
-        let mut h = HudDisplay::new();
-        h.projector_ok = false;
-        assert!(h.needs_service());
+    fn test_field_toggle() {
+        let mut c = HudDisplay::new();
+        c.render_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let h = HudDisplay::new();
-        assert!((h.health_score() - 100.0).abs() < 0.1);
+        let c = HudDisplay::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

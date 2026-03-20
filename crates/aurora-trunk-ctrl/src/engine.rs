@@ -1,13 +1,13 @@
-/// trunk ctrl: unlock, open, close, lock, kick
-/// Phase 1190
+/// trunk ctrl: open, close, lock, kick, height
+/// Phase 1318
 
 #[derive(Debug, Clone)]
 pub struct TrunkCtrl {
-    pub unlock_ok: bool,
     pub open_ok: bool,
     pub close_ok: bool,
     pub lock_ok: bool,
     pub kick_ok: bool,
+    pub height_ok: bool,
 }
 
 impl Default for TrunkCtrl {
@@ -19,20 +19,20 @@ impl Default for TrunkCtrl {
 impl TrunkCtrl {
     pub fn new() -> Self {
         Self {
-            unlock_ok: true,
             open_ok: true,
             close_ok: true,
             lock_ok: true,
             kick_ok: true,
+            height_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.unlock_ok && self.open_ok && self.close_ok
+        self.open_ok && self.close_ok && self.lock_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.lock_ok && self.kick_ok
+        self.kick_ok && self.height_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl TrunkCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.unlock_ok || !self.open_ok
+        !self.open_ok || !self.close_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.unlock_ok { return 5.0; }
+        if !self.open_ok { return 5.0; }
         100.0
     }
 }
@@ -80,7 +80,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = TrunkCtrl::new();
-        c.unlock_ok = false;
+        c.open_ok = false;
         assert!(c.needs_attention());
     }
 

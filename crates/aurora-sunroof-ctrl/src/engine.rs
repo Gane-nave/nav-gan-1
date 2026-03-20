@@ -1,13 +1,13 @@
-/// sunroof ctrl: open, close, tilt, vent, shade
-/// Phase 1189
+/// sunroof ctrl: open, tilt, close, shade, rain
+/// Phase 1317
 
 #[derive(Debug, Clone)]
 pub struct SunroofCtrl {
     pub open_ok: bool,
-    pub close_ok: bool,
     pub tilt_ok: bool,
-    pub vent_ok: bool,
+    pub close_ok: bool,
     pub shade_ok: bool,
+    pub rain_ok: bool,
 }
 
 impl Default for SunroofCtrl {
@@ -20,19 +20,19 @@ impl SunroofCtrl {
     pub fn new() -> Self {
         Self {
             open_ok: true,
-            close_ok: true,
             tilt_ok: true,
-            vent_ok: true,
+            close_ok: true,
             shade_ok: true,
+            rain_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.open_ok && self.close_ok && self.tilt_ok
+        self.open_ok && self.tilt_ok && self.close_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.vent_ok && self.shade_ok
+        self.shade_ok && self.rain_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl SunroofCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.open_ok || !self.close_ok
+        !self.open_ok || !self.tilt_ok
     }
 
     pub fn health_score(&self) -> f64 {

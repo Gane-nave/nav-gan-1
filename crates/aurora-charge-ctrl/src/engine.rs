@@ -1,70 +1,50 @@
-/// Charge controller: charging schedule, rate control, battery protection
-/// Phase 289
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum ChargeState {
-    Idle,
-    Charging,
-    Complete,
-    Error,
-    Scheduled,
-}
+/// charge ctrl: connect, negotiate, current, schedule, stop
+/// Phase 1319
 
 #[derive(Debug, Clone)]
-pub struct ChargeController {
-    pub state: ChargeState,
-    pub charge_rate_kw: f64,
-    pub max_rate_kw: f64,
-    pub target_soc_pct: f64,
-    pub current_soc_pct: f64,
-    pub battery_temp_c: f64,
+pub struct ChargeCtrl {
+    pub connect_ok: bool,
+    pub negotiate_ok: bool,
+    pub current_ok: bool,
+    pub schedule_ok: bool,
+    pub stop_ok: bool,
 }
 
-impl Default for ChargeController {
+impl Default for ChargeCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ChargeController {
+impl ChargeCtrl {
     pub fn new() -> Self {
         Self {
-            state: ChargeState::Idle,
-            charge_rate_kw: 0.0,
-            max_rate_kw: 11.0,
-            target_soc_pct: 80.0,
-            current_soc_pct: 50.0,
-            battery_temp_c: 25.0,
+            connect_ok: true,
+            negotiate_ok: true,
+            current_ok: true,
+            schedule_ok: true,
+            stop_ok: true,
         }
     }
 
-    pub fn is_charging(&self) -> bool {
-        self.state == ChargeState::Charging
+    pub fn primary_ok(&self) -> bool {
+        self.connect_ok && self.negotiate_ok && self.current_ok
     }
 
-    pub fn at_target(&self) -> bool {
-        self.current_soc_pct >= self.target_soc_pct
+    pub fn secondary_ok(&self) -> bool {
+        self.schedule_ok && self.stop_ok
     }
 
-    pub fn temp_ok(&self) -> bool {
-        self.battery_temp_c > 0.0 && self.battery_temp_c < 45.0
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn time_remaining_h(&self) -> f64 {
-        if self.charge_rate_kw <= 0.0 {
-            return 0.0;
-        }
-        let remaining_pct = (self.target_soc_pct - self.current_soc_pct).max(0.0);
-        remaining_pct / 100.0 * 75.0 / self.charge_rate_kw
+    pub fn needs_attention(&self) -> bool {
+        !self.connect_ok || !self.negotiate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.state == ChargeState::Error {
-            return 0.0;
-        }
-        if !self.temp_ok() {
-            return 40.0;
-        }
+        if !self.connect_ok { return 5.0; }
         100.0
     }
 }
@@ -74,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_charging() {
-        let c = ChargeController::new();
-        assert!(!c.is_charging());
+    fn test_primary() {
+        let c = ChargeCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_not_at_target() {
-        let c = ChargeController::new();
-        assert!(!c.at_target());
+    fn test_secondary() {
+        let c = ChargeCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_temp_ok() {
-        let c = ChargeController::new();
-        assert!(c.temp_ok());
+    fn test_all_ok() {
+        let c = ChargeCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_zero_time() {
-        let c = ChargeController::new();
-        assert!(c.time_remaining_h() < 0.1);
+    fn test_no_attention() {
+        let c = ChargeCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_at_target() {
-        let mut c = ChargeController::new();
-        c.current_soc_pct = 85.0;
-        assert!(c.at_target());
+    fn test_field_toggle() {
+        let mut c = ChargeCtrl::new();
+        c.connect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ChargeController::new();
+        let c = ChargeCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

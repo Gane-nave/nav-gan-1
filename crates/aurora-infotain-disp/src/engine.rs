@@ -1,38 +1,38 @@
-/// cluster disp: speed, rpm, fuel, temp, warning
-/// Phase 1303
+/// infotain disp: media, nav, phone, settings, update
+/// Phase 1304
 
 #[derive(Debug, Clone)]
-pub struct ClusterDisp {
-    pub speed_ok: bool,
-    pub rpm_ok: bool,
-    pub fuel_ok: bool,
-    pub temp_ok: bool,
-    pub warning_ok: bool,
+pub struct InfotainDisp {
+    pub media_ok: bool,
+    pub nav_ok: bool,
+    pub phone_ok: bool,
+    pub settings_ok: bool,
+    pub update_ok: bool,
 }
 
-impl Default for ClusterDisp {
+impl Default for InfotainDisp {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ClusterDisp {
+impl InfotainDisp {
     pub fn new() -> Self {
         Self {
-            speed_ok: true,
-            rpm_ok: true,
-            fuel_ok: true,
-            temp_ok: true,
-            warning_ok: true,
+            media_ok: true,
+            nav_ok: true,
+            phone_ok: true,
+            settings_ok: true,
+            update_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.speed_ok && self.rpm_ok && self.fuel_ok
+        self.media_ok && self.nav_ok && self.phone_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.temp_ok && self.warning_ok
+        self.settings_ok && self.update_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ClusterDisp {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.speed_ok || !self.rpm_ok
+        !self.media_ok || !self.nav_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.speed_ok { return 5.0; }
+        if !self.media_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = ClusterDisp::new();
+        let c = InfotainDisp::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = ClusterDisp::new();
+        let c = InfotainDisp::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ClusterDisp::new();
+        let c = InfotainDisp::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = ClusterDisp::new();
+        let c = InfotainDisp::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = ClusterDisp::new();
-        c.speed_ok = false;
+        let mut c = InfotainDisp::new();
+        c.media_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ClusterDisp::new();
+        let c = InfotainDisp::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

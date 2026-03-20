@@ -1,38 +1,38 @@
-/// cluster disp: speed, rpm, fuel, temp, warning
-/// Phase 1303
+/// haptic ctrl: vibrate, pattern, intensity, zone, sync
+/// Phase 1313
 
 #[derive(Debug, Clone)]
-pub struct ClusterDisp {
-    pub speed_ok: bool,
-    pub rpm_ok: bool,
-    pub fuel_ok: bool,
-    pub temp_ok: bool,
-    pub warning_ok: bool,
+pub struct HapticCtrl {
+    pub vibrate_ok: bool,
+    pub pattern_ok: bool,
+    pub intensity_ok: bool,
+    pub zone_ok: bool,
+    pub sync_ok: bool,
 }
 
-impl Default for ClusterDisp {
+impl Default for HapticCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ClusterDisp {
+impl HapticCtrl {
     pub fn new() -> Self {
         Self {
-            speed_ok: true,
-            rpm_ok: true,
-            fuel_ok: true,
-            temp_ok: true,
-            warning_ok: true,
+            vibrate_ok: true,
+            pattern_ok: true,
+            intensity_ok: true,
+            zone_ok: true,
+            sync_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.speed_ok && self.rpm_ok && self.fuel_ok
+        self.vibrate_ok && self.pattern_ok && self.intensity_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.temp_ok && self.warning_ok
+        self.zone_ok && self.sync_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ClusterDisp {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.speed_ok || !self.rpm_ok
+        !self.vibrate_ok || !self.pattern_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.speed_ok { return 5.0; }
+        if !self.vibrate_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = ClusterDisp::new();
+        let c = HapticCtrl::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = ClusterDisp::new();
+        let c = HapticCtrl::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ClusterDisp::new();
+        let c = HapticCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = ClusterDisp::new();
+        let c = HapticCtrl::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = ClusterDisp::new();
-        c.speed_ok = false;
+        let mut c = HapticCtrl::new();
+        c.vibrate_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ClusterDisp::new();
+        let c = HapticCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

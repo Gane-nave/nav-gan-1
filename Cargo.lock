@@ -245,6 +245,10 @@ name = "aurora-ambient-light"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ambient-light2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-amplifier-mon"
 version = "0.1.0"
 
@@ -1122,6 +1126,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-climate-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-climate-ctrl2"
 version = "0.1.0"
 
 [[package]]
@@ -2649,6 +2657,10 @@ name = "aurora-haptic"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-haptic-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-haptic-seat"
 version = "0.1.0"
 
@@ -2966,6 +2978,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-infotain-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infotain-disp"
 version = "0.1.0"
 
 [[package]]
@@ -3486,6 +3502,10 @@ name = "aurora-mirror-defog"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mirror-disp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mirror-fold"
 version = "0.1.0"
 
@@ -3933,6 +3953,10 @@ name = "aurora-pedal-box"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pedal-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pedal-map"
 version = "0.1.0"
 
@@ -4253,6 +4277,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rear-camera"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rear-disp"
 version = "0.1.0"
 
 [[package]]
@@ -4641,6 +4669,10 @@ name = "aurora-seat-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-seat-ctrl2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-seat-heat"
 version = "0.1.0"
 
@@ -4813,6 +4845,10 @@ name = "aurora-solar-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sound-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sound-dead"
 version = "0.1.0"
 
@@ -4947,6 +4983,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-steering-column"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steering-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -5709,6 +5749,10 @@ name = "aurora-voice-cmd"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-voice-ctrl2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-voltage-monitor"
 version = "0.1.0"
 
@@ -5882,6 +5926,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-window-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-window-ctrl2"
 version = "0.1.0"
 
 [[package]]

@@ -1,38 +1,38 @@
-/// cluster disp: speed, rpm, fuel, temp, warning
-/// Phase 1303
+/// pedal ctrl: throttle, brake, clutch, force, travel
+/// Phase 1310
 
 #[derive(Debug, Clone)]
-pub struct ClusterDisp {
-    pub speed_ok: bool,
-    pub rpm_ok: bool,
-    pub fuel_ok: bool,
-    pub temp_ok: bool,
-    pub warning_ok: bool,
+pub struct PedalCtrl {
+    pub throttle_ok: bool,
+    pub brake_ok: bool,
+    pub clutch_ok: bool,
+    pub force_ok: bool,
+    pub travel_ok: bool,
 }
 
-impl Default for ClusterDisp {
+impl Default for PedalCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ClusterDisp {
+impl PedalCtrl {
     pub fn new() -> Self {
         Self {
-            speed_ok: true,
-            rpm_ok: true,
-            fuel_ok: true,
-            temp_ok: true,
-            warning_ok: true,
+            throttle_ok: true,
+            brake_ok: true,
+            clutch_ok: true,
+            force_ok: true,
+            travel_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.speed_ok && self.rpm_ok && self.fuel_ok
+        self.throttle_ok && self.brake_ok && self.clutch_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.temp_ok && self.warning_ok
+        self.force_ok && self.travel_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ClusterDisp {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.speed_ok || !self.rpm_ok
+        !self.throttle_ok || !self.brake_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.speed_ok { return 5.0; }
+        if !self.throttle_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = ClusterDisp::new();
+        let c = PedalCtrl::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = ClusterDisp::new();
+        let c = PedalCtrl::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ClusterDisp::new();
+        let c = PedalCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = ClusterDisp::new();
+        let c = PedalCtrl::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = ClusterDisp::new();
-        c.speed_ok = false;
+        let mut c = PedalCtrl::new();
+        c.throttle_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ClusterDisp::new();
+        let c = PedalCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

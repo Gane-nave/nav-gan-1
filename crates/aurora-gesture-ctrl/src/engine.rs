@@ -1,13 +1,13 @@
-/// gesture ctrl: detect, classify, interpret, execute, feedback
-/// Phase 1182
+/// gesture ctrl: detect, classify, track, respond, learn
+/// Phase 1311
 
 #[derive(Debug, Clone)]
 pub struct GestureCtrl {
     pub detect_ok: bool,
     pub classify_ok: bool,
-    pub interpret_ok: bool,
-    pub execute_ok: bool,
-    pub feedback_ok: bool,
+    pub track_ok: bool,
+    pub respond_ok: bool,
+    pub learn_ok: bool,
 }
 
 impl Default for GestureCtrl {
@@ -21,18 +21,18 @@ impl GestureCtrl {
         Self {
             detect_ok: true,
             classify_ok: true,
-            interpret_ok: true,
-            execute_ok: true,
-            feedback_ok: true,
+            track_ok: true,
+            respond_ok: true,
+            learn_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.detect_ok && self.classify_ok && self.interpret_ok
+        self.detect_ok && self.classify_ok && self.track_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.execute_ok && self.feedback_ok
+        self.respond_ok && self.learn_ok
     }
 
     pub fn all_ok(&self) -> bool {
