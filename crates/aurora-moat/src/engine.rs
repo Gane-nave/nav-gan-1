@@ -8,14 +8,24 @@ pub struct DataFlywheel {
     pub exclusive_data_sources: u32,
 }
 impl Default for DataFlywheel {
-    fn default() -> Self { Self::new() }
+    fn default() -> Self {
+        Self::new()
+    }
 }
 impl DataFlywheel {
     pub fn new() -> Self {
-        Self { user_count: 0, data_points_per_day: 0, data_quality_score: 0.0, partner_count: 0, exclusive_data_sources: 0 }
+        Self {
+            user_count: 0,
+            data_points_per_day: 0,
+            data_quality_score: 0.0,
+            partner_count: 0,
+            exclusive_data_sources: 0,
+        }
     }
     pub fn network_effect_multiplier(&self) -> f64 {
-        if self.user_count == 0 { return 1.0; }
+        if self.user_count == 0 {
+            return 1.0;
+        }
         (1.0 + (self.user_count as f64).ln() * 0.1).min(5.0)
     }
     pub fn switching_cost(&self, history_months: u32, personalization_depth: f64) -> f64 {
@@ -31,7 +41,9 @@ impl DataFlywheel {
         (d + n + p + e).clamp(0.0, 1.0)
     }
     pub fn flywheel_velocity(&self) -> f64 {
-        (self.data_points_per_day as f64).ln().max(0.0) * self.data_quality_score * self.network_effect_multiplier()
+        (self.data_points_per_day as f64).ln().max(0.0)
+            * self.data_quality_score
+            * self.network_effect_multiplier()
     }
 }
 #[derive(Debug, Clone)]
@@ -53,9 +65,43 @@ impl LockInMetrics {
 #[cfg(test)]
 mod tests {
     use super::*;
-    #[test] fn test_empty_flywheel() { let fw = DataFlywheel::new(); assert_eq!(fw.network_effect_multiplier(), 1.0); }
-    #[test] fn test_network_grows() { let fw = DataFlywheel { user_count: 1_000_000, ..DataFlywheel::new() }; assert!(fw.network_effect_multiplier() > 1.0); }
-    #[test] fn test_switching_cost() { let fw = DataFlywheel::new(); assert!(fw.switching_cost(24, 1.0) > fw.switching_cost(0, 0.0)); }
-    #[test] fn test_moat_range() { let fw = DataFlywheel { user_count: 1_000_000, data_points_per_day: 10_000_000, data_quality_score: 0.9, partner_count: 30, exclusive_data_sources: 5 }; assert!(fw.moat_strength() > 0.0 && fw.moat_strength() <= 1.0); }
-    #[test] fn test_stickiness() { let m = LockInMetrics { accumulated_history_days: 365, personalized_routes: 100, community_contributions: 50, integrated_services: 10 }; assert!((m.stickiness_score() - 1.0).abs() < 0.01); }
+    #[test]
+    fn test_empty_flywheel() {
+        let fw = DataFlywheel::new();
+        assert_eq!(fw.network_effect_multiplier(), 1.0);
+    }
+    #[test]
+    fn test_network_grows() {
+        let fw = DataFlywheel {
+            user_count: 1_000_000,
+            ..DataFlywheel::new()
+        };
+        assert!(fw.network_effect_multiplier() > 1.0);
+    }
+    #[test]
+    fn test_switching_cost() {
+        let fw = DataFlywheel::new();
+        assert!(fw.switching_cost(24, 1.0) > fw.switching_cost(0, 0.0));
+    }
+    #[test]
+    fn test_moat_range() {
+        let fw = DataFlywheel {
+            user_count: 1_000_000,
+            data_points_per_day: 10_000_000,
+            data_quality_score: 0.9,
+            partner_count: 30,
+            exclusive_data_sources: 5,
+        };
+        assert!(fw.moat_strength() > 0.0 && fw.moat_strength() <= 1.0);
+    }
+    #[test]
+    fn test_stickiness() {
+        let m = LockInMetrics {
+            accumulated_history_days: 365,
+            personalized_routes: 100,
+            community_contributions: 50,
+            integrated_services: 10,
+        };
+        assert!((m.stickiness_score() - 1.0).abs() < 0.01);
+    }
 }
