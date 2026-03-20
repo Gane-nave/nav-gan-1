@@ -54,6 +54,7 @@ aurora-deploy = { path = "../aurora-deploy" }
 aurora-auth = { path = "../aurora-auth" }
 aurora-security = { path = "../aurora-security" }
 aurora-orchestrator = { path = "../aurora-orchestrator" }
+aurora-web = { path = "../aurora-web" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 tokio = { workspace = true }

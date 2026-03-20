@@ -135,6 +135,7 @@ members = [
     "crates/aurora-worksteal",
     "crates/aurora-bounded-queue",
     "crates/aurora-orchestrator",
+    "crates/aurora-web",
 ]
 
 [workspace.package]

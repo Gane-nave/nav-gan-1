@@ -113,6 +113,7 @@ dependencies = [
  "aurora-security",
  "aurora-sensors",
  "aurora-telemetry",
+ "aurora-web",
  "axum",
  "chrono",
  "parking_lot",
@@ -176,6 +177,7 @@ dependencies = [
  "aurora-twin",
  "aurora-ux",
  "aurora-vehicle",
+ "aurora-web",
  "axum",
  "chrono",
  "parking_lot",
@@ -1315,6 +1317,15 @@ name = "aurora-voice"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
+]
+
+[[package]]
+name = "aurora-web"
+version = "0.1.0"
+dependencies = [
+ "aurora-orchestrator",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]

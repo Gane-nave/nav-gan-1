@@ -28,6 +28,8 @@ pub fn build_router(state: Arc<AppState>) -> Router {
         .route("/auth/status", get(routes::get_auth_status))
         .route("/auth/token", post(routes::post_auth_token))
         .route("/security/headers", get(routes::get_security_headers))
+        .route("/api/dashboard", get(routes::get_dashboard))
+        .route("/", get(routes::get_web_ui))
         .layer(CorsLayer::permissive())
         .layer(TraceLayer::new_for_http())
         .with_state(state)
@@ -204,6 +206,33 @@ mod tests {
                     .body(Body::empty())
                     .unwrap(),
             )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn dashboard_endpoint_returns_200() {
+        let app = test_app();
+        let response = app
+            .oneshot(
+                Request::builder()
+                    .uri("/api/dashboard")
+                    .body(Body::empty())
+                    .unwrap(),
+            )
+            .await
+            .unwrap();
+
+        assert_eq!(response.status(), StatusCode::OK);
+    }
+
+    #[tokio::test]
+    async fn web_ui_returns_html() {
+        let app = test_app();
+        let response = app
+            .oneshot(Request::builder().uri("/").body(Body::empty()).unwrap())
             .await
             .unwrap();
 
