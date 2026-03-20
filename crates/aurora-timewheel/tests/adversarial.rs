@@ -66,7 +66,7 @@ fn adversarial_clear_and_reuse() {
     }
     w.clear();
     assert!(w.is_empty());
-    let id = w.schedule(1, "new");
+    let _id = w.schedule(1, "new");
     let fired = w.advance(1);
     assert_eq!(fired.len(), 1);
     assert_eq!(fired[0].label, "new");

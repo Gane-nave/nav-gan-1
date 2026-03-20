@@ -67,7 +67,7 @@ fn adversarial_empty_operations() {
 #[test]
 fn adversarial_byte_boundary() {
     // UTF-8 multi-byte characters
-    let mut rope = Rope::from_str("héllo wörld", 4);
+    let rope = Rope::from_str("héllo wörld", 4);
     assert_eq!(rope.char_count(), 11);
     assert!(rope.len() > 11); // multi-byte chars
     let found = rope.find("wörld");
