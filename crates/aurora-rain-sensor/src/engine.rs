@@ -1,12 +1,12 @@
-/// Rain sensor: optical, sensitivity, wiper auto mode
-/// Phase 561
+/// Rain sensor: optical, sensitivity, wiper control
+/// Phase 697
 
 #[derive(Debug, Clone)]
 pub struct RainSensor {
-    pub sensitivity_pct: f64,
     pub optical_ok: bool,
-    pub lens_clean: bool,
-    pub auto_mode: bool,
+    pub sensitivity_ok: bool,
+    pub wiper_ctrl_ok: bool,
+    pub lens_ok: bool,
     pub calibrated: bool,
 }
 
@@ -19,32 +19,32 @@ impl Default for RainSensor {
 impl RainSensor {
     pub fn new() -> Self {
         Self {
-            sensitivity_pct: 70.0,
             optical_ok: true,
-            lens_clean: true,
-            auto_mode: true,
+            sensitivity_ok: true,
+            wiper_ctrl_ok: true,
+            lens_ok: true,
             calibrated: true,
         }
     }
 
     pub fn detection_ok(&self) -> bool {
-        self.optical_ok && self.lens_clean
+        self.optical_ok && self.sensitivity_ok && self.lens_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.detection_ok() && self.calibrated
+    pub fn control_ok(&self) -> bool {
+        self.wiper_ctrl_ok && self.calibrated
     }
 
     pub fn all_ok(&self) -> bool {
-        self.system_ok() && self.auto_mode
+        self.detection_ok() && self.control_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.optical_ok || !self.calibrated
+        !self.optical_ok || !self.lens_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.optical_ok { return 20.0; }
+        if !self.optical_ok { return 10.0; }
         100.0
     }
 }
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_system() {
+    fn test_control() {
         let c = RainSensor::new();
-        assert!(c.system_ok());
+        assert!(c.control_ok());
     }
 
     #[test]

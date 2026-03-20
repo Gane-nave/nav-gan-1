@@ -1,14 +1,13 @@
-/// Telematics: cellular connectivity, data upload, remote diagnostics
-/// Phase 282
+/// Telematics unit: modem, SIM, GPS, crash detect
+/// Phase 707
 
 #[derive(Debug, Clone)]
 pub struct Telematics {
-    pub cellular_connected: bool,
-    pub signal_bars: u8,
-    pub data_usage_mb: f64,
-    pub gps_fix: bool,
     pub modem_ok: bool,
     pub sim_ok: bool,
+    pub gps_ok: bool,
+    pub crash_ok: bool,
+    pub ota_ok: bool,
 }
 
 impl Default for Telematics {
@@ -20,25 +19,24 @@ impl Default for Telematics {
 impl Telematics {
     pub fn new() -> Self {
         Self {
-            cellular_connected: true,
-            signal_bars: 4,
-            data_usage_mb: 50.0,
-            gps_fix: true,
             modem_ok: true,
             sim_ok: true,
+            gps_ok: true,
+            crash_ok: true,
+            ota_ok: true,
         }
     }
 
-    pub fn online(&self) -> bool {
-        self.cellular_connected && self.modem_ok && self.sim_ok
+    pub fn connectivity_ok(&self) -> bool {
+        self.modem_ok && self.sim_ok
     }
 
-    pub fn signal_strong(&self) -> bool {
-        self.signal_bars >= 3
+    pub fn safety_ok(&self) -> bool {
+        self.crash_ok && self.gps_ok
     }
 
-    pub fn can_upload(&self) -> bool {
-        self.online() && self.signal_strong()
+    pub fn all_ok(&self) -> bool {
+        self.connectivity_ok() && self.safety_ok() && self.ota_ok
     }
 
     pub fn needs_service(&self) -> bool {
@@ -46,15 +44,7 @@ impl Telematics {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.modem_ok {
-            return 0.0;
-        }
-        if !self.sim_ok {
-            return 20.0;
-        }
-        if !self.cellular_connected {
-            return 40.0;
-        }
+        if !self.modem_ok { return 5.0; }
         100.0
     }
 }
@@ -64,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_online() {
-        let t = Telematics::new();
-        assert!(t.online());
+    fn test_connectivity() {
+        let c = Telematics::new();
+        assert!(c.connectivity_ok());
     }
 
     #[test]
-    fn test_signal() {
-        let t = Telematics::new();
-        assert!(t.signal_strong());
+    fn test_safety() {
+        let c = Telematics::new();
+        assert!(c.safety_ok());
     }
 
     #[test]
-    fn test_upload() {
-        let t = Telematics::new();
-        assert!(t.can_upload());
+    fn test_all_ok() {
+        let c = Telematics::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_service() {
-        let t = Telematics::new();
-        assert!(!t.needs_service());
+        let c = Telematics::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_offline() {
-        let mut t = Telematics::new();
-        t.cellular_connected = false;
-        assert!(!t.online());
+    fn test_modem() {
+        let mut c = Telematics::new();
+        c.modem_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let t = Telematics::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = Telematics::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
