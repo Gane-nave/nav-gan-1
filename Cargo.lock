@@ -186,10 +186,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-arena"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-audit"
 version = "0.1.0"
 
@@ -247,10 +243,6 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-bitset"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-cache"
@@ -361,10 +353,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-dag"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-deploy"
@@ -544,6 +532,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-fsm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fusion"
 version = "0.1.0"
 dependencies = [
@@ -594,7 +586,7 @@ name = "aurora-graphdb"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-heap"
+name = "aurora-hashring"
 version = "0.1.0"
 
 [[package]]
@@ -701,6 +693,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-interval"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-lane"
@@ -1019,10 +1015,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-skiplist"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-social"
 version = "0.1.0"
 dependencies = [
@@ -1107,10 +1099,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-trie"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-trust"

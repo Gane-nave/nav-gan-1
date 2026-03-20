@@ -113,6 +113,9 @@ members = [
     "crates/aurora-trie",
     "crates/aurora-dag",
     "crates/aurora-heap",
+    "crates/aurora-hashring",
+    "crates/aurora-fsm",
+    "crates/aurora-interval",
 ]
 
 [workspace.package]
