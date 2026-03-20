@@ -1,20 +1,13 @@
-/// Sway bar monitoring: end link wear, bushing condition, roll control
-/// Phase 200
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum BushingCondition {
-    Good,
-    Worn,
-    Cracked,
-    Missing,
-}
+/// Sway bar: anti-roll bar, end links, bushings
+/// Phase 477
 
 #[derive(Debug, Clone)]
 pub struct SwayBar {
-    pub bushing_condition: BushingCondition,
-    pub end_link_play_mm: f64,
-    pub clunking_over_bumps: bool,
-    pub roll_stiffness_nm_deg: f64,
+    pub stiffness_nmm: f64,
+    pub end_link_ok: bool,
+    pub bushing_ok: bool,
+    pub bent: bool,
+    pub corroded: bool,
 }
 
 impl Default for SwayBar {
@@ -26,41 +19,33 @@ impl Default for SwayBar {
 impl SwayBar {
     pub fn new() -> Self {
         Self {
-            bushing_condition: BushingCondition::Good,
-            end_link_play_mm: 0.5,
-            clunking_over_bumps: false,
-            roll_stiffness_nm_deg: 150.0,
+            stiffness_nmm: 25.0,
+            end_link_ok: true,
+            bushing_ok: true,
+            bent: false,
+            corroded: false,
         }
     }
 
-    pub fn bushings_ok(&self) -> bool {
-        self.bushing_condition == BushingCondition::Good
+    pub fn effective_stiffness(&self) -> f64 {
+        if self.bushing_ok { self.stiffness_nmm } else { self.stiffness_nmm * 0.6 }
     }
 
-    pub fn end_links_ok(&self) -> bool {
-        self.end_link_play_mm < 3.0
+    pub fn linkage_ok(&self) -> bool {
+        self.end_link_ok && self.bushing_ok
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.bushings_ok() || !self.end_links_ok() || self.clunking_over_bumps
+    pub fn all_ok(&self) -> bool {
+        self.linkage_ok() && !self.bent && !self.corroded
     }
 
-    pub fn roll_control_pct(&self) -> f64 {
-        (self.roll_stiffness_nm_deg / 200.0 * 100.0).clamp(0.0, 100.0)
+    pub fn needs_replacement(&self) -> bool {
+        self.bent
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.bushings_ok() {
-            score -= 30.0;
-        }
-        if !self.end_links_ok() {
-            score -= 25.0;
-        }
-        if self.clunking_over_bumps {
-            score -= 20.0;
-        }
-        score.max(0.0)
+        if self.bent { return 15.0; }
+        100.0
     }
 }
 
@@ -69,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_healthy() {
-        let s = SwayBar::new();
-        assert!(!s.needs_service());
+    fn test_stiffness() {
+        let c = SwayBar::new();
+        assert!(c.effective_stiffness() > 20.0);
     }
 
     #[test]
-    fn test_bushings_ok() {
-        let s = SwayBar::new();
-        assert!(s.bushings_ok());
+    fn test_linkage() {
+        let c = SwayBar::new();
+        assert!(c.linkage_ok());
     }
 
     #[test]
-    fn test_end_links_ok() {
-        let s = SwayBar::new();
-        assert!(s.end_links_ok());
+    fn test_all_ok() {
+        let c = SwayBar::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_roll_control() {
-        let s = SwayBar::new();
-        assert!(s.roll_control_pct() > 70.0);
+    fn test_no_replace() {
+        let c = SwayBar::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_worn_bushings() {
-        let mut s = SwayBar::new();
-        s.bushing_condition = BushingCondition::Worn;
-        assert!(s.needs_service());
+    fn test_bent() {
+        let mut c = SwayBar::new();
+        c.bent = true;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let s = SwayBar::new();
-        assert!((s.health_score() - 100.0).abs() < 0.1);
+        let c = SwayBar::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

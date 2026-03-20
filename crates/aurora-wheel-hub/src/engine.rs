@@ -1,12 +1,12 @@
-/// Wheel hub: bearing condition, ABS tone ring, hub assembly
-/// Phase 328
+/// Wheel hub: bearing, seal, ABS tone ring
+/// Phase 483
 
 #[derive(Debug, Clone)]
 pub struct WheelHub {
-    pub bearing_ok: bool,
-    pub tone_ring_ok: bool,
-    pub play_mm: f64,
+    pub bearing_play_mm: f64,
     pub max_play_mm: f64,
+    pub seal_ok: bool,
+    pub tone_ring_ok: bool,
     pub noise_detected: bool,
 }
 
@@ -19,40 +19,32 @@ impl Default for WheelHub {
 impl WheelHub {
     pub fn new() -> Self {
         Self {
-            bearing_ok: true,
-            tone_ring_ok: true,
-            play_mm: 0.02,
+            bearing_play_mm: 0.02,
             max_play_mm: 0.1,
+            seal_ok: true,
+            tone_ring_ok: true,
             noise_detected: false,
         }
     }
 
-    pub fn play_ok(&self) -> bool {
-        self.play_mm < self.max_play_mm
+    pub fn play_pct(&self) -> f64 {
+        (self.bearing_play_mm / self.max_play_mm) * 100.0
+    }
+
+    pub fn excessive_play(&self) -> bool {
+        self.bearing_play_mm > self.max_play_mm * 0.8
     }
 
     pub fn all_ok(&self) -> bool {
-        self.bearing_ok && self.tone_ring_ok && self.play_ok() && !self.noise_detected
+        self.seal_ok && self.tone_ring_ok && !self.noise_detected && !self.excessive_play()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        !self.bearing_ok || self.play_mm >= self.max_play_mm
-    }
-
-    pub fn abs_compatible(&self) -> bool {
-        self.tone_ring_ok
+        self.noise_detected || self.excessive_play()
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bearing_ok {
-            return 0.0;
-        }
-        if !self.tone_ring_ok {
-            return 30.0;
-        }
-        if self.noise_detected {
-            return 60.0;
-        }
+        if self.noise_detected { return 20.0; }
         100.0
     }
 }
@@ -62,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_play_ok() {
-        let w = WheelHub::new();
-        assert!(w.play_ok());
+    fn test_play() {
+        let c = WheelHub::new();
+        assert!(c.play_pct() < 30.0);
+    }
+
+    #[test]
+    fn test_no_excessive() {
+        let c = WheelHub::new();
+        assert!(!c.excessive_play());
     }
 
     #[test]
     fn test_all_ok() {
-        let w = WheelHub::new();
-        assert!(w.all_ok());
+        let c = WheelHub::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_replace() {
-        let w = WheelHub::new();
-        assert!(!w.needs_replacement());
+        let c = WheelHub::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_abs() {
-        let w = WheelHub::new();
-        assert!(w.abs_compatible());
-    }
-
-    #[test]
-    fn test_bad_bearing() {
-        let mut w = WheelHub::new();
-        w.bearing_ok = false;
-        assert!(w.needs_replacement());
+    fn test_noise() {
+        let mut c = WheelHub::new();
+        c.noise_detected = true;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let w = WheelHub::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = WheelHub::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

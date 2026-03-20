@@ -1,13 +1,13 @@
-/// Tie rod monitoring: end play, boot condition, steering response
-/// Phase 202
+/// Tie rod: steering linkage, inner/outer ends
+/// Phase 479
 
 #[derive(Debug, Clone)]
 pub struct TieRod {
-    pub side: String,
-    pub end_play_mm: f64,
-    pub boot_intact: bool,
-    pub steering_play_deg: f64,
-    pub mileage_km: f64,
+    pub play_mm: f64,
+    pub max_play_mm: f64,
+    pub inner_ok: bool,
+    pub outer_ok: bool,
+    pub boot_ok: bool,
 }
 
 impl Default for TieRod {
@@ -19,42 +19,33 @@ impl Default for TieRod {
 impl TieRod {
     pub fn new() -> Self {
         Self {
-            side: "left".into(),
-            end_play_mm: 0.2,
-            boot_intact: true,
-            steering_play_deg: 1.0,
-            mileage_km: 65000.0,
+            play_mm: 0.3,
+            max_play_mm: 2.0,
+            inner_ok: true,
+            outer_ok: true,
+            boot_ok: true,
         }
     }
 
-    pub fn end_play_ok(&self) -> bool {
-        self.end_play_mm < 1.0
+    pub fn play_pct(&self) -> f64 {
+        (self.play_mm / self.max_play_mm) * 100.0
     }
 
-    pub fn steering_tight(&self) -> bool {
-        self.steering_play_deg < 3.0
+    pub fn excessive_play(&self) -> bool {
+        self.play_mm > self.max_play_mm * 0.8
+    }
+
+    pub fn all_ok(&self) -> bool {
+        self.inner_ok && self.outer_ok && self.boot_ok && !self.excessive_play()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.end_play_mm > 2.0 || !self.boot_intact || self.steering_play_deg > 5.0
-    }
-
-    pub fn affects_alignment(&self) -> bool {
-        self.end_play_mm > 0.5
+        !self.inner_ok || !self.outer_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.end_play_ok() {
-            score -= 30.0;
-        }
-        if !self.boot_intact {
-            score -= 25.0;
-        }
-        if !self.steering_tight() {
-            score -= 25.0;
-        }
-        score.max(0.0)
+        if !self.inner_ok || !self.outer_ok { return 15.0; }
+        100.0
     }
 }
 
@@ -63,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_healthy() {
-        let t = TieRod::new();
-        assert!(!t.needs_replacement());
+    fn test_play() {
+        let c = TieRod::new();
+        assert!(c.play_pct() < 25.0);
     }
 
     #[test]
-    fn test_end_play_ok() {
-        let t = TieRod::new();
-        assert!(t.end_play_ok());
+    fn test_no_excessive() {
+        let c = TieRod::new();
+        assert!(!c.excessive_play());
     }
 
     #[test]
-    fn test_steering_tight() {
-        let t = TieRod::new();
-        assert!(t.steering_tight());
+    fn test_all_ok() {
+        let c = TieRod::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_alignment_effect() {
-        let t = TieRod::new();
-        assert!(!t.affects_alignment());
+    fn test_no_replace() {
+        let c = TieRod::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_torn_boot() {
-        let mut t = TieRod::new();
-        t.boot_intact = false;
-        assert!(t.needs_replacement());
+    fn test_inner_bad() {
+        let mut c = TieRod::new();
+        c.inner_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let t = TieRod::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TieRod::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

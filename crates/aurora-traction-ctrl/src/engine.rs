@@ -1,88 +1,51 @@
-/// Traction control: wheel spin detection, torque reduction, surface adaptation
-/// Phase 152
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum SurfaceType {
-    Dry,
-    Wet,
-    Snow,
-    Ice,
-    Gravel,
-    Mud,
-}
-
-impl SurfaceType {
-    pub fn grip_coefficient(&self) -> f64 {
-        match self {
-            SurfaceType::Dry => 1.0,
-            SurfaceType::Wet => 0.7,
-            SurfaceType::Snow => 0.3,
-            SurfaceType::Ice => 0.15,
-            SurfaceType::Gravel => 0.5,
-            SurfaceType::Mud => 0.4,
-        }
-    }
-
-    pub fn max_safe_speed_kmh(&self) -> f64 {
-        match self {
-            SurfaceType::Dry => 200.0,
-            SurfaceType::Wet => 130.0,
-            SurfaceType::Snow => 60.0,
-            SurfaceType::Ice => 30.0,
-            SurfaceType::Gravel => 80.0,
-            SurfaceType::Mud => 40.0,
-        }
-    }
-}
+/// Traction control: wheel slip, throttle intervention
+/// Phase 490
 
 #[derive(Debug, Clone)]
-pub struct TractionSystem {
-    pub enabled: bool,
-    pub surface: SurfaceType,
-    pub wheel_spin_detected: bool,
-    pub torque_reduction_pct: f64,
-    pub interventions: u64,
+pub struct TractionControl {
+    pub slip_pct: f64,
+    pub max_slip_pct: f64,
+    pub tc_active: bool,
+    pub intervening: bool,
+    pub sensor_ok: bool,
 }
 
-impl Default for TractionSystem {
+impl Default for TractionControl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TractionSystem {
+impl TractionControl {
     pub fn new() -> Self {
         Self {
-            enabled: true,
-            surface: SurfaceType::Dry,
-            wheel_spin_detected: false,
-            torque_reduction_pct: 0.0,
-            interventions: 0,
+            slip_pct: 2.0,
+            max_slip_pct: 10.0,
+            tc_active: true,
+            intervening: false,
+            sensor_ok: true,
         }
     }
 
-    pub fn needs_intervention(&self) -> bool {
-        self.enabled && self.wheel_spin_detected
+    pub fn slip_ok(&self) -> bool {
+        self.slip_pct < self.max_slip_pct
     }
 
-    pub fn recommended_torque_limit_pct(&self) -> f64 {
-        self.surface.grip_coefficient() * 100.0
+    pub fn system_ok(&self) -> bool {
+        self.tc_active && self.sensor_ok
     }
 
-    pub fn is_low_grip(&self) -> bool {
-        self.surface.grip_coefficient() < 0.5
+    pub fn all_ok(&self) -> bool {
+        self.slip_ok() && self.system_ok()
     }
 
-    pub fn apply_intervention(&mut self) {
-        if self.needs_intervention() {
-            self.torque_reduction_pct = 100.0 - self.recommended_torque_limit_pct();
-            self.interventions += 1;
-            self.wheel_spin_detected = false;
-        }
+    pub fn needs_service(&self) -> bool {
+        !self.sensor_ok
     }
 
-    pub fn effective_power_pct(&self) -> f64 {
-        100.0 - self.torque_reduction_pct
+    pub fn health_score(&self) -> f64 {
+        if !self.sensor_ok { return 15.0; }
+        100.0
     }
 }
 
@@ -91,54 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_grip_dry() {
-        assert!((SurfaceType::Dry.grip_coefficient() - 1.0).abs() < 0.01);
+    fn test_slip() {
+        let c = TractionControl::new();
+        assert!(c.slip_ok());
     }
 
     #[test]
-    fn test_grip_ice() {
-        assert!(SurfaceType::Ice.grip_coefficient() < 0.2);
+    fn test_system() {
+        let c = TractionControl::new();
+        assert!(c.system_ok());
     }
 
     #[test]
-    fn test_max_speed() {
-        assert!(SurfaceType::Ice.max_safe_speed_kmh() < SurfaceType::Dry.max_safe_speed_kmh());
+    fn test_all_ok() {
+        let c = TractionControl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_needs_intervention() {
-        let mut s = TractionSystem::new();
-        s.wheel_spin_detected = true;
-        assert!(s.needs_intervention());
+    fn test_no_service() {
+        let c = TractionControl::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_no_intervention() {
-        let s = TractionSystem::new();
-        assert!(!s.needs_intervention());
+    fn test_sensor_fail() {
+        let mut c = TractionControl::new();
+        c.sensor_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
-    fn test_low_grip() {
-        let mut s = TractionSystem::new();
-        s.surface = SurfaceType::Ice;
-        assert!(s.is_low_grip());
-    }
-
-    #[test]
-    fn test_apply_intervention() {
-        let mut s = TractionSystem::new();
-        s.surface = SurfaceType::Ice;
-        s.wheel_spin_detected = true;
-        s.apply_intervention();
-        assert!(s.torque_reduction_pct > 50.0);
-        assert_eq!(s.interventions, 1);
-    }
-
-    #[test]
-    fn test_effective_power() {
-        let mut s = TractionSystem::new();
-        s.torque_reduction_pct = 30.0;
-        assert!((s.effective_power_pct() - 70.0).abs() < 0.1);
+    fn test_health() {
+        let c = TractionControl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

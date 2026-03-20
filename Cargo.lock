@@ -77,6 +77,10 @@ name = "aurora-abs-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-abs-module"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-abs-system"
 version = "0.1.0"
 
@@ -130,6 +134,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-air-quality"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-air-spring"
 version = "0.1.0"
 
 [[package]]
@@ -528,11 +536,23 @@ name = "aurora-brake-assist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-brake-caliper"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-brake-cool"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-light"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-line"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-rotor"
 version = "0.1.0"
 
 [[package]]
@@ -686,6 +706,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-clutch-wear"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-coil-spring"
 version = "0.1.0"
 
 [[package]]
@@ -1270,6 +1294,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-esc-module"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-esc-system"
 version = "0.1.0"
 
@@ -1625,6 +1653,10 @@ name = "aurora-highway-merge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hill-assist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-hill-hold"
 version = "0.1.0"
 
@@ -1948,6 +1980,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-launch-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-leaf-spring"
 version = "0.1.0"
 
 [[package]]
@@ -2975,6 +3011,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-steering-heat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steering-rack"
 version = "0.1.0"
 
 [[package]]
