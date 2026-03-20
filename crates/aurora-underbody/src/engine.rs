@@ -1,13 +1,13 @@
-/// Underbody panel: flat floor, aerodynamic sealing, stone protection
-/// Phase 358
+/// Underbody: aerodynamic panel, stone guard, drainage
+/// Phase 550
 
 #[derive(Debug, Clone)]
 pub struct Underbody {
-    pub panels_ok: bool,
-    pub panel_count: u8,
+    pub panel_ok: bool,
+    pub stone_guard_ok: bool,
+    pub drain_clear: bool,
+    pub rust_free: bool,
     pub fasteners_ok: bool,
-    pub flat_floor: bool,
-    pub damage_detected: bool,
 }
 
 impl Default for Underbody {
@@ -19,37 +19,32 @@ impl Default for Underbody {
 impl Underbody {
     pub fn new() -> Self {
         Self {
-            panels_ok: true,
-            panel_count: 6,
+            panel_ok: true,
+            stone_guard_ok: true,
+            drain_clear: true,
+            rust_free: true,
             fasteners_ok: true,
-            flat_floor: true,
-            damage_detected: false,
         }
     }
 
-    pub fn sealed(&self) -> bool {
-        self.panels_ok && self.fasteners_ok
+    pub fn protection_ok(&self) -> bool {
+        self.panel_ok && self.stone_guard_ok
     }
 
-    pub fn aero_effective(&self) -> bool {
-        self.flat_floor && self.sealed()
-    }
-
-    pub fn needs_repair(&self) -> bool {
-        self.damage_detected || !self.panels_ok
+    pub fn drainage_ok(&self) -> bool {
+        self.drain_clear
     }
 
     pub fn all_ok(&self) -> bool {
-        self.panels_ok && self.fasteners_ok && !self.damage_detected
+        self.protection_ok() && self.drainage_ok() && self.rust_free && self.fasteners_ok
+    }
+
+    pub fn needs_service(&self) -> bool {
+        !self.panel_ok || !self.rust_free
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.damage_detected {
-            return 20.0;
-        }
-        if !self.panels_ok {
-            return 40.0;
-        }
+        if !self.rust_free { return 20.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sealed() {
-        let u = Underbody::new();
-        assert!(u.sealed());
+    fn test_protection() {
+        let c = Underbody::new();
+        assert!(c.protection_ok());
     }
 
     #[test]
-    fn test_aero() {
-        let u = Underbody::new();
-        assert!(u.aero_effective());
-    }
-
-    #[test]
-    fn test_no_repair() {
-        let u = Underbody::new();
-        assert!(!u.needs_repair());
+    fn test_drainage() {
+        let c = Underbody::new();
+        assert!(c.drainage_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let u = Underbody::new();
-        assert!(u.all_ok());
+        let c = Underbody::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_damaged() {
-        let mut u = Underbody::new();
-        u.damage_detected = true;
-        assert!(u.needs_repair());
+    fn test_no_service() {
+        let c = Underbody::new();
+        assert!(!c.needs_service());
+    }
+
+    #[test]
+    fn test_rust() {
+        let mut c = Underbody::new();
+        c.rust_free = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let u = Underbody::new();
-        assert!((u.health_score() - 100.0).abs() < 0.1);
+        let c = Underbody::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

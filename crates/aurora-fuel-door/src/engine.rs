@@ -1,13 +1,13 @@
-/// Fuel door: release mechanism, hinge, seal, capless filler
-/// Phase 416
+/// Fuel door: actuator, hinge, spring, seal
+/// Phase 555
 
 #[derive(Debug, Clone)]
 pub struct FuelDoor {
-    pub release_ok: bool,
+    pub actuator_ok: bool,
     pub hinge_ok: bool,
-    pub seal_ok: bool,
-    pub capless: bool,
     pub spring_ok: bool,
+    pub seal_ok: bool,
+    pub locked: bool,
 }
 
 impl Default for FuelDoor {
@@ -19,37 +19,32 @@ impl Default for FuelDoor {
 impl FuelDoor {
     pub fn new() -> Self {
         Self {
-            release_ok: true,
+            actuator_ok: true,
             hinge_ok: true,
-            seal_ok: true,
-            capless: false,
             spring_ok: true,
+            seal_ok: true,
+            locked: true,
         }
     }
 
-    pub fn functional(&self) -> bool {
-        self.release_ok && self.hinge_ok && self.spring_ok
-    }
-
-    pub fn all_ok(&self) -> bool {
-        self.functional() && self.seal_ok
-    }
-
-    pub fn needs_repair(&self) -> bool {
-        !self.release_ok || !self.hinge_ok
+    pub fn mechanism_ok(&self) -> bool {
+        self.actuator_ok && self.hinge_ok && self.spring_ok
     }
 
     pub fn sealed(&self) -> bool {
         self.seal_ok
     }
 
+    pub fn all_ok(&self) -> bool {
+        self.mechanism_ok() && self.sealed()
+    }
+
+    pub fn needs_service(&self) -> bool {
+        !self.actuator_ok || !self.hinge_ok
+    }
+
     pub fn health_score(&self) -> f64 {
-        if !self.release_ok {
-            return 20.0;
-        }
-        if !self.seal_ok {
-            return 50.0;
-        }
+        if !self.actuator_ok { return 20.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_functional() {
-        let f = FuelDoor::new();
-        assert!(f.functional());
-    }
-
-    #[test]
-    fn test_all_ok() {
-        let f = FuelDoor::new();
-        assert!(f.all_ok());
-    }
-
-    #[test]
-    fn test_no_repair() {
-        let f = FuelDoor::new();
-        assert!(!f.needs_repair());
+    fn test_mechanism() {
+        let c = FuelDoor::new();
+        assert!(c.mechanism_ok());
     }
 
     #[test]
     fn test_sealed() {
-        let f = FuelDoor::new();
-        assert!(f.sealed());
+        let c = FuelDoor::new();
+        assert!(c.sealed());
     }
 
     #[test]
-    fn test_stuck() {
-        let mut f = FuelDoor::new();
-        f.release_ok = false;
-        assert!(f.needs_repair());
+    fn test_all_ok() {
+        let c = FuelDoor::new();
+        assert!(c.all_ok());
+    }
+
+    #[test]
+    fn test_no_service() {
+        let c = FuelDoor::new();
+        assert!(!c.needs_service());
+    }
+
+    #[test]
+    fn test_actuator() {
+        let mut c = FuelDoor::new();
+        c.actuator_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let f = FuelDoor::new();
-        assert!((f.health_score() - 100.0).abs() < 0.1);
+        let c = FuelDoor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

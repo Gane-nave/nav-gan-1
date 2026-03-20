@@ -1,22 +1,13 @@
-/// Rain sensor: precipitation detection, wiper speed control, intensity
-/// Phase 231
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum RainIntensity {
-    None,
-    Light,
-    Moderate,
-    Heavy,
-    Torrential,
-}
+/// Rain sensor: optical, sensitivity, wiper auto mode
+/// Phase 561
 
 #[derive(Debug, Clone)]
 pub struct RainSensor {
-    pub intensity: RainIntensity,
-    pub moisture_pct: f64,
-    pub droplet_count: u32,
-    pub sensor_ok: bool,
-    pub auto_wiper_on: bool,
+    pub sensitivity_pct: f64,
+    pub optical_ok: bool,
+    pub lens_clean: bool,
+    pub auto_mode: bool,
+    pub calibrated: bool,
 }
 
 impl Default for RainSensor {
@@ -28,39 +19,32 @@ impl Default for RainSensor {
 impl RainSensor {
     pub fn new() -> Self {
         Self {
-            intensity: RainIntensity::None,
-            moisture_pct: 0.0,
-            droplet_count: 0,
-            sensor_ok: true,
-            auto_wiper_on: true,
+            sensitivity_pct: 70.0,
+            optical_ok: true,
+            lens_clean: true,
+            auto_mode: true,
+            calibrated: true,
         }
     }
 
-    pub fn is_raining(&self) -> bool {
-        self.intensity != RainIntensity::None
+    pub fn detection_ok(&self) -> bool {
+        self.optical_ok && self.lens_clean
     }
 
-    pub fn wiper_speed(&self) -> u8 {
-        match self.intensity {
-            RainIntensity::None => 0,
-            RainIntensity::Light => 1,
-            RainIntensity::Moderate => 2,
-            RainIntensity::Heavy => 3,
-            RainIntensity::Torrential => 4,
-        }
+    pub fn system_ok(&self) -> bool {
+        self.detection_ok() && self.calibrated
     }
 
-    pub fn reduce_speed_advisory(&self) -> bool {
-        matches!(
-            self.intensity,
-            RainIntensity::Heavy | RainIntensity::Torrential
-        )
+    pub fn all_ok(&self) -> bool {
+        self.system_ok() && self.auto_mode
+    }
+
+    pub fn needs_service(&self) -> bool {
+        !self.optical_ok || !self.calibrated
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok {
-            return 0.0;
-        }
+        if !self.optical_ok { return 20.0; }
         100.0
     }
 }
@@ -70,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_raining() {
-        let r = RainSensor::new();
-        assert!(!r.is_raining());
+    fn test_detection() {
+        let c = RainSensor::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_wiper_off() {
-        let r = RainSensor::new();
-        assert_eq!(r.wiper_speed(), 0);
+    fn test_system() {
+        let c = RainSensor::new();
+        assert!(c.system_ok());
     }
 
     #[test]
-    fn test_no_advisory() {
-        let r = RainSensor::new();
-        assert!(!r.reduce_speed_advisory());
+    fn test_all_ok() {
+        let c = RainSensor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_heavy_rain() {
-        let mut r = RainSensor::new();
-        r.intensity = RainIntensity::Heavy;
-        assert!(r.reduce_speed_advisory());
+    fn test_no_service() {
+        let c = RainSensor::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_raining() {
-        let mut r = RainSensor::new();
-        r.intensity = RainIntensity::Light;
-        assert!(r.is_raining());
+    fn test_optical() {
+        let mut c = RainSensor::new();
+        c.optical_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let r = RainSensor::new();
-        assert!((r.health_score() - 100.0).abs() < 0.1);
+        let c = RainSensor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

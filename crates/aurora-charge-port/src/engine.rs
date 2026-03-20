@@ -1,14 +1,13 @@
-/// Charge port: door actuator, latch, illumination, lock
-/// Phase 292
+/// Charge port: connector, locking pin, cooling, comm
+/// Phase 556
 
 #[derive(Debug, Clone)]
 pub struct ChargePort {
-    pub door_open: bool,
-    pub locked: bool,
-    pub connector_inserted: bool,
-    pub illuminated: bool,
-    pub latch_ok: bool,
-    pub actuator_ok: bool,
+    pub connector_ok: bool,
+    pub lock_pin_ok: bool,
+    pub cooling_ok: bool,
+    pub comm_ok: bool,
+    pub sealed: bool,
 }
 
 impl Default for ChargePort {
@@ -20,38 +19,32 @@ impl Default for ChargePort {
 impl ChargePort {
     pub fn new() -> Self {
         Self {
-            door_open: false,
-            locked: true,
-            connector_inserted: false,
-            illuminated: false,
-            latch_ok: true,
-            actuator_ok: true,
+            connector_ok: true,
+            lock_pin_ok: true,
+            cooling_ok: true,
+            comm_ok: true,
+            sealed: true,
         }
     }
 
-    pub fn ready_to_charge(&self) -> bool {
-        self.door_open && self.connector_inserted && self.latch_ok
+    pub fn electrical_ok(&self) -> bool {
+        self.connector_ok && self.comm_ok
     }
 
-    pub fn can_open(&self) -> bool {
-        !self.locked && self.actuator_ok
+    pub fn mechanical_ok(&self) -> bool {
+        self.lock_pin_ok && self.sealed
     }
 
-    pub fn can_remove_connector(&self) -> bool {
-        !self.locked && self.connector_inserted
+    pub fn all_ok(&self) -> bool {
+        self.electrical_ok() && self.mechanical_ok() && self.cooling_ok
     }
 
-    pub fn secure(&self) -> bool {
-        self.locked && self.connector_inserted
+    pub fn needs_service(&self) -> bool {
+        !self.connector_ok || !self.lock_pin_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok {
-            return 20.0;
-        }
-        if !self.latch_ok {
-            return 50.0;
-        }
+        if !self.connector_ok { return 10.0; }
         100.0
     }
 }
@@ -61,34 +54,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_ready() {
+    fn test_electrical() {
         let c = ChargePort::new();
-        assert!(!c.ready_to_charge());
+        assert!(c.electrical_ok());
     }
 
     #[test]
-    fn test_cannot_open() {
+    fn test_mechanical() {
         let c = ChargePort::new();
-        assert!(!c.can_open());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_no_remove() {
+    fn test_all_ok() {
         let c = ChargePort::new();
-        assert!(!c.can_remove_connector());
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_secure() {
+    fn test_no_service() {
         let c = ChargePort::new();
-        assert!(!c.secure());
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_open() {
+    fn test_connector() {
         let mut c = ChargePort::new();
-        c.locked = false;
-        assert!(c.can_open());
+        c.connector_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]

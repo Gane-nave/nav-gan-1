@@ -1,14 +1,13 @@
-/// Tow hitch: receiver, tongue weight, trailer connection
-/// Phase 335
+/// Tow hitch: receiver, ball mount, wiring, capacity
+/// Phase 557
 
 #[derive(Debug, Clone)]
 pub struct TowHitch {
-    pub connected: bool,
-    pub tongue_weight_kg: f64,
-    pub max_tongue_kg: f64,
-    pub tow_weight_kg: f64,
-    pub max_tow_kg: f64,
-    pub electrical_ok: bool,
+    pub capacity_kg: f64,
+    pub load_kg: f64,
+    pub wiring_ok: bool,
+    pub ball_ok: bool,
+    pub receiver_ok: bool,
 }
 
 impl Default for TowHitch {
@@ -20,38 +19,32 @@ impl Default for TowHitch {
 impl TowHitch {
     pub fn new() -> Self {
         Self {
-            connected: false,
-            tongue_weight_kg: 0.0,
-            max_tongue_kg: 200.0,
-            tow_weight_kg: 0.0,
-            max_tow_kg: 2000.0,
-            electrical_ok: true,
+            capacity_kg: 2500.0,
+            load_kg: 500.0,
+            wiring_ok: true,
+            ball_ok: true,
+            receiver_ok: true,
         }
     }
 
-    pub fn trailer_connected(&self) -> bool {
-        self.connected
+    pub fn within_capacity(&self) -> bool {
+        self.load_kg < self.capacity_kg
     }
 
-    pub fn tongue_ok(&self) -> bool {
-        self.tongue_weight_kg <= self.max_tongue_kg
+    pub fn hardware_ok(&self) -> bool {
+        self.ball_ok && self.receiver_ok
     }
 
-    pub fn tow_ok(&self) -> bool {
-        self.tow_weight_kg <= self.max_tow_kg
+    pub fn all_ok(&self) -> bool {
+        self.within_capacity() && self.hardware_ok() && self.wiring_ok
     }
 
-    pub fn overloaded(&self) -> bool {
-        self.tow_weight_kg > self.max_tow_kg || self.tongue_weight_kg > self.max_tongue_kg
+    pub fn needs_service(&self) -> bool {
+        !self.receiver_ok || !self.wiring_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.overloaded() {
-            return 20.0;
-        }
-        if !self.electrical_ok {
-            return 50.0;
-        }
+        if !self.receiver_ok { return 15.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_connected() {
-        let t = TowHitch::new();
-        assert!(!t.trailer_connected());
+    fn test_capacity() {
+        let c = TowHitch::new();
+        assert!(c.within_capacity());
     }
 
     #[test]
-    fn test_tongue_ok() {
-        let t = TowHitch::new();
-        assert!(t.tongue_ok());
+    fn test_hardware() {
+        let c = TowHitch::new();
+        assert!(c.hardware_ok());
     }
 
     #[test]
-    fn test_tow_ok() {
-        let t = TowHitch::new();
-        assert!(t.tow_ok());
+    fn test_all_ok() {
+        let c = TowHitch::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_overloaded() {
-        let t = TowHitch::new();
-        assert!(!t.overloaded());
+    fn test_no_service() {
+        let c = TowHitch::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_overloaded() {
-        let mut t = TowHitch::new();
-        t.tow_weight_kg = 3000.0;
-        assert!(t.overloaded());
+    fn test_receiver() {
+        let mut c = TowHitch::new();
+        c.receiver_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let t = TowHitch::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TowHitch::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

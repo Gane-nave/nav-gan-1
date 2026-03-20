@@ -1,13 +1,13 @@
-/// Chassis flex: torsional rigidity, flex measurement, reinforcement
-/// Phase 334
+/// Chassis flex: torsional rigidity, welds, mounts
+/// Phase 549
 
 #[derive(Debug, Clone)]
 pub struct ChassisFlex {
-    pub torsional_rigidity_nm_deg: f64,
-    pub flex_measurement_mm: f64,
-    pub max_flex_mm: f64,
-    pub reinforced: bool,
-    pub fatigue_cycles: u64,
+    pub rigidity_nm_deg: f64,
+    pub min_rigidity: f64,
+    pub welds_ok: bool,
+    pub mounts_ok: bool,
+    pub corrosion_free: bool,
 }
 
 impl Default for ChassisFlex {
@@ -19,37 +19,32 @@ impl Default for ChassisFlex {
 impl ChassisFlex {
     pub fn new() -> Self {
         Self {
-            torsional_rigidity_nm_deg: 25000.0,
-            flex_measurement_mm: 1.0,
-            max_flex_mm: 5.0,
-            reinforced: false,
-            fatigue_cycles: 100000,
+            rigidity_nm_deg: 25000.0,
+            min_rigidity: 15000.0,
+            welds_ok: true,
+            mounts_ok: true,
+            corrosion_free: true,
         }
     }
 
-    pub fn flex_ok(&self) -> bool {
-        self.flex_measurement_mm < self.max_flex_mm
+    pub fn rigidity_ok(&self) -> bool {
+        self.rigidity_nm_deg > self.min_rigidity
     }
 
-    pub fn rigid_enough(&self) -> bool {
-        self.torsional_rigidity_nm_deg > 20000.0
+    pub fn structural_ok(&self) -> bool {
+        self.welds_ok && self.mounts_ok && self.corrosion_free
     }
 
-    pub fn excess_flex(&self) -> bool {
-        self.flex_measurement_mm > self.max_flex_mm * 0.8
+    pub fn all_ok(&self) -> bool {
+        self.rigidity_ok() && self.structural_ok()
     }
 
-    pub fn fatigue_ok(&self) -> bool {
-        self.fatigue_cycles < 500000
+    pub fn needs_repair(&self) -> bool {
+        !self.welds_ok || !self.mounts_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flex_ok() {
-            return 0.0;
-        }
-        if self.excess_flex() {
-            return 40.0;
-        }
+        if !self.welds_ok { return 10.0; }
         100.0
     }
 }
@@ -59,34 +54,34 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_flex_ok() {
+    fn test_rigidity() {
         let c = ChassisFlex::new();
-        assert!(c.flex_ok());
+        assert!(c.rigidity_ok());
     }
 
     #[test]
-    fn test_rigid() {
+    fn test_structural() {
         let c = ChassisFlex::new();
-        assert!(c.rigid_enough());
+        assert!(c.structural_ok());
     }
 
     #[test]
-    fn test_no_excess() {
+    fn test_all_ok() {
         let c = ChassisFlex::new();
-        assert!(!c.excess_flex());
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_fatigue() {
+    fn test_no_repair() {
         let c = ChassisFlex::new();
-        assert!(c.fatigue_ok());
+        assert!(!c.needs_repair());
     }
 
     #[test]
-    fn test_too_flex() {
+    fn test_welds() {
         let mut c = ChassisFlex::new();
-        c.flex_measurement_mm = 6.0;
-        assert!(!c.flex_ok());
+        c.welds_ok = false;
+        assert!(c.needs_repair());
     }
 
     #[test]

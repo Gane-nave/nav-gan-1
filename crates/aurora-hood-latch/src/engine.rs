@@ -1,12 +1,12 @@
-/// Hood latch: primary latch, safety catch, cable release
-/// Phase 414
+/// Hood latch: primary/secondary, cable, striker
+/// Phase 553
 
 #[derive(Debug, Clone)]
 pub struct HoodLatch {
-    pub primary_engaged: bool,
-    pub safety_catch: bool,
+    pub primary_ok: bool,
+    pub secondary_ok: bool,
     pub cable_ok: bool,
-    pub spring_ok: bool,
+    pub striker_ok: bool,
     pub lubricated: bool,
 }
 
@@ -19,37 +19,32 @@ impl Default for HoodLatch {
 impl HoodLatch {
     pub fn new() -> Self {
         Self {
-            primary_engaged: true,
-            safety_catch: true,
+            primary_ok: true,
+            secondary_ok: true,
             cable_ok: true,
-            spring_ok: true,
+            striker_ok: true,
             lubricated: true,
         }
     }
 
-    pub fn secure(&self) -> bool {
-        self.primary_engaged && self.safety_catch
+    pub fn latch_ok(&self) -> bool {
+        self.primary_ok && self.secondary_ok
+    }
+
+    pub fn mechanism_ok(&self) -> bool {
+        self.cable_ok && self.striker_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.secure() && self.cable_ok && self.spring_ok
+        self.latch_ok() && self.mechanism_ok() && self.lubricated
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.cable_ok || !self.spring_ok || !self.lubricated
-    }
-
-    pub fn safety_ok(&self) -> bool {
-        self.safety_catch
+        !self.primary_ok || !self.cable_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.safety_catch {
-            return 0.0;
-        }
-        if !self.cable_ok {
-            return 30.0;
-        }
+        if !self.primary_ok { return 5.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_secure() {
-        let h = HoodLatch::new();
-        assert!(h.secure());
+    fn test_latch() {
+        let c = HoodLatch::new();
+        assert!(c.latch_ok());
+    }
+
+    #[test]
+    fn test_mechanism() {
+        let c = HoodLatch::new();
+        assert!(c.mechanism_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let h = HoodLatch::new();
-        assert!(h.all_ok());
+        let c = HoodLatch::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_service() {
-        let h = HoodLatch::new();
-        assert!(!h.needs_service());
+        let c = HoodLatch::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_safety() {
-        let h = HoodLatch::new();
-        assert!(h.safety_ok());
-    }
-
-    #[test]
-    fn test_bad_cable() {
-        let mut h = HoodLatch::new();
-        h.cable_ok = false;
-        assert!(h.needs_service());
+    fn test_primary() {
+        let mut c = HoodLatch::new();
+        c.primary_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let h = HoodLatch::new();
-        assert!((h.health_score() - 100.0).abs() < 0.1);
+        let c = HoodLatch::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

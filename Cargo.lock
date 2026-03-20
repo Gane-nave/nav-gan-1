@@ -197,6 +197,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-antenna-mod"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-antenna-mount"
 version = "0.1.0"
 
@@ -581,6 +585,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bump-stop"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bumper"
 version = "0.1.0"
 
 [[package]]
@@ -1421,6 +1429,10 @@ name = "aurora-features"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fender"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-final-drive"
 version = "0.1.0"
 
@@ -2079,6 +2091,10 @@ name = "aurora-light-adapt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-light-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-limited-slip"
 version = "0.1.0"
 
@@ -2111,6 +2127,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-lru"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lug-nut"
 version = "0.1.0"
 
 [[package]]
@@ -2765,6 +2785,10 @@ name = "aurora-ride-height"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rim-check"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ringbuf"
 version = "0.1.0"
 
@@ -3065,6 +3089,10 @@ name = "aurora-speed-scale"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-splash-guard"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-splitter"
 version = "0.1.0"
 
@@ -3227,6 +3255,10 @@ name = "aurora-temp-sensor-cab"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-temp-sensor-ext"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-temporal"
 version = "0.1.0"
 dependencies = [
@@ -3315,6 +3347,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-tire-press"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tire-tread"
 version = "0.1.0"
 
 [[package]]

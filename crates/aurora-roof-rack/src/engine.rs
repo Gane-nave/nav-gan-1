@@ -1,13 +1,13 @@
-/// Roof rack: load capacity, crossbar position, aerodynamic drag
-/// Phase 336
+/// Roof rack: cross bars, mounts, load capacity, wind noise
+/// Phase 558
 
 #[derive(Debug, Clone)]
 pub struct RoofRack {
-    pub installed: bool,
-    pub load_kg: f64,
     pub max_load_kg: f64,
-    pub crossbars_locked: bool,
-    pub aero_fairing: bool,
+    pub current_load_kg: f64,
+    pub mounts_ok: bool,
+    pub bars_ok: bool,
+    pub wind_strip_ok: bool,
 }
 
 impl Default for RoofRack {
@@ -19,40 +19,32 @@ impl Default for RoofRack {
 impl RoofRack {
     pub fn new() -> Self {
         Self {
-            installed: false,
-            load_kg: 0.0,
             max_load_kg: 75.0,
-            crossbars_locked: true,
-            aero_fairing: false,
+            current_load_kg: 0.0,
+            mounts_ok: true,
+            bars_ok: true,
+            wind_strip_ok: true,
         }
     }
 
-    pub fn loaded(&self) -> bool {
-        self.load_kg > 1.0
+    pub fn load_ok(&self) -> bool {
+        self.current_load_kg < self.max_load_kg
     }
 
-    pub fn overloaded(&self) -> bool {
-        self.load_kg > self.max_load_kg
+    pub fn structural_ok(&self) -> bool {
+        self.mounts_ok && self.bars_ok
     }
 
-    pub fn secure(&self) -> bool {
-        self.crossbars_locked && !self.overloaded()
+    pub fn all_ok(&self) -> bool {
+        self.load_ok() && self.structural_ok() && self.wind_strip_ok
     }
 
-    pub fn load_pct(&self) -> f64 {
-        if self.max_load_kg <= 0.0 {
-            return 0.0;
-        }
-        (self.load_kg / self.max_load_kg * 100.0).clamp(0.0, 100.0)
+    pub fn needs_service(&self) -> bool {
+        !self.mounts_ok || !self.bars_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.overloaded() {
-            return 20.0;
-        }
-        if !self.crossbars_locked {
-            return 40.0;
-        }
+        if !self.mounts_ok { return 15.0; }
         100.0
     }
 }
@@ -62,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_loaded() {
-        let r = RoofRack::new();
-        assert!(!r.loaded());
+    fn test_load() {
+        let c = RoofRack::new();
+        assert!(c.load_ok());
     }
 
     #[test]
-    fn test_not_overloaded() {
-        let r = RoofRack::new();
-        assert!(!r.overloaded());
+    fn test_structural() {
+        let c = RoofRack::new();
+        assert!(c.structural_ok());
     }
 
     #[test]
-    fn test_secure() {
-        let r = RoofRack::new();
-        assert!(r.secure());
+    fn test_all_ok() {
+        let c = RoofRack::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_load_pct() {
-        let r = RoofRack::new();
-        assert!(r.load_pct() < 1.0);
+    fn test_no_service() {
+        let c = RoofRack::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_overloaded() {
-        let mut r = RoofRack::new();
-        r.load_kg = 100.0;
-        assert!(r.overloaded());
+    fn test_mounts() {
+        let mut c = RoofRack::new();
+        c.mounts_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let r = RoofRack::new();
-        assert!((r.health_score() - 100.0).abs() < 0.1);
+        let c = RoofRack::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,13 +1,13 @@
-/// Trunk latch: electric release, emergency release, striker alignment
-/// Phase 415
+/// Trunk latch: actuator, switch, seal, strut
+/// Phase 554
 
 #[derive(Debug, Clone)]
 pub struct TrunkLatch {
-    pub engaged: bool,
-    pub electric_ok: bool,
-    pub emergency_ok: bool,
-    pub striker_ok: bool,
     pub actuator_ok: bool,
+    pub switch_ok: bool,
+    pub seal_ok: bool,
+    pub strut_ok: bool,
+    pub locked: bool,
 }
 
 impl Default for TrunkLatch {
@@ -19,37 +19,32 @@ impl Default for TrunkLatch {
 impl TrunkLatch {
     pub fn new() -> Self {
         Self {
-            engaged: true,
-            electric_ok: true,
-            emergency_ok: true,
-            striker_ok: true,
             actuator_ok: true,
+            switch_ok: true,
+            seal_ok: true,
+            strut_ok: true,
+            locked: true,
         }
     }
 
-    pub fn secure(&self) -> bool {
-        self.engaged && self.striker_ok
+    pub fn latch_ok(&self) -> bool {
+        self.actuator_ok && self.switch_ok
+    }
+
+    pub fn support_ok(&self) -> bool {
+        self.strut_ok && self.seal_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.secure() && self.electric_ok && self.emergency_ok && self.actuator_ok
+        self.latch_ok() && self.support_ok()
     }
 
-    pub fn needs_repair(&self) -> bool {
-        !self.actuator_ok || !self.electric_ok
-    }
-
-    pub fn safety_ok(&self) -> bool {
-        self.emergency_ok
+    pub fn needs_service(&self) -> bool {
+        !self.actuator_ok || !self.strut_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.emergency_ok {
-            return 0.0;
-        }
-        if !self.actuator_ok {
-            return 30.0;
-        }
+        if !self.actuator_ok { return 15.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_secure() {
-        let t = TrunkLatch::new();
-        assert!(t.secure());
+    fn test_latch() {
+        let c = TrunkLatch::new();
+        assert!(c.latch_ok());
+    }
+
+    #[test]
+    fn test_support() {
+        let c = TrunkLatch::new();
+        assert!(c.support_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let t = TrunkLatch::new();
-        assert!(t.all_ok());
+        let c = TrunkLatch::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_repair() {
-        let t = TrunkLatch::new();
-        assert!(!t.needs_repair());
+    fn test_no_service() {
+        let c = TrunkLatch::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_safety() {
-        let t = TrunkLatch::new();
-        assert!(t.safety_ok());
-    }
-
-    #[test]
-    fn test_bad_actuator() {
-        let mut t = TrunkLatch::new();
-        t.actuator_ok = false;
-        assert!(t.needs_repair());
+    fn test_actuator() {
+        let mut c = TrunkLatch::new();
+        c.actuator_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let t = TrunkLatch::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TrunkLatch::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

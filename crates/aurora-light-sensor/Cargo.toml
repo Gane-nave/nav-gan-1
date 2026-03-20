@@ -1,5 +1,5 @@
 [package]
-name = "aurora-hood-latch"
+name = "aurora-light-sensor"
 version = "0.1.0"
 edition = "2021"
 
