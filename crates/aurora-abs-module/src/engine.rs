@@ -1,13 +1,13 @@
-/// ABS module: hydraulic unit, speed sensors, pump
-/// Phase 488
+/// ABS module: pump, valve, sensor, ECU
+/// Phase 659
 
 #[derive(Debug, Clone)]
 pub struct AbsModule {
     pub pump_ok: bool,
     pub valve_ok: bool,
-    pub sensors_ok: bool,
+    pub sensor_ok: bool,
     pub ecu_ok: bool,
-    pub warning_light: bool,
+    pub calibrated: bool,
 }
 
 impl Default for AbsModule {
@@ -21,26 +21,26 @@ impl AbsModule {
         Self {
             pump_ok: true,
             valve_ok: true,
-            sensors_ok: true,
+            sensor_ok: true,
             ecu_ok: true,
-            warning_light: false,
+            calibrated: true,
         }
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.pump_ok && self.valve_ok && self.sensors_ok && self.ecu_ok
+    pub fn hydraulic_ok(&self) -> bool {
+        self.pump_ok && self.valve_ok
     }
 
-    pub fn is_active(&self) -> bool {
-        self.system_ok() && !self.warning_light
+    pub fn electronic_ok(&self) -> bool {
+        self.sensor_ok && self.ecu_ok && self.calibrated
     }
 
     pub fn all_ok(&self) -> bool {
-        self.system_ok() && !self.warning_light
+        self.hydraulic_ok() && self.electronic_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        self.warning_light || !self.system_ok()
+        !self.pump_ok || !self.ecu_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_system() {
+    fn test_hydraulic() {
         let c = AbsModule::new();
-        assert!(c.system_ok());
+        assert!(c.hydraulic_ok());
     }
 
     #[test]
-    fn test_active() {
+    fn test_electronic() {
         let c = AbsModule::new();
-        assert!(c.is_active());
+        assert!(c.electronic_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_warning() {
+    fn test_pump() {
         let mut c = AbsModule::new();
-        c.warning_light = true;
+        c.pump_ok = false;
         assert!(c.needs_service());
     }
 

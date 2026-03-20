@@ -1,13 +1,13 @@
-/// Wheel speed sensing: individual wheel RPM, slip detection, ABS input
-/// Phase 204
+/// Wheel speed sensor: reluctor, gap, signal, wiring
+/// Phase 669
 
 #[derive(Debug, Clone)]
 pub struct WheelSpeedSensor {
-    pub position: String,
-    pub rpm: f64,
-    pub speed_kmh: f64,
-    pub pulse_count: u64,
-    pub signal_valid: bool,
+    pub reluctor_ok: bool,
+    pub gap_ok: bool,
+    pub signal_ok: bool,
+    pub wiring_ok: bool,
+    pub calibrated: bool,
 }
 
 impl Default for WheelSpeedSensor {
@@ -19,31 +19,33 @@ impl Default for WheelSpeedSensor {
 impl WheelSpeedSensor {
     pub fn new() -> Self {
         Self {
-            position: "front_left".into(),
-            rpm: 800.0,
-            speed_kmh: 60.0,
-            pulse_count: 0,
-            signal_valid: true,
+            reluctor_ok: true,
+            gap_ok: true,
+            signal_ok: true,
+            wiring_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn is_moving(&self) -> bool {
-        self.rpm > 5.0
+    pub fn sensor_ok(&self) -> bool {
+        self.reluctor_ok && self.gap_ok
     }
 
-    pub fn slip_ratio(&self, reference_speed_kmh: f64) -> f64 {
-        if reference_speed_kmh <= 0.0 {
-            return 0.0;
-        }
-        ((reference_speed_kmh - self.speed_kmh) / reference_speed_kmh).abs()
+    pub fn output_ok(&self) -> bool {
+        self.signal_ok && self.wiring_ok && self.calibrated
     }
 
-    pub fn wheel_locked(&self, reference_speed_kmh: f64) -> bool {
-        reference_speed_kmh > 10.0 && self.speed_kmh < 1.0
+    pub fn all_ok(&self) -> bool {
+        self.sensor_ok() && self.output_ok()
     }
 
-    pub fn spinning(&self, reference_speed_kmh: f64) -> bool {
-        self.speed_kmh > reference_speed_kmh * 1.3 && reference_speed_kmh > 5.0
+    pub fn needs_service(&self) -> bool {
+        !self.reluctor_ok || !self.signal_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.signal_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -52,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_moving() {
-        let w = WheelSpeedSensor::new();
-        assert!(w.is_moving());
+    fn test_sensor() {
+        let c = WheelSpeedSensor::new();
+        assert!(c.sensor_ok());
     }
 
     #[test]
-    fn test_slip_ratio() {
-        let w = WheelSpeedSensor::new();
-        assert!(w.slip_ratio(60.0) < 0.01);
+    fn test_output() {
+        let c = WheelSpeedSensor::new();
+        assert!(c.output_ok());
     }
 
     #[test]
-    fn test_not_locked() {
-        let w = WheelSpeedSensor::new();
-        assert!(!w.wheel_locked(60.0));
+    fn test_all_ok() {
+        let c = WheelSpeedSensor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_locked() {
-        let mut w = WheelSpeedSensor::new();
-        w.speed_kmh = 0.0;
-        assert!(w.wheel_locked(60.0));
+    fn test_no_service() {
+        let c = WheelSpeedSensor::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_not_spinning() {
-        let w = WheelSpeedSensor::new();
-        assert!(!w.spinning(60.0));
+    fn test_reluctor() {
+        let mut c = WheelSpeedSensor::new();
+        c.reluctor_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
-    fn test_spinning() {
-        let mut w = WheelSpeedSensor::new();
-        w.speed_kmh = 100.0;
-        assert!(w.spinning(60.0));
+    fn test_health() {
+        let c = WheelSpeedSensor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

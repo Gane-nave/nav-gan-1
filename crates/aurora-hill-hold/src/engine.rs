@@ -1,55 +1,50 @@
-/// Hill hold assist: incline detection, brake hold, rollback prevention
-/// Phase 207
+/// Hill hold assist: incline sensor, brake hold, release logic
+/// Phase 671
 
 #[derive(Debug, Clone)]
-pub struct HillHoldAssist {
-    pub incline_deg: f64,
-    pub brake_hold_active: bool,
-    pub hold_pressure_bar: f64,
-    pub rollback_detected: bool,
+pub struct HillHold {
+    pub incline_ok: bool,
+    pub brake_hold_ok: bool,
+    pub release_ok: bool,
+    pub ecu_ok: bool,
     pub enabled: bool,
 }
 
-impl Default for HillHoldAssist {
+impl Default for HillHold {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl HillHoldAssist {
+impl HillHold {
     pub fn new() -> Self {
         Self {
-            incline_deg: 0.0,
-            brake_hold_active: false,
-            hold_pressure_bar: 0.0,
-            rollback_detected: false,
+            incline_ok: true,
+            brake_hold_ok: true,
+            release_ok: true,
+            ecu_ok: true,
             enabled: true,
         }
     }
 
-    pub fn on_hill(&self) -> bool {
-        self.incline_deg.abs() > 3.0
+    pub fn detection_ok(&self) -> bool {
+        self.incline_ok && self.ecu_ok
     }
 
-    pub fn should_activate(&self) -> bool {
-        self.enabled && self.on_hill() && !self.brake_hold_active
+    pub fn hold_ok(&self) -> bool {
+        self.brake_hold_ok && self.release_ok
     }
 
-    pub fn holding(&self) -> bool {
-        self.brake_hold_active && self.hold_pressure_bar > 5.0
+    pub fn all_ok(&self) -> bool {
+        self.detection_ok() && self.hold_ok() && self.enabled
     }
 
-    pub fn steep_hill(&self) -> bool {
-        self.incline_deg.abs() > 15.0
+    pub fn needs_service(&self) -> bool {
+        !self.incline_ok || !self.ecu_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.enabled {
-            return 50.0;
-        }
-        if self.rollback_detected {
-            return 30.0;
-        }
+        if !self.ecu_ok { return 10.0; }
         100.0
     }
 }
@@ -59,41 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_flat() {
-        let h = HillHoldAssist::new();
-        assert!(!h.on_hill());
+    fn test_detection() {
+        let c = HillHold::new();
+        assert!(c.detection_ok());
     }
 
     #[test]
-    fn test_on_hill() {
-        let mut h = HillHoldAssist::new();
-        h.incline_deg = 10.0;
-        assert!(h.on_hill());
+    fn test_hold() {
+        let c = HillHold::new();
+        assert!(c.hold_ok());
     }
 
     #[test]
-    fn test_should_activate() {
-        let mut h = HillHoldAssist::new();
-        h.incline_deg = 10.0;
-        assert!(h.should_activate());
+    fn test_all_ok() {
+        let c = HillHold::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_holding() {
-        let h = HillHoldAssist::new();
-        assert!(!h.holding());
+    fn test_no_service() {
+        let c = HillHold::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_steep() {
-        let mut h = HillHoldAssist::new();
-        h.incline_deg = 20.0;
-        assert!(h.steep_hill());
+    fn test_incline() {
+        let mut c = HillHold::new();
+        c.incline_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let h = HillHoldAssist::new();
-        assert!((h.health_score() - 100.0).abs() < 0.1);
+        let c = HillHold::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

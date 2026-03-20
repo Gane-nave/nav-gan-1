@@ -1,13 +1,13 @@
-/// Traction control: wheel slip, throttle intervention
-/// Phase 490
+/// Traction control: wheel slip, throttle cut, brake apply
+/// Phase 670
 
 #[derive(Debug, Clone)]
 pub struct TractionControl {
-    pub slip_pct: f64,
-    pub max_slip_pct: f64,
-    pub tc_active: bool,
-    pub intervening: bool,
-    pub sensor_ok: bool,
+    pub slip_sensor_ok: bool,
+    pub throttle_ok: bool,
+    pub brake_apply_ok: bool,
+    pub ecu_ok: bool,
+    pub enabled: bool,
 }
 
 impl Default for TractionControl {
@@ -19,32 +19,32 @@ impl Default for TractionControl {
 impl TractionControl {
     pub fn new() -> Self {
         Self {
-            slip_pct: 2.0,
-            max_slip_pct: 10.0,
-            tc_active: true,
-            intervening: false,
-            sensor_ok: true,
+            slip_sensor_ok: true,
+            throttle_ok: true,
+            brake_apply_ok: true,
+            ecu_ok: true,
+            enabled: true,
         }
     }
 
-    pub fn slip_ok(&self) -> bool {
-        self.slip_pct < self.max_slip_pct
+    pub fn sensors_ok(&self) -> bool {
+        self.slip_sensor_ok && self.throttle_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.tc_active && self.sensor_ok
+    pub fn intervention_ok(&self) -> bool {
+        self.brake_apply_ok && self.ecu_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.slip_ok() && self.system_ok()
+        self.sensors_ok() && self.intervention_ok() && self.enabled
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.sensor_ok
+        !self.ecu_ok || !self.slip_sensor_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok { return 15.0; }
+        if !self.ecu_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_slip() {
+    fn test_sensors() {
         let c = TractionControl::new();
-        assert!(c.slip_ok());
+        assert!(c.sensors_ok());
     }
 
     #[test]
-    fn test_system() {
+    fn test_intervention() {
         let c = TractionControl::new();
-        assert!(c.system_ok());
+        assert!(c.intervention_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_sensor_fail() {
+    fn test_ecu() {
         let mut c = TractionControl::new();
-        c.sensor_ok = false;
+        c.ecu_ok = false;
         assert!(c.needs_service());
     }
 

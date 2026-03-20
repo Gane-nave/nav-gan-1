@@ -1,13 +1,13 @@
-/// ESC module: stability control, yaw sensor, lateral accel
-/// Phase 489
+/// ESC module: yaw sensor, steering angle, lateral accel
+/// Phase 660
 
 #[derive(Debug, Clone)]
 pub struct EscModule {
-    pub yaw_rate_dps: f64,
-    pub lateral_g: f64,
-    pub esc_active: bool,
-    pub sensor_ok: bool,
-    pub ecu_ok: bool,
+    pub yaw_ok: bool,
+    pub steering_angle_ok: bool,
+    pub lateral_ok: bool,
+    pub control_ok: bool,
+    pub calibrated: bool,
 }
 
 impl Default for EscModule {
@@ -19,32 +19,32 @@ impl Default for EscModule {
 impl EscModule {
     pub fn new() -> Self {
         Self {
-            yaw_rate_dps: 5.0,
-            lateral_g: 0.3,
-            esc_active: true,
-            sensor_ok: true,
-            ecu_ok: true,
+            yaw_ok: true,
+            steering_angle_ok: true,
+            lateral_ok: true,
+            control_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn stable(&self) -> bool {
-        self.yaw_rate_dps.abs() < 30.0 && self.lateral_g.abs() < 0.8
+    pub fn sensors_ok(&self) -> bool {
+        self.yaw_ok && self.steering_angle_ok && self.lateral_ok
     }
 
     pub fn system_ok(&self) -> bool {
-        self.sensor_ok && self.ecu_ok
+        self.control_ok && self.calibrated
     }
 
     pub fn all_ok(&self) -> bool {
-        self.system_ok() && self.esc_active
+        self.sensors_ok() && self.system_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.sensor_ok || !self.ecu_ok
+    pub fn needs_calibration(&self) -> bool {
+        !self.calibrated || !self.yaw_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ecu_ok { return 10.0; }
+        if !self.control_ok { return 10.0; }
         100.0
     }
 }
@@ -54,9 +54,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stable() {
+    fn test_sensors() {
         let c = EscModule::new();
-        assert!(c.stable());
+        assert!(c.sensors_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_cal() {
         let c = EscModule::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_ecu_fail() {
+    fn test_cal() {
         let mut c = EscModule::new();
-        c.ecu_ok = false;
-        assert!(c.needs_service());
+        c.calibrated = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]

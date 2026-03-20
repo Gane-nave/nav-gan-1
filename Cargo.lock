@@ -125,6 +125,10 @@ name = "aurora-adaptive-cruise"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-adaptive-damper"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-adhesive-bond"
 version = "0.1.0"
 
@@ -580,6 +584,10 @@ name = "aurora-brake-assist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-brake-booster"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-brake-caliper"
 version = "0.1.0"
 
@@ -588,7 +596,15 @@ name = "aurora-brake-cool"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-brake-drum"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-brake-fluid"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-hose"
 version = "0.1.0"
 
 [[package]]
@@ -601,6 +617,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-rotor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-shoe"
 version = "0.1.0"
 
 [[package]]
@@ -1380,6 +1400,10 @@ name = "aurora-engine-sound"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-eps-motor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-error-accum"
 version = "0.1.0"
 dependencies = [
@@ -2156,6 +2180,10 @@ name = "aurora-knock-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-knuckle"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lambda-sensor"
 version = "0.1.0"
 
@@ -2331,6 +2359,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-mass-airflow"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-master-cyl"
 version = "0.1.0"
 
 [[package]]
@@ -2817,6 +2849,10 @@ name = "aurora-prop-shaft"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-prop-valve"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ptc-heater"
 version = "0.1.0"
 
@@ -3183,6 +3219,10 @@ name = "aurora-shock-absorb"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-shock-absorber"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-side-camera"
 version = "0.1.0"
 
@@ -3319,6 +3359,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-steering-col"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steering-column"
 version = "0.1.0"
 
 [[package]]
@@ -3534,6 +3578,10 @@ name = "aurora-tire-tread"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-toe-link"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-toll-calc"
 version = "0.1.0"
 
@@ -3587,6 +3635,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-sign"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trailing-arm"
 version = "0.1.0"
 
 [[package]]
@@ -3882,6 +3934,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-wheel-align"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-cyl"
 version = "0.1.0"
 
 [[package]]
