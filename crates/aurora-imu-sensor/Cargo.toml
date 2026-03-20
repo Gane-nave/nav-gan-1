@@ -1,0 +1,6 @@
+[package]
+name = "aurora-imu-sensor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

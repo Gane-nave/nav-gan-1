@@ -1,0 +1,6 @@
+[package]
+name = "aurora-brake-wear"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

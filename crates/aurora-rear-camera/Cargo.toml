@@ -1,0 +1,6 @@
+[package]
+name = "aurora-rear-camera"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-seat-heat"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

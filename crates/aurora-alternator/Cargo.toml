@@ -1,0 +1,6 @@
+[package]
+name = "aurora-alternator"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

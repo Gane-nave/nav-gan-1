@@ -109,6 +109,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-alternator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics"
 version = "0.1.0"
 dependencies = [
@@ -359,6 +363,10 @@ name = "aurora-battery-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-belt-tension"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bench"
 version = "0.1.0"
 dependencies = [
@@ -405,6 +413,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-assist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-wear"
 version = "0.1.0"
 
 [[package]]
@@ -990,6 +1002,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-front-camera"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fsm"
 version = "0.1.0"
 
@@ -1175,6 +1191,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-imu-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-incidents"
 version = "0.1.0"
 dependencies = [
@@ -1347,6 +1367,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-lidar-proc"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-light-adapt"
 version = "0.1.0"
 
@@ -1447,6 +1471,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-mirror-assist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mirror-fold"
 version = "0.1.0"
 
 [[package]]
@@ -1691,6 +1719,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-power-window"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-prediction-mh"
 version = "0.1.0"
 
@@ -1752,11 +1784,19 @@ name = "aurora-quota"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-radar-proc"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-rcu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rear-camera"
 version = "0.1.0"
 
 [[package]]
@@ -1905,6 +1945,10 @@ name = "aurora-seat-comfort"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-seat-heat"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-security"
 version = "0.1.0"
 dependencies = [
@@ -1936,6 +1980,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-serialization"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-side-camera"
 version = "0.1.0"
 
 [[package]]
@@ -1981,6 +2029,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-spark-plug"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-speed-advisor"
 version = "0.1.0"
 
@@ -2018,6 +2070,10 @@ name = "aurora-stability-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-starter-motor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-steer-assist"
 version = "0.1.0"
 
@@ -2046,6 +2102,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-sunroof-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-suspension-adapt"
@@ -2111,6 +2171,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-tire-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tire-press"
 version = "0.1.0"
 
 [[package]]
@@ -2204,6 +2268,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-ultrasonic"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-uncertainty"
@@ -2319,6 +2387,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-wheel-align"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-window-tint"

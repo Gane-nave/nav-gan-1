@@ -1,0 +1,6 @@
+[package]
+name = "aurora-power-window"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

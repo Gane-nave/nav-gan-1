@@ -1,0 +1,6 @@
+[package]
+name = "aurora-starter-motor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-wheel-align"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
