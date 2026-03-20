@@ -549,6 +549,38 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-archive-ar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-cpio"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-dmg"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-iso"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-rar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-sevenz"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-tar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-archive-zip"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-arena"
 version = "0.1.0"
 
@@ -1508,6 +1540,46 @@ name = "aurora-comply-wltp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-compress-brotli"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-bz2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-deflate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-gzip"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-lz4"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-lzma"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-snappy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-xz"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-zlib"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compress-zstd"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-compression"
 version = "0.1.0"
 
@@ -1767,6 +1839,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cruise-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-aes"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-argon2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-bcrypt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-blake3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-chacha"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-ecdsa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-ed25519"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-hmac"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-noise"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-pbkdf2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-poly1305"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-rsa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-scrypt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-secp256k1"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-sha256"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-sha512"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-tls13"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crypto-x25519"
 version = "0.1.0"
 
 [[package]]
@@ -2477,6 +2621,78 @@ dependencies = [
 
 [[package]]
 name = "aurora-emission-test"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-ascii"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-base32"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-base58"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-base64"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-base85"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-bech32"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-der"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-hex"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-html"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-jwt2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-pem"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-percent"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-punycode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-qp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-unicode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-url"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-utf8"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-encode-z85"
 version = "0.1.0"
 
 [[package]]
@@ -5719,6 +5935,54 @@ name = "aurora-scenic-route"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-backoff"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-batch"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-choreo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-cron"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-dag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-deadline"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-delay"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-interval"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-pipeline"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-priority"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-ratelimit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-saga"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-scheduler"
 version = "0.1.0"
 
@@ -7338,6 +7602,30 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiring-loom"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-approval"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-audit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-bpmn"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-notify"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-state"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-workflow-version"
 version = "0.1.0"
 
 [[package]]

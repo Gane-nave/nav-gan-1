@@ -1,0 +1,4 @@
+[package]
+name = "aurora-compress-zstd"
+version = "0.1.0"
+edition = "2021"
