@@ -158,6 +158,7 @@ dependencies = [
  "aurora-micro-nav",
  "aurora-observability",
  "aurora-offline",
+ "aurora-orchestrator",
  "aurora-parking",
  "aurora-payments",
  "aurora-probabilistic",
@@ -918,6 +919,28 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
+]
+
+[[package]]
+name = "aurora-orchestrator"
+version = "0.1.0"
+dependencies = [
+ "aurora-backpressure",
+ "aurora-bloom",
+ "aurora-bounded-queue",
+ "aurora-btree",
+ "aurora-cache",
+ "aurora-circuit",
+ "aurora-clock",
+ "aurora-errors",
+ "aurora-features",
+ "aurora-histogram",
+ "aurora-lru",
+ "aurora-perf",
+ "aurora-ratelimit",
+ "aurora-retry",
+ "aurora-snapshot",
+ "aurora-structured-log",
 ]
 
 [[package]]
