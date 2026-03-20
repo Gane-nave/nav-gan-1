@@ -1,12 +1,12 @@
-/// deploy artifact: build, sign, store, distribute, log
-/// Phase 1597
+/// deploy artifact: build, store, retrieve, clean, log
+/// Phase 2129
 
 #[derive(Debug, Clone)]
 pub struct DeployArtifact {
     pub build_ok: bool,
-    pub sign_ok: bool,
     pub store_ok: bool,
-    pub distribute_ok: bool,
+    pub retrieve_ok: bool,
+    pub clean_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl DeployArtifact {
     pub fn new() -> Self {
         Self {
             build_ok: true,
-            sign_ok: true,
             store_ok: true,
-            distribute_ok: true,
+            retrieve_ok: true,
+            clean_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.build_ok && self.sign_ok && self.store_ok
+        self.build_ok && self.store_ok && self.retrieve_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.distribute_ok && self.log_ok
+        self.clean_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl DeployArtifact {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.build_ok || !self.sign_ok
+        !self.build_ok || !self.store_ok
     }
 
     pub fn health_score(&self) -> f64 {

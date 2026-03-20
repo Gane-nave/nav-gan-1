@@ -1,12 +1,12 @@
-/// deploy hotfix: branch, fix, test, merge, log
-/// Phase 1595
+/// deploy hotfix: create, deploy, verify, close, log
+/// Phase 2125
 
 #[derive(Debug, Clone)]
 pub struct DeployHotfix {
-    pub branch_ok: bool,
-    pub fix_ok: bool,
-    pub test_ok: bool,
-    pub merge_ok: bool,
+    pub create_ok: bool,
+    pub deploy_ok: bool,
+    pub verify_ok: bool,
+    pub close_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for DeployHotfix {
 impl DeployHotfix {
     pub fn new() -> Self {
         Self {
-            branch_ok: true,
-            fix_ok: true,
-            test_ok: true,
-            merge_ok: true,
+            create_ok: true,
+            deploy_ok: true,
+            verify_ok: true,
+            close_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.branch_ok && self.fix_ok && self.test_ok
+        self.create_ok && self.deploy_ok && self.verify_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.merge_ok && self.log_ok
+        self.close_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl DeployHotfix {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.branch_ok || !self.fix_ok
+        !self.create_ok || !self.deploy_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.branch_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = DeployHotfix::new();
-        c.branch_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

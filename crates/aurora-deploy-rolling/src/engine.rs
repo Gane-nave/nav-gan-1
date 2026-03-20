@@ -1,11 +1,11 @@
-/// deploy rolling: batch, update, verify, complete, log
-/// Phase 1592
+/// deploy rolling: start, pause, resume, complete, log
+/// Phase 2122
 
 #[derive(Debug, Clone)]
 pub struct DeployRolling {
-    pub batch_ok: bool,
-    pub update_ok: bool,
-    pub verify_ok: bool,
+    pub start_ok: bool,
+    pub pause_ok: bool,
+    pub resume_ok: bool,
     pub complete_ok: bool,
     pub log_ok: bool,
 }
@@ -19,16 +19,16 @@ impl Default for DeployRolling {
 impl DeployRolling {
     pub fn new() -> Self {
         Self {
-            batch_ok: true,
-            update_ok: true,
-            verify_ok: true,
+            start_ok: true,
+            pause_ok: true,
+            resume_ok: true,
             complete_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.batch_ok && self.update_ok && self.verify_ok
+        self.start_ok && self.pause_ok && self.resume_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl DeployRolling {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.batch_ok || !self.update_ok
+        !self.start_ok || !self.pause_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.batch_ok {
+        if !self.start_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = DeployRolling::new();
-        c.batch_ok = false;
+        c.start_ok = false;
         assert!(c.needs_attention());
     }
 

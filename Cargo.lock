@@ -2453,6 +2453,10 @@ name = "aurora-deploy-ansible"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-deploy-argocd"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy-artifact"
 version = "0.1.0"
 
@@ -2461,7 +2465,15 @@ name = "aurora-deploy-blue"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-deploy-bluegreen"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy-canary"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-canary2"
 version = "0.1.0"
 
 [[package]]
@@ -2481,7 +2493,19 @@ name = "aurora-deploy-feature"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-deploy-feature2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-flux"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy-helm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-helm2"
 version = "0.1.0"
 
 [[package]]
@@ -2497,7 +2521,23 @@ name = "aurora-deploy-k8s"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-deploy-k8s2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-promote"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-pulumi"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy-registry2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-release2"
 version = "0.1.0"
 
 [[package]]
@@ -2505,7 +2545,15 @@ name = "aurora-deploy-rollback"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-deploy-rollback2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy-rolling"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-shadow"
 version = "0.1.0"
 
 [[package]]
@@ -2544,6 +2592,78 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-devops-backup2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-build2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-changelog"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-chaos3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-config3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-docs2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-env2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-format2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-lint2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-merge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-migrate2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-pipeline2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-review"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-scale2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-scan3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-secret2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-tag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-devops-test2"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-diagnostics"
@@ -4325,6 +4445,78 @@ name = "aurora-infotainment"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-infra-bastion"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-cdn2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-cert3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-compute"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-container"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-dns3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-firewall2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-gateway2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-lb2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-mesh2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-nat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-queue3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-registry2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-serverless"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-storage2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-subnet"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-vpc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infra-vpn"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-injector"
 version = "0.1.0"
 
@@ -5645,6 +5837,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-obj-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-anomaly2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-capacity"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-cost"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-dashboard2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-error2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-event2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-health2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-incident2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-latency"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-log3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-metric2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-oncall"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-profile2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-report2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-sla"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-slo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-trace2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obs-uptime"
 version = "0.1.0"
 
 [[package]]

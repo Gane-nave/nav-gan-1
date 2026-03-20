@@ -1,11 +1,11 @@
-/// deploy ansible: inventory, playbook, role, vault, log
-/// Phase 1601
+/// deploy ansible: playbook, role, inventory, vault, log
+/// Phase 2116
 
 #[derive(Debug, Clone)]
 pub struct DeployAnsible {
-    pub inventory_ok: bool,
     pub playbook_ok: bool,
     pub role_ok: bool,
+    pub inventory_ok: bool,
     pub vault_ok: bool,
     pub log_ok: bool,
 }
@@ -19,16 +19,16 @@ impl Default for DeployAnsible {
 impl DeployAnsible {
     pub fn new() -> Self {
         Self {
-            inventory_ok: true,
             playbook_ok: true,
             role_ok: true,
+            inventory_ok: true,
             vault_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.inventory_ok && self.playbook_ok && self.role_ok
+        self.playbook_ok && self.role_ok && self.inventory_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl DeployAnsible {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.inventory_ok || !self.playbook_ok
+        !self.playbook_ok || !self.role_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.inventory_ok {
+        if !self.playbook_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = DeployAnsible::new();
-        c.inventory_ok = false;
+        c.playbook_ok = false;
         assert!(c.needs_attention());
     }
 

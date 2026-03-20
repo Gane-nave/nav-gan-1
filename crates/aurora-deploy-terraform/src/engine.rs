@@ -1,12 +1,12 @@
-/// deploy terraform: plan, apply, destroy, import, log
-/// Phase 1600
+/// deploy terraform: plan, apply, destroy, output, log
+/// Phase 2115
 
 #[derive(Debug, Clone)]
 pub struct DeployTerraform {
     pub plan_ok: bool,
     pub apply_ok: bool,
     pub destroy_ok: bool,
-    pub import_ok: bool,
+    pub output_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl DeployTerraform {
             plan_ok: true,
             apply_ok: true,
             destroy_ok: true,
-            import_ok: true,
+            output_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl DeployTerraform {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.import_ok && self.log_ok
+        self.output_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {

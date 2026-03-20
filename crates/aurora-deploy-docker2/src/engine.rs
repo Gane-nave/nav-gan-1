@@ -1,12 +1,12 @@
-/// deploy docker: build, push, pull, compose, log
-/// Phase 1602
+/// deploy docker2: build, push, pull, run, log
+/// Phase 2112
 
 #[derive(Debug, Clone)]
 pub struct DeployDocker2 {
     pub build_ok: bool,
     pub push_ok: bool,
     pub pull_ok: bool,
-    pub compose_ok: bool,
+    pub run_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl DeployDocker2 {
             build_ok: true,
             push_ok: true,
             pull_ok: true,
-            compose_ok: true,
+            run_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl DeployDocker2 {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.compose_ok && self.log_ok
+        self.run_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
