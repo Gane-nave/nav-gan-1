@@ -212,6 +212,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-backpressure"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bench"
 version = "0.1.0"
 dependencies = [
@@ -262,6 +266,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-circuit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-city"
 version = "0.1.0"
 dependencies = [
@@ -284,6 +292,10 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-compression"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-confidence"
@@ -563,6 +575,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-geo"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -579,6 +595,14 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-health"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-histogram"
 version = "0.1.0"
 
 [[package]]
@@ -887,6 +911,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-quota"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
@@ -996,11 +1024,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-serialization"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-snapshot"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-social"
@@ -1035,6 +1071,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-streaming"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-structured-log"
 version = "0.1.0"
 
 [[package]]
@@ -1074,6 +1114,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-tracing-dist"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-traffic"
@@ -1145,6 +1189,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-websocket"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-wellness"

@@ -1,0 +1,7 @@
+[package]
+name = "aurora-health"
+version = "0.1.0"
+edition = "2021"
+description = "Health check aggregation and readiness probes for AURORA NAV"
+
+[dependencies]
