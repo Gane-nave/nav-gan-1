@@ -1,0 +1,6 @@
+[package]
+name = "aurora-underbody"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

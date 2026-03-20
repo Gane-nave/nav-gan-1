@@ -105,12 +105,20 @@ name = "aurora-adaptive-cruise"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-aero-coeff"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-agnss"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-air-dam"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-air-quality"
@@ -469,6 +477,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-assist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-cool"
 version = "0.1.0"
 
 [[package]]
@@ -913,6 +925,10 @@ name = "aurora-diff-lock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-diffuser"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-distribution"
 version = "0.1.0"
 
@@ -971,7 +987,15 @@ name = "aurora-door-lock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-downforce"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dpf-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-drag-reduce"
 version = "0.1.0"
 
 [[package]]
@@ -1097,6 +1121,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-energy-harvest"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-engine-cover"
 version = "0.1.0"
 
 [[package]]
@@ -1365,6 +1393,10 @@ name = "aurora-graphdb"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-grille-shut"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-haptic"
 version = "0.1.0"
 
@@ -1402,6 +1434,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-heap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-heat-shield"
 version = "0.1.0"
 
 [[package]]
@@ -1968,6 +2004,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nv-harshness"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-obd-diag"
 version = "0.1.0"
 
@@ -2495,6 +2535,10 @@ name = "aurora-side-camera"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-side-skirt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
@@ -2529,6 +2573,10 @@ name = "aurora-solar-charge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sound-dead"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-source-select"
 version = "0.1.0"
 dependencies = [
@@ -2554,6 +2602,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-speed-scale"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-splitter"
 version = "0.1.0"
 
 [[package]]
@@ -2881,6 +2933,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-underbody"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ux"
 version = "0.1.0"
 dependencies = [
@@ -2934,6 +2990,10 @@ name = "aurora-vertical-int"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-vibr-damp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-vin-decode"
 version = "0.1.0"
 
@@ -2962,6 +3022,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-voice-cmd"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vortex-gen"
 version = "0.1.0"
 
 [[package]]
@@ -3029,11 +3093,19 @@ name = "aurora-wheel-speed"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-wheel-well"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-window-ctrl"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-window-tint"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wing-elem"
 version = "0.1.0"
 
 [[package]]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-heat-shield"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-drag-reduce"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
