@@ -113,6 +113,10 @@ name = "aurora-accident-alert"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-active-aero"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-adaptive"
 version = "0.1.0"
 dependencies = [
@@ -652,6 +656,10 @@ name = "aurora-bolt-torque"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-boost-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-boost-sensor"
 version = "0.1.0"
 
@@ -709,6 +717,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-shoe"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-temp"
 version = "0.1.0"
 
 [[package]]
@@ -1273,6 +1285,10 @@ name = "aurora-data-network"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-record"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dc-converter"
 version = "0.1.0"
 
@@ -1476,6 +1492,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-drag-reduce"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-drift-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -1850,6 +1870,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-final-drive"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fire-suppres"
 version = "0.1.0"
 
 [[package]]
@@ -2648,6 +2672,10 @@ name = "aurora-lane-keep"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lap-timer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lat-accel"
 version = "0.1.0"
 
@@ -2986,6 +3014,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nitrous-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-noise-map"
 version = "0.1.0"
 
@@ -3094,6 +3126,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-oil-pump"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oil-temp"
 version = "0.1.0"
 
 [[package]]
@@ -3557,6 +3593,10 @@ name = "aurora-rev-limiter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rev-match"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-revenue"
 version = "0.1.0"
 
@@ -3610,6 +3650,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rocker-panel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-roll-cage"
 version = "0.1.0"
 
 [[package]]
@@ -3981,6 +4025,10 @@ name = "aurora-splitter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sport-exhaust"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-spring-damper"
 version = "0.1.0"
 
@@ -4171,6 +4219,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-telemetry-log"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-temp-sensor-cab"
 version = "0.1.0"
 
@@ -4290,6 +4342,10 @@ name = "aurora-tire-repair"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tire-temp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tire-tread"
 version = "0.1.0"
 
@@ -4321,11 +4377,19 @@ name = "aurora-torque-split"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-torque-vector"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tow-hitch"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-tracing-dist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-track-mode"
 version = "0.1.0"
 
 [[package]]
@@ -4719,6 +4783,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-weight-dist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-weight-reduc"
 version = "0.1.0"
 
 [[package]]

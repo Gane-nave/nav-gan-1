@@ -1,54 +1,50 @@
-/// Launch control: RPM limiting, traction management, launch optimization
-/// Phase 208
+/// Launch control: RPM, clutch, traction, timing, mode
+/// Phase 944
 
 #[derive(Debug, Clone)]
-pub struct LaunchControl {
-    pub armed: bool,
-    pub launch_rpm: f64,
-    pub current_rpm: f64,
-    pub traction_limit_pct: f64,
-    pub launches_count: u32,
-    pub enabled: bool,
+pub struct LaunchCtrl {
+    pub rpm_ok: bool,
+    pub clutch_ok: bool,
+    pub traction_ok: bool,
+    pub timing_ok: bool,
+    pub mode_ok: bool,
 }
 
-impl Default for LaunchControl {
+impl Default for LaunchCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LaunchControl {
+impl LaunchCtrl {
     pub fn new() -> Self {
         Self {
-            armed: false,
-            launch_rpm: 4000.0,
-            current_rpm: 800.0,
-            traction_limit_pct: 100.0,
-            launches_count: 0,
-            enabled: true,
+            rpm_ok: true,
+            clutch_ok: true,
+            traction_ok: true,
+            timing_ok: true,
+            mode_ok: true,
         }
     }
 
-    pub fn ready_to_launch(&self) -> bool {
-        self.armed && self.enabled && (self.current_rpm - self.launch_rpm).abs() < 200.0
+    pub fn preparation_ok(&self) -> bool {
+        self.rpm_ok && self.clutch_ok && self.mode_ok
     }
 
-    pub fn rpm_at_target(&self) -> bool {
-        (self.current_rpm - self.launch_rpm).abs() < 200.0
+    pub fn execution_ok(&self) -> bool {
+        self.traction_ok && self.timing_ok
     }
 
-    pub fn traction_limited(&self) -> bool {
-        self.traction_limit_pct < 100.0
+    pub fn all_ok(&self) -> bool {
+        self.preparation_ok() && self.execution_ok()
     }
 
-    pub fn over_revving(&self) -> bool {
-        self.current_rpm > self.launch_rpm * 1.1
+    pub fn needs_config(&self) -> bool {
+        !self.rpm_ok || !self.clutch_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.enabled {
-            return 50.0;
-        }
+        if !self.rpm_ok { return 10.0; }
         100.0
     }
 }
@@ -58,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_ready() {
-        let l = LaunchControl::new();
-        assert!(!l.ready_to_launch());
+    fn test_preparation() {
+        let c = LaunchCtrl::new();
+        assert!(c.preparation_ok());
     }
 
     #[test]
-    fn test_not_at_target() {
-        let l = LaunchControl::new();
-        assert!(!l.rpm_at_target());
+    fn test_execution() {
+        let c = LaunchCtrl::new();
+        assert!(c.execution_ok());
     }
 
     #[test]
-    fn test_no_traction_limit() {
-        let l = LaunchControl::new();
-        assert!(!l.traction_limited());
+    fn test_all_ok() {
+        let c = LaunchCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_over_revving() {
-        let l = LaunchControl::new();
-        assert!(!l.over_revving());
+    fn test_no_config() {
+        let c = LaunchCtrl::new();
+        assert!(!c.needs_config());
     }
 
     #[test]
-    fn test_ready() {
-        let mut l = LaunchControl::new();
-        l.armed = true;
-        l.current_rpm = 4000.0;
-        assert!(l.ready_to_launch());
+    fn test_rpm() {
+        let mut c = LaunchCtrl::new();
+        c.rpm_ok = false;
+        assert!(c.needs_config());
     }
 
     #[test]
     fn test_health() {
-        let l = LaunchControl::new();
-        assert!((l.health_score() - 100.0).abs() < 0.1);
+        let c = LaunchCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
