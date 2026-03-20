@@ -57,7 +57,13 @@ impl LeaseManager {
         if let Some(existing) = self.leases.iter_mut().find(|l| l.resource() == resource) {
             if existing.is_active(now_ms) {
                 if existing.holder() == holder {
-                    // Same holder — renew
+                    // Same holder — renew (check max_renewals)
+                    if self.max_renewals > 0 && existing.renewals() >= self.max_renewals {
+                        self.total_conflicts += 1;
+                        return LeaseResult::Conflict {
+                            current_holder: existing.holder().to_string(),
+                        };
+                    }
                     if existing.renew(now_ms, ttl_ms) {
                         return LeaseResult::Granted {
                             lease_id: existing.id(),
@@ -144,9 +150,14 @@ impl LeaseManager {
     /// Clean up expired and revoked leases.
     pub fn cleanup(&mut self, now_ms: u64) {
         let before = self.leases.len();
+        let revoked_count = self
+            .leases
+            .iter()
+            .filter(|l| l.status() == LeaseStatus::Revoked)
+            .count();
         self.leases.retain(|l| l.is_active(now_ms));
         let removed = before - self.leases.len();
-        self.total_expired += removed as u64;
+        self.total_expired += (removed - revoked_count) as u64;
     }
 
     /// Total granted (lifetime).
