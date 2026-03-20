@@ -1,0 +1,6 @@
+[package]
+name = "aurora-turn-signal"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-washer-fluid"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
