@@ -103,7 +103,7 @@ impl BatchCollector {
         if self.total_flushes == 0 {
             return 0.0;
         }
-        self.total_events as f64 / self.total_flushes as f64
+        (self.total_events - self.batch.len() as u64) as f64 / self.total_flushes as f64
     }
 
     /// Fill ratio of current batch (0.0 to 1.0).

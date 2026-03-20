@@ -24,6 +24,8 @@ pub struct LeaseGrant {
     holder: String,
     /// Timestamp when the lease was granted (ms).
     granted_at_ms: u64,
+    /// Timestamp when the lease was originally granted (ms) — never changes.
+    original_granted_at_ms: u64,
     /// Time-to-live in milliseconds.
     ttl_ms: u64,
     /// Number of times this lease has been renewed.
@@ -40,6 +42,7 @@ impl LeaseGrant {
             resource: resource.to_string(),
             holder: holder.to_string(),
             granted_at_ms,
+            original_granted_at_ms: granted_at_ms,
             ttl_ms,
             renewals: 0,
             status: LeaseStatus::Active,
@@ -130,7 +133,7 @@ impl LeaseGrant {
 
     /// Total duration held from original grant to now.
     pub fn held_duration_ms(&self, now_ms: u64) -> u64 {
-        now_ms.saturating_sub(self.granted_at_ms)
+        now_ms.saturating_sub(self.original_granted_at_ms)
     }
 }
 
@@ -201,5 +204,13 @@ mod tests {
     fn test_held_duration() {
         let g = LeaseGrant::new(1, "r", "h", 1000, 5000);
         assert_eq!(g.held_duration_ms(3000), 2000);
+    }
+
+    #[test]
+    fn test_held_duration_after_renewal() {
+        let mut g = LeaseGrant::new(1, "r", "h", 1000, 5000);
+        g.renew(4000, 5000); // renew at t=4000
+        // held_duration should be from original grant (1000), not renewal time (4000)
+        assert_eq!(g.held_duration_ms(6000), 5000); // 6000 - 1000 = 5000
     }
 }

@@ -75,9 +75,11 @@ impl LeaseManager {
                     current_holder: existing.holder().to_string(),
                 };
             }
-            // Expired — replace
+            // Expired or revoked — replace
+            if existing.status() != LeaseStatus::Revoked {
+                self.total_expired += 1;
+            }
             existing.mark_expired();
-            self.total_expired += 1;
         }
 
         // Remove any expired lease for this resource
