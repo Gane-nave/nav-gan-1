@@ -1,93 +1,51 @@
-/// Ultrasonic sensors: parking assist, close-range detection, curb detection
-/// Phase 184
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum SensorZone {
-    FrontCenter,
-    FrontLeft,
-    FrontRight,
-    RearCenter,
-    RearLeft,
-    RearRight,
-    SideLeft,
-    SideRight,
-}
+/// Ultrasonic sensor: ping, echo, distance, array, filter
+/// Phase 1107
 
 #[derive(Debug, Clone)]
-pub struct UltrasonicSensor {
-    pub zone: SensorZone,
-    pub distance_cm: f64,
-    pub active: bool,
+pub struct Ultrasonic {
+    pub ping_ok: bool,
+    pub echo_ok: bool,
+    pub distance_ok: bool,
+    pub array_ok: bool,
+    pub filter_ok: bool,
 }
 
-impl UltrasonicSensor {
-    pub fn new(zone: SensorZone) -> Self {
-        Self {
-            zone,
-            distance_cm: 300.0,
-            active: true,
-        }
-    }
-
-    pub fn obstacle_near(&self) -> bool {
-        self.active && self.distance_cm < 50.0
-    }
-
-    pub fn obstacle_critical(&self) -> bool {
-        self.active && self.distance_cm < 15.0
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct UltrasonicSystem {
-    pub sensors: Vec<UltrasonicSensor>,
-}
-
-impl Default for UltrasonicSystem {
+impl Default for Ultrasonic {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl UltrasonicSystem {
+impl Ultrasonic {
     pub fn new() -> Self {
         Self {
-            sensors: vec![
-                UltrasonicSensor::new(SensorZone::FrontCenter),
-                UltrasonicSensor::new(SensorZone::FrontLeft),
-                UltrasonicSensor::new(SensorZone::FrontRight),
-                UltrasonicSensor::new(SensorZone::RearCenter),
-                UltrasonicSensor::new(SensorZone::RearLeft),
-                UltrasonicSensor::new(SensorZone::RearRight),
-            ],
+            ping_ok: true,
+            echo_ok: true,
+            distance_ok: true,
+            array_ok: true,
+            filter_ok: true,
         }
     }
 
-    pub fn any_near(&self) -> bool {
-        self.sensors.iter().any(|s| s.obstacle_near())
+    pub fn sensing_ok(&self) -> bool {
+        self.ping_ok && self.echo_ok && self.distance_ok
     }
 
-    pub fn any_critical(&self) -> bool {
-        self.sensors.iter().any(|s| s.obstacle_critical())
+    pub fn processing_ok(&self) -> bool {
+        self.array_ok && self.filter_ok
     }
 
-    pub fn closest_cm(&self) -> f64 {
-        self.sensors
-            .iter()
-            .filter(|s| s.active)
-            .map(|s| s.distance_cm)
-            .fold(f64::MAX, f64::min)
+    pub fn all_ok(&self) -> bool {
+        self.sensing_ok() && self.processing_ok()
     }
 
-    pub fn all_clear(&self) -> bool {
-        self.sensors
-            .iter()
-            .filter(|s| s.active)
-            .all(|s| s.distance_cm > 100.0)
+    pub fn needs_calibrate(&self) -> bool {
+        !self.ping_ok || !self.echo_ok
     }
 
-    pub fn active_count(&self) -> usize {
-        self.sensors.iter().filter(|s| s.active).count()
+    pub fn health_score(&self) -> f64 {
+        if !self.ping_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -96,47 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_obstacle() {
-        let s = UltrasonicSensor::new(SensorZone::FrontCenter);
-        assert!(!s.obstacle_near());
+    fn test_sensing() {
+        let c = Ultrasonic::new();
+        assert!(c.sensing_ok());
     }
 
     #[test]
-    fn test_near() {
-        let mut s = UltrasonicSensor::new(SensorZone::FrontCenter);
-        s.distance_cm = 30.0;
-        assert!(s.obstacle_near());
+    fn test_processing() {
+        let c = Ultrasonic::new();
+        assert!(c.processing_ok());
     }
 
     #[test]
-    fn test_critical() {
-        let mut s = UltrasonicSensor::new(SensorZone::RearCenter);
-        s.distance_cm = 10.0;
-        assert!(s.obstacle_critical());
+    fn test_all_ok() {
+        let c = Ultrasonic::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_system_clear() {
-        let s = UltrasonicSystem::new();
-        assert!(s.all_clear());
+    fn test_no_calibrate() {
+        let c = Ultrasonic::new();
+        assert!(!c.needs_calibrate());
     }
 
     #[test]
-    fn test_system_not_near() {
-        let s = UltrasonicSystem::new();
-        assert!(!s.any_near());
+    fn test_ping() {
+        let mut c = Ultrasonic::new();
+        c.ping_ok = false;
+        assert!(c.needs_calibrate());
     }
 
     #[test]
-    fn test_closest() {
-        let mut s = UltrasonicSystem::new();
-        s.sensors[0].distance_cm = 20.0;
-        assert!((s.closest_cm() - 20.0).abs() < 0.1);
-    }
-
-    #[test]
-    fn test_active_count() {
-        let s = UltrasonicSystem::new();
-        assert_eq!(s.active_count(), 6);
+    fn test_health() {
+        let c = Ultrasonic::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

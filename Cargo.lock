@@ -508,6 +508,10 @@ name = "aurora-auto-park"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auto-pilot"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-automl"
 version = "0.1.0"
 
@@ -832,6 +836,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-cam-phaser"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-camera-fusion"
 version = "0.1.0"
 
 [[package]]
@@ -1212,6 +1220,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-convoy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-convoy-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -2162,6 +2174,10 @@ name = "aurora-frame-rail"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-free-space"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-front-camera"
 version = "0.1.0"
 
@@ -2675,6 +2691,10 @@ name = "aurora-immobilizer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-imu-fusion"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-imu-sensor"
 version = "0.1.0"
 
@@ -2945,6 +2965,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-lane-depart"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lane-detect"
 version = "0.1.0"
 
 [[package]]
@@ -3259,6 +3283,10 @@ name = "aurora-most-bus"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-motion-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-motion-data"
 version = "0.1.0"
 
@@ -3401,6 +3429,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-obd-scanner"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obj-detect"
 version = "0.1.0"
 
 [[package]]
@@ -3576,7 +3608,15 @@ name = "aurora-parking-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-parking-slot"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-parts-cat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-path-plan"
 version = "0.1.0"
 
 [[package]]
@@ -3594,6 +3634,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-pcv-valve"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ped-detect"
 version = "0.1.0"
 
 [[package]]
@@ -4347,6 +4391,10 @@ name = "aurora-siem-feed"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sign-detect"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sign-read"
 version = "0.1.0"
 
@@ -4363,6 +4411,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sla-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-slam-engine"
 version = "0.1.0"
 
 [[package]]
@@ -4613,6 +4665,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-summon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-summon-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -5129,6 +5185,10 @@ name = "aurora-valet-mode"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-valet-park"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-valve-cover"
 version = "0.1.0"
 
@@ -5358,6 +5418,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wheel-lock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-odom"
 version = "0.1.0"
 
 [[package]]

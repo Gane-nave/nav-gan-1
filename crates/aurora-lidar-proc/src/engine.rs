@@ -1,72 +1,51 @@
-/// LiDAR processing: point cloud, object detection, 3D mapping
-/// Phase 182
+/// LiDAR processing: scan, filter, cluster, classify, fuse
+/// Phase 1105
 
 #[derive(Debug, Clone)]
-pub struct LidarPoint {
-    pub x: f64,
-    pub y: f64,
-    pub z: f64,
-    pub intensity: f64,
+pub struct LidarProc {
+    pub scan_ok: bool,
+    pub filter_ok: bool,
+    pub cluster_ok: bool,
+    pub classify_ok: bool,
+    pub fuse_ok: bool,
 }
 
-impl LidarPoint {
-    pub fn distance(&self) -> f64 {
-        (self.x * self.x + self.y * self.y + self.z * self.z).sqrt()
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct LidarSystem {
-    pub active: bool,
-    pub range_m: f64,
-    pub points_per_sec: u64,
-    pub channels: u32,
-    pub rotation_hz: f64,
-    pub detected_objects: u32,
-}
-
-impl Default for LidarSystem {
+impl Default for LidarProc {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LidarSystem {
+impl LidarProc {
     pub fn new() -> Self {
         Self {
-            active: true,
-            range_m: 200.0,
-            points_per_sec: 300_000,
-            channels: 64,
-            rotation_hz: 20.0,
-            detected_objects: 0,
+            scan_ok: true,
+            filter_ok: true,
+            cluster_ok: true,
+            classify_ok: true,
+            fuse_ok: true,
         }
     }
 
-    pub fn resolution_score(&self) -> f64 {
-        let ch_s = (self.channels as f64 / 128.0).min(1.0) * 50.0;
-        let rate_s = (self.points_per_sec as f64 / 1_000_000.0).min(1.0) * 50.0;
-        ch_s + rate_s
+    pub fn processing_ok(&self) -> bool {
+        self.scan_ok && self.filter_ok && self.cluster_ok
     }
 
-    pub fn effective_range_m(&self) -> f64 {
-        if self.active {
-            self.range_m
-        } else {
-            0.0
-        }
+    pub fn understanding_ok(&self) -> bool {
+        self.classify_ok && self.fuse_ok
     }
 
-    pub fn has_detections(&self) -> bool {
-        self.detected_objects > 0
+    pub fn all_ok(&self) -> bool {
+        self.processing_ok() && self.understanding_ok()
     }
 
-    pub fn points_per_rotation(&self) -> u64 {
-        if self.rotation_hz > 0.0 {
-            (self.points_per_sec as f64 / self.rotation_hz) as u64
-        } else {
-            0
-        }
+    pub fn needs_calibrate(&self) -> bool {
+        !self.scan_ok || !self.filter_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.scan_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -75,50 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_point_distance() {
-        let p = LidarPoint {
-            x: 3.0,
-            y: 4.0,
-            z: 0.0,
-            intensity: 100.0,
-        };
-        assert!((p.distance() - 5.0).abs() < 0.01);
+    fn test_processing() {
+        let c = LidarProc::new();
+        assert!(c.processing_ok());
     }
 
     #[test]
-    fn test_active() {
-        let s = LidarSystem::new();
-        assert!(s.active);
+    fn test_understanding() {
+        let c = LidarProc::new();
+        assert!(c.understanding_ok());
     }
 
     #[test]
-    fn test_range() {
-        let s = LidarSystem::new();
-        assert!((s.effective_range_m() - 200.0).abs() < 0.1);
+    fn test_all_ok() {
+        let c = LidarProc::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_inactive_range() {
-        let mut s = LidarSystem::new();
-        s.active = false;
-        assert!((s.effective_range_m() - 0.0).abs() < 0.1);
+    fn test_no_calibrate() {
+        let c = LidarProc::new();
+        assert!(!c.needs_calibrate());
     }
 
     #[test]
-    fn test_resolution() {
-        let s = LidarSystem::new();
-        assert!(s.resolution_score() > 30.0);
+    fn test_scan() {
+        let mut c = LidarProc::new();
+        c.scan_ok = false;
+        assert!(c.needs_calibrate());
     }
 
     #[test]
-    fn test_no_detections() {
-        let s = LidarSystem::new();
-        assert!(!s.has_detections());
-    }
-
-    #[test]
-    fn test_points_per_rotation() {
-        let s = LidarSystem::new();
-        assert!(s.points_per_rotation() > 10000);
+    fn test_health() {
+        let c = LidarProc::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
