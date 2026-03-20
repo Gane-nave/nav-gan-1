@@ -1,5 +1,5 @@
 [package]
-name = "aurora-airbag-ctrl"
+name = "aurora-parking-sensor"
 version = "0.1.0"
 edition = "2021"
 

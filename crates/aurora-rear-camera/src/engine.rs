@@ -1,23 +1,13 @@
-/// Rear camera: backup view, obstacle detection, trajectory overlay
-/// Phase 179
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum CameraState {
-    Off,
-    Active,
-    Recording,
-    Error,
-}
+/// Rear camera: image quality, lens, night vision, gridlines
+/// Phase 545
 
 #[derive(Debug, Clone)]
 pub struct RearCamera {
-    pub state: CameraState,
-    pub resolution_w: u32,
-    pub resolution_h: u32,
-    pub fov_deg: f64,
-    pub night_vision: bool,
-    pub distance_lines: bool,
-    pub closest_obstacle_m: f64,
+    pub resolution_ok: bool,
+    pub lens_clean: bool,
+    pub night_vision_ok: bool,
+    pub gridlines_ok: bool,
+    pub wiring_ok: bool,
 }
 
 impl Default for RearCamera {
@@ -29,38 +19,33 @@ impl Default for RearCamera {
 impl RearCamera {
     pub fn new() -> Self {
         Self {
-            state: CameraState::Off,
-            resolution_w: 1280,
-            resolution_h: 720,
-            fov_deg: 170.0,
-            night_vision: true,
-            distance_lines: true,
-            closest_obstacle_m: f64::MAX,
+            resolution_ok: true,
+            lens_clean: true,
+            night_vision_ok: true,
+            gridlines_ok: true,
+            wiring_ok: true,
         }
     }
 
-    pub fn is_active(&self) -> bool {
-        matches!(self.state, CameraState::Active | CameraState::Recording)
+    pub fn image_ok(&self) -> bool {
+        self.resolution_ok && self.lens_clean
     }
 
-    pub fn obstacle_warning(&self) -> bool {
-        self.is_active() && self.closest_obstacle_m < 1.0
+    pub fn features_ok(&self) -> bool {
+        self.night_vision_ok && self.gridlines_ok
     }
 
-    pub fn obstacle_critical(&self) -> bool {
-        self.is_active() && self.closest_obstacle_m < 0.3
+    pub fn all_ok(&self) -> bool {
+        self.image_ok() && self.features_ok() && self.wiring_ok
     }
 
-    pub fn megapixels(&self) -> f64 {
-        (self.resolution_w as f64 * self.resolution_h as f64) / 1_000_000.0
+    pub fn needs_service(&self) -> bool {
+        !self.resolution_ok || !self.wiring_ok
     }
 
-    pub fn has_error(&self) -> bool {
-        matches!(self.state, CameraState::Error)
-    }
-
-    pub fn wide_angle(&self) -> bool {
-        self.fov_deg > 150.0
+    pub fn health_score(&self) -> f64 {
+        if !self.resolution_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -69,51 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_off_by_default() {
+    fn test_image() {
         let c = RearCamera::new();
-        assert!(!c.is_active());
+        assert!(c.image_ok());
     }
 
     #[test]
-    fn test_active() {
-        let mut c = RearCamera::new();
-        c.state = CameraState::Active;
-        assert!(c.is_active());
-    }
-
-    #[test]
-    fn test_obstacle_warning() {
-        let mut c = RearCamera::new();
-        c.state = CameraState::Active;
-        c.closest_obstacle_m = 0.5;
-        assert!(c.obstacle_warning());
-    }
-
-    #[test]
-    fn test_no_warning_far() {
-        let mut c = RearCamera::new();
-        c.state = CameraState::Active;
-        c.closest_obstacle_m = 5.0;
-        assert!(!c.obstacle_warning());
-    }
-
-    #[test]
-    fn test_critical() {
-        let mut c = RearCamera::new();
-        c.state = CameraState::Active;
-        c.closest_obstacle_m = 0.1;
-        assert!(c.obstacle_critical());
-    }
-
-    #[test]
-    fn test_megapixels() {
+    fn test_features() {
         let c = RearCamera::new();
-        assert!(c.megapixels() > 0.9);
+        assert!(c.features_ok());
     }
 
     #[test]
-    fn test_wide_angle() {
+    fn test_all_ok() {
         let c = RearCamera::new();
-        assert!(c.wide_angle());
+        assert!(c.all_ok());
+    }
+
+    #[test]
+    fn test_no_service() {
+        let c = RearCamera::new();
+        assert!(!c.needs_service());
+    }
+
+    #[test]
+    fn test_resolution() {
+        let mut c = RearCamera::new();
+        c.resolution_ok = false;
+        assert!(c.needs_service());
+    }
+
+    #[test]
+    fn test_health() {
+        let c = RearCamera::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

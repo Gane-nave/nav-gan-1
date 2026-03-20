@@ -701,6 +701,10 @@ name = "aurora-clear-coat"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-climate-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-climate-zone"
 version = "0.1.0"
 
@@ -891,6 +895,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-crash-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crash-struct"
 version = "0.1.0"
 
 [[package]]
@@ -1117,6 +1125,10 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-door-latch"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-door-lock"
@@ -1657,6 +1669,10 @@ name = "aurora-headlamp-aim"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-headlight"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-headlight-aim"
 version = "0.1.0"
 
@@ -1702,6 +1718,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hood-latch"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-horn"
 version = "0.1.0"
 
 [[package]]
@@ -1822,6 +1842,14 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-infotain-scr"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infotainment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-instrument"
 version = "0.1.0"
 
 [[package]]
@@ -1965,6 +1993,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-key-fob"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-keyless-entry"
 version = "0.1.0"
 
 [[package]]
@@ -2444,6 +2476,10 @@ name = "aurora-parking-nav"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-parking-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-payments"
 version = "0.1.0"
 dependencies = [
@@ -2873,6 +2909,10 @@ name = "aurora-sealant-mon"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-seat-adjust"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-seat-comfort"
 version = "0.1.0"
 
@@ -3128,6 +3168,10 @@ name = "aurora-subwoofer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sunroof"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sunroof-ctrl"
 version = "0.1.0"
 
@@ -3153,6 +3197,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-tail-lamp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-taillight"
 version = "0.1.0"
 
 [[package]]
@@ -3613,6 +3661,10 @@ name = "aurora-window-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-window-reg"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-window-seal"
 version = "0.1.0"
 
@@ -3634,6 +3686,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-mech"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wiper-motor"
 version = "0.1.0"
 
 [[package]]

@@ -1,22 +1,13 @@
-/// Airbag control: deployment logic, crash severity, occupant classification
-/// Phase 225
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum AirbagStatus {
-    Ready,
-    Deployed,
-    Fault,
-    Disabled,
-}
+/// Airbag controller: crash sensor, squib circuit, readiness
+/// Phase 528
 
 #[derive(Debug, Clone)]
 pub struct AirbagController {
-    pub driver_status: AirbagStatus,
-    pub passenger_status: AirbagStatus,
-    pub side_curtain_status: AirbagStatus,
-    pub passenger_present: bool,
-    pub child_seat_detected: bool,
-    pub crash_severity_g: f64,
+    pub crash_sensor_ok: bool,
+    pub squib_ok: bool,
+    pub clock_spring_ok: bool,
+    pub armed: bool,
+    pub fault_count: u32,
 }
 
 impl Default for AirbagController {
@@ -28,47 +19,32 @@ impl Default for AirbagController {
 impl AirbagController {
     pub fn new() -> Self {
         Self {
-            driver_status: AirbagStatus::Ready,
-            passenger_status: AirbagStatus::Ready,
-            side_curtain_status: AirbagStatus::Ready,
-            passenger_present: true,
-            child_seat_detected: false,
-            crash_severity_g: 0.0,
+            crash_sensor_ok: true,
+            squib_ok: true,
+            clock_spring_ok: true,
+            armed: true,
+            fault_count: 0,
         }
     }
 
-    pub fn all_ready(&self) -> bool {
-        self.driver_status == AirbagStatus::Ready
-            && self.passenger_status == AirbagStatus::Ready
-            && self.side_curtain_status == AirbagStatus::Ready
+    pub fn sensors_ok(&self) -> bool {
+        self.crash_sensor_ok && self.clock_spring_ok
     }
 
-    pub fn any_deployed(&self) -> bool {
-        self.driver_status == AirbagStatus::Deployed
-            || self.passenger_status == AirbagStatus::Deployed
-            || self.side_curtain_status == AirbagStatus::Deployed
+    pub fn system_ready(&self) -> bool {
+        self.sensors_ok() && self.squib_ok && self.armed
     }
 
-    pub fn has_fault(&self) -> bool {
-        self.driver_status == AirbagStatus::Fault
-            || self.passenger_status == AirbagStatus::Fault
-            || self.side_curtain_status == AirbagStatus::Fault
+    pub fn all_ok(&self) -> bool {
+        self.system_ready() && self.fault_count == 0
     }
 
-    pub fn passenger_disabled(&self) -> bool {
-        self.child_seat_detected || !self.passenger_present
+    pub fn needs_service(&self) -> bool {
+        self.fault_count > 0 || !self.squib_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.has_fault() {
-            return 20.0;
-        }
-        if self.any_deployed() {
-            return 0.0;
-        }
-        if !self.all_ready() {
-            return 50.0;
-        }
+        if !self.squib_ok { return 5.0; }
         100.0
     }
 }
@@ -78,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_all_ready() {
-        let a = AirbagController::new();
-        assert!(a.all_ready());
+    fn test_sensors() {
+        let c = AirbagController::new();
+        assert!(c.sensors_ok());
     }
 
     #[test]
-    fn test_none_deployed() {
-        let a = AirbagController::new();
-        assert!(!a.any_deployed());
+    fn test_ready() {
+        let c = AirbagController::new();
+        assert!(c.system_ready());
     }
 
     #[test]
-    fn test_no_fault() {
-        let a = AirbagController::new();
-        assert!(!a.has_fault());
+    fn test_all_ok() {
+        let c = AirbagController::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_passenger_not_disabled() {
-        let a = AirbagController::new();
-        assert!(!a.passenger_disabled());
+    fn test_no_service() {
+        let c = AirbagController::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_child_seat() {
-        let mut a = AirbagController::new();
-        a.child_seat_detected = true;
-        assert!(a.passenger_disabled());
+    fn test_squib_fail() {
+        let mut c = AirbagController::new();
+        c.squib_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let a = AirbagController::new();
-        assert!((a.health_score() - 100.0).abs() < 0.1);
+        let c = AirbagController::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
