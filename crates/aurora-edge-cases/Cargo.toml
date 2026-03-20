@@ -1,0 +1,8 @@
+[package]
+name = "aurora-edge-cases"
+version = "0.1.0"
+edition = "2021"
+description = "Edge case detection and handling for navigation."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

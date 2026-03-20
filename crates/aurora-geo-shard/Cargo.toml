@@ -1,0 +1,8 @@
+[package]
+name = "aurora-geo-shard"
+version = "0.1.0"
+edition = "2021"
+description = "Geo-sharding for scalable regional processing."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

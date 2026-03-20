@@ -185,34 +185,52 @@ dependencies = [
  "aurora-anti-manipulation",
  "aurora-api",
  "aurora-auth",
+ "aurora-calibration",
  "aurora-charging",
  "aurora-city",
  "aurora-confidence",
  "aurora-config",
+ "aurora-conflict-res",
+ "aurora-constraints",
+ "aurora-context-aware",
  "aurora-continuity",
  "aurora-core",
  "aurora-corrections",
+ "aurora-data-integrity",
  "aurora-deploy",
+ "aurora-determinism",
  "aurora-developer",
  "aurora-device-caps",
  "aurora-dual-freq",
  "aurora-edge",
+ "aurora-edge-cases",
  "aurora-ekf",
  "aurora-emergency",
+ "aurora-error-accum",
  "aurora-events",
  "aurora-evidence",
+ "aurora-explain",
  "aurora-fallback",
  "aurora-fleet",
  "aurora-fusion",
+ "aurora-geo-dist",
+ "aurora-geo-shard",
+ "aurora-geofence",
  "aurora-gnss",
  "aurora-gnss-quality",
+ "aurora-incr-correct",
  "aurora-integrity",
  "aurora-lane",
+ "aurora-latency-comp",
+ "aurora-load-shed",
  "aurora-map",
+ "aurora-map-update",
  "aurora-marketplace",
  "aurora-metrics",
  "aurora-micro-nav",
  "aurora-multi-gnss",
+ "aurora-nav-state",
+ "aurora-numerical",
  "aurora-observability",
  "aurora-offline",
  "aurora-orchestrator",
@@ -220,9 +238,12 @@ dependencies = [
  "aurora-payments",
  "aurora-pnt-telemetry",
  "aurora-probabilistic",
+ "aurora-quality-ctrl",
  "aurora-resilience",
  "aurora-risk",
+ "aurora-route-quality",
  "aurora-routing",
+ "aurora-sampling-ctrl",
  "aurora-satellite",
  "aurora-sdk",
  "aurora-security",
@@ -230,13 +251,17 @@ dependencies = [
  "aurora-smooth-nav",
  "aurora-source-select",
  "aurora-stability",
+ "aurora-subsystem-sync",
  "aurora-telemetry",
+ "aurora-topology",
  "aurora-traffic",
  "aurora-trust",
  "aurora-tunnel",
  "aurora-twin",
+ "aurora-uncertainty",
  "aurora-ux",
  "aurora-vehicle",
+ "aurora-version-sync",
  "aurora-web",
  "axum",
  "chrono",
@@ -344,6 +369,13 @@ name = "aurora-cache"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-calibration"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-carplay"
 version = "0.1.0"
 dependencies = [
@@ -430,8 +462,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-conflict-res"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-consensus"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-constraints"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-context-aware"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-continuity"
@@ -506,6 +559,13 @@ name = "aurora-dag"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-integrity"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-dead-reckoning"
 version = "0.1.0"
 dependencies = [
@@ -520,6 +580,13 @@ version = "0.1.0"
 [[package]]
 name = "aurora-deploy"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-determinism"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-developer"
@@ -634,6 +701,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-edge-cases"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-ekf"
 version = "0.1.0"
 dependencies = [
@@ -668,6 +742,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-error-accum"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -715,6 +796,13 @@ dependencies = [
  "serde_json",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-explain"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -788,6 +876,27 @@ dependencies = [
 [[package]]
 name = "aurora-geo"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-geo-dist"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-geo-shard"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-geofence"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-gnss"
@@ -872,6 +981,13 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "aurora-incr-correct"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -978,6 +1094,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-latency-comp"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-lease"
 version = "0.1.0"
 
@@ -987,6 +1110,13 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "aurora-load-shed"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1019,6 +1149,13 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "aurora-map-update"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1120,6 +1257,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nav-state"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-nightmode"
 version = "0.1.0"
 dependencies = [
@@ -1136,6 +1280,13 @@ dependencies = [
  "serde",
  "serde_json",
  "uuid",
+]
+
+[[package]]
+name = "aurora-numerical"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1300,6 +1451,13 @@ name = "aurora-pubsub"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-quality-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-quota"
 version = "0.1.0"
 
@@ -1371,6 +1529,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-route-quality"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-route-share"
 version = "0.1.0"
 dependencies = [
@@ -1389,6 +1554,13 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "aurora-sampling-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1535,6 +1707,13 @@ name = "aurora-structured-log"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-subsystem-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -1578,6 +1757,13 @@ version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
+]
+
+[[package]]
+name = "aurora-topology"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1642,6 +1828,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-uncertainty"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-ux"
 version = "0.1.0"
 dependencies = [
@@ -1666,6 +1859,13 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-version-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

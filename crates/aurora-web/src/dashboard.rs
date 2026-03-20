@@ -27,6 +27,8 @@ pub struct DashboardData {
     pub health: HealthData,
     /// PNT (Positioning, Navigation, Timing) status.
     pub pnt: PntData,
+    /// Deep navigation layers status.
+    pub deep_layers: DeepLayersData,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -171,6 +173,40 @@ pub struct PntData {
     pub telemetry_entries: u64,
 }
 
+/// Deep navigation layers — numerical stability, uncertainty, context, topology, etc.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct DeepLayersData {
+    pub numerical_stability_ok: bool,
+    pub uncertainty_precision_class: String,
+    pub subsystem_conflicts: u32,
+    pub latency_compensated: bool,
+    pub latency_ms: f64,
+    pub topology_level: String,
+    pub context_mode: String,
+    pub context_environment: String,
+    pub conflict_resolution_strategy: String,
+    pub incremental_corrections: u64,
+    pub edge_case_active: String,
+    pub data_integrity_ok: bool,
+    pub version_sync_mismatches: u64,
+    pub geofence_active: bool,
+    pub geofence_zones: u32,
+    pub explainability_entries: u32,
+    pub determinism_enabled: bool,
+    pub load_shed_active: bool,
+    pub load_shed_dropped: u64,
+    pub geo_dist_regions: u32,
+    pub calibration_score: f64,
+    pub active_constraints: u32,
+    pub sampling_rate_hz: f64,
+    pub nav_state: String,
+    pub accumulated_error_m: f64,
+    pub route_quality_score: f64,
+    pub geo_shards: u32,
+    pub map_update_pending: bool,
+    pub global_quality_score: f64,
+}
+
 impl Default for DashboardData {
     fn default() -> Self {
         Self {
@@ -258,6 +294,37 @@ impl Default for DashboardData {
                 routing: "Initializing".into(),
                 traffic: "Initializing".into(),
                 api: "Initializing".into(),
+            },
+            deep_layers: DeepLayersData {
+                numerical_stability_ok: true,
+                uncertainty_precision_class: "Unknown".into(),
+                subsystem_conflicts: 0,
+                latency_compensated: false,
+                latency_ms: 0.0,
+                topology_level: "Ground".into(),
+                context_mode: "Driving".into(),
+                context_environment: "Urban".into(),
+                conflict_resolution_strategy: "HighestConfidence".into(),
+                incremental_corrections: 0,
+                edge_case_active: "Normal".into(),
+                data_integrity_ok: true,
+                version_sync_mismatches: 0,
+                geofence_active: false,
+                geofence_zones: 0,
+                explainability_entries: 0,
+                determinism_enabled: true,
+                load_shed_active: false,
+                load_shed_dropped: 0,
+                geo_dist_regions: 0,
+                calibration_score: 1.0,
+                active_constraints: 0,
+                sampling_rate_hz: 1.0,
+                nav_state: "Initializing".into(),
+                accumulated_error_m: 0.0,
+                route_quality_score: 0.0,
+                geo_shards: 0,
+                map_update_pending: false,
+                global_quality_score: 1.0,
             },
             pnt: PntData {
                 multi_gnss_constellations: 0,

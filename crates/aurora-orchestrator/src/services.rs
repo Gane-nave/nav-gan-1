@@ -155,7 +155,7 @@ impl ServiceRegistry {
     /// Check if the circuit breaker allows external calls.
     ///
     /// This is a read-only check that does NOT trigger state transitions.
-    /// Use [`try_external_call`] for the full Open→HalfOpen recovery path.
+    /// Use `try_external_call` for the full Open→HalfOpen recovery path.
     pub fn can_call_external(&self) -> bool {
         matches!(
             self.external_circuit.state(),
@@ -165,7 +165,7 @@ impl ServiceRegistry {
 
     /// Attempt an external call through the circuit breaker.
     ///
-    /// Unlike [`can_call_external`], this method triggers state transitions
+    /// Unlike `can_call_external`, this method triggers state transitions
     /// (e.g. Open→HalfOpen after the cooldown elapses) and should be called
     /// before every external request.
     pub fn try_external_call(&mut self) -> bool {
