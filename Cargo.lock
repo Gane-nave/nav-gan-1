@@ -253,6 +253,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-anomaly-det"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-anonymize"
 version = "0.1.0"
 dependencies = [
@@ -489,6 +493,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-auto-park"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-automl"
 version = "0.1.0"
 
 [[package]]
@@ -993,11 +1001,19 @@ name = "aurora-cluster-ecu"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cluster-ml"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-clutch-ctrl"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-clutch-wear"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cnn-engine"
 version = "0.1.0"
 
 [[package]]
@@ -1282,6 +1298,10 @@ name = "aurora-cv-boot"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cv-engine"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cv-joint"
 version = "0.1.0"
 
@@ -1446,6 +1466,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-digital-mirror"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dim-reduce"
 version = "0.1.0"
 
 [[package]]
@@ -1929,6 +1953,10 @@ name = "aurora-features"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-federated-ml"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fender"
 version = "0.1.0"
 
@@ -2007,6 +2035,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fog-light"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-forecast"
 version = "0.1.0"
 
 [[package]]
@@ -2111,6 +2143,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-gan-engine"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-gas-strut"
@@ -3106,6 +3142,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-neural-net"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-night-vision"
 version = "0.1.0"
 
@@ -3119,6 +3159,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-nitrous-sys"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-nlp-engine"
 version = "0.1.0"
 
 [[package]]
@@ -3192,6 +3236,10 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
 ]
+
+[[package]]
+name = "aurora-ocr-engine"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-offline"
@@ -3680,6 +3728,10 @@ name = "aurora-recirc-flap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-recommend"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-recycl-plan"
 version = "0.1.0"
 
@@ -3689,6 +3741,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-regen-brake"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-reinforce"
 version = "0.1.0"
 
 [[package]]
@@ -3782,6 +3838,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-rivet-mon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rnn-engine"
 version = "0.1.0"
 
 [[package]]
@@ -4158,6 +4218,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-speaker-mount"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-speech-rec"
 version = "0.1.0"
 
 [[package]]
@@ -4650,6 +4714,10 @@ name = "aurora-transfer-case"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-transformer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trie"
 version = "0.1.0"
 
@@ -4683,6 +4751,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-tts-engine"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-tunnel"
