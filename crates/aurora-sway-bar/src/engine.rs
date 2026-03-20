@@ -1,13 +1,13 @@
-/// Sway bar: anti-roll bar, end links, bushings
-/// Phase 477
+/// Sway bar: link, bushing, bar integrity
+/// Phase 641
 
 #[derive(Debug, Clone)]
 pub struct SwayBar {
-    pub stiffness_nmm: f64,
-    pub end_link_ok: bool,
+    pub link_ok: bool,
     pub bushing_ok: bool,
-    pub bent: bool,
-    pub corroded: bool,
+    pub bar_ok: bool,
+    pub mount_ok: bool,
+    pub noise_free: bool,
 }
 
 impl Default for SwayBar {
@@ -19,32 +19,32 @@ impl Default for SwayBar {
 impl SwayBar {
     pub fn new() -> Self {
         Self {
-            stiffness_nmm: 25.0,
-            end_link_ok: true,
+            link_ok: true,
             bushing_ok: true,
-            bent: false,
-            corroded: false,
+            bar_ok: true,
+            mount_ok: true,
+            noise_free: true,
         }
     }
 
-    pub fn effective_stiffness(&self) -> f64 {
-        if self.bushing_ok { self.stiffness_nmm } else { self.stiffness_nmm * 0.6 }
+    pub fn linkage_ok(&self) -> bool {
+        self.link_ok && self.bushing_ok
     }
 
-    pub fn linkage_ok(&self) -> bool {
-        self.end_link_ok && self.bushing_ok
+    pub fn structure_ok(&self) -> bool {
+        self.bar_ok && self.mount_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.linkage_ok() && !self.bent && !self.corroded
+        self.linkage_ok() && self.structure_ok() && self.noise_free
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.bent
+    pub fn needs_service(&self) -> bool {
+        !self.link_ok || !self.bushing_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.bent { return 15.0; }
+        if !self.bar_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stiffness() {
-        let c = SwayBar::new();
-        assert!(c.effective_stiffness() > 20.0);
-    }
-
-    #[test]
     fn test_linkage() {
         let c = SwayBar::new();
         assert!(c.linkage_ok());
+    }
+
+    #[test]
+    fn test_structure() {
+        let c = SwayBar::new();
+        assert!(c.structure_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_service() {
         let c = SwayBar::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_bent() {
+    fn test_link() {
         let mut c = SwayBar::new();
-        c.bent = true;
-        assert!(c.needs_replacement());
+        c.link_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]

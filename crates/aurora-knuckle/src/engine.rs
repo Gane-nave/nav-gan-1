@@ -1,50 +1,50 @@
-/// Control arm: bushing, pivot, ball joint mount
-/// Phase 640
+/// Steering knuckle: spindle, mount, ABS bracket
+/// Phase 651
 
 #[derive(Debug, Clone)]
-pub struct ControlArm {
-    pub bushing_ok: bool,
-    pub pivot_ok: bool,
+pub struct Knuckle {
+    pub spindle_ok: bool,
     pub mount_ok: bool,
-    pub bent: bool,
+    pub abs_bracket_ok: bool,
+    pub cracked: bool,
     pub corrosion_free: bool,
 }
 
-impl Default for ControlArm {
+impl Default for Knuckle {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ControlArm {
+impl Knuckle {
     pub fn new() -> Self {
         Self {
-            bushing_ok: true,
-            pivot_ok: true,
+            spindle_ok: true,
             mount_ok: true,
-            bent: false,
+            abs_bracket_ok: true,
+            cracked: false,
             corrosion_free: true,
         }
     }
 
     pub fn structural_ok(&self) -> bool {
-        !self.bent && self.corrosion_free
+        self.spindle_ok && !self.cracked && self.corrosion_free
     }
 
-    pub fn joints_ok(&self) -> bool {
-        self.bushing_ok && self.pivot_ok && self.mount_ok
+    pub fn mounting_ok(&self) -> bool {
+        self.mount_ok && self.abs_bracket_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.structural_ok() && self.joints_ok()
+        self.structural_ok() && self.mounting_ok()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.bent || !self.bushing_ok
+        self.cracked || !self.spindle_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.bent { return 5.0; }
+        if self.cracked { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_structural() {
-        let c = ControlArm::new();
+        let c = Knuckle::new();
         assert!(c.structural_ok());
     }
 
     #[test]
-    fn test_joints() {
-        let c = ControlArm::new();
-        assert!(c.joints_ok());
+    fn test_mounting() {
+        let c = Knuckle::new();
+        assert!(c.mounting_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ControlArm::new();
+        let c = Knuckle::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_replace() {
-        let c = ControlArm::new();
+        let c = Knuckle::new();
         assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_bent() {
-        let mut c = ControlArm::new();
-        c.bent = true;
+    fn test_crack() {
+        let mut c = Knuckle::new();
+        c.cracked = true;
         assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let c = ControlArm::new();
+        let c = Knuckle::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

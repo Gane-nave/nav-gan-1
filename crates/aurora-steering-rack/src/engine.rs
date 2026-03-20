@@ -1,13 +1,13 @@
-/// Steering rack: power steering, pinion, fluid
-/// Phase 480
+/// Steering rack: pinion, tie rod, boot, power assist
+/// Phase 636
 
 #[derive(Debug, Clone)]
 pub struct SteeringRack {
-    pub fluid_level_pct: f64,
-    pub leak_detected: bool,
-    pub noise_db: f64,
-    pub play_deg: f64,
-    pub assist_ok: bool,
+    pub pinion_ok: bool,
+    pub tie_rod_ok: bool,
+    pub boot_ok: bool,
+    pub power_assist_ok: bool,
+    pub play_mm: f64,
 }
 
 impl Default for SteeringRack {
@@ -19,32 +19,32 @@ impl Default for SteeringRack {
 impl SteeringRack {
     pub fn new() -> Self {
         Self {
-            fluid_level_pct: 95.0,
-            leak_detected: false,
-            noise_db: 30.0,
-            play_deg: 1.0,
-            assist_ok: true,
+            pinion_ok: true,
+            tie_rod_ok: true,
+            boot_ok: true,
+            power_assist_ok: true,
+            play_mm: 1.0,
         }
     }
 
-    pub fn fluid_ok(&self) -> bool {
-        self.fluid_level_pct > 60.0 && !self.leak_detected
+    pub fn mechanical_ok(&self) -> bool {
+        self.pinion_ok && self.tie_rod_ok
     }
 
-    pub fn noise_ok(&self) -> bool {
-        self.noise_db < 50.0
+    pub fn sealed_ok(&self) -> bool {
+        self.boot_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.fluid_ok() && self.noise_ok() && self.assist_ok
+        self.mechanical_ok() && self.sealed_ok() && self.power_assist_ok && self.play_mm < 3.0
     }
 
     pub fn needs_service(&self) -> bool {
-        self.leak_detected || self.fluid_level_pct < 40.0
+        !self.pinion_ok || !self.boot_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leak_detected { return 20.0; }
+        if !self.pinion_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_fluid() {
+    fn test_mechanical() {
         let c = SteeringRack::new();
-        assert!(c.fluid_ok());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_noise() {
+    fn test_sealed() {
         let c = SteeringRack::new();
-        assert!(c.noise_ok());
+        assert!(c.sealed_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_leak() {
+    fn test_pinion() {
         let mut c = SteeringRack::new();
-        c.leak_detected = true;
+        c.pinion_ok = false;
         assert!(c.needs_service());
     }
 

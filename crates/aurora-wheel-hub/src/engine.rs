@@ -1,13 +1,13 @@
-/// Wheel hub: bearing, seal, ABS tone ring
-/// Phase 483
+/// Wheel hub: bearing, ABS ring, stud, seal
+/// Phase 649
 
 #[derive(Debug, Clone)]
 pub struct WheelHub {
-    pub bearing_play_mm: f64,
-    pub max_play_mm: f64,
+    pub bearing_ok: bool,
+    pub abs_ring_ok: bool,
+    pub stud_ok: bool,
     pub seal_ok: bool,
-    pub tone_ring_ok: bool,
-    pub noise_detected: bool,
+    pub play_ok: bool,
 }
 
 impl Default for WheelHub {
@@ -19,32 +19,32 @@ impl Default for WheelHub {
 impl WheelHub {
     pub fn new() -> Self {
         Self {
-            bearing_play_mm: 0.02,
-            max_play_mm: 0.1,
+            bearing_ok: true,
+            abs_ring_ok: true,
+            stud_ok: true,
             seal_ok: true,
-            tone_ring_ok: true,
-            noise_detected: false,
+            play_ok: true,
         }
     }
 
-    pub fn play_pct(&self) -> f64 {
-        (self.bearing_play_mm / self.max_play_mm) * 100.0
+    pub fn rotation_ok(&self) -> bool {
+        self.bearing_ok && self.play_ok
     }
 
-    pub fn excessive_play(&self) -> bool {
-        self.bearing_play_mm > self.max_play_mm * 0.8
+    pub fn sensors_ok(&self) -> bool {
+        self.abs_ring_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.seal_ok && self.tone_ring_ok && !self.noise_detected && !self.excessive_play()
+        self.rotation_ok() && self.sensors_ok() && self.stud_ok && self.seal_ok
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.noise_detected || self.excessive_play()
+        !self.bearing_ok || !self.abs_ring_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.noise_detected { return 20.0; }
+        if !self.bearing_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_play() {
+    fn test_rotation() {
         let c = WheelHub::new();
-        assert!(c.play_pct() < 30.0);
+        assert!(c.rotation_ok());
     }
 
     #[test]
-    fn test_no_excessive() {
+    fn test_sensors() {
         let c = WheelHub::new();
-        assert!(!c.excessive_play());
+        assert!(c.sensors_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_noise() {
+    fn test_bearing() {
         let mut c = WheelHub::new();
-        c.noise_detected = true;
+        c.bearing_ok = false;
         assert!(c.needs_replacement());
     }
 

@@ -1,13 +1,13 @@
-/// Air spring: air suspension, ride height, compressor
-/// Phase 476
+/// Air spring: bellows, valve, height sensor, compressor
+/// Phase 645
 
 #[derive(Debug, Clone)]
 pub struct AirSpring {
-    pub pressure_bar: f64,
-    pub ride_height_mm: f64,
-    pub target_height_mm: f64,
+    pub bellows_ok: bool,
+    pub valve_ok: bool,
+    pub height_ok: bool,
     pub compressor_ok: bool,
-    pub leak_detected: bool,
+    pub leak_free: bool,
 }
 
 impl Default for AirSpring {
@@ -19,32 +19,32 @@ impl Default for AirSpring {
 impl AirSpring {
     pub fn new() -> Self {
         Self {
-            pressure_bar: 8.0,
-            ride_height_mm: 150.0,
-            target_height_mm: 150.0,
+            bellows_ok: true,
+            valve_ok: true,
+            height_ok: true,
             compressor_ok: true,
-            leak_detected: false,
+            leak_free: true,
         }
     }
 
-    pub fn height_error_mm(&self) -> f64 {
-        (self.ride_height_mm - self.target_height_mm).abs()
+    pub fn spring_ok(&self) -> bool {
+        self.bellows_ok && self.leak_free
     }
 
-    pub fn at_target(&self) -> bool {
-        self.height_error_mm() < 5.0
+    pub fn system_ok(&self) -> bool {
+        self.valve_ok && self.height_ok && self.compressor_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.compressor_ok && !self.leak_detected && self.at_target()
+        self.spring_ok() && self.system_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        self.leak_detected || !self.compressor_ok
+        !self.bellows_ok || !self.leak_free
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leak_detected { return 20.0; }
+        if !self.bellows_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_height_error() {
+    fn test_spring() {
         let c = AirSpring::new();
-        assert!(c.height_error_mm() < 1.0);
+        assert!(c.spring_ok());
     }
 
     #[test]
-    fn test_at_target() {
+    fn test_system() {
         let c = AirSpring::new();
-        assert!(c.at_target());
+        assert!(c.system_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_leak() {
+    fn test_bellows() {
         let mut c = AirSpring::new();
-        c.leak_detected = true;
+        c.bellows_ok = false;
         assert!(c.needs_service());
     }
 

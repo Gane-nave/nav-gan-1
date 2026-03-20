@@ -1,46 +1,46 @@
-/// Leaf spring: arch, clamp, shackle, bushing
-/// Phase 644
+/// Trailing arm: bushing, pivot, mount, alignment
+/// Phase 652
 
 #[derive(Debug, Clone)]
-pub struct LeafSpring {
-    pub arch_ok: bool,
-    pub clamp_ok: bool,
-    pub shackle_ok: bool,
+pub struct TrailingArm {
     pub bushing_ok: bool,
+    pub pivot_ok: bool,
+    pub mount_ok: bool,
+    pub aligned: bool,
     pub cracked: bool,
 }
 
-impl Default for LeafSpring {
+impl Default for TrailingArm {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LeafSpring {
+impl TrailingArm {
     pub fn new() -> Self {
         Self {
-            arch_ok: true,
-            clamp_ok: true,
-            shackle_ok: true,
             bushing_ok: true,
+            pivot_ok: true,
+            mount_ok: true,
+            aligned: true,
             cracked: false,
         }
     }
 
-    pub fn shape_ok(&self) -> bool {
-        self.arch_ok && !self.cracked
+    pub fn joints_ok(&self) -> bool {
+        self.bushing_ok && self.pivot_ok
     }
 
-    pub fn hardware_ok(&self) -> bool {
-        self.clamp_ok && self.shackle_ok && self.bushing_ok
+    pub fn structure_ok(&self) -> bool {
+        self.mount_ok && !self.cracked
     }
 
     pub fn all_ok(&self) -> bool {
-        self.shape_ok() && self.hardware_ok()
+        self.joints_ok() && self.structure_ok() && self.aligned
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.cracked || !self.arch_ok
+        self.cracked || !self.bushing_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_shape() {
-        let c = LeafSpring::new();
-        assert!(c.shape_ok());
+    fn test_joints() {
+        let c = TrailingArm::new();
+        assert!(c.joints_ok());
     }
 
     #[test]
-    fn test_hardware() {
-        let c = LeafSpring::new();
-        assert!(c.hardware_ok());
+    fn test_structure() {
+        let c = TrailingArm::new();
+        assert!(c.structure_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = LeafSpring::new();
+        let c = TrailingArm::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_replace() {
-        let c = LeafSpring::new();
+        let c = TrailingArm::new();
         assert!(!c.needs_replacement());
     }
 
     #[test]
     fn test_crack() {
-        let mut c = LeafSpring::new();
+        let mut c = TrailingArm::new();
         c.cracked = true;
         assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let c = LeafSpring::new();
+        let c = TrailingArm::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

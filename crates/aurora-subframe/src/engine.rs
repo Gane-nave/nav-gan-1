@@ -1,13 +1,13 @@
-/// Subframe: cradle mount, bushing condition, alignment
-/// Phase 333
+/// Subframe: bushing, mount, crossmember, rust
+/// Phase 648
 
 #[derive(Debug, Clone)]
 pub struct Subframe {
-    pub bushings_ok: bool,
-    pub mounts_ok: bool,
-    pub alignment_ok: bool,
-    pub corrosion_pct: f64,
-    pub cracked: bool,
+    pub bushing_ok: bool,
+    pub mount_ok: bool,
+    pub crossmember_ok: bool,
+    pub rust_free: bool,
+    pub bolts_ok: bool,
 }
 
 impl Default for Subframe {
@@ -19,40 +19,32 @@ impl Default for Subframe {
 impl Subframe {
     pub fn new() -> Self {
         Self {
-            bushings_ok: true,
-            mounts_ok: true,
-            alignment_ok: true,
-            corrosion_pct: 5.0,
-            cracked: false,
+            bushing_ok: true,
+            mount_ok: true,
+            crossmember_ok: true,
+            rust_free: true,
+            bolts_ok: true,
         }
+    }
+
+    pub fn structure_ok(&self) -> bool {
+        self.crossmember_ok && self.rust_free
+    }
+
+    pub fn mounting_ok(&self) -> bool {
+        self.bushing_ok && self.mount_ok && self.bolts_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.bushings_ok && self.mounts_ok && self.alignment_ok && !self.cracked
+        self.structure_ok() && self.mounting_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.cracked || self.corrosion_pct > 50.0
-    }
-
-    pub fn needs_bushings(&self) -> bool {
-        !self.bushings_ok
-    }
-
-    pub fn structural_ok(&self) -> bool {
-        !self.cracked && self.corrosion_pct < 30.0
+    pub fn needs_service(&self) -> bool {
+        !self.rust_free || !self.bushing_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.cracked {
-            return 0.0;
-        }
-        if !self.mounts_ok {
-            return 30.0;
-        }
-        if !self.bushings_ok {
-            return 50.0;
-        }
+        if !self.rust_free { return 10.0; }
         100.0
     }
 }
@@ -62,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
+    fn test_structure() {
+        let c = Subframe::new();
+        assert!(c.structure_ok());
+    }
+
+    #[test]
+    fn test_mounting() {
+        let c = Subframe::new();
+        assert!(c.mounting_ok());
+    }
+
+    #[test]
     fn test_all_ok() {
-        let s = Subframe::new();
-        assert!(s.all_ok());
+        let c = Subframe::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_replace() {
-        let s = Subframe::new();
-        assert!(!s.needs_replacement());
+    fn test_no_service() {
+        let c = Subframe::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_no_bushings() {
-        let s = Subframe::new();
-        assert!(!s.needs_bushings());
-    }
-
-    #[test]
-    fn test_structural() {
-        let s = Subframe::new();
-        assert!(s.structural_ok());
-    }
-
-    #[test]
-    fn test_cracked() {
-        let mut s = Subframe::new();
-        s.cracked = true;
-        assert!(s.needs_replacement());
+    fn test_rust() {
+        let mut c = Subframe::new();
+        c.rust_free = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let s = Subframe::new();
-        assert!((s.health_score() - 100.0).abs() < 0.1);
+        let c = Subframe::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

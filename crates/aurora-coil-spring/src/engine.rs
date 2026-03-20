@@ -1,13 +1,13 @@
-/// Coil spring: suspension spring rate, sag, corrosion
-/// Phase 474
+/// Coil spring: rate, sag, crack, coating
+/// Phase 643
 
 #[derive(Debug, Clone)]
 pub struct CoilSpring {
-    pub spring_rate_nmm: f64,
-    pub free_length_mm: f64,
-    pub compressed_mm: f64,
-    pub sag_ok: bool,
-    pub corrosion_free: bool,
+    pub rate_ok: bool,
+    pub sag_mm: f64,
+    pub max_sag_mm: f64,
+    pub cracked: bool,
+    pub coating_ok: bool,
 }
 
 impl Default for CoilSpring {
@@ -19,32 +19,32 @@ impl Default for CoilSpring {
 impl CoilSpring {
     pub fn new() -> Self {
         Self {
-            spring_rate_nmm: 35.0,
-            free_length_mm: 350.0,
-            compressed_mm: 200.0,
-            sag_ok: true,
-            corrosion_free: true,
+            rate_ok: true,
+            sag_mm: 0.0,
+            max_sag_mm: 15.0,
+            cracked: false,
+            coating_ok: true,
         }
     }
 
-    pub fn travel_mm(&self) -> f64 {
-        self.free_length_mm - self.compressed_mm
+    pub fn height_ok(&self) -> bool {
+        self.sag_mm < self.max_sag_mm
     }
 
-    pub fn not_sagged(&self) -> bool {
-        self.sag_ok && self.corrosion_free
+    pub fn structural_ok(&self) -> bool {
+        !self.cracked && self.coating_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.sag_ok && self.corrosion_free
+        self.height_ok() && self.structural_ok() && self.rate_ok
     }
 
     pub fn needs_replacement(&self) -> bool {
-        !self.sag_ok
+        self.cracked || self.sag_mm > self.max_sag_mm
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sag_ok { return 20.0; }
+        if self.cracked { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_travel() {
+    fn test_height() {
         let c = CoilSpring::new();
-        assert!(c.travel_mm() > 100.0);
+        assert!(c.height_ok());
     }
 
     #[test]
-    fn test_not_sagged() {
+    fn test_structural() {
         let c = CoilSpring::new();
-        assert!(c.not_sagged());
+        assert!(c.structural_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_sagged() {
+    fn test_crack() {
         let mut c = CoilSpring::new();
-        c.sag_ok = false;
+        c.cracked = true;
         assert!(c.needs_replacement());
     }
 
