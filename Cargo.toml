@@ -116,6 +116,15 @@ members = [
     "crates/aurora-hashring",
     "crates/aurora-fsm",
     "crates/aurora-interval",
+    "crates/aurora-pool",
+    "crates/aurora-unionfind",
+    "crates/aurora-segment",
+    "crates/aurora-timewheel",
+    "crates/aurora-wal",
+    "crates/aurora-rope",
+    "crates/aurora-merkle",
+    "crates/aurora-prioritymap",
+    "crates/aurora-slab",
 ]
 
 [workspace.package]

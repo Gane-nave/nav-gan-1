@@ -1166,6 +1166,42 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora_merkle"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_pool"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_prioritymap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_rope"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_segment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_slab"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_timewheel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_unionfind"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_wal"
+version = "0.1.0"
+
+[[package]]
 name = "autocfg"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
