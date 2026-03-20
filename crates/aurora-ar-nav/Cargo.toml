@@ -1,0 +1,10 @@
+[package]
+name = "aurora-ar-nav"
+version = "0.1.0"
+edition = "2021"
+description = "Augmented Reality navigation overlay with 3D waypoints and lane projection"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]

@@ -282,6 +282,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ar-nav"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-arena"
 version = "0.1.0"
 
@@ -985,6 +992,13 @@ dependencies = [
 
 [[package]]
 name = "aurora-incr-correct"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-indoor"
 version = "0.1.0"
 dependencies = [
  "serde",
@@ -1845,6 +1859,13 @@ dependencies = [
  "serde_json",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-v2x"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]

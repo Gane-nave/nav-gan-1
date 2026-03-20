@@ -205,6 +205,9 @@ members = [
     "crates/aurora-geo-shard",
     "crates/aurora-map-update",
     "crates/aurora-quality-ctrl",
+    "crates/aurora-v2x",
+    "crates/aurora-indoor",
+    "crates/aurora-ar-nav",
 ]
 
 [workspace.package]

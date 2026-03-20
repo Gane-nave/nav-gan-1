@@ -29,6 +29,12 @@ pub struct DashboardData {
     pub pnt: PntData,
     /// Deep navigation layers status.
     pub deep_layers: DeepLayersData,
+    /// V2X (Vehicle-to-Everything) status.
+    pub v2x: V2xData,
+    /// Indoor positioning status.
+    pub indoor: IndoorData,
+    /// AR navigation status.
+    pub ar_nav: ArNavData,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -171,6 +177,42 @@ pub struct PntData {
     pub anti_jam_status: String,
     pub smooth_nav_enabled: bool,
     pub telemetry_entries: u64,
+}
+
+/// V2X (Vehicle-to-Everything) communication status.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct V2xData {
+    pub channel: String,
+    pub nearby_vehicles: u32,
+    pub messages_received: u64,
+    pub messages_sent: u64,
+    pub collision_warnings: u64,
+    pub signal_state: String,
+    pub glosa_speed_mps: Option<f64>,
+}
+
+/// Indoor positioning status.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct IndoorData {
+    pub is_indoor: bool,
+    pub position_x: f64,
+    pub position_y: f64,
+    pub floor: i32,
+    pub accuracy_m: f64,
+    pub tech_used: String,
+    pub beacon_count: u32,
+    pub floor_transition: String,
+}
+
+/// AR navigation overlay status.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct ArNavData {
+    pub active: bool,
+    pub elements_count: u32,
+    pub elements_rendered: u64,
+    pub lane_projection_active: bool,
+    pub focal_length: f64,
+    pub max_render_distance_m: f64,
 }
 
 /// Deep navigation layers — numerical stability, uncertainty, context, topology, etc.
@@ -343,6 +385,33 @@ impl Default for DashboardData {
                 smooth_nav_enabled: true,
                 telemetry_entries: 0,
             },
+            v2x: V2xData {
+                channel: "DualMode".into(),
+                nearby_vehicles: 0,
+                messages_received: 0,
+                messages_sent: 0,
+                collision_warnings: 0,
+                signal_state: "Unknown".into(),
+                glosa_speed_mps: None,
+            },
+            indoor: IndoorData {
+                is_indoor: false,
+                position_x: 0.0,
+                position_y: 0.0,
+                floor: 0,
+                accuracy_m: 0.0,
+                tech_used: "None".into(),
+                beacon_count: 0,
+                floor_transition: "None".into(),
+            },
+            ar_nav: ArNavData {
+                active: false,
+                elements_count: 0,
+                elements_rendered: 0,
+                lane_projection_active: false,
+                focal_length: 500.0,
+                max_render_distance_m: 200.0,
+            },
         }
     }
 }
@@ -404,6 +473,27 @@ mod tests {
         let json = serde_json::to_string(&seg).unwrap();
         assert!(json.contains("speed_ratio"));
         assert!(json.contains("#FFA500"));
+    }
+
+    #[test]
+    fn v2x_data_in_dashboard() {
+        let data = DashboardData::default();
+        assert_eq!(data.v2x.channel, "DualMode");
+        assert_eq!(data.v2x.nearby_vehicles, 0);
+    }
+
+    #[test]
+    fn indoor_data_in_dashboard() {
+        let data = DashboardData::default();
+        assert!(!data.indoor.is_indoor);
+        assert_eq!(data.indoor.floor, 0);
+    }
+
+    #[test]
+    fn ar_nav_data_in_dashboard() {
+        let data = DashboardData::default();
+        assert!(!data.ar_nav.active);
+        assert_eq!(data.ar_nav.elements_count, 0);
     }
 
     #[test]
