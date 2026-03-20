@@ -248,6 +248,10 @@ members = [
     "crates/aurora-peripheral-viz",
     "crates/aurora-anti-overlap",
     "crates/aurora-visual-lang",
+    # Group 6: Advanced Navigation
+    "crates/aurora-haptic",
+    "crates/aurora-elevation",
+    "crates/aurora-convoy",
 ]
 
 [workspace.package]
