@@ -286,6 +286,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-compression"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -563,6 +567,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-geo"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -579,6 +587,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-histogram"
 version = "0.1.0"
 
 [[package]]
@@ -1038,6 +1050,10 @@ name = "aurora-streaming"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-structured-log"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -1074,6 +1090,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-tracing-dist"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-traffic"
@@ -1145,6 +1165,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-websocket"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-wellness"
