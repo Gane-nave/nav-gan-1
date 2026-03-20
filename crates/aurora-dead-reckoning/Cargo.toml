@@ -1,0 +1,11 @@
+[package]
+name = "aurora-dead-reckoning"
+version.workspace = true
+edition.workspace = true
+description = "Dead reckoning navigation without GPS signal"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

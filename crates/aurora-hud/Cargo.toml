@@ -1,0 +1,11 @@
+[package]
+name = "aurora-hud"
+version.workspace = true
+edition.workspace = true
+description = "HUD and windshield projection display mode"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

@@ -1,0 +1,11 @@
+[package]
+name = "aurora-route-learn"
+version.workspace = true
+edition.workspace = true
+description = "User route preference learning engine"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

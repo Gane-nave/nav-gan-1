@@ -25,6 +25,8 @@ pub struct DashboardData {
     pub metrics: MetricsData,
     /// System health.
     pub health: HealthData,
+    /// PNT (Positioning, Navigation, Timing) status.
+    pub pnt: PntData,
 }
 
 #[derive(Debug, Clone, Serialize, Deserialize)]
@@ -150,6 +152,25 @@ pub struct HealthData {
     pub api: String,
 }
 
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct PntData {
+    pub multi_gnss_constellations: u32,
+    pub ekf_sources_fused: u32,
+    pub ekf_confidence: f64,
+    pub tunnel_mode_active: bool,
+    pub tunnel_distance_m: f64,
+    pub gnss_quality_score: f64,
+    pub fallback_active: bool,
+    pub fallback_source: String,
+    pub device_dual_band: bool,
+    pub agnss_enabled: bool,
+    pub dual_freq_enabled: bool,
+    pub source_count: u32,
+    pub anti_jam_status: String,
+    pub smooth_nav_enabled: bool,
+    pub telemetry_entries: u64,
+}
+
 impl Default for DashboardData {
     fn default() -> Self {
         Self {
@@ -237,6 +258,23 @@ impl Default for DashboardData {
                 routing: "Initializing".into(),
                 traffic: "Initializing".into(),
                 api: "Initializing".into(),
+            },
+            pnt: PntData {
+                multi_gnss_constellations: 0,
+                ekf_sources_fused: 0,
+                ekf_confidence: 0.0,
+                tunnel_mode_active: false,
+                tunnel_distance_m: 0.0,
+                gnss_quality_score: 0.0,
+                fallback_active: false,
+                fallback_source: "GNSS".into(),
+                device_dual_band: false,
+                agnss_enabled: false,
+                dual_freq_enabled: false,
+                source_count: 0,
+                anti_jam_status: "Clear".into(),
+                smooth_nav_enabled: true,
+                telemetry_entries: 0,
             },
         }
     }

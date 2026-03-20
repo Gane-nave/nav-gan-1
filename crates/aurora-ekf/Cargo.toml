@@ -1,0 +1,11 @@
+[package]
+name = "aurora-ekf"
+version.workspace = true
+edition.workspace = true
+description = "Extended Kalman Filter for multi-sensor positioning fusion"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

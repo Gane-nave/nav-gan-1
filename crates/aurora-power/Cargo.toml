@@ -1,0 +1,11 @@
+[package]
+name = "aurora-power"
+version.workspace = true
+edition.workspace = true
+description = "Battery-saving adaptive GPS sampling"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

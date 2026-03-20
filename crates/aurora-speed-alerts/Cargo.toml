@@ -1,0 +1,11 @@
+[package]
+name = "aurora-speed-alerts"
+version.workspace = true
+edition.workspace = true
+description = "Speed limit monitoring and alerts"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
