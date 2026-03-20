@@ -1,0 +1,8 @@
+[package]
+name = "aurora-constraints"
+version = "0.1.0"
+edition = "2021"
+description = "Physics and traffic rule constraints engine."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

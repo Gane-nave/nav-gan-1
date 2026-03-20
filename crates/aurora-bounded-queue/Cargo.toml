@@ -1,0 +1,8 @@
+[package]
+name = "aurora-bounded-queue"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Bounded MPMC queue with backpressure for AURORA NAV"
+
+[dependencies]

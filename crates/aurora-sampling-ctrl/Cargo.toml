@@ -1,0 +1,8 @@
+[package]
+name = "aurora-sampling-ctrl"
+version = "0.1.0"
+edition = "2021"
+description = "Adaptive sampling rate control for GPS and IMU."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

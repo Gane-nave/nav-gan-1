@@ -1,0 +1,11 @@
+[package]
+name = "aurora-crowd-reports"
+version.workspace = true
+edition.workspace = true
+description = "Real-time crowd-sourced traffic reports"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

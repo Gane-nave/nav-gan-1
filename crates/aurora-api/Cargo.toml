@@ -18,6 +18,7 @@ aurora-metrics = { path = "../aurora-metrics" }
 aurora-observability = { path = "../aurora-observability" }
 aurora-auth = { path = "../aurora-auth" }
 aurora-security = { path = "../aurora-security" }
+aurora-web = { path = "../aurora-web" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 chrono = { workspace = true }

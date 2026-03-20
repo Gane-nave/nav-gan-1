@@ -1,0 +1,8 @@
+[package]
+name = "aurora-btree"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "B-Tree with order-statistic operations for AURORA NAV"
+
+[dependencies]

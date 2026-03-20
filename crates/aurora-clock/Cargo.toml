@@ -1,0 +1,8 @@
+[package]
+name = "aurora-clock"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Hybrid logical clocks for distributed ordering for AURORA NAV"
+
+[dependencies]

@@ -1,0 +1,8 @@
+[package]
+name = "aurora-calibration"
+version = "0.1.0"
+edition = "2021"
+description = "Automatic sensor calibration during navigation."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

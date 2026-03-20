@@ -1,0 +1,11 @@
+[package]
+name = "aurora-location-ads"
+version.workspace = true
+edition.workspace = true
+description = "Location-based advertising engine"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

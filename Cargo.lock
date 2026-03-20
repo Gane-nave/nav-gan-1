@@ -73,6 +73,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-adaptive"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-agnss"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-alerts"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-analytics"
 version = "0.1.0"
 dependencies = [
@@ -82,6 +106,30 @@ dependencies = [
  "serde_json",
  "thiserror",
  "uuid",
+]
+
+[[package]]
+name = "aurora-anomaly"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-anonymize"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-anti-jam"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -113,6 +161,7 @@ dependencies = [
  "aurora-security",
  "aurora-sensors",
  "aurora-telemetry",
+ "aurora-web",
  "axum",
  "chrono",
  "parking_lot",
@@ -131,50 +180,89 @@ dependencies = [
 name = "aurora-app"
 version = "0.1.0"
 dependencies = [
+ "aurora-agnss",
+ "aurora-anti-jam",
  "aurora-anti-manipulation",
  "aurora-api",
  "aurora-auth",
+ "aurora-calibration",
  "aurora-charging",
  "aurora-city",
  "aurora-confidence",
  "aurora-config",
+ "aurora-conflict-res",
+ "aurora-constraints",
+ "aurora-context-aware",
  "aurora-continuity",
  "aurora-core",
  "aurora-corrections",
+ "aurora-data-integrity",
  "aurora-deploy",
+ "aurora-determinism",
  "aurora-developer",
+ "aurora-device-caps",
+ "aurora-dual-freq",
  "aurora-edge",
+ "aurora-edge-cases",
+ "aurora-ekf",
  "aurora-emergency",
+ "aurora-error-accum",
  "aurora-events",
  "aurora-evidence",
+ "aurora-explain",
+ "aurora-fallback",
  "aurora-fleet",
  "aurora-fusion",
+ "aurora-geo-dist",
+ "aurora-geo-shard",
+ "aurora-geofence",
  "aurora-gnss",
+ "aurora-gnss-quality",
+ "aurora-incr-correct",
  "aurora-integrity",
  "aurora-lane",
+ "aurora-latency-comp",
+ "aurora-load-shed",
  "aurora-map",
+ "aurora-map-update",
  "aurora-marketplace",
  "aurora-metrics",
  "aurora-micro-nav",
+ "aurora-multi-gnss",
+ "aurora-nav-state",
+ "aurora-numerical",
  "aurora-observability",
  "aurora-offline",
+ "aurora-orchestrator",
  "aurora-parking",
  "aurora-payments",
+ "aurora-pnt-telemetry",
  "aurora-probabilistic",
+ "aurora-quality-ctrl",
  "aurora-resilience",
  "aurora-risk",
+ "aurora-route-quality",
  "aurora-routing",
+ "aurora-sampling-ctrl",
  "aurora-satellite",
  "aurora-sdk",
  "aurora-security",
  "aurora-sensors",
+ "aurora-smooth-nav",
+ "aurora-source-select",
  "aurora-stability",
+ "aurora-subsystem-sync",
  "aurora-telemetry",
+ "aurora-topology",
  "aurora-traffic",
  "aurora-trust",
+ "aurora-tunnel",
  "aurora-twin",
+ "aurora-uncertainty",
  "aurora-ux",
  "aurora-vehicle",
+ "aurora-version-sync",
+ "aurora-web",
  "axum",
  "chrono",
  "parking_lot",
@@ -184,6 +272,25 @@ dependencies = [
  "tracing",
  "tracing-subscriber",
 ]
+
+[[package]]
+name = "aurora-ar"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-ar-nav"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-arena"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-audit"
@@ -249,8 +356,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-bitset"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bloom"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bounded-queue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-btree"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cache"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-calibration"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-carplay"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-cdn"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "aurora-charging"
@@ -281,6 +427,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-clock"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-compliance"
@@ -319,8 +469,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-conflict-res"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-consensus"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-constraints"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-context-aware"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-continuity"
@@ -367,8 +538,62 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-crdt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-crowd-reports"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-crowd-speed"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-cuckoo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-integrity"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-dead-reckoning"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-debounce"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-determinism"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-developer"
@@ -382,6 +607,14 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-device-caps"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -442,6 +675,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-drive-patterns"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-dual-freq"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-e2e-tests"
 version = "0.1.0"
 
@@ -456,6 +705,21 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-edge-cases"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-ekf"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -488,6 +752,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-error-accum"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-errors"
 version = "0.1.0"
 dependencies = [
@@ -496,6 +767,14 @@ dependencies = [
  "serde",
  "serde_json",
  "thiserror",
+]
+
+[[package]]
+name = "aurora-eta"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -527,6 +806,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-explain"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-fallback"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-features"
 version = "0.1.0"
 
@@ -542,6 +836,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-fsm"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-fusion"
@@ -563,6 +861,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-gamification"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-gateway"
 version = "0.1.0"
 dependencies = [
@@ -577,6 +883,27 @@ dependencies = [
 [[package]]
 name = "aurora-geo"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-geo-dist"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-geo-shard"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-geofence"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-gnss"
@@ -594,7 +921,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-gnss-quality"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hashring"
 version = "0.1.0"
 
 [[package]]
@@ -602,7 +941,23 @@ name = "aurora-health"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-heap"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-histogram"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hud"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-hyperloglog"
 version = "0.1.0"
 
 [[package]]
@@ -625,6 +980,28 @@ dependencies = [
  "thiserror",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-incidents"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-incr-correct"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-indoor"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -711,6 +1088,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-interval"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-jumphash"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lane"
 version = "0.1.0"
 dependencies = [
@@ -723,6 +1108,44 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-latency-comp"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-lease"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-legal"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-load-shed"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-location-ads"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-lru"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map"
 version = "0.1.0"
 dependencies = [
@@ -732,6 +1155,21 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "aurora-map-match"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-map-update"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -793,6 +1231,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-moderation"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-monitoring"
 version = "0.1.0"
 dependencies = [
@@ -805,8 +1251,39 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-multi-gnss"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-multimodal"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-multistop"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-nav-state"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-nightmode"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "aurora-notifications"
@@ -817,6 +1294,13 @@ dependencies = [
  "serde",
  "serde_json",
  "uuid",
+]
+
+[[package]]
+name = "aurora-numerical"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -846,6 +1330,28 @@ dependencies = [
  "serde_json",
  "tokio",
  "tracing",
+]
+
+[[package]]
+name = "aurora-orchestrator"
+version = "0.1.0"
+dependencies = [
+ "aurora-backpressure",
+ "aurora-bloom",
+ "aurora-bounded-queue",
+ "aurora-btree",
+ "aurora-cache",
+ "aurora-circuit",
+ "aurora-clock",
+ "aurora-errors",
+ "aurora-features",
+ "aurora-histogram",
+ "aurora-lru",
+ "aurora-perf",
+ "aurora-ratelimit",
+ "aurora-retry",
+ "aurora-snapshot",
+ "aurora-structured-log",
 ]
 
 [[package]]
@@ -893,6 +1399,46 @@ name = "aurora-plugins"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pnt-telemetry"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-poi-services"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-power"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-predictive"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-prefetch"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-probabilistic"
 version = "0.1.0"
 dependencies = [
@@ -919,12 +1465,31 @@ name = "aurora-pubsub"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-quality-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-quota"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-rcu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-reroute"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
 
 [[package]]
 name = "aurora-resilience"
@@ -941,6 +1506,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-retry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ringbuf"
 version = "0.1.0"
 
 [[package]]
@@ -966,6 +1535,29 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-route-learn"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-route-quality"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "aurora-route-share"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-routing"
 version = "0.1.0"
 dependencies = [
@@ -976,6 +1568,13 @@ dependencies = [
  "serde",
  "serde_json",
  "tracing",
+]
+
+[[package]]
+name = "aurora-sampling-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1021,6 +1620,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-semaphore"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sensors"
 version = "0.1.0"
 dependencies = [
@@ -1047,6 +1650,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-skiplist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-smooth-nav"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "aurora-snapshot"
 version = "0.1.0"
 
@@ -1055,6 +1670,22 @@ name = "aurora-social"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
+]
+
+[[package]]
+name = "aurora-source-select"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-speed-alerts"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1088,6 +1719,13 @@ version = "0.1.0"
 [[package]]
 name = "aurora-structured-log"
 version = "0.1.0"
+
+[[package]]
+name = "aurora-subsystem-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "aurora-telemetry"
@@ -1128,6 +1766,21 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-tiles"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-topology"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-tracing-dist"
 version = "0.1.0"
 
@@ -1145,6 +1798,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-traffic-predict"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-trie"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trust"
 version = "0.1.0"
 dependencies = [
@@ -1153,6 +1818,14 @@ dependencies = [
  "serde",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-tunnel"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1169,6 +1842,13 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-uncertainty"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-ux"
 version = "0.1.0"
 dependencies = [
@@ -1179,6 +1859,13 @@ dependencies = [
  "serde_json",
  "tracing",
  "uuid",
+]
+
+[[package]]
+name = "aurora-v2x"
+version = "0.1.0"
+dependencies = [
+ "serde",
 ]
 
 [[package]]
@@ -1196,10 +1883,34 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-version-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
 name = "aurora-voice"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
+]
+
+[[package]]
+name = "aurora-weather"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "aurora-web"
+version = "0.1.0"
+dependencies = [
+ "aurora-orchestrator",
+ "serde",
+ "serde_json",
 ]
 
 [[package]]
@@ -1212,6 +1923,46 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-worksteal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_merkle"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_pool"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_prioritymap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_rope"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_segment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_slab"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_timewheel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_unionfind"
+version = "0.1.0"
+
+[[package]]
+name = "aurora_wal"
+version = "0.1.0"
 
 [[package]]
 name = "autocfg"

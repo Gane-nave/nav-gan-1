@@ -10,6 +10,7 @@ use aurora_events::EventBus;
 use aurora_fusion::FusionEngine;
 use aurora_gnss::ConstellationManager;
 use aurora_integrity::IntegrityEngine;
+use aurora_orchestrator::ServiceRegistry;
 use aurora_sensors::imu::ImuProcessor;
 use aurora_telemetry::TelemetryRecorder;
 use parking_lot::RwLock;
@@ -27,6 +28,8 @@ pub struct NavigationPipeline {
     pub telemetry: Arc<TelemetryRecorder>,
     pub event_bus: Arc<EventBus>,
     pub last_position: Arc<RwLock<Option<FusedPosition>>>,
+    /// Infrastructure service registry (cache, circuit breaker, rate limiter, etc.).
+    pub services: Arc<RwLock<ServiceRegistry>>,
     config: AuroraConfig,
     /// Whether any GNSS data has ever been received by this pipeline.
     has_received_gnss: AtomicBool,
@@ -45,6 +48,7 @@ impl NavigationPipeline {
             telemetry,
             event_bus: Arc::new(EventBus::new()),
             last_position: Arc::new(RwLock::new(None)),
+            services: Arc::new(RwLock::new(ServiceRegistry::new())),
             config,
             has_received_gnss: AtomicBool::new(false),
         }
@@ -102,6 +106,27 @@ impl NavigationPipeline {
     /// Returns whether the pipeline is healthy.
     pub fn is_healthy(&self) -> bool {
         true // Subsystems are always initialised; health degrades gracefully
+    }
+
+    /// Returns infrastructure service statistics.
+    pub fn service_stats(&self) -> aurora_orchestrator::services::RegistryStats {
+        self.services.read().stats()
+    }
+
+    /// Check if external calls are allowed (circuit breaker).
+    ///
+    /// Read-only check — does NOT trigger Open→HalfOpen recovery.
+    /// Use `try_external_call` before actually making a request.
+    pub fn can_call_external(&self) -> bool {
+        self.services.read().can_call_external()
+    }
+
+    /// Attempt an external call through the circuit breaker.
+    ///
+    /// Triggers state transitions (Open→HalfOpen after cooldown) and returns
+    /// whether the call is permitted.
+    pub fn try_external_call(&self) -> bool {
+        self.services.write().try_external_call()
     }
 
     /// Returns subsystem status summary.

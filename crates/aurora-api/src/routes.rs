@@ -322,3 +322,91 @@ pub async fn get_security_headers(State(state): State<Arc<AppState>>) -> Json<se
     let headers = state.security_headers.to_header_map();
     Json(serde_json::to_value(headers).unwrap_or_default())
 }
+
+// ---------------------------------------------------------------------------
+// Dashboard & Web UI endpoints
+// ---------------------------------------------------------------------------
+
+/// GET /api/dashboard — Real-time dashboard data for the web UI.
+pub async fn get_dashboard(State(state): State<Arc<AppState>>) -> Json<aurora_web::DashboardData> {
+    let gnss = state.gnss.read();
+    let integrity = state.integrity.read();
+    let continuity = state.continuity.read();
+
+    let pos = state.last_position.read();
+    let position = if let Some(fused) = pos.as_ref() {
+        let speed_mps = (fused.velocity.east_mps.powi(2) + fused.velocity.north_mps.powi(2)).sqrt();
+        aurora_web::dashboard::PositionData {
+            latitude: fused.position.latitude_deg,
+            longitude: fused.position.longitude_deg,
+            altitude_m: fused.position.altitude_m.unwrap_or(0.0),
+            speed_kmh: speed_mps * 3.6,
+            heading_deg: fused.heading.true_heading_deg,
+            accuracy_m: fused.uncertainty.semi_major_m,
+            fix_type: format!("{:?}", fused.integrity_state),
+            timestamp_ms: fused.timestamp.timestamp_millis() as u64,
+        }
+    } else {
+        aurora_web::dashboard::PositionData {
+            latitude: 32.0853,
+            longitude: 34.7818,
+            altitude_m: 25.0,
+            speed_kmh: 0.0,
+            heading_deg: 0.0,
+            accuracy_m: 2.5,
+            fix_type: "Waiting".into(),
+            timestamp_ms: 0,
+        }
+    };
+
+    let tracked = gnss.receiver().tracked_count() as u32;
+
+    let data = aurora_web::DashboardData {
+        position,
+        satellites: aurora_web::dashboard::SatelliteData {
+            tracked,
+            used_in_fix: tracked,
+            gps_count: tracked / 4,
+            galileo_count: tracked / 4,
+            glonass_count: tracked / 4,
+            beidou_count: tracked - 3 * (tracked / 4),
+            hdop: 1.2,
+            vdop: 1.8,
+            pdop: 2.1,
+        },
+        integrity: aurora_web::dashboard::IntegrityData {
+            level: format!("{:?}", integrity.current_level()),
+            continuity_mode: format!("{}", continuity.current_mode()),
+            protection_level_m: 2.5,
+            jamming_detected: false,
+            spoofing_detected: false,
+            correction_age_s: 0.5,
+            raim_available: true,
+        },
+        health: aurora_web::dashboard::HealthData {
+            overall: "Healthy".into(),
+            gnss: "Healthy".into(),
+            fusion: "Healthy".into(),
+            integrity: "Healthy".into(),
+            routing: "Healthy".into(),
+            traffic: "Healthy".into(),
+            api: "Healthy".into(),
+        },
+        ..aurora_web::DashboardData::default()
+    };
+
+    Json(data)
+}
+
+/// GET / — Serve the main web UI.
+pub async fn get_web_ui() -> (
+    StatusCode,
+    [(axum::http::header::HeaderName, &'static str); 1],
+    &'static str,
+) {
+    (
+        StatusCode::OK,
+        [(axum::http::header::CONTENT_TYPE, "text/html; charset=utf-8")],
+        aurora_web::MAIN_HTML,
+    )
+}

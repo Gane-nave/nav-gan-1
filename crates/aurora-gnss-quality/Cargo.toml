@@ -1,0 +1,11 @@
+[package]
+name = "aurora-gnss-quality"
+version.workspace = true
+edition.workspace = true
+description = "GNSS quality scoring — SNR, DOP, multipath, confidence"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }
