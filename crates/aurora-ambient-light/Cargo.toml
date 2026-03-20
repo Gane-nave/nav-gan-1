@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ambient-light"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

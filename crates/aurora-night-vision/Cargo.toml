@@ -1,0 +1,6 @@
+[package]
+name = "aurora-night-vision"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

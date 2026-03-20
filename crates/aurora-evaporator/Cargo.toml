@@ -1,0 +1,6 @@
+[package]
+name = "aurora-evaporator"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

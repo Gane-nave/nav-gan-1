@@ -1,0 +1,6 @@
+[package]
+name = "aurora-airbag-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

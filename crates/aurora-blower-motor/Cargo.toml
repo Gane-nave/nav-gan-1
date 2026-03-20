@@ -1,0 +1,6 @@
+[package]
+name = "aurora-blower-motor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

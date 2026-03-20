@@ -105,6 +105,10 @@ name = "aurora-air-quality"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-airbag-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alerts"
 version = "0.1.0"
 dependencies = [
@@ -114,6 +118,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-alternator"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ambient-light"
 version = "0.1.0"
 
 [[package]]
@@ -416,6 +424,10 @@ name = "aurora-bloom"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-blower-motor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bounded-queue"
 version = "0.1.0"
 
@@ -433,6 +445,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-btree"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cabin-filter"
 version = "0.1.0"
 
 [[package]]
@@ -533,6 +549,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-compression"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compressor-ac"
 version = "0.1.0"
 
 [[package]]
@@ -650,6 +670,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-crash-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crdt"
 version = "0.1.0"
 
@@ -726,6 +750,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-defog-system"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-defroster"
 version = "0.1.0"
 
 [[package]]
@@ -978,6 +1006,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-evaporator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-events"
 version = "0.1.0"
 dependencies = [
@@ -1201,6 +1233,10 @@ name = "aurora-heap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-heater-core"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-highway-merge"
 version = "0.1.0"
 
@@ -1227,6 +1263,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-hvac-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-hyperloglog"
@@ -1642,6 +1682,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-night-vision"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-nightmode"
 version = "0.1.0"
 dependencies = [
@@ -1773,6 +1817,10 @@ name = "aurora-pedestrian"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pedestrian-det"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-perceptual"
 version = "0.1.0"
 
@@ -1821,6 +1869,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-power-steer"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-power-window"
@@ -1888,7 +1940,15 @@ name = "aurora-quota"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rack-pinion"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-radar-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rain-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -1969,6 +2029,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-rollover-det"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-roundabout"
@@ -2054,6 +2118,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-seat-heat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-seatbelt-tens"
 version = "0.1.0"
 
 [[package]]
@@ -2183,6 +2251,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-steer-assist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steering-col"
 version = "0.1.0"
 
 [[package]]

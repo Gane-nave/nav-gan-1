@@ -1,0 +1,6 @@
+[package]
+name = "aurora-pedestrian-det"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
