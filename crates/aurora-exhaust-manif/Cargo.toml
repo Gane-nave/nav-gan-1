@@ -1,0 +1,6 @@
+[package]
+name = "aurora-exhaust-manif"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

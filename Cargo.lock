@@ -383,6 +383,10 @@ name = "aurora-axle-monitor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-axle-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-backpressure"
 version = "0.1.0"
 
@@ -396,6 +400,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-belt-tension"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-belt-tensn"
 version = "0.1.0"
 
 [[package]]
@@ -585,6 +593,10 @@ name = "aurora-clock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-clutch-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-compliance"
 version = "0.1.0"
 dependencies = [
@@ -630,6 +642,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-conn-rod"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-consensus"
@@ -726,6 +742,10 @@ name = "aurora-crank-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-crankcase"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crash-sensor"
 version = "0.1.0"
 
@@ -767,6 +787,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cyclist-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cylinder-head"
 version = "0.1.0"
 
 [[package]]
@@ -1134,6 +1158,10 @@ name = "aurora-exhaust-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-exhaust-manif"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-exhaust-monitor"
 version = "0.1.0"
 
@@ -1175,6 +1203,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-flexray-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-flywheel"
 version = "0.1.0"
 
 [[package]]
@@ -1487,6 +1519,10 @@ dependencies = [
  "thiserror",
  "tracing",
 ]
+
+[[package]]
+name = "aurora-intake-manif"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-integration-tests"
@@ -2051,6 +2087,10 @@ name = "aurora-pipeline"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-piston-ring"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-plugins"
 version = "0.1.0"
 
@@ -2137,7 +2177,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-prop-shaft"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pubsub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-pulley-sys"
 version = "0.1.0"
 
 [[package]]
@@ -2602,6 +2650,10 @@ name = "aurora-thermo-valve"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-thermostat"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-throttle-map"
 version = "0.1.0"
 
@@ -2622,6 +2674,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-timing-chain"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tire-monitor"
 version = "0.1.0"
 
@@ -2639,6 +2695,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-torque-conv"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-tracing-dist"
@@ -2671,6 +2731,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-sign"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -2770,6 +2834,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-v2x-comm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valve-train"
 version = "0.1.0"
 
 [[package]]
@@ -2882,6 +2950,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-wheel-align"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-hub"
 version = "0.1.0"
 
 [[package]]

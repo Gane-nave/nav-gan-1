@@ -1,0 +1,6 @@
+[package]
+name = "aurora-wheel-hub"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

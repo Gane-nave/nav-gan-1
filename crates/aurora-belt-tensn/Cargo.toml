@@ -1,0 +1,6 @@
+[package]
+name = "aurora-belt-tensn"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

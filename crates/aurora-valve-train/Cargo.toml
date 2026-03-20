@@ -1,0 +1,6 @@
+[package]
+name = "aurora-valve-train"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

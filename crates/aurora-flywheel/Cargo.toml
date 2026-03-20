@@ -1,0 +1,6 @@
+[package]
+name = "aurora-flywheel"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

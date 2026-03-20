@@ -1,0 +1,6 @@
+[package]
+name = "aurora-intake-manif"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
