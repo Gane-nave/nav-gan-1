@@ -1,38 +1,38 @@
-/// surround view: capture, stitch, render, overlay, stream
-/// Phase 1175
+/// dms sys: track, analyze, alert, escalate, log
+/// Phase 1173
 
 #[derive(Debug, Clone)]
-pub struct SurroundView {
-    pub capture_ok: bool,
-    pub stitch_ok: bool,
-    pub render_ok: bool,
-    pub overlay_ok: bool,
-    pub stream_ok: bool,
+pub struct DmsSys {
+    pub track_ok: bool,
+    pub analyze_ok: bool,
+    pub alert_ok: bool,
+    pub escalate_ok: bool,
+    pub log_ok: bool,
 }
 
-impl Default for SurroundView {
+impl Default for DmsSys {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SurroundView {
+impl DmsSys {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            stitch_ok: true,
-            render_ok: true,
-            overlay_ok: true,
-            stream_ok: true,
+            track_ok: true,
+            analyze_ok: true,
+            alert_ok: true,
+            escalate_ok: true,
+            log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.stitch_ok && self.render_ok
+        self.track_ok && self.analyze_ok && self.alert_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.overlay_ok && self.stream_ok
+        self.escalate_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SurroundView {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.stitch_ok
+        !self.track_ok || !self.analyze_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.track_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SurroundView::new();
+        let c = DmsSys::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SurroundView::new();
+        let c = DmsSys::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SurroundView::new();
+        let c = DmsSys::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SurroundView::new();
+        let c = DmsSys::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SurroundView::new();
-        c.capture_ok = false;
+        let mut c = DmsSys::new();
+        c.track_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SurroundView::new();
+        let c = DmsSys::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

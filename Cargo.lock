@@ -113,6 +113,10 @@ name = "aurora-ac-performance"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-acc-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-accel-sensor"
 version = "0.1.0"
 
@@ -154,6 +158,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-adhesive-bond"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-aeb-sys"
 version = "0.1.0"
 
 [[package]]
@@ -314,6 +322,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-anti-overlap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-apa-sys"
 version = "0.1.0"
 
 [[package]]
@@ -797,6 +809,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bsm-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bsw-sys"
 version = "0.1.0"
 
 [[package]]
@@ -1601,6 +1617,10 @@ name = "aurora-dlp-engine"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dms-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dns-resolver"
 version = "0.1.0"
 
@@ -1768,6 +1788,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-e2e-tests"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-eba-sys"
 version = "0.1.0"
 
 [[package]]
@@ -1944,6 +1968,10 @@ dependencies = [
  "serde_json",
  "thiserror",
 ]
+
+[[package]]
+name = "aurora-esc-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-esc-module"
@@ -2513,6 +2541,10 @@ name = "aurora-hazmat-route"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hda-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-head-gasket"
 version = "0.1.0"
 
@@ -3051,6 +3083,10 @@ name = "aurora-ldap-client"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ldw-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-leaf-spring"
 version = "0.1.0"
 
@@ -3096,6 +3132,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-lineage-track"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lka-sys"
 version = "0.1.0"
 
 [[package]]
@@ -3430,6 +3470,10 @@ name = "aurora-nlp-engine"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-noa-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-noise-map"
 version = "0.1.0"
 
@@ -3566,6 +3610,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-olap-cube"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oms-sys"
 version = "0.1.0"
 
 [[package]]
@@ -3992,6 +4040,10 @@ name = "aurora-ratelimit"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rcta-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rcu"
 version = "0.1.0"
 
@@ -4252,6 +4304,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-routing-graph"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rpa-sys"
 version = "0.1.0"
 
 [[package]]
@@ -4816,6 +4872,10 @@ name = "aurora-taillight"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tcs-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-teen-driver"
 version = "0.1.0"
 
@@ -4999,6 +5059,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-tire-tread"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tja-sys"
 version = "0.1.0"
 
 [[package]]

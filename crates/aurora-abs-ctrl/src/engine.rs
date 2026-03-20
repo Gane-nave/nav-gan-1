@@ -1,63 +1,50 @@
-/// ABS control: anti-lock braking, wheel slip management, brake modulation
-/// Phase 205
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum AbsState {
-    Inactive,
-    Monitoring,
-    Intervening,
-    Fault,
-}
+/// abs ctrl: sense, pulse, modulate, release, log
+/// Phase 1158
 
 #[derive(Debug, Clone)]
-pub struct AbsController {
-    pub state: AbsState,
-    pub wheel_slip_pct: [f64; 4],
-    pub intervention_count: u32,
-    pub brake_pressure_bar: f64,
-    pub enabled: bool,
+pub struct AbsCtrl {
+    pub sense_ok: bool,
+    pub pulse_ok: bool,
+    pub modulate_ok: bool,
+    pub release_ok: bool,
+    pub log_ok: bool,
 }
 
-impl Default for AbsController {
+impl Default for AbsCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl AbsController {
+impl AbsCtrl {
     pub fn new() -> Self {
         Self {
-            state: AbsState::Monitoring,
-            wheel_slip_pct: [0.0; 4],
-            intervention_count: 0,
-            brake_pressure_bar: 0.0,
-            enabled: true,
+            sense_ok: true,
+            pulse_ok: true,
+            modulate_ok: true,
+            release_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn max_slip(&self) -> f64 {
-        self.wheel_slip_pct.iter().cloned().fold(0.0_f64, f64::max)
+    pub fn primary_ok(&self) -> bool {
+        self.sense_ok && self.pulse_ok && self.modulate_ok
     }
 
-    pub fn needs_intervention(&self) -> bool {
-        self.enabled && self.max_slip() > 15.0
+    pub fn secondary_ok(&self) -> bool {
+        self.release_ok && self.log_ok
     }
 
-    pub fn is_active(&self) -> bool {
-        self.state == AbsState::Intervening
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn has_fault(&self) -> bool {
-        self.state == AbsState::Fault
+    pub fn needs_attention(&self) -> bool {
+        !self.sense_ok || !self.pulse_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.has_fault() {
-            return 0.0;
-        }
-        if !self.enabled {
-            return 50.0;
-        }
+        if !self.sense_ok { return 5.0; }
         100.0
     }
 }
@@ -67,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_default_monitoring() {
-        let a = AbsController::new();
-        assert_eq!(a.state, AbsState::Monitoring);
+    fn test_primary() {
+        let c = AbsCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_max_slip() {
-        let mut a = AbsController::new();
-        a.wheel_slip_pct = [5.0, 10.0, 3.0, 7.0];
-        assert!((a.max_slip() - 10.0).abs() < 0.1);
+    fn test_secondary() {
+        let c = AbsCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_no_intervention() {
-        let a = AbsController::new();
-        assert!(!a.needs_intervention());
+    fn test_all_ok() {
+        let c = AbsCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_needs_intervention() {
-        let mut a = AbsController::new();
-        a.wheel_slip_pct[0] = 20.0;
-        assert!(a.needs_intervention());
+    fn test_no_attention() {
+        let c = AbsCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_no_fault() {
-        let a = AbsController::new();
-        assert!(!a.has_fault());
+    fn test_field_toggle() {
+        let mut c = AbsCtrl::new();
+        c.sense_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let a = AbsController::new();
-        assert!((a.health_score() - 100.0).abs() < 0.1);
+        let c = AbsCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

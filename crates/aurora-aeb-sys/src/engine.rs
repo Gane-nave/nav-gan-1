@@ -1,38 +1,38 @@
-/// surround view: capture, stitch, render, overlay, stream
-/// Phase 1175
+/// aeb sys: detect, classify, warn, brake, report
+/// Phase 1165
 
 #[derive(Debug, Clone)]
-pub struct SurroundView {
-    pub capture_ok: bool,
-    pub stitch_ok: bool,
-    pub render_ok: bool,
-    pub overlay_ok: bool,
-    pub stream_ok: bool,
+pub struct AebSys {
+    pub detect_ok: bool,
+    pub classify_ok: bool,
+    pub warn_ok: bool,
+    pub brake_ok: bool,
+    pub report_ok: bool,
 }
 
-impl Default for SurroundView {
+impl Default for AebSys {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SurroundView {
+impl AebSys {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            stitch_ok: true,
-            render_ok: true,
-            overlay_ok: true,
-            stream_ok: true,
+            detect_ok: true,
+            classify_ok: true,
+            warn_ok: true,
+            brake_ok: true,
+            report_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.stitch_ok && self.render_ok
+        self.detect_ok && self.classify_ok && self.warn_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.overlay_ok && self.stream_ok
+        self.brake_ok && self.report_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SurroundView {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.stitch_ok
+        !self.detect_ok || !self.classify_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SurroundView::new();
+        let c = AebSys::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SurroundView::new();
+        let c = AebSys::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SurroundView::new();
+        let c = AebSys::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SurroundView::new();
+        let c = AebSys::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SurroundView::new();
-        c.capture_ok = false;
+        let mut c = AebSys::new();
+        c.detect_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SurroundView::new();
+        let c = AebSys::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

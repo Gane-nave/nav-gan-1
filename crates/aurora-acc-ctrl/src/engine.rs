@@ -1,38 +1,38 @@
-/// surround view: capture, stitch, render, overlay, stream
-/// Phase 1175
+/// acc ctrl: set, follow, gap, resume, cancel
+/// Phase 1166
 
 #[derive(Debug, Clone)]
-pub struct SurroundView {
-    pub capture_ok: bool,
-    pub stitch_ok: bool,
-    pub render_ok: bool,
-    pub overlay_ok: bool,
-    pub stream_ok: bool,
+pub struct AccCtrl {
+    pub set_ok: bool,
+    pub follow_ok: bool,
+    pub gap_ok: bool,
+    pub resume_ok: bool,
+    pub cancel_ok: bool,
 }
 
-impl Default for SurroundView {
+impl Default for AccCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SurroundView {
+impl AccCtrl {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            stitch_ok: true,
-            render_ok: true,
-            overlay_ok: true,
-            stream_ok: true,
+            set_ok: true,
+            follow_ok: true,
+            gap_ok: true,
+            resume_ok: true,
+            cancel_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.stitch_ok && self.render_ok
+        self.set_ok && self.follow_ok && self.gap_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.overlay_ok && self.stream_ok
+        self.resume_ok && self.cancel_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SurroundView {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.stitch_ok
+        !self.set_ok || !self.follow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.set_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SurroundView::new();
+        let c = AccCtrl::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SurroundView::new();
+        let c = AccCtrl::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SurroundView::new();
+        let c = AccCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SurroundView::new();
+        let c = AccCtrl::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SurroundView::new();
-        c.capture_ok = false;
+        let mut c = AccCtrl::new();
+        c.set_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SurroundView::new();
+        let c = AccCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
