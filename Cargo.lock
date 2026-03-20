@@ -109,6 +109,10 @@ name = "aurora-adaptive-cruise"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-adhesive-bond"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-aero-coeff"
 version = "0.1.0"
 
@@ -407,6 +411,10 @@ name = "aurora-ball-joint"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-barrier-coat"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-mgmt"
 version = "0.1.0"
 
@@ -473,6 +481,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bms-cell"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-body-fit"
 version = "0.1.0"
 
 [[package]]
@@ -615,6 +627,14 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-clamp-force"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-clear-coat"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-climate-zone"
@@ -778,6 +798,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-corrosion-mon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crank-sensor"
 version = "0.1.0"
 
@@ -894,6 +918,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-defroster"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dent-detect"
 version = "0.1.0"
 
 [[package]]
@@ -1282,6 +1310,10 @@ name = "aurora-flexray-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-flush-align"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-flywheel"
 version = "0.1.0"
 
@@ -1343,6 +1375,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-gasket-integ"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-gateway"
@@ -2127,6 +2163,14 @@ name = "aurora-oxygen-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-paint-thick"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-panel-gap"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-park-assist"
 version = "0.1.0"
 
@@ -2269,6 +2313,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-primer-coat"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-probabilistic"
@@ -2421,6 +2469,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-rivet-mon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-road-noise"
 version = "0.1.0"
 
@@ -2491,6 +2543,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-rust-protect"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sampling-ctrl"
 version = "0.1.0"
 dependencies = [
@@ -2515,6 +2571,10 @@ name = "aurora-scheduler"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-scratch-det"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sdk"
 version = "0.1.0"
 dependencies = [
@@ -2527,6 +2587,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-sealant-mon"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-seat-comfort"
@@ -3138,6 +3202,10 @@ name = "aurora-weight-dist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-weld-integ"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-wellness"
 version = "0.1.0"
 dependencies = [
@@ -3198,6 +3266,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-zero-friction"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-zinc-layer"
 version = "0.1.0"
 
 [[package]]
