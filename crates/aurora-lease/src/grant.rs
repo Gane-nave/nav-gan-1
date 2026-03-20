@@ -102,9 +102,13 @@ impl LeaseGrant {
     }
 
     /// Remaining TTL at the given time.
+    /// A ttl_ms of 0 means "no expiry" — returns u64::MAX.
     pub fn remaining_ms(&self, now_ms: u64) -> u64 {
         if self.is_expired(now_ms) {
             return 0;
+        }
+        if self.ttl_ms == 0 {
+            return u64::MAX;
         }
         let elapsed = now_ms.saturating_sub(self.granted_at_ms);
         self.ttl_ms.saturating_sub(elapsed)
@@ -225,10 +229,14 @@ mod tests {
         assert!(!g.is_expired(1000)); // at grant time
         assert!(!g.is_expired(999_999)); // far future
         assert!(g.is_active(999_999));
+        // remaining_ms returns u64::MAX for zero-TTL leases
+        assert_eq!(g.remaining_ms(1000), u64::MAX);
+        assert_eq!(g.remaining_ms(999_999), u64::MAX);
         // But revoke still works
         let mut g2 = LeaseGrant::new(2, "r", "h", 1000, 0);
         g2.revoke();
         assert!(g2.is_expired(1000));
         assert!(!g2.is_active(1000));
+        assert_eq!(g2.remaining_ms(1000), 0); // revoked = 0 remaining
     }
 }
