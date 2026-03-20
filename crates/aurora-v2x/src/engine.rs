@@ -338,7 +338,7 @@ mod tests {
         assert!(speed.is_some());
         let s = speed.unwrap();
         assert!(
-            s >= 2.0 && s <= 20.0,
+            (2.0..=20.0).contains(&s),
             "GLOSA speed should be clamped: {}",
             s
         );
@@ -374,7 +374,7 @@ mod tests {
         };
         let ttc = v.ttc_seconds(32.0, 34.0, 10.0);
         assert!(
-            ttc > 0.0 && ttc < 100.0,
+            (0.0..100.0).contains(&ttc),
             "TTC should be reasonable: {}",
             ttc
         );
@@ -394,7 +394,7 @@ mod tests {
         };
         let d = v.distance_to(32.001, 34.0);
         assert!(
-            d > 100.0 && d < 120.0,
+            (100.0..120.0).contains(&d),
             "0.001 deg lat should be ~111m, got {}",
             d
         );
