@@ -531,6 +531,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-convoy"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-core"
 version = "0.1.0"
 dependencies = [
@@ -767,6 +771,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-elevation"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-emergency"
 version = "0.1.0"
 dependencies = [
@@ -982,6 +990,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-haptic"
 version = "0.1.0"
 
 [[package]]
