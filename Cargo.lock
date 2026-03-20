@@ -528,6 +528,10 @@ name = "aurora-auto-pilot"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auto-trans"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-automl"
 version = "0.1.0"
 
@@ -544,6 +548,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-awd-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-axle-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -612,6 +620,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bearing-noise"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-belt-drive"
 version = "0.1.0"
 
 [[package]]
@@ -972,6 +984,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-ceramic-coat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-chain-drive"
 version = "0.1.0"
 
 [[package]]
@@ -1438,6 +1454,10 @@ name = "aurora-cv2x-modem"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cvt-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cyclist-det"
 version = "0.1.0"
 
@@ -1514,6 +1534,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-dc-fast-charge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dct-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -2397,6 +2421,10 @@ name = "aurora-gauge-cluster"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-gear-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gear-select"
 version = "0.1.0"
 
@@ -2698,6 +2726,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hub-cap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hub-motor"
 version = "0.1.0"
 
 [[package]]
@@ -3215,6 +3247,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-maint-pred"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-manual-trans"
 version = "0.1.0"
 
 [[package]]
@@ -3977,6 +4013,10 @@ name = "aurora-prop-valve"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-propshaft"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-proxy-lb"
 version = "0.1.0"
 
@@ -4125,6 +4165,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-reducer"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-reduction-gear"
 version = "0.1.0"
 
 [[package]]

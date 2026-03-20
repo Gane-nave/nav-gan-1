@@ -1,13 +1,13 @@
-/// Oil cooler: oil temp, flow, thermostat bypass
-/// Phase 514
+/// oil cooler: flow, exchange, bypass, filter, check
+/// Phase 1229
 
 #[derive(Debug, Clone)]
 pub struct OilCooler {
-    pub oil_temp_c: f64,
-    pub max_oil_temp_c: f64,
     pub flow_ok: bool,
-    pub thermostat_ok: bool,
-    pub leak_free: bool,
+    pub exchange_ok: bool,
+    pub bypass_ok: bool,
+    pub filter_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for OilCooler {
@@ -19,32 +19,32 @@ impl Default for OilCooler {
 impl OilCooler {
     pub fn new() -> Self {
         Self {
-            oil_temp_c: 95.0,
-            max_oil_temp_c: 130.0,
             flow_ok: true,
-            thermostat_ok: true,
-            leak_free: true,
+            exchange_ok: true,
+            bypass_ok: true,
+            filter_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn temp_ok(&self) -> bool {
-        self.oil_temp_c < self.max_oil_temp_c
+    pub fn primary_ok(&self) -> bool {
+        self.flow_ok && self.exchange_ok && self.bypass_ok
     }
 
-    pub fn cooling_ok(&self) -> bool {
-        self.temp_ok() && self.flow_ok && self.thermostat_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.filter_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.cooling_ok() && self.leak_free
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.leak_free || !self.thermostat_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.flow_ok || !self.exchange_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 10.0; }
+        if !self.flow_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_temp() {
+    fn test_primary() {
         let c = OilCooler::new();
-        assert!(c.temp_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_cooling() {
+    fn test_secondary() {
         let c = OilCooler::new();
-        assert!(c.cooling_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = OilCooler::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_leak() {
+    fn test_field_toggle() {
         let mut c = OilCooler::new();
-        c.leak_free = false;
-        assert!(c.needs_service());
+        c.flow_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

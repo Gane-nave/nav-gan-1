@@ -1,95 +1,51 @@
-/// Differential lock: center/rear/front diff control, torque split
-/// Phase 162
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum DiffPosition {
-    Center,
-    Front,
-    Rear,
-}
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum LockState {
-    Open,
-    Partial(u8),
-    Locked,
-}
-
-impl LockState {
-    pub fn lock_pct(&self) -> f64 {
-        match self {
-            LockState::Open => 0.0,
-            LockState::Partial(p) => *p as f64,
-            LockState::Locked => 100.0,
-        }
-    }
-}
+/// diff lock: engage, disengage, sense, distribute, report
+/// Phase 1218
 
 #[derive(Debug, Clone)]
-pub struct Differential {
-    pub position: DiffPosition,
-    pub state: LockState,
-    pub torque_split_pct: f64,
+pub struct DiffLock {
+    pub engage_ok: bool,
+    pub disengage_ok: bool,
+    pub sense_ok: bool,
+    pub distribute_ok: bool,
+    pub report_ok: bool,
 }
 
-impl Differential {
-    pub fn new(position: DiffPosition) -> Self {
-        Self {
-            position,
-            state: LockState::Open,
-            torque_split_pct: 50.0,
-        }
-    }
-
-    pub fn is_locked(&self) -> bool {
-        matches!(self.state, LockState::Locked)
-    }
-
-    pub fn effective_traction(&self) -> f64 {
-        50.0 + self.state.lock_pct() * 0.5
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct DiffLockSystem {
-    pub diffs: Vec<Differential>,
-    pub auto_mode: bool,
-}
-
-impl Default for DiffLockSystem {
+impl Default for DiffLock {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl DiffLockSystem {
+impl DiffLock {
     pub fn new() -> Self {
         Self {
-            diffs: vec![
-                Differential::new(DiffPosition::Center),
-                Differential::new(DiffPosition::Front),
-                Differential::new(DiffPosition::Rear),
-            ],
-            auto_mode: true,
+            engage_ok: true,
+            disengage_ok: true,
+            sense_ok: true,
+            distribute_ok: true,
+            report_ok: true,
         }
     }
 
-    pub fn any_locked(&self) -> bool {
-        self.diffs.iter().any(|d| d.is_locked())
+    pub fn primary_ok(&self) -> bool {
+        self.engage_ok && self.disengage_ok && self.sense_ok
     }
 
-    pub fn total_traction_score(&self) -> f64 {
-        if self.diffs.is_empty() {
-            return 0.0;
-        }
-        let total: f64 = self.diffs.iter().map(|d| d.effective_traction()).sum();
-        total / self.diffs.len() as f64
+    pub fn secondary_ok(&self) -> bool {
+        self.distribute_ok && self.report_ok
     }
 
-    pub fn all_open(&self) -> bool {
-        self.diffs
-            .iter()
-            .all(|d| matches!(d.state, LockState::Open))
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
+    }
+
+    pub fn needs_attention(&self) -> bool {
+        !self.engage_ok || !self.disengage_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.engage_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -98,45 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_lock_pct() {
-        assert!((LockState::Locked.lock_pct() - 100.0).abs() < 0.1);
-        assert!((LockState::Open.lock_pct() - 0.0).abs() < 0.1);
+    fn test_primary() {
+        let c = DiffLock::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_partial() {
-        assert!((LockState::Partial(50).lock_pct() - 50.0).abs() < 0.1);
+    fn test_secondary() {
+        let c = DiffLock::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_is_locked() {
-        let mut d = Differential::new(DiffPosition::Center);
-        d.state = LockState::Locked;
-        assert!(d.is_locked());
+    fn test_all_ok() {
+        let c = DiffLock::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_effective_traction() {
-        let mut d = Differential::new(DiffPosition::Rear);
-        d.state = LockState::Locked;
-        assert!(d.effective_traction() > 90.0);
+    fn test_no_attention() {
+        let c = DiffLock::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_system_all_open() {
-        let s = DiffLockSystem::new();
-        assert!(s.all_open());
+    fn test_field_toggle() {
+        let mut c = DiffLock::new();
+        c.engage_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
-    fn test_system_none_locked() {
-        let s = DiffLockSystem::new();
-        assert!(!s.any_locked());
-    }
-
-    #[test]
-    fn test_traction_score() {
-        let s = DiffLockSystem::new();
-        assert!(s.total_traction_score() > 40.0);
+    fn test_health() {
+        let c = DiffLock::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

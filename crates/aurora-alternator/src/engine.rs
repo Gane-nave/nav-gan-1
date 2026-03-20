@@ -1,13 +1,13 @@
-/// Alternator: rotor, stator, regulator, diode
-/// Phase 724
+/// alternator: generate, regulate, rectify, cool, check
+/// Phase 1225
 
 #[derive(Debug, Clone)]
 pub struct Alternator {
-    pub rotor_ok: bool,
-    pub stator_ok: bool,
-    pub regulator_ok: bool,
-    pub diode_ok: bool,
-    pub output_ok: bool,
+    pub generate_ok: bool,
+    pub regulate_ok: bool,
+    pub rectify_ok: bool,
+    pub cool_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for Alternator {
@@ -19,32 +19,32 @@ impl Default for Alternator {
 impl Alternator {
     pub fn new() -> Self {
         Self {
-            rotor_ok: true,
-            stator_ok: true,
-            regulator_ok: true,
-            diode_ok: true,
-            output_ok: true,
+            generate_ok: true,
+            regulate_ok: true,
+            rectify_ok: true,
+            cool_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn generation_ok(&self) -> bool {
-        self.rotor_ok && self.stator_ok && self.output_ok
+    pub fn primary_ok(&self) -> bool {
+        self.generate_ok && self.regulate_ok && self.rectify_ok
     }
 
-    pub fn regulation_ok(&self) -> bool {
-        self.regulator_ok && self.diode_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.cool_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.generation_ok() && self.regulation_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.rotor_ok || !self.diode_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.generate_ok || !self.regulate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.rotor_ok { return 10.0; }
+        if !self.generate_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_generation() {
+    fn test_primary() {
         let c = Alternator::new();
-        assert!(c.generation_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_regulation() {
+    fn test_secondary() {
         let c = Alternator::new();
-        assert!(c.regulation_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = Alternator::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_rotor() {
+    fn test_field_toggle() {
         let mut c = Alternator::new();
-        c.rotor_ok = false;
-        assert!(c.needs_replacement());
+        c.generate_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

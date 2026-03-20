@@ -1,38 +1,38 @@
-/// clutch ctrl: engage, slip, release, wear, report
-/// Phase 1217
+/// axle ctrl: drive, float, lock, ratio, check
+/// Phase 1220
 
 #[derive(Debug, Clone)]
-pub struct ClutchCtrl {
-    pub engage_ok: bool,
-    pub slip_ok: bool,
-    pub release_ok: bool,
-    pub wear_ok: bool,
-    pub report_ok: bool,
+pub struct AxleCtrl {
+    pub drive_ok: bool,
+    pub float_ok: bool,
+    pub lock_ok: bool,
+    pub ratio_ok: bool,
+    pub check_ok: bool,
 }
 
-impl Default for ClutchCtrl {
+impl Default for AxleCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ClutchCtrl {
+impl AxleCtrl {
     pub fn new() -> Self {
         Self {
-            engage_ok: true,
-            slip_ok: true,
-            release_ok: true,
-            wear_ok: true,
-            report_ok: true,
+            drive_ok: true,
+            float_ok: true,
+            lock_ok: true,
+            ratio_ok: true,
+            check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.engage_ok && self.slip_ok && self.release_ok
+        self.drive_ok && self.float_ok && self.lock_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.wear_ok && self.report_ok
+        self.ratio_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ClutchCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.engage_ok || !self.slip_ok
+        !self.drive_ok || !self.float_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.engage_ok { return 5.0; }
+        if !self.drive_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = ClutchCtrl::new();
+        let c = AxleCtrl::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = ClutchCtrl::new();
+        let c = AxleCtrl::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ClutchCtrl::new();
+        let c = AxleCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = ClutchCtrl::new();
+        let c = AxleCtrl::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = ClutchCtrl::new();
-        c.engage_ok = false;
+        let mut c = AxleCtrl::new();
+        c.drive_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ClutchCtrl::new();
+        let c = AxleCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

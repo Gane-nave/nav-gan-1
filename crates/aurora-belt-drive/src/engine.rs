@@ -1,38 +1,38 @@
-/// clutch ctrl: engage, slip, release, wear, report
-/// Phase 1217
+/// belt drive: tension, route, align, wear, check
+/// Phase 1226
 
 #[derive(Debug, Clone)]
-pub struct ClutchCtrl {
-    pub engage_ok: bool,
-    pub slip_ok: bool,
-    pub release_ok: bool,
+pub struct BeltDrive {
+    pub tension_ok: bool,
+    pub route_ok: bool,
+    pub align_ok: bool,
     pub wear_ok: bool,
-    pub report_ok: bool,
+    pub check_ok: bool,
 }
 
-impl Default for ClutchCtrl {
+impl Default for BeltDrive {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ClutchCtrl {
+impl BeltDrive {
     pub fn new() -> Self {
         Self {
-            engage_ok: true,
-            slip_ok: true,
-            release_ok: true,
+            tension_ok: true,
+            route_ok: true,
+            align_ok: true,
             wear_ok: true,
-            report_ok: true,
+            check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.engage_ok && self.slip_ok && self.release_ok
+        self.tension_ok && self.route_ok && self.align_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.wear_ok && self.report_ok
+        self.wear_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl ClutchCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.engage_ok || !self.slip_ok
+        !self.tension_ok || !self.route_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.engage_ok { return 5.0; }
+        if !self.tension_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = ClutchCtrl::new();
+        let c = BeltDrive::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = ClutchCtrl::new();
+        let c = BeltDrive::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ClutchCtrl::new();
+        let c = BeltDrive::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = ClutchCtrl::new();
+        let c = BeltDrive::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = ClutchCtrl::new();
-        c.engage_ok = false;
+        let mut c = BeltDrive::new();
+        c.tension_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ClutchCtrl::new();
+        let c = BeltDrive::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

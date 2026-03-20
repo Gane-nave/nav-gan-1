@@ -1,13 +1,13 @@
-/// Starter motor: solenoid, armature, drive gear, flywheel ring
-/// Phase 725
+/// starter motor: crank, engage, disengage, protect, check
+/// Phase 1224
 
 #[derive(Debug, Clone)]
 pub struct StarterMotor {
-    pub solenoid_ok: bool,
-    pub armature_ok: bool,
-    pub drive_ok: bool,
-    pub ring_gear_ok: bool,
-    pub current_ok: bool,
+    pub crank_ok: bool,
+    pub engage_ok: bool,
+    pub disengage_ok: bool,
+    pub protect_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for StarterMotor {
@@ -19,32 +19,32 @@ impl Default for StarterMotor {
 impl StarterMotor {
     pub fn new() -> Self {
         Self {
-            solenoid_ok: true,
-            armature_ok: true,
-            drive_ok: true,
-            ring_gear_ok: true,
-            current_ok: true,
+            crank_ok: true,
+            engage_ok: true,
+            disengage_ok: true,
+            protect_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn engagement_ok(&self) -> bool {
-        self.solenoid_ok && self.drive_ok && self.ring_gear_ok
+    pub fn primary_ok(&self) -> bool {
+        self.crank_ok && self.engage_ok && self.disengage_ok
     }
 
-    pub fn motor_ok(&self) -> bool {
-        self.armature_ok && self.current_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.protect_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.engagement_ok() && self.motor_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.solenoid_ok || !self.armature_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.crank_ok || !self.engage_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.armature_ok { return 10.0; }
+        if !self.crank_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_engagement() {
+    fn test_primary() {
         let c = StarterMotor::new();
-        assert!(c.engagement_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_motor() {
+    fn test_secondary() {
         let c = StarterMotor::new();
-        assert!(c.motor_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = StarterMotor::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_solenoid() {
+    fn test_field_toggle() {
         let mut c = StarterMotor::new();
-        c.solenoid_ok = false;
-        assert!(c.needs_replacement());
+        c.crank_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
