@@ -98,6 +98,9 @@ members = [
     "crates/aurora-backpressure",
     "crates/aurora-snapshot",
     "crates/aurora-quota",
+    "crates/aurora-migration",
+    "crates/aurora-retry",
+    "crates/aurora-pubsub",
 ]
 
 [workspace.package]
