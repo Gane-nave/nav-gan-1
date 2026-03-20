@@ -1,81 +1,82 @@
 # Testing AURORA NAV
 
 ## Overview
-AURORA NAV is a Rust workspace with 83+ crates. Testing is done via `cargo test`, `cargo clippy`, and adversarial integration tests.
+AURORA NAV is a Rust workspace with 207+ crates. All crates are pure Rust libraries with no external runtime dependencies.
 
-## Build Pipeline
+## Running Tests
+
+### Full workspace test suite
 ```bash
-cargo build --all-targets                    # compile all crates
-cargo clippy --all-targets -- -D warnings    # lint with zero warnings
-cargo fmt --check                            # formatting check
-cargo test                                   # run all tests
+cargo test --workspace
 ```
-All four commands must pass with zero errors and zero warnings.
+Expected: 4,600+ tests, 0 failures.
 
-## Test Count Verification
-Use this to verify total test counts:
+### Individual crate tests
 ```bash
-cargo test 2>&1 | rg "^test result:" | awk '{s+=$4; f+=$6} END {print "Total passed:", s, "Failed:", f}'
-```
-As of Phase 43-45: **2,234 tests, 0 failures**
-
-## Per-Crate Testing
-```bash
-cargo test -p aurora-marketplace               # run tests for one crate
-cargo test -p aurora-vehicle --test adversarial_phase11  # run specific test file
-cargo test -p aurora-developer -- rotate_key   # run tests matching name
+cargo test -p aurora-v2x
+cargo test -p aurora-indoor
+cargo test -p aurora-ar-nav
+cargo test -p aurora-web
 ```
 
-## API Server Testing
-The API server (aurora-api) uses tower::oneshot for endpoint tests. No need to start a live server.
-Endpoints: `/health` (200), `/position` (503 when no fix), `/integrity` (200), `/status` (200)
-
-## Adversarial Test Patterns
-Adversarial tests are in `crates/<crate>/tests/adversarial_phase*.rs`. They test:
-1. Full lifecycle flows
-2. Bug regression guards
-3. Formula verification
-4. State machine correctness
-
-For standalone adversarial tests, compile with:
+### Lint checks (matching CI)
 ```bash
-rustc --edition 2021 test_file.rs -L target/debug/deps \
-  --extern crate_name=$(ls target/debug/libcrate_name*.rlib | head -1) \
-  -o test_binary && ./test_binary
+RUSTFLAGS="-D warnings" cargo build --all-targets
+cargo clippy --all-targets -- -D warnings
+cargo fmt --all -- --check
+RUSTDOCFLAGS="-D warnings" cargo doc --no-deps --workspace
 ```
 
-## API Conventions to Watch
-- `RateLimiter::new(capacity: u64, refill_per_second: u64)` — both args are `u64`, not `f64`
-- `RateLimiter::try_acquire(&mut self, key_id: &EntityId)` — requires a key ID
-- `ApiKeyManager::rotate_key(&mut self, key_id: &EntityId)` — takes only key_id
-- `AuroraClient::disconnect(&mut self)` — returns `()`, not `Result`
-- `LruCache::new(max_entries: usize)` — takes only max_entries, no max_bytes
-- `LruCache::insert(key: String, value: V, byte_size: usize)` — key must be String, not &str
-- `CircuitBreaker::new(name: &str, config: CircuitConfig)` — requires both name and config
-- `CircuitBreaker::record_success(&mut self)` — takes NO parameters (no timestamp)
-- `HealthChecker::new(config: HealthCheckConfig)` — requires config parameter
-- `HealthChecker::register_target(&mut self, target_id: &str)` — takes only target_id
-- `BatchJob::record_progress(processed: u64, failed: u64)` — second param is failed count, NOT timestamp
+## Writing Adversarial Tests
 
-## WeightedRoundRobin Algorithm Notes
-The algorithm uses a counter-based approach where distribution is inherently skewed:
-- High-weight instances get picked much more frequently than low-weight ones
-- With weights A=3, B=1: A may get ~99.98% of picks, B ~0.02%
-- Don't assert specific distribution percentages — just assert both instances appear and higher weight > lower weight
-- The safety guard fix uses a local `iterations` counter per pick() call instead of persistent index
+For standalone adversarial test binaries that test across crate boundaries:
 
-## Common Compilation Issues
-- Enum variant names: Check actual source before writing tests
-- API parameter order: Always check function signatures in source
-- Import paths: Crates export from submodules (e.g., `aurora_marketplace::listing::MarketplaceStore`)
-- Structs with `Box<dyn Trait>` cannot auto-derive `Debug`
-- Rust 1.94 adds new clippy lints (e.g., `unnecessary_map_or`) — may need fixes for CI
+```bash
+# First build the workspace
+cargo build --workspace
 
-## Bug Fix Verification
-When verifying bug fixes, always:
-1. Read the fixed code lines to confirm the change is present
-2. Run the adversarial test that guards against regression
-3. Verify the test would fail with the old (broken) code
+# Compile standalone test file
+rustc --edition 2021 /tmp/test.rs \
+  -L target/debug/deps \
+  --extern aurora_v2x=$(ls target/debug/libaurora_v2x*.rlib | head -1) \
+  --extern aurora_indoor=$(ls target/debug/libaurora_indoor*.rlib | head -1) \
+  --extern aurora_ar_nav=$(ls target/debug/libaurora_ar_nav*.rlib | head -1) \
+  -o /tmp/test_bin
+
+# Run
+/tmp/test_bin
+```
+
+## Key Edge Cases to Test
+
+### V2X (aurora-v2x)
+- Haversine distance at same point (should be 0)
+- TTC with zero speed (closing_speed clamps to 0.01)
+- GLOSA with short time_to_change (<0.5s green, <1.0s red → None)
+- Yellow/FlashingRed/Unknown signals → GLOSA returns None
+- Prune on empty vehicle list (no panic)
+
+### Indoor (aurora-indoor)
+- Co-located beacons (weighted average still works)
+- RSSI equal to tx_power (distance = 1.0m exactly)
+- Magnetic fingerprint exact match (confidence = 1.0)
+- Floor transition boundaries: <5 Pa = None, 5-15 Pa = Escalator, >15 Pa = Stairs, >40 Pa = Elevator
+- Negative pressure deltas (abs() is used)
+- Unregistered beacon IDs are silently filtered
+
+### AR Nav (aurora-ar-nav)
+- Projection at z<=0.1 returns None (behind camera)
+- Projection at z=0.11 works (just past boundary)
+- Fade at max_distance clamps opacity to 0.1
+- Sort by depth with equal z values (no panic)
+- Empty active engine renders empty vec
+
+## CI Notes
+- CI workflow is at `.github/workflows/ci.yml`
+- CI uses `dtolnay/rust-toolchain@stable` which might differ from local Rust version
+- CI logs have historically returned 404 (infrastructure/proxy issue)
+- All CI checks are not marked as required — PR is mergeable even if they fail
+- Always verify locally with the same CI flags before pushing
 
 ## Devin Secrets Needed
-No secrets required for testing — all tests run locally via cargo.
+None — this is a pure Rust workspace with no external service dependencies.
