@@ -1,5 +1,5 @@
-/// Timing chain: stretch monitoring, tensioner, guide rail wear
-/// Phase 313
+/// Timing chain: stretch, tensioner, guide, sprocket
+/// Phase 576
 
 #[derive(Debug, Clone)]
 pub struct TimingChain {
@@ -7,7 +7,7 @@ pub struct TimingChain {
     pub max_stretch_mm: f64,
     pub tensioner_ok: bool,
     pub guide_ok: bool,
-    pub mileage_km: f64,
+    pub sprocket_ok: bool,
 }
 
 impl Default for TimingChain {
@@ -23,33 +23,28 @@ impl TimingChain {
             max_stretch_mm: 3.0,
             tensioner_ok: true,
             guide_ok: true,
-            mileage_km: 50000.0,
+            sprocket_ok: true,
         }
     }
 
     pub fn stretch_ok(&self) -> bool {
-        self.stretch_mm < self.max_stretch_mm * 0.8
+        self.stretch_mm < self.max_stretch_mm
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.stretch_mm >= self.max_stretch_mm || !self.guide_ok
+    pub fn components_ok(&self) -> bool {
+        self.tensioner_ok && self.guide_ok && self.sprocket_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.tensioner_ok && self.guide_ok && self.stretch_ok()
+        self.stretch_ok() && self.components_ok()
     }
 
-    pub fn remaining_life_pct(&self) -> f64 {
-        ((self.max_stretch_mm - self.stretch_mm) / self.max_stretch_mm * 100.0).clamp(0.0, 100.0)
+    pub fn needs_replacement(&self) -> bool {
+        self.stretch_mm > self.max_stretch_mm || !self.guide_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.needs_replacement() {
-            return 0.0;
-        }
-        if !self.tensioner_ok {
-            return 30.0;
-        }
+        if self.stretch_mm > self.max_stretch_mm { return 5.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stretch_ok() {
-        let t = TimingChain::new();
-        assert!(t.stretch_ok());
+    fn test_stretch() {
+        let c = TimingChain::new();
+        assert!(c.stretch_ok());
     }
 
     #[test]
-    fn test_no_replace() {
-        let t = TimingChain::new();
-        assert!(!t.needs_replacement());
+    fn test_components() {
+        let c = TimingChain::new();
+        assert!(c.components_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let t = TimingChain::new();
-        assert!(t.all_ok());
+        let c = TimingChain::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_life() {
-        let t = TimingChain::new();
-        assert!(t.remaining_life_pct() > 80.0);
+    fn test_no_replace() {
+        let c = TimingChain::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_worn() {
-        let mut t = TimingChain::new();
-        t.stretch_mm = 3.5;
-        assert!(t.needs_replacement());
+    fn test_stretched() {
+        let mut c = TimingChain::new();
+        c.stretch_mm = 4.0;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let t = TimingChain::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TimingChain::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

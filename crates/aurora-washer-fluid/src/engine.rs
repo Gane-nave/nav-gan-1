@@ -1,13 +1,13 @@
-/// Washer fluid: level monitoring, pump control, nozzle heating
-/// Phase 241
+/// Washer fluid: level, nozzle, pump, heating
+/// Phase 570
 
 #[derive(Debug, Clone)]
 pub struct WasherFluid {
     pub level_pct: f64,
+    pub nozzle_ok: bool,
     pub pump_ok: bool,
-    pub nozzle_heater_on: bool,
-    pub fluid_temp_c: f64,
-    pub low_warning: bool,
+    pub heated: bool,
+    pub fluid_ok: bool,
 }
 
 impl Default for WasherFluid {
@@ -20,39 +20,31 @@ impl WasherFluid {
     pub fn new() -> Self {
         Self {
             level_pct: 80.0,
+            nozzle_ok: true,
             pump_ok: true,
-            nozzle_heater_on: false,
-            fluid_temp_c: 15.0,
-            low_warning: false,
+            heated: true,
+            fluid_ok: true,
         }
     }
 
     pub fn level_ok(&self) -> bool {
-        self.level_pct > 15.0
+        self.level_pct > 10.0
+    }
+
+    pub fn system_ok(&self) -> bool {
+        self.nozzle_ok && self.pump_ok
+    }
+
+    pub fn all_ok(&self) -> bool {
+        self.level_ok() && self.system_ok() && self.fluid_ok
     }
 
     pub fn needs_refill(&self) -> bool {
         self.level_pct < 10.0
     }
 
-    pub fn frozen_risk(&self) -> bool {
-        self.fluid_temp_c < -5.0
-    }
-
-    pub fn heater_needed(&self) -> bool {
-        self.fluid_temp_c < 2.0
-    }
-
     pub fn health_score(&self) -> f64 {
-        if !self.pump_ok {
-            return 20.0;
-        }
-        if self.needs_refill() {
-            return 30.0;
-        }
-        if !self.level_ok() {
-            return 60.0;
-        }
+        if !self.pump_ok { return 20.0; }
         100.0
     }
 }
@@ -62,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_level_ok() {
-        let w = WasherFluid::new();
-        assert!(w.level_ok());
+    fn test_level() {
+        let c = WasherFluid::new();
+        assert!(c.level_ok());
+    }
+
+    #[test]
+    fn test_system() {
+        let c = WasherFluid::new();
+        assert!(c.system_ok());
+    }
+
+    #[test]
+    fn test_all_ok() {
+        let c = WasherFluid::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_refill() {
-        let w = WasherFluid::new();
-        assert!(!w.needs_refill());
-    }
-
-    #[test]
-    fn test_no_frozen() {
-        let w = WasherFluid::new();
-        assert!(!w.frozen_risk());
-    }
-
-    #[test]
-    fn test_no_heater() {
-        let w = WasherFluid::new();
-        assert!(!w.heater_needed());
+        let c = WasherFluid::new();
+        assert!(!c.needs_refill());
     }
 
     #[test]
     fn test_low() {
-        let mut w = WasherFluid::new();
-        w.level_pct = 5.0;
-        assert!(w.needs_refill());
+        let mut c = WasherFluid::new();
+        c.level_pct = 5.0;
+        assert!(c.needs_refill());
     }
 
     #[test]
     fn test_health() {
-        let w = WasherFluid::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = WasherFluid::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

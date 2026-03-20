@@ -459,6 +459,10 @@ name = "aurora-belt-tension"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-belt-tensioner"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-belt-tensn"
 version = "0.1.0"
 
@@ -557,6 +561,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-cool"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-fluid"
 version = "0.1.0"
 
 [[package]]
@@ -847,6 +855,10 @@ name = "aurora-convoy-plan"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-coolant"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-coolant-mgmt"
 version = "0.1.0"
 
@@ -1067,6 +1079,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-diff-fluid"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-diff-lock"
@@ -1300,6 +1316,10 @@ name = "aurora-engine-cover"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-engine-oil"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-engine-sound"
 version = "0.1.0"
 
@@ -1383,6 +1403,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-exhaust-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-exhaust-gasket"
 version = "0.1.0"
 
 [[package]]
@@ -1495,6 +1519,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-economy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-filter"
 version = "0.1.0"
 
 [[package]]
@@ -1670,6 +1698,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hazmat-route"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-head-gasket"
 version = "0.1.0"
 
 [[package]]
@@ -1879,6 +1911,10 @@ dependencies = [
  "thiserror",
  "tracing",
 ]
+
+[[package]]
+name = "aurora-intake-gasket"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-intake-manif"
@@ -2417,7 +2453,15 @@ name = "aurora-oil-cooler"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-oil-filter"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-oil-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oil-pan"
 version = "0.1.0"
 
 [[package]]
@@ -2592,6 +2636,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-power-steer"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-power-steer-fluid"
 version = "0.1.0"
 
 [[package]]
@@ -3414,6 +3462,14 @@ name = "aurora-trans-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-trans-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-fluid"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trans-shift"
 version = "0.1.0"
 
@@ -3530,6 +3586,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-v2x-comm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valve-cover"
 version = "0.1.0"
 
 [[package]]
