@@ -449,6 +449,47 @@ body {
       <div class="data-row"><span class="label">Parking</span><span class="value" id="city-parking">0</span></div>
       <div class="data-row"><span class="label">EV Chargers</span><span class="value" id="city-ev">0</span></div>
     </div>
+
+    <div class="panel-section">
+      <h3><span class="dot"></span> PNT ENGINE</h3>
+      <div class="data-row"><span class="label">Constellations</span><span class="value blue" id="pnt-const">0</span></div>
+      <div class="data-row"><span class="label">EKF Sources</span><span class="value" id="pnt-ekf">0</span></div>
+      <div class="data-row"><span class="label">EKF Confidence</span><span class="value green" id="pnt-conf">--%</span></div>
+      <div class="data-row"><span class="label">Quality Score</span><span class="value green" id="pnt-quality">--</span></div>
+      <div class="data-row"><span class="label">Dual Band</span><span class="value" id="pnt-dual">--</span></div>
+      <div class="data-row"><span class="label">Anti-Jam</span><span class="value green" id="pnt-jam">--</span></div>
+      <div class="data-row"><span class="label">Telemetry</span><span class="value" id="pnt-telem">0</span></div>
+    </div>
+
+    <div class="panel-section">
+      <h3><span class="dot" style="background:var(--accent-purple)"></span> V2X COMMS</h3>
+      <div class="data-row"><span class="label">Channel</span><span class="value" id="v2x-channel">--</span></div>
+      <div class="data-row"><span class="label">Nearby</span><span class="value blue" id="v2x-nearby">0</span></div>
+      <div class="data-row"><span class="label">Received</span><span class="value" id="v2x-rx">0</span></div>
+      <div class="data-row"><span class="label">Sent</span><span class="value" id="v2x-tx">0</span></div>
+      <div class="data-row"><span class="label">Warnings</span><span class="value green" id="v2x-warn">0</span></div>
+      <div class="data-row"><span class="label">Signal</span><span class="value green" id="v2x-signal">--</span></div>
+    </div>
+
+    <div class="panel-section">
+      <h3><span class="dot" style="background:var(--accent-cyan)"></span> AR NAV</h3>
+      <div class="data-row"><span class="label">Active</span><span class="value green" id="ar-active">--</span></div>
+      <div class="data-row"><span class="label">Elements</span><span class="value" id="ar-elements">0</span></div>
+      <div class="data-row"><span class="label">Rendered</span><span class="value" id="ar-rendered">0</span></div>
+      <div class="data-row"><span class="label">Lane Proj.</span><span class="value green" id="ar-lane">--</span></div>
+      <div class="data-row"><span class="label">Range</span><span class="value" id="ar-range">-- m</span></div>
+    </div>
+
+    <div class="panel-section">
+      <h3><span class="dot" style="background:var(--accent-amber)"></span> DEEP LAYERS</h3>
+      <div class="data-row"><span class="label">Nav State</span><span class="value green" id="dl-state">--</span></div>
+      <div class="data-row"><span class="label">Quality</span><span class="value green" id="dl-quality">--</span></div>
+      <div class="data-row"><span class="label">Stability</span><span class="value green" id="dl-stable">--</span></div>
+      <div class="data-row"><span class="label">Geofence</span><span class="value" id="dl-geo">--</span></div>
+      <div class="data-row"><span class="label">Corrections</span><span class="value" id="dl-corr">0</span></div>
+      <div class="data-row"><span class="label">Calibration</span><span class="value green" id="dl-cal">--</span></div>
+      <div class="data-row"><span class="label">Context</span><span class="value" id="dl-context">--</span></div>
+    </div>
   </nav>
 
   <!-- MAP -->
@@ -731,6 +772,57 @@ function updateDashboard(data) {
   document.getElementById('city-green').className = 'value ' + (c.green_wave_active ? 'green' : '');
   document.getElementById('city-parking').textContent = c.smart_parking_spots;
   document.getElementById('city-ev').textContent = c.ev_chargers_nearby;
+
+  // PNT Engine
+  if (data.pnt) {
+    const pnt = data.pnt;
+    document.getElementById('pnt-const').textContent = pnt.multi_gnss_constellations;
+    document.getElementById('pnt-ekf').textContent = pnt.ekf_sources_fused;
+    document.getElementById('pnt-conf').textContent = (pnt.ekf_confidence * 100).toFixed(0) + '%';
+    document.getElementById('pnt-quality').textContent = (pnt.gnss_quality_score * 100).toFixed(0) + '%';
+    document.getElementById('pnt-dual').textContent = pnt.device_dual_band ? 'Yes' : 'No';
+    document.getElementById('pnt-dual').className = 'value ' + (pnt.device_dual_band ? 'green' : '');
+    document.getElementById('pnt-jam').textContent = pnt.anti_jam_status;
+    document.getElementById('pnt-telem').textContent = pnt.telemetry_entries;
+  }
+
+  // V2X Communications
+  if (data.v2x) {
+    const v = data.v2x;
+    document.getElementById('v2x-channel').textContent = v.channel;
+    document.getElementById('v2x-nearby').textContent = v.nearby_vehicles;
+    document.getElementById('v2x-rx').textContent = v.messages_received;
+    document.getElementById('v2x-tx').textContent = v.messages_sent;
+    document.getElementById('v2x-warn').textContent = v.collision_warnings;
+    document.getElementById('v2x-warn').className = 'value ' + (v.collision_warnings === 0 ? 'green' : 'red');
+    document.getElementById('v2x-signal').textContent = v.signal_state;
+    document.getElementById('v2x-signal').className = 'value ' + (v.signal_state === 'Green' ? 'green' : v.signal_state === 'Red' ? 'red' : 'amber');
+  }
+
+  // AR Navigation
+  if (data.ar_nav) {
+    const ar = data.ar_nav;
+    document.getElementById('ar-active').textContent = ar.active ? 'Yes' : 'No';
+    document.getElementById('ar-active').className = 'value ' + (ar.active ? 'green' : '');
+    document.getElementById('ar-elements').textContent = ar.elements_count;
+    document.getElementById('ar-rendered').textContent = ar.elements_rendered;
+    document.getElementById('ar-lane').textContent = ar.lane_projection_active ? 'Active' : 'Off';
+    document.getElementById('ar-lane').className = 'value ' + (ar.lane_projection_active ? 'green' : '');
+    document.getElementById('ar-range').textContent = ar.max_render_distance_m.toFixed(0) + ' m';
+  }
+
+  // Deep Layers
+  if (data.deep_layers) {
+    const dl = data.deep_layers;
+    document.getElementById('dl-state').textContent = dl.nav_state;
+    document.getElementById('dl-quality').textContent = (dl.global_quality_score * 100).toFixed(0) + '%';
+    document.getElementById('dl-stable').textContent = dl.numerical_stability_ok ? 'OK' : 'Unstable';
+    document.getElementById('dl-stable').className = 'value ' + (dl.numerical_stability_ok ? 'green' : 'red');
+    document.getElementById('dl-geo').textContent = dl.geofence_active ? dl.geofence_zones + ' zones' : 'Off';
+    document.getElementById('dl-corr').textContent = dl.incremental_corrections;
+    document.getElementById('dl-cal').textContent = (dl.calibration_score * 100).toFixed(0) + '%';
+    document.getElementById('dl-context').textContent = dl.context_mode + ' / ' + dl.context_environment;
+  }
 
   // Metrics
   const m = data.metrics;
