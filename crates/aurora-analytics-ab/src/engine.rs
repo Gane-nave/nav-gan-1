@@ -1,9 +1,9 @@
-/// analytics ab: define, assign, measure, conclude, log
-/// Phase 1558
+/// analytics ab: create, assign, measure, conclude, log
+/// Phase 2190
 
 #[derive(Debug, Clone)]
 pub struct AnalyticsAb {
-    pub define_ok: bool,
+    pub create_ok: bool,
     pub assign_ok: bool,
     pub measure_ok: bool,
     pub conclude_ok: bool,
@@ -19,7 +19,7 @@ impl Default for AnalyticsAb {
 impl AnalyticsAb {
     pub fn new() -> Self {
         Self {
-            define_ok: true,
+            create_ok: true,
             assign_ok: true,
             measure_ok: true,
             conclude_ok: true,
@@ -28,7 +28,7 @@ impl AnalyticsAb {
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.assign_ok && self.measure_ok
+        self.create_ok && self.assign_ok && self.measure_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl AnalyticsAb {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.assign_ok
+        !self.create_ok || !self.assign_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.define_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = AnalyticsAb::new();
-        c.define_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

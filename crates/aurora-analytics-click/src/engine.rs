@@ -1,11 +1,11 @@
-/// analytics click: track, classify, aggregate, report, log
-/// Phase 1561
+/// analytics click: track, aggregate, funnel, report, log
+/// Phase 2184
 
 #[derive(Debug, Clone)]
 pub struct AnalyticsClick {
     pub track_ok: bool,
-    pub classify_ok: bool,
     pub aggregate_ok: bool,
+    pub funnel_ok: bool,
     pub report_ok: bool,
     pub log_ok: bool,
 }
@@ -20,15 +20,15 @@ impl AnalyticsClick {
     pub fn new() -> Self {
         Self {
             track_ok: true,
-            classify_ok: true,
             aggregate_ok: true,
+            funnel_ok: true,
             report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.track_ok && self.classify_ok && self.aggregate_ok
+        self.track_ok && self.aggregate_ok && self.funnel_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl AnalyticsClick {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.track_ok || !self.classify_ok
+        !self.track_ok || !self.aggregate_ok
     }
 
     pub fn health_score(&self) -> f64 {

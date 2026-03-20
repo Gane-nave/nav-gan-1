@@ -285,11 +285,27 @@ name = "aurora-analytics-ab"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-analytics-alert2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-attribution"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-batch2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics-click"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-analytics-cohort"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-dashboard3"
 version = "0.1.0"
 
 [[package]]
@@ -301,6 +317,14 @@ name = "aurora-analytics-event"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-analytics-event3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-export2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics-funnel"
 version = "0.1.0"
 
@@ -309,7 +333,31 @@ name = "aurora-analytics-heatmap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-analytics-import2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-ltv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-page"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics-perf2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-predict"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-realtime"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-retention"
 version = "0.1.0"
 
 [[package]]
@@ -317,7 +365,15 @@ name = "aurora-analytics-scroll"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-analytics-segment"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics-session"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-user2"
 version = "0.1.0"
 
 [[package]]
@@ -2274,7 +2330,31 @@ name = "aurora-dash-pad"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-archive2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-data-catalog"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-catalog2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-clean2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-enrich2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-extract2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-govern2"
 version = "0.1.0"
 
 [[package]]
@@ -2289,6 +2369,26 @@ name = "aurora-data-lake"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-lake2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-lineage2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-load2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-mart"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-mask2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-data-mesh"
 version = "0.1.0"
 
@@ -2297,7 +2397,15 @@ name = "aurora-data-network"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-partition2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-data-quality"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-quality2"
 version = "0.1.0"
 
 [[package]]
@@ -2305,7 +2413,27 @@ name = "aurora-data-record"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-data-replicate2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-shard2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-transform2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-validate2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-data-vault"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-data-warehouse2"
 version = "0.1.0"
 
 [[package]]
@@ -4565,6 +4693,10 @@ name = "aurora-integ-azure-blob"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-integ-azure2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integ-ftp"
 version = "0.1.0"
 
@@ -4577,7 +4709,19 @@ name = "aurora-integ-graphql"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-integ-graphql3"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integ-grpc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-grpc3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-imap"
 version = "0.1.0"
 
 [[package]]
@@ -4585,7 +4729,15 @@ name = "aurora-integ-kafka"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-integ-kafka2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integ-minio"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-mongo2"
 version = "0.1.0"
 
 [[package]]
@@ -4593,11 +4745,35 @@ name = "aurora-integ-mqtt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-integ-mysql2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integ-nats"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-integ-nats2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-postgres2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-rabbit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-redis3"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integ-rest"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-rest3"
 version = "0.1.0"
 
 [[package]]
@@ -4606,6 +4782,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-integ-sftp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-smtp"
 version = "0.1.0"
 
 [[package]]
@@ -9111,6 +9291,78 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-wf-approval"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-audit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-condition"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-debug"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-engine2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-loop"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-metric"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-notify2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-parallel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-queue2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-schedule2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-signal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-state2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-step"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-template"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-timer"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-trigger2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wf-version2"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-wheel-align"

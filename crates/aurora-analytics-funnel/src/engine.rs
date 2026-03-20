@@ -1,11 +1,11 @@
-/// analytics funnel: define, track, convert, report, log
-/// Phase 1556
+/// analytics funnel: define, track, analyze, report, log
+/// Phase 2188
 
 #[derive(Debug, Clone)]
 pub struct AnalyticsFunnel {
     pub define_ok: bool,
     pub track_ok: bool,
-    pub convert_ok: bool,
+    pub analyze_ok: bool,
     pub report_ok: bool,
     pub log_ok: bool,
 }
@@ -21,14 +21,14 @@ impl AnalyticsFunnel {
         Self {
             define_ok: true,
             track_ok: true,
-            convert_ok: true,
+            analyze_ok: true,
             report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.track_ok && self.convert_ok
+        self.define_ok && self.track_ok && self.analyze_ok
     }
 
     pub fn secondary_ok(&self) -> bool {

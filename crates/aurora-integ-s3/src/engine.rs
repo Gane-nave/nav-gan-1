@@ -1,12 +1,12 @@
-/// integ s3: connect, upload, download, list, log
-/// Phase 1658
+/// integ s3: upload, download, list, delete, log
+/// Phase 2246
 
 #[derive(Debug, Clone)]
 pub struct IntegS3 {
-    pub connect_ok: bool,
     pub upload_ok: bool,
     pub download_ok: bool,
     pub list_ok: bool,
+    pub delete_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for IntegS3 {
 impl IntegS3 {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
             upload_ok: true,
             download_ok: true,
             list_ok: true,
+            delete_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.upload_ok && self.download_ok
+        self.upload_ok && self.download_ok && self.list_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.list_ok && self.log_ok
+        self.delete_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl IntegS3 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.upload_ok
+        !self.upload_ok || !self.download_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok {
+        if !self.upload_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = IntegS3::new();
-        c.connect_ok = false;
+        c.upload_ok = false;
         assert!(c.needs_attention());
     }
 

@@ -1,12 +1,12 @@
-/// integ soap: create, send, parse, validate, log
-/// Phase 1647
+/// integ soap: connect, call, parse, retry, log
+/// Phase 2241
 
 #[derive(Debug, Clone)]
 pub struct IntegSoap {
-    pub create_ok: bool,
-    pub send_ok: bool,
+    pub connect_ok: bool,
+    pub call_ok: bool,
     pub parse_ok: bool,
-    pub validate_ok: bool,
+    pub retry_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for IntegSoap {
 impl IntegSoap {
     pub fn new() -> Self {
         Self {
-            create_ok: true,
-            send_ok: true,
+            connect_ok: true,
+            call_ok: true,
             parse_ok: true,
-            validate_ok: true,
+            retry_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.create_ok && self.send_ok && self.parse_ok
+        self.connect_ok && self.call_ok && self.parse_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.validate_ok && self.log_ok
+        self.retry_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl IntegSoap {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.create_ok || !self.send_ok
+        !self.connect_ok || !self.call_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.create_ok {
+        if !self.connect_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = IntegSoap::new();
-        c.create_ok = false;
+        c.connect_ok = false;
         assert!(c.needs_attention());
     }
 

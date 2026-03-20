@@ -1,12 +1,12 @@
-/// analytics cohort: define, segment, analyze, compare, log
-/// Phase 1557
+/// analytics cohort: define, analyze, compare, report, log
+/// Phase 2189
 
 #[derive(Debug, Clone)]
 pub struct AnalyticsCohort {
     pub define_ok: bool,
-    pub segment_ok: bool,
     pub analyze_ok: bool,
     pub compare_ok: bool,
+    pub report_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl AnalyticsCohort {
     pub fn new() -> Self {
         Self {
             define_ok: true,
-            segment_ok: true,
             analyze_ok: true,
             compare_ok: true,
+            report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.segment_ok && self.analyze_ok
+        self.define_ok && self.analyze_ok && self.compare_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.compare_ok && self.log_ok
+        self.report_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl AnalyticsCohort {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.segment_ok
+        !self.define_ok || !self.analyze_ok
     }
 
     pub fn health_score(&self) -> f64 {
