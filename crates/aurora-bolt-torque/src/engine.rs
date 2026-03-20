@@ -1,13 +1,13 @@
-/// Bolt torque: fastener preload, angle tightening, yield control
-/// Phase 402
+/// Bolt torque monitoring: spec, actual, stretch, angle
+/// Phase 798
 
 #[derive(Debug, Clone)]
 pub struct BoltTorque {
-    pub torque_nm: f64,
-    pub target_nm: f64,
-    pub tolerance_pct: f64,
-    pub angle_deg: f64,
-    pub yield_reached: bool,
+    pub spec_ok: bool,
+    pub actual_ok: bool,
+    pub stretch_ok: bool,
+    pub angle_ok: bool,
+    pub grade_ok: bool,
 }
 
 impl Default for BoltTorque {
@@ -19,42 +19,32 @@ impl Default for BoltTorque {
 impl BoltTorque {
     pub fn new() -> Self {
         Self {
-            torque_nm: 95.0,
-            target_nm: 100.0,
-            tolerance_pct: 10.0,
-            angle_deg: 90.0,
-            yield_reached: false,
+            spec_ok: true,
+            actual_ok: true,
+            stretch_ok: true,
+            angle_ok: true,
+            grade_ok: true,
         }
     }
 
-    pub fn in_spec(&self) -> bool {
-        let min = self.target_nm * (1.0 - self.tolerance_pct / 100.0);
-        let max = self.target_nm * (1.0 + self.tolerance_pct / 100.0);
-        (min..=max).contains(&self.torque_nm)
+    pub fn fastening_ok(&self) -> bool {
+        self.spec_ok && self.actual_ok && self.angle_ok
+    }
+
+    pub fn material_ok(&self) -> bool {
+        self.stretch_ok && self.grade_ok
+    }
+
+    pub fn all_ok(&self) -> bool {
+        self.fastening_ok() && self.material_ok()
     }
 
     pub fn needs_retorque(&self) -> bool {
-        !self.in_spec()
-    }
-
-    pub fn over_torqued(&self) -> bool {
-        self.yield_reached
-    }
-
-    pub fn torque_pct(&self) -> f64 {
-        if self.target_nm <= 0.0 {
-            return 0.0;
-        }
-        (self.torque_nm / self.target_nm * 100.0).clamp(0.0, 200.0)
+        !self.actual_ok || !self.angle_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.yield_reached {
-            return 0.0;
-        }
-        if !self.in_spec() {
-            return 30.0;
-        }
+        if !self.actual_ok { return 5.0; }
         100.0
     }
 }
@@ -64,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_in_spec() {
-        let b = BoltTorque::new();
-        assert!(b.in_spec());
+    fn test_fastening() {
+        let c = BoltTorque::new();
+        assert!(c.fastening_ok());
+    }
+
+    #[test]
+    fn test_material() {
+        let c = BoltTorque::new();
+        assert!(c.material_ok());
+    }
+
+    #[test]
+    fn test_all_ok() {
+        let c = BoltTorque::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_retorque() {
-        let b = BoltTorque::new();
-        assert!(!b.needs_retorque());
+        let c = BoltTorque::new();
+        assert!(!c.needs_retorque());
     }
 
     #[test]
-    fn test_not_over() {
-        let b = BoltTorque::new();
-        assert!(!b.over_torqued());
-    }
-
-    #[test]
-    fn test_pct() {
-        let b = BoltTorque::new();
-        assert!(b.torque_pct() > 90.0);
-    }
-
-    #[test]
-    fn test_yield() {
-        let mut b = BoltTorque::new();
-        b.yield_reached = true;
-        assert!(b.over_torqued());
+    fn test_actual() {
+        let mut c = BoltTorque::new();
+        c.actual_ok = false;
+        assert!(c.needs_retorque());
     }
 
     #[test]
     fn test_health() {
-        let b = BoltTorque::new();
-        assert!((b.health_score() - 100.0).abs() < 0.1);
+        let c = BoltTorque::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

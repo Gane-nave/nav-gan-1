@@ -185,6 +185,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-alignment-spec"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alternator"
 version = "0.1.0"
 
@@ -463,6 +467,10 @@ name = "aurora-axle-monitor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-axle-seal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-axle-sensor"
 version = "0.1.0"
 
@@ -472,6 +480,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-backpressure"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-balance-weight"
 version = "0.1.0"
 
 [[package]]
@@ -488,6 +500,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-battery-mgmt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-battery-tray"
 version = "0.1.0"
 
 [[package]]
@@ -585,6 +601,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-body-height"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-body-mount"
 version = "0.1.0"
 
 [[package]]
@@ -1500,6 +1520,10 @@ name = "aurora-engine-ecu"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-engine-mount"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-engine-oil"
 version = "0.1.0"
 
@@ -1595,6 +1619,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-exhaust-gasket"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-exhaust-hanger"
 version = "0.1.0"
 
 [[package]]
@@ -2058,6 +2086,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hub-bearing"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hub-cap"
 version = "0.1.0"
 
 [[package]]
@@ -3156,6 +3188,10 @@ name = "aurora-radiator-fan"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-radiator-mount"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rain-sensor"
 version = "0.1.0"
 
@@ -3565,6 +3601,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-spare-tire"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-spark-plug"
 version = "0.1.0"
 
@@ -3874,6 +3914,10 @@ name = "aurora-tire-pressure"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tire-repair"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tire-tread"
 version = "0.1.0"
 
@@ -3955,6 +3999,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trans-fluid"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-mount"
 version = "0.1.0"
 
 [[package]]
@@ -4102,6 +4150,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-valve-cover"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valve-stem"
 version = "0.1.0"
 
 [[package]]
@@ -4269,11 +4321,23 @@ name = "aurora-wheel-align"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-wheel-bearing-kit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-wheel-cyl"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-wheel-hub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-lock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wheel-spacer"
 version = "0.1.0"
 
 [[package]]

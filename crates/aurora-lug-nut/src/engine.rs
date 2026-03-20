@@ -1,13 +1,13 @@
-/// Lug nut: torque, thread condition, stud integrity
-/// Phase 548
+/// Lug nut: torque, thread, seat, cover
+/// Phase 806
 
 #[derive(Debug, Clone)]
 pub struct LugNut {
-    pub torque_nm: f64,
-    pub target_torque_nm: f64,
+    pub torque_ok: bool,
     pub thread_ok: bool,
-    pub stud_ok: bool,
-    pub seated: bool,
+    pub seat_ok: bool,
+    pub cover_ok: bool,
+    pub grade_ok: bool,
 }
 
 impl Default for LugNut {
@@ -19,32 +19,32 @@ impl Default for LugNut {
 impl LugNut {
     pub fn new() -> Self {
         Self {
-            torque_nm: 110.0,
-            target_torque_nm: 110.0,
+            torque_ok: true,
             thread_ok: true,
-            stud_ok: true,
-            seated: true,
+            seat_ok: true,
+            cover_ok: true,
+            grade_ok: true,
         }
     }
 
-    pub fn torque_ok(&self) -> bool {
-        (self.torque_nm - self.target_torque_nm).abs() < 15.0
+    pub fn fastening_ok(&self) -> bool {
+        self.torque_ok && self.thread_ok && self.seat_ok
     }
 
-    pub fn thread_good(&self) -> bool {
-        self.thread_ok && self.stud_ok
+    pub fn condition_ok(&self) -> bool {
+        self.cover_ok && self.grade_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.torque_ok() && self.thread_good() && self.seated
+        self.fastening_ok() && self.condition_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.thread_ok || !self.stud_ok
+    pub fn needs_retorque(&self) -> bool {
+        !self.torque_ok || !self.thread_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.stud_ok { return 10.0; }
+        if !self.torque_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_torque() {
+    fn test_fastening() {
         let c = LugNut::new();
-        assert!(c.torque_ok());
+        assert!(c.fastening_ok());
     }
 
     #[test]
-    fn test_thread() {
+    fn test_condition() {
         let c = LugNut::new();
-        assert!(c.thread_good());
+        assert!(c.condition_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_retorque() {
         let c = LugNut::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_retorque());
     }
 
     #[test]
-    fn test_stud() {
+    fn test_torque() {
         let mut c = LugNut::new();
-        c.stud_ok = false;
-        assert!(c.needs_service());
+        c.torque_ok = false;
+        assert!(c.needs_retorque());
     }
 
     #[test]
