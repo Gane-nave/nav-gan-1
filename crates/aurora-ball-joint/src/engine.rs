@@ -1,13 +1,13 @@
-/// Ball joint: wear, boot, play, grease
-/// Phase 639
+/// ball joint: pivot, articulate, bear, seal, inspect
+/// Phase 1201
 
 #[derive(Debug, Clone)]
 pub struct BallJoint {
-    pub wear_ok: bool,
-    pub boot_ok: bool,
-    pub play_mm: f64,
-    pub max_play_mm: f64,
-    pub greased: bool,
+    pub pivot_ok: bool,
+    pub articulate_ok: bool,
+    pub bear_ok: bool,
+    pub seal_ok: bool,
+    pub inspect_ok: bool,
 }
 
 impl Default for BallJoint {
@@ -19,32 +19,32 @@ impl Default for BallJoint {
 impl BallJoint {
     pub fn new() -> Self {
         Self {
-            wear_ok: true,
-            boot_ok: true,
-            play_mm: 0.5,
-            max_play_mm: 2.0,
-            greased: true,
+            pivot_ok: true,
+            articulate_ok: true,
+            bear_ok: true,
+            seal_ok: true,
+            inspect_ok: true,
         }
     }
 
-    pub fn play_ok(&self) -> bool {
-        self.play_mm < self.max_play_mm
+    pub fn primary_ok(&self) -> bool {
+        self.pivot_ok && self.articulate_ok && self.bear_ok
     }
 
-    pub fn condition_ok(&self) -> bool {
-        self.wear_ok && self.boot_ok && self.greased
+    pub fn secondary_ok(&self) -> bool {
+        self.seal_ok && self.inspect_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.play_ok() && self.condition_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.wear_ok || !self.boot_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.pivot_ok || !self.articulate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.wear_ok { return 5.0; }
+        if !self.pivot_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_play() {
+    fn test_primary() {
         let c = BallJoint::new();
-        assert!(c.play_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_condition() {
+    fn test_secondary() {
         let c = BallJoint::new();
-        assert!(c.condition_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = BallJoint::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_wear() {
+    fn test_field_toggle() {
         let mut c = BallJoint::new();
-        c.wear_ok = false;
-        assert!(c.needs_replacement());
+        c.pivot_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

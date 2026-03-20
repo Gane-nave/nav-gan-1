@@ -1,13 +1,13 @@
-/// Strut mount: bearing, rubber, plate, noise
-/// Phase 642
+/// strut mount: isolate, pivot, bear, align, check
+/// Phase 1198
 
 #[derive(Debug, Clone)]
 pub struct StrutMount {
-    pub bearing_ok: bool,
-    pub rubber_ok: bool,
-    pub plate_ok: bool,
-    pub noise_free: bool,
-    pub aligned: bool,
+    pub isolate_ok: bool,
+    pub pivot_ok: bool,
+    pub bear_ok: bool,
+    pub align_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for StrutMount {
@@ -19,32 +19,32 @@ impl Default for StrutMount {
 impl StrutMount {
     pub fn new() -> Self {
         Self {
-            bearing_ok: true,
-            rubber_ok: true,
-            plate_ok: true,
-            noise_free: true,
-            aligned: true,
+            isolate_ok: true,
+            pivot_ok: true,
+            bear_ok: true,
+            align_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn bearing_good(&self) -> bool {
-        self.bearing_ok && self.noise_free
+    pub fn primary_ok(&self) -> bool {
+        self.isolate_ok && self.pivot_ok && self.bear_ok
     }
 
-    pub fn mount_ok(&self) -> bool {
-        self.rubber_ok && self.plate_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.align_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.bearing_good() && self.mount_ok() && self.aligned
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.bearing_ok || !self.rubber_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.isolate_ok || !self.pivot_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bearing_ok { return 10.0; }
+        if !self.isolate_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_bearing() {
+    fn test_primary() {
         let c = StrutMount::new();
-        assert!(c.bearing_good());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_mount() {
+    fn test_secondary() {
         let c = StrutMount::new();
-        assert!(c.mount_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = StrutMount::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_bearing_fail() {
+    fn test_field_toggle() {
         let mut c = StrutMount::new();
-        c.bearing_ok = false;
-        assert!(c.needs_replacement());
+        c.isolate_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

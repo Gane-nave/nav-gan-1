@@ -1,38 +1,38 @@
-/// steering rack: translate, assist, center, ratio, check
-/// Phase 1206
+/// anti roll: stiffen, soften, decouple, link, report
+/// Phase 1197
 
 #[derive(Debug, Clone)]
-pub struct SteeringRack {
-    pub translate_ok: bool,
-    pub assist_ok: bool,
-    pub center_ok: bool,
-    pub ratio_ok: bool,
-    pub check_ok: bool,
+pub struct AntiRoll {
+    pub stiffen_ok: bool,
+    pub soften_ok: bool,
+    pub decouple_ok: bool,
+    pub link_ok: bool,
+    pub report_ok: bool,
 }
 
-impl Default for SteeringRack {
+impl Default for AntiRoll {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SteeringRack {
+impl AntiRoll {
     pub fn new() -> Self {
         Self {
-            translate_ok: true,
-            assist_ok: true,
-            center_ok: true,
-            ratio_ok: true,
-            check_ok: true,
+            stiffen_ok: true,
+            soften_ok: true,
+            decouple_ok: true,
+            link_ok: true,
+            report_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.translate_ok && self.assist_ok && self.center_ok
+        self.stiffen_ok && self.soften_ok && self.decouple_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.ratio_ok && self.check_ok
+        self.link_ok && self.report_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SteeringRack {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.translate_ok || !self.assist_ok
+        !self.stiffen_ok || !self.soften_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.translate_ok { return 5.0; }
+        if !self.stiffen_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SteeringRack::new();
+        let c = AntiRoll::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SteeringRack::new();
+        let c = AntiRoll::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SteeringRack::new();
+        let c = AntiRoll::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SteeringRack::new();
+        let c = AntiRoll::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SteeringRack::new();
-        c.translate_ok = false;
+        let mut c = AntiRoll::new();
+        c.stiffen_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SteeringRack::new();
+        let c = AntiRoll::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

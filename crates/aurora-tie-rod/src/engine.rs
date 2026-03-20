@@ -1,13 +1,13 @@
-/// Tie rod: steering linkage, inner/outer ends
-/// Phase 479
+/// tie rod: connect, adjust, transmit, lock, check
+/// Phase 1200
 
 #[derive(Debug, Clone)]
 pub struct TieRod {
-    pub play_mm: f64,
-    pub max_play_mm: f64,
-    pub inner_ok: bool,
-    pub outer_ok: bool,
-    pub boot_ok: bool,
+    pub connect_ok: bool,
+    pub adjust_ok: bool,
+    pub transmit_ok: bool,
+    pub lock_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for TieRod {
@@ -19,32 +19,32 @@ impl Default for TieRod {
 impl TieRod {
     pub fn new() -> Self {
         Self {
-            play_mm: 0.3,
-            max_play_mm: 2.0,
-            inner_ok: true,
-            outer_ok: true,
-            boot_ok: true,
+            connect_ok: true,
+            adjust_ok: true,
+            transmit_ok: true,
+            lock_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn play_pct(&self) -> f64 {
-        (self.play_mm / self.max_play_mm) * 100.0
+    pub fn primary_ok(&self) -> bool {
+        self.connect_ok && self.adjust_ok && self.transmit_ok
     }
 
-    pub fn excessive_play(&self) -> bool {
-        self.play_mm > self.max_play_mm * 0.8
+    pub fn secondary_ok(&self) -> bool {
+        self.lock_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.inner_ok && self.outer_ok && self.boot_ok && !self.excessive_play()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.inner_ok || !self.outer_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.connect_ok || !self.adjust_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.inner_ok || !self.outer_ok { return 15.0; }
+        if !self.connect_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_play() {
+    fn test_primary() {
         let c = TieRod::new();
-        assert!(c.play_pct() < 25.0);
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_no_excessive() {
+    fn test_secondary() {
         let c = TieRod::new();
-        assert!(!c.excessive_play());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = TieRod::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_inner_bad() {
+    fn test_field_toggle() {
         let mut c = TieRod::new();
-        c.inner_ok = false;
-        assert!(c.needs_replacement());
+        c.connect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

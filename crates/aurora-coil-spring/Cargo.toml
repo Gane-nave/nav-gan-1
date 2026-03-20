@@ -2,5 +2,3 @@
 name = "aurora-coil-spring"
 version = "0.1.0"
 edition = "2021"
-
-[dependencies]

@@ -325,6 +325,10 @@ name = "aurora-anti-overlap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-anti-roll"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-apa-sys"
 version = "0.1.0"
 
@@ -785,6 +789,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-brake-line"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-brake-pad"
 version = "0.1.0"
 
 [[package]]

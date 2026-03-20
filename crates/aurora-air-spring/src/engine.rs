@@ -1,13 +1,13 @@
-/// Air spring: bellows, valve, height sensor, compressor
-/// Phase 645
+/// air spring: inflate, deflate, level, adapt, report
+/// Phase 1194
 
 #[derive(Debug, Clone)]
 pub struct AirSpring {
-    pub bellows_ok: bool,
-    pub valve_ok: bool,
-    pub height_ok: bool,
-    pub compressor_ok: bool,
-    pub leak_free: bool,
+    pub inflate_ok: bool,
+    pub deflate_ok: bool,
+    pub level_ok: bool,
+    pub adapt_ok: bool,
+    pub report_ok: bool,
 }
 
 impl Default for AirSpring {
@@ -19,32 +19,32 @@ impl Default for AirSpring {
 impl AirSpring {
     pub fn new() -> Self {
         Self {
-            bellows_ok: true,
-            valve_ok: true,
-            height_ok: true,
-            compressor_ok: true,
-            leak_free: true,
+            inflate_ok: true,
+            deflate_ok: true,
+            level_ok: true,
+            adapt_ok: true,
+            report_ok: true,
         }
     }
 
-    pub fn spring_ok(&self) -> bool {
-        self.bellows_ok && self.leak_free
+    pub fn primary_ok(&self) -> bool {
+        self.inflate_ok && self.deflate_ok && self.level_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.valve_ok && self.height_ok && self.compressor_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.adapt_ok && self.report_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.spring_ok() && self.system_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.bellows_ok || !self.leak_free
+    pub fn needs_attention(&self) -> bool {
+        !self.inflate_ok || !self.deflate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bellows_ok { return 10.0; }
+        if !self.inflate_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_spring() {
+    fn test_primary() {
         let c = AirSpring::new();
-        assert!(c.spring_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_system() {
+    fn test_secondary() {
         let c = AirSpring::new();
-        assert!(c.system_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = AirSpring::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_bellows() {
+    fn test_field_toggle() {
         let mut c = AirSpring::new();
-        c.bellows_ok = false;
-        assert!(c.needs_service());
+        c.inflate_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

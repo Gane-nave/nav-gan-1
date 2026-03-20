@@ -1,13 +1,13 @@
-/// Control arm: bushing, pivot, ball joint mount
-/// Phase 640
+/// control arm: pivot, guide, absorb, align, inspect
+/// Phase 1199
 
 #[derive(Debug, Clone)]
 pub struct ControlArm {
-    pub bushing_ok: bool,
     pub pivot_ok: bool,
-    pub mount_ok: bool,
-    pub bent: bool,
-    pub corrosion_free: bool,
+    pub guide_ok: bool,
+    pub absorb_ok: bool,
+    pub align_ok: bool,
+    pub inspect_ok: bool,
 }
 
 impl Default for ControlArm {
@@ -19,32 +19,32 @@ impl Default for ControlArm {
 impl ControlArm {
     pub fn new() -> Self {
         Self {
-            bushing_ok: true,
             pivot_ok: true,
-            mount_ok: true,
-            bent: false,
-            corrosion_free: true,
+            guide_ok: true,
+            absorb_ok: true,
+            align_ok: true,
+            inspect_ok: true,
         }
     }
 
-    pub fn structural_ok(&self) -> bool {
-        !self.bent && self.corrosion_free
+    pub fn primary_ok(&self) -> bool {
+        self.pivot_ok && self.guide_ok && self.absorb_ok
     }
 
-    pub fn joints_ok(&self) -> bool {
-        self.bushing_ok && self.pivot_ok && self.mount_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.align_ok && self.inspect_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.structural_ok() && self.joints_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.bent || !self.bushing_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.pivot_ok || !self.guide_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.bent { return 5.0; }
+        if !self.pivot_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_structural() {
+    fn test_primary() {
         let c = ControlArm::new();
-        assert!(c.structural_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_joints() {
+    fn test_secondary() {
         let c = ControlArm::new();
-        assert!(c.joints_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = ControlArm::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_bent() {
+    fn test_field_toggle() {
         let mut c = ControlArm::new();
-        c.bent = true;
-        assert!(c.needs_replacement());
+        c.pivot_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

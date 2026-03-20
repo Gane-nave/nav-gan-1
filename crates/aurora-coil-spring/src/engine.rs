@@ -1,13 +1,13 @@
-/// Coil spring: rate, sag, crack, coating
-/// Phase 643
+/// coil spring: compress, extend, rate, preload, check
+/// Phase 1195
 
 #[derive(Debug, Clone)]
 pub struct CoilSpring {
+    pub compress_ok: bool,
+    pub extend_ok: bool,
     pub rate_ok: bool,
-    pub sag_mm: f64,
-    pub max_sag_mm: f64,
-    pub cracked: bool,
-    pub coating_ok: bool,
+    pub preload_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for CoilSpring {
@@ -19,32 +19,32 @@ impl Default for CoilSpring {
 impl CoilSpring {
     pub fn new() -> Self {
         Self {
+            compress_ok: true,
+            extend_ok: true,
             rate_ok: true,
-            sag_mm: 0.0,
-            max_sag_mm: 15.0,
-            cracked: false,
-            coating_ok: true,
+            preload_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn height_ok(&self) -> bool {
-        self.sag_mm < self.max_sag_mm
+    pub fn primary_ok(&self) -> bool {
+        self.compress_ok && self.extend_ok && self.rate_ok
     }
 
-    pub fn structural_ok(&self) -> bool {
-        !self.cracked && self.coating_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.preload_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.height_ok() && self.structural_ok() && self.rate_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.cracked || self.sag_mm > self.max_sag_mm
+    pub fn needs_attention(&self) -> bool {
+        !self.compress_ok || !self.extend_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.cracked { return 5.0; }
+        if !self.compress_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_height() {
+    fn test_primary() {
         let c = CoilSpring::new();
-        assert!(c.height_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_structural() {
+    fn test_secondary() {
         let c = CoilSpring::new();
-        assert!(c.structural_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = CoilSpring::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_crack() {
+    fn test_field_toggle() {
         let mut c = CoilSpring::new();
-        c.cracked = true;
-        assert!(c.needs_replacement());
+        c.compress_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

@@ -1,13 +1,13 @@
-/// Brake rotor: thickness, runout, crack, heat spots
-/// Phase 654
+/// brake rotor: friction, cool, vent, measure, replace
+/// Phase 1204
 
 #[derive(Debug, Clone)]
 pub struct BrakeRotor {
-    pub thickness_ok: bool,
-    pub runout_ok: bool,
-    pub cracked: bool,
-    pub heat_spots: bool,
-    pub surface_ok: bool,
+    pub friction_ok: bool,
+    pub cool_ok: bool,
+    pub vent_ok: bool,
+    pub measure_ok: bool,
+    pub replace_ok: bool,
 }
 
 impl Default for BrakeRotor {
@@ -19,32 +19,32 @@ impl Default for BrakeRotor {
 impl BrakeRotor {
     pub fn new() -> Self {
         Self {
-            thickness_ok: true,
-            runout_ok: true,
-            cracked: false,
-            heat_spots: false,
-            surface_ok: true,
+            friction_ok: true,
+            cool_ok: true,
+            vent_ok: true,
+            measure_ok: true,
+            replace_ok: true,
         }
     }
 
-    pub fn measurement_ok(&self) -> bool {
-        self.thickness_ok && self.runout_ok
+    pub fn primary_ok(&self) -> bool {
+        self.friction_ok && self.cool_ok && self.vent_ok
     }
 
-    pub fn surface_good(&self) -> bool {
-        self.surface_ok && !self.heat_spots
+    pub fn secondary_ok(&self) -> bool {
+        self.measure_ok && self.replace_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.measurement_ok() && self.surface_good() && !self.cracked
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.cracked || !self.thickness_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.friction_ok || !self.cool_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.cracked { return 5.0; }
+        if !self.friction_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_measurement() {
+    fn test_primary() {
         let c = BrakeRotor::new();
-        assert!(c.measurement_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_surface() {
+    fn test_secondary() {
         let c = BrakeRotor::new();
-        assert!(c.surface_good());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = BrakeRotor::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_crack() {
+    fn test_field_toggle() {
         let mut c = BrakeRotor::new();
-        c.cracked = true;
-        assert!(c.needs_replacement());
+        c.friction_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

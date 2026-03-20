@@ -1,13 +1,13 @@
-/// Brake caliper: piston, seal, slide pin, bleeder
-/// Phase 656
+/// brake caliper: clamp, release, float, bleed, inspect
+/// Phase 1203
 
 #[derive(Debug, Clone)]
 pub struct BrakeCaliper {
-    pub piston_ok: bool,
-    pub seal_ok: bool,
-    pub slide_pin_ok: bool,
-    pub bleeder_ok: bool,
-    pub leak_free: bool,
+    pub clamp_ok: bool,
+    pub release_ok: bool,
+    pub float_ok: bool,
+    pub bleed_ok: bool,
+    pub inspect_ok: bool,
 }
 
 impl Default for BrakeCaliper {
@@ -19,32 +19,32 @@ impl Default for BrakeCaliper {
 impl BrakeCaliper {
     pub fn new() -> Self {
         Self {
-            piston_ok: true,
-            seal_ok: true,
-            slide_pin_ok: true,
-            bleeder_ok: true,
-            leak_free: true,
+            clamp_ok: true,
+            release_ok: true,
+            float_ok: true,
+            bleed_ok: true,
+            inspect_ok: true,
         }
     }
 
-    pub fn hydraulic_ok(&self) -> bool {
-        self.piston_ok && self.seal_ok && self.leak_free
+    pub fn primary_ok(&self) -> bool {
+        self.clamp_ok && self.release_ok && self.float_ok
     }
 
-    pub fn mechanical_ok(&self) -> bool {
-        self.slide_pin_ok && self.bleeder_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.bleed_ok && self.inspect_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.hydraulic_ok() && self.mechanical_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_rebuild(&self) -> bool {
-        !self.piston_ok || !self.seal_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.clamp_ok || !self.release_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.piston_ok { return 10.0; }
+        if !self.clamp_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_hydraulic() {
+    fn test_primary() {
         let c = BrakeCaliper::new();
-        assert!(c.hydraulic_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_mechanical() {
+    fn test_secondary() {
         let c = BrakeCaliper::new();
-        assert!(c.mechanical_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_rebuild() {
+    fn test_no_attention() {
         let c = BrakeCaliper::new();
-        assert!(!c.needs_rebuild());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_piston() {
+    fn test_field_toggle() {
         let mut c = BrakeCaliper::new();
-        c.piston_ok = false;
-        assert!(c.needs_rebuild());
+        c.clamp_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

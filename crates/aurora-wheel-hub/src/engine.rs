@@ -1,13 +1,13 @@
-/// Wheel hub: bearing, ABS ring, stud, seal
-/// Phase 649
+/// wheel hub: mount, rotate, seal, encode, check
+/// Phase 1202
 
 #[derive(Debug, Clone)]
 pub struct WheelHub {
-    pub bearing_ok: bool,
-    pub abs_ring_ok: bool,
-    pub stud_ok: bool,
+    pub mount_ok: bool,
+    pub rotate_ok: bool,
     pub seal_ok: bool,
-    pub play_ok: bool,
+    pub encode_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for WheelHub {
@@ -19,32 +19,32 @@ impl Default for WheelHub {
 impl WheelHub {
     pub fn new() -> Self {
         Self {
-            bearing_ok: true,
-            abs_ring_ok: true,
-            stud_ok: true,
+            mount_ok: true,
+            rotate_ok: true,
             seal_ok: true,
-            play_ok: true,
+            encode_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn rotation_ok(&self) -> bool {
-        self.bearing_ok && self.play_ok
+    pub fn primary_ok(&self) -> bool {
+        self.mount_ok && self.rotate_ok && self.seal_ok
     }
 
-    pub fn sensors_ok(&self) -> bool {
-        self.abs_ring_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.encode_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.rotation_ok() && self.sensors_ok() && self.stud_ok && self.seal_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.bearing_ok || !self.abs_ring_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.mount_ok || !self.rotate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bearing_ok { return 5.0; }
+        if !self.mount_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_rotation() {
+    fn test_primary() {
         let c = WheelHub::new();
-        assert!(c.rotation_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_sensors() {
+    fn test_secondary() {
         let c = WheelHub::new();
-        assert!(c.sensors_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = WheelHub::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_bearing() {
+    fn test_field_toggle() {
         let mut c = WheelHub::new();
-        c.bearing_ok = false;
-        assert!(c.needs_replacement());
+        c.mount_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

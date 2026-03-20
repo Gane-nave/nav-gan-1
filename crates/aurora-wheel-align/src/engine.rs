@@ -1,50 +1,50 @@
-/// Wheel alignment: camber, caster, toe angles
-/// Phase 484
+/// wheel align: camber, caster, toe, thrust, adjust
+/// Phase 1209
 
 #[derive(Debug, Clone)]
-pub struct WheelAlignment {
-    pub camber_deg: f64,
-    pub caster_deg: f64,
-    pub toe_deg: f64,
-    pub within_spec: bool,
-    pub adjusted: bool,
+pub struct WheelAlign {
+    pub camber_ok: bool,
+    pub caster_ok: bool,
+    pub toe_ok: bool,
+    pub thrust_ok: bool,
+    pub adjust_ok: bool,
 }
 
-impl Default for WheelAlignment {
+impl Default for WheelAlign {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl WheelAlignment {
+impl WheelAlign {
     pub fn new() -> Self {
         Self {
-            camber_deg: -0.5,
-            caster_deg: 3.0,
-            toe_deg: 0.1,
-            within_spec: true,
-            adjusted: true,
+            camber_ok: true,
+            caster_ok: true,
+            toe_ok: true,
+            thrust_ok: true,
+            adjust_ok: true,
         }
     }
 
-    pub fn camber_ok(&self) -> bool {
-        (self.camber_deg).abs() < 2.0
+    pub fn primary_ok(&self) -> bool {
+        self.camber_ok && self.caster_ok && self.toe_ok
     }
 
-    pub fn caster_ok(&self) -> bool {
-        self.caster_deg > 1.0 && self.caster_deg < 8.0
+    pub fn secondary_ok(&self) -> bool {
+        self.thrust_ok && self.adjust_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.camber_ok() && self.caster_ok() && self.within_spec
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_adjustment(&self) -> bool {
-        !self.within_spec
+    pub fn needs_attention(&self) -> bool {
+        !self.camber_ok || !self.caster_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.within_spec { return 40.0; }
+        if !self.camber_ok { return 5.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_camber() {
-        let c = WheelAlignment::new();
-        assert!(c.camber_ok());
+    fn test_primary() {
+        let c = WheelAlign::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_caster() {
-        let c = WheelAlignment::new();
-        assert!(c.caster_ok());
+    fn test_secondary() {
+        let c = WheelAlign::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = WheelAlignment::new();
+        let c = WheelAlign::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_adjust() {
-        let c = WheelAlignment::new();
-        assert!(!c.needs_adjustment());
+    fn test_no_attention() {
+        let c = WheelAlign::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_out_spec() {
-        let mut c = WheelAlignment::new();
-        c.within_spec = false;
-        assert!(c.needs_adjustment());
+    fn test_field_toggle() {
+        let mut c = WheelAlign::new();
+        c.camber_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = WheelAlignment::new();
+        let c = WheelAlign::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

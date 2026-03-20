@@ -1,59 +1,50 @@
-/// Shock absorber: monotube/twin-tube, rebound/compression damping
-/// Phase 331
+/// shock absorb: dampen, rebound, adjust, monitor, report
+/// Phase 1196
 
 #[derive(Debug, Clone)]
-pub struct ShockAbsorber {
-    pub rebound_force_n: f64,
-    pub compression_force_n: f64,
-    pub leaking: bool,
-    pub worn: bool,
-    pub adaptive: bool,
+pub struct ShockAbsorb {
+    pub dampen_ok: bool,
+    pub rebound_ok: bool,
+    pub adjust_ok: bool,
+    pub monitor_ok: bool,
+    pub report_ok: bool,
 }
 
-impl Default for ShockAbsorber {
+impl Default for ShockAbsorb {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ShockAbsorber {
+impl ShockAbsorb {
     pub fn new() -> Self {
         Self {
-            rebound_force_n: 800.0,
-            compression_force_n: 400.0,
-            leaking: false,
-            worn: false,
-            adaptive: true,
+            dampen_ok: true,
+            rebound_ok: true,
+            adjust_ok: true,
+            monitor_ok: true,
+            report_ok: true,
         }
     }
 
-    pub fn ratio(&self) -> f64 {
-        if self.compression_force_n <= 0.0 {
-            return 0.0;
-        }
-        self.rebound_force_n / self.compression_force_n
+    pub fn primary_ok(&self) -> bool {
+        self.dampen_ok && self.rebound_ok && self.adjust_ok
     }
 
-    pub fn functioning(&self) -> bool {
-        !self.leaking && !self.worn
+    pub fn secondary_ok(&self) -> bool {
+        self.monitor_ok && self.report_ok
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.leaking || self.worn
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn ratio_ok(&self) -> bool {
-        let r = self.ratio();
-        r > 1.5 && r < 3.0
+    pub fn needs_attention(&self) -> bool {
+        !self.dampen_ok || !self.rebound_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leaking {
-            return 0.0;
-        }
-        if self.worn {
-            return 30.0;
-        }
+        if !self.dampen_ok { return 5.0; }
         100.0
     }
 }
@@ -63,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_ratio() {
-        let s = ShockAbsorber::new();
-        assert!((s.ratio() - 2.0).abs() < 0.1);
+    fn test_primary() {
+        let c = ShockAbsorb::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_functioning() {
-        let s = ShockAbsorber::new();
-        assert!(s.functioning());
+    fn test_secondary() {
+        let c = ShockAbsorb::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_no_replace() {
-        let s = ShockAbsorber::new();
-        assert!(!s.needs_replacement());
+    fn test_all_ok() {
+        let c = ShockAbsorb::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_ratio_ok() {
-        let s = ShockAbsorber::new();
-        assert!(s.ratio_ok());
+    fn test_no_attention() {
+        let c = ShockAbsorb::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_leak() {
-        let mut s = ShockAbsorber::new();
-        s.leaking = true;
-        assert!(s.needs_replacement());
+    fn test_field_toggle() {
+        let mut c = ShockAbsorb::new();
+        c.dampen_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let s = ShockAbsorber::new();
-        assert!((s.health_score() - 100.0).abs() < 0.1);
+        let c = ShockAbsorb::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
