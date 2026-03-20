@@ -144,3 +144,81 @@ When verifying bug fixes, always:
 
 ## Devin Secrets Needed
 No secrets required for testing — all tests run locally via cargo.
+# Testing AURORA NAV
+
+## Quick Start
+```bash
+cd /home/ubuntu/repos/aurora-nav
+cargo build --all-targets
+cargo clippy --all-targets
+cargo test
+cargo fmt --check
+```
+
+## Test Counts (as of Phase 12)
+- Total: 871+ tests, 0 failures, 0 clippy warnings
+- aurora-config: 26 tests
+- aurora-app: 16 tests
+- aurora-integration-tests: 29 tests (4 test files)
+- Full suite runs in ~10 seconds
+
+## API Server Testing
+The API server can be tested two ways:
+1. **Unit tests via tower::oneshot** (preferred): `cargo test -p aurora-integration-tests --test e2e_api`
+2. **Live server**: `cargo run --bin aurora-nav -- --port 9876` then curl endpoints
+
+Endpoints:
+- `/health` → 200, `{"status": "operational"}`
+- `/position` → 503 (no GNSS fix available)
+- `/integrity` → 200, `{"level": "NoSolution"}`
+- `/status` → 200, valid JSON counters
+- `/telemetry` → 200, empty samples
+- `/constellation` → 200, `[]`
+
+## CLI Binary Testing
+```bash
+# Dump default config
+cargo run --bin aurora-nav -- --dump-config
+
+# Print version
+cargo run --bin aurora-nav -- --version
+
+# Print subsystem status as JSON
+cargo run --bin aurora-nav -- --status
+
+# Test validation rejection
+cargo run --bin aurora-nav -- --port 0
+# Expected: Error: Validation("api.port must be > 0"), exit code 1
+```
+
+## Adversarial Testing Patterns
+
+### GNSS Health State Tracking
+The `NavigationPipeline` tracks whether GNSS data has ever been received via `has_received_gnss` AtomicBool. To test:
+1. Fresh pipeline → `has_received_gnss_data() == false` → health Healthy (sat_count=0 is OK)
+2. Call `mark_gnss_received()` → `has_received_gnss_data() == true`
+3. Health with sat_count=0 after receiving data → Degraded (not Healthy)
+
+### Config Validation
+- All config section structs use `#[serde(default)]` — partial TOML fills missing values from defaults
+- `ConfigBuilder::build()` validates; `build_unchecked()` skips validation (testing only)
+- CLI overrides are re-validated after application
+- Environment variable overrides use `AURORA_*` prefix
+
+### Cross-Crate Integration Tests
+Run specific test files:
+```bash
+cargo test -p aurora-integration-tests --test e2e_config
+cargo test -p aurora-integration-tests --test e2e_api
+cargo test -p aurora-integration-tests --test e2e_cross_crate
+cargo test -p aurora-integration-tests --test e2e_pipeline
+```
+
+## Common Issues
+- If `cargo test` fails with serde errors on partial TOML, check that `#[serde(default)]` is on the struct
+- If health check reports Degraded on a fresh pipeline, check `has_received_gnss` flag logic
+- The binary might not start a persistent server in early phases — `--status` and `--dump-config` are the safe testing paths
+- Some adversarial tests compile against `target/debug/deps` — make sure `cargo build` runs first
+
+## Devin Secrets Needed
+No secrets required — this is a pure Rust workspace tested locally.
