@@ -1,13 +1,13 @@
-/// Rain sensor: optical, sensitivity, wiper control
-/// Phase 697
+/// rain sensor: detect, measure, adapt, wipe, log
+/// Phase 1292
 
 #[derive(Debug, Clone)]
 pub struct RainSensor {
-    pub optical_ok: bool,
-    pub sensitivity_ok: bool,
-    pub wiper_ctrl_ok: bool,
-    pub lens_ok: bool,
-    pub calibrated: bool,
+    pub detect_ok: bool,
+    pub measure_ok: bool,
+    pub adapt_ok: bool,
+    pub wipe_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for RainSensor {
@@ -19,32 +19,32 @@ impl Default for RainSensor {
 impl RainSensor {
     pub fn new() -> Self {
         Self {
-            optical_ok: true,
-            sensitivity_ok: true,
-            wiper_ctrl_ok: true,
-            lens_ok: true,
-            calibrated: true,
+            detect_ok: true,
+            measure_ok: true,
+            adapt_ok: true,
+            wipe_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn detection_ok(&self) -> bool {
-        self.optical_ok && self.sensitivity_ok && self.lens_ok
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.measure_ok && self.adapt_ok
     }
 
-    pub fn control_ok(&self) -> bool {
-        self.wiper_ctrl_ok && self.calibrated
+    pub fn secondary_ok(&self) -> bool {
+        self.wipe_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.detection_ok() && self.control_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.optical_ok || !self.lens_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.measure_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.optical_ok { return 10.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_detection() {
+    fn test_primary() {
         let c = RainSensor::new();
-        assert!(c.detection_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_control() {
+    fn test_secondary() {
         let c = RainSensor::new();
-        assert!(c.control_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = RainSensor::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_optical() {
+    fn test_field_toggle() {
         let mut c = RainSensor::new();
-        c.optical_ok = false;
-        assert!(c.needs_service());
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

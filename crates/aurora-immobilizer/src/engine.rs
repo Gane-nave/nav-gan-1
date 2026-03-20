@@ -1,13 +1,13 @@
-/// Immobilizer: transponder, ECU match, relay, antenna ring
-/// Phase 733
+/// immobilizer: challenge, respond, verify, enable, log
+/// Phase 1286
 
 #[derive(Debug, Clone)]
 pub struct Immobilizer {
-    pub transponder_ok: bool,
-    pub ecu_match_ok: bool,
-    pub relay_ok: bool,
-    pub antenna_ring_ok: bool,
-    pub enabled: bool,
+    pub challenge_ok: bool,
+    pub respond_ok: bool,
+    pub verify_ok: bool,
+    pub enable_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for Immobilizer {
@@ -19,32 +19,32 @@ impl Default for Immobilizer {
 impl Immobilizer {
     pub fn new() -> Self {
         Self {
-            transponder_ok: true,
-            ecu_match_ok: true,
-            relay_ok: true,
-            antenna_ring_ok: true,
-            enabled: true,
+            challenge_ok: true,
+            respond_ok: true,
+            verify_ok: true,
+            enable_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn authentication_ok(&self) -> bool {
-        self.transponder_ok && self.ecu_match_ok
+    pub fn primary_ok(&self) -> bool {
+        self.challenge_ok && self.respond_ok && self.verify_ok
     }
 
-    pub fn hardware_ok(&self) -> bool {
-        self.relay_ok && self.antenna_ring_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.enable_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.authentication_ok() && self.hardware_ok() && self.enabled
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.transponder_ok || !self.ecu_match_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.challenge_ok || !self.respond_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.transponder_ok { return 5.0; }
+        if !self.challenge_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_authentication() {
+    fn test_primary() {
         let c = Immobilizer::new();
-        assert!(c.authentication_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_hardware() {
+    fn test_secondary() {
         let c = Immobilizer::new();
-        assert!(c.hardware_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = Immobilizer::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_transponder() {
+    fn test_field_toggle() {
         let mut c = Immobilizer::new();
-        c.transponder_ok = false;
-        assert!(c.needs_service());
+        c.challenge_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

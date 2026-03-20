@@ -1,13 +1,13 @@
-/// Dash cam: front camera, rear camera, loop record, G-sensor
-/// Phase 844
+/// dash cam: record, store, detect, upload, loop
+/// Phase 1289
 
 #[derive(Debug, Clone)]
 pub struct DashCam {
-    pub front_ok: bool,
-    pub rear_ok: bool,
+    pub record_ok: bool,
+    pub store_ok: bool,
+    pub detect_ok: bool,
+    pub upload_ok: bool,
     pub loop_ok: bool,
-    pub g_sensor_ok: bool,
-    pub storage_ok: bool,
 }
 
 impl Default for DashCam {
@@ -19,32 +19,32 @@ impl Default for DashCam {
 impl DashCam {
     pub fn new() -> Self {
         Self {
-            front_ok: true,
-            rear_ok: true,
+            record_ok: true,
+            store_ok: true,
+            detect_ok: true,
+            upload_ok: true,
             loop_ok: true,
-            g_sensor_ok: true,
-            storage_ok: true,
         }
     }
 
-    pub fn recording_ok(&self) -> bool {
-        self.front_ok && self.rear_ok && self.loop_ok
+    pub fn primary_ok(&self) -> bool {
+        self.record_ok && self.store_ok && self.detect_ok
     }
 
-    pub fn features_ok(&self) -> bool {
-        self.g_sensor_ok && self.storage_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.upload_ok && self.loop_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.recording_ok() && self.features_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.front_ok || !self.storage_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.record_ok || !self.store_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.front_ok { return 15.0; }
+        if !self.record_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_recording() {
+    fn test_primary() {
         let c = DashCam::new();
-        assert!(c.recording_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_features() {
+    fn test_secondary() {
         let c = DashCam::new();
-        assert!(c.features_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = DashCam::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_front() {
+    fn test_field_toggle() {
         let mut c = DashCam::new();
-        c.front_ok = false;
-        assert!(c.needs_service());
+        c.record_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

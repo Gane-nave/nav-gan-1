@@ -1,13 +1,13 @@
-/// Keyless entry: transponder, antenna, rolling code, range
-/// Phase 732
+/// keyless entry: detect, authenticate, unlock, lock, log
+/// Phase 1284
 
 #[derive(Debug, Clone)]
 pub struct KeylessEntry {
-    pub transponder_ok: bool,
-    pub antenna_ok: bool,
-    pub rolling_code_ok: bool,
-    pub range_ok: bool,
-    pub battery_ok: bool,
+    pub detect_ok: bool,
+    pub authenticate_ok: bool,
+    pub unlock_ok: bool,
+    pub lock_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for KeylessEntry {
@@ -19,32 +19,32 @@ impl Default for KeylessEntry {
 impl KeylessEntry {
     pub fn new() -> Self {
         Self {
-            transponder_ok: true,
-            antenna_ok: true,
-            rolling_code_ok: true,
-            range_ok: true,
-            battery_ok: true,
+            detect_ok: true,
+            authenticate_ok: true,
+            unlock_ok: true,
+            lock_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn security_ok(&self) -> bool {
-        self.transponder_ok && self.rolling_code_ok
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.authenticate_ok && self.unlock_ok
     }
 
-    pub fn signal_ok(&self) -> bool {
-        self.antenna_ok && self.range_ok && self.battery_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.lock_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.security_ok() && self.signal_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.transponder_ok || !self.battery_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.authenticate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.transponder_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_security() {
+    fn test_primary() {
         let c = KeylessEntry::new();
-        assert!(c.security_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_signal() {
+    fn test_secondary() {
         let c = KeylessEntry::new();
-        assert!(c.signal_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = KeylessEntry::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_transponder() {
+    fn test_field_toggle() {
         let mut c = KeylessEntry::new();
-        c.transponder_ok = false;
-        assert!(c.needs_service());
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

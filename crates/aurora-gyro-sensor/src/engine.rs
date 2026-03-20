@@ -1,38 +1,38 @@
-/// light sensor: measure, adapt, dim, bright, log
-/// Phase 1293
+/// gyro sensor: measure, drift, calibrate, fuse, log
+/// Phase 1297
 
 #[derive(Debug, Clone)]
-pub struct LightSensor {
+pub struct GyroSensor {
     pub measure_ok: bool,
-    pub adapt_ok: bool,
-    pub dim_ok: bool,
-    pub bright_ok: bool,
+    pub drift_ok: bool,
+    pub calibrate_ok: bool,
+    pub fuse_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for LightSensor {
+impl Default for GyroSensor {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LightSensor {
+impl GyroSensor {
     pub fn new() -> Self {
         Self {
             measure_ok: true,
-            adapt_ok: true,
-            dim_ok: true,
-            bright_ok: true,
+            drift_ok: true,
+            calibrate_ok: true,
+            fuse_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.measure_ok && self.adapt_ok && self.dim_ok
+        self.measure_ok && self.drift_ok && self.calibrate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.bright_ok && self.log_ok
+        self.fuse_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl LightSensor {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.measure_ok || !self.adapt_ok
+        !self.measure_ok || !self.drift_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = LightSensor::new();
+        let c = GyroSensor::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = LightSensor::new();
+        let c = GyroSensor::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = LightSensor::new();
+        let c = GyroSensor::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = LightSensor::new();
+        let c = GyroSensor::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = LightSensor::new();
+        let mut c = GyroSensor::new();
         c.measure_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = LightSensor::new();
+        let c = GyroSensor::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

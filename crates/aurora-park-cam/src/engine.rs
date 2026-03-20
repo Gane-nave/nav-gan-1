@@ -1,38 +1,38 @@
-/// light sensor: measure, adapt, dim, bright, log
-/// Phase 1293
+/// park cam: capture, stitch, overlay, guide, record
+/// Phase 1291
 
 #[derive(Debug, Clone)]
-pub struct LightSensor {
-    pub measure_ok: bool,
-    pub adapt_ok: bool,
-    pub dim_ok: bool,
-    pub bright_ok: bool,
-    pub log_ok: bool,
+pub struct ParkCam {
+    pub capture_ok: bool,
+    pub stitch_ok: bool,
+    pub overlay_ok: bool,
+    pub guide_ok: bool,
+    pub record_ok: bool,
 }
 
-impl Default for LightSensor {
+impl Default for ParkCam {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl LightSensor {
+impl ParkCam {
     pub fn new() -> Self {
         Self {
-            measure_ok: true,
-            adapt_ok: true,
-            dim_ok: true,
-            bright_ok: true,
-            log_ok: true,
+            capture_ok: true,
+            stitch_ok: true,
+            overlay_ok: true,
+            guide_ok: true,
+            record_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.measure_ok && self.adapt_ok && self.dim_ok
+        self.capture_ok && self.stitch_ok && self.overlay_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.bright_ok && self.log_ok
+        self.guide_ok && self.record_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl LightSensor {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.measure_ok || !self.adapt_ok
+        !self.capture_ok || !self.stitch_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.measure_ok { return 5.0; }
+        if !self.capture_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = LightSensor::new();
+        let c = ParkCam::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = LightSensor::new();
+        let c = ParkCam::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = LightSensor::new();
+        let c = ParkCam::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = LightSensor::new();
+        let c = ParkCam::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = LightSensor::new();
-        c.measure_ok = false;
+        let mut c = ParkCam::new();
+        c.capture_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = LightSensor::new();
+        let c = ParkCam::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

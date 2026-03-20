@@ -217,6 +217,10 @@ name = "aurora-airbag-ecu"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-alarm-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alerts"
 version = "0.1.0"
 dependencies = [
@@ -588,6 +592,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-ball-joint"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-baro-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -2593,6 +2601,10 @@ name = "aurora-google-link"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-gps-track"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-grade-assist"
 version = "0.1.0"
 
@@ -2622,6 +2634,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-grpc-server"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-gyro-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -2814,6 +2830,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hud-render"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-humid-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -3326,6 +3346,10 @@ name = "aurora-maf-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mag-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-maint-pred"
 version = "0.1.0"
 
@@ -3835,6 +3859,10 @@ name = "aurora-park-brake"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-park-cam"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-park-pawl"
 version = "0.1.0"
 
@@ -4109,6 +4137,10 @@ name = "aurora-propshaft"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-prox-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-proxy-lb"
 version = "0.1.0"
 
@@ -4142,6 +4174,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-purge-valve"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-push-start"
 version = "0.1.0"
 
 [[package]]
@@ -5099,6 +5135,10 @@ name = "aurora-temp-sensor-ext"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-temp-sensor2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-temporal"
 version = "0.1.0"
 dependencies = [
@@ -5278,6 +5318,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-torque-vector"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-touch-sensor"
 version = "0.1.0"
 
 [[package]]

@@ -1,13 +1,13 @@
-/// Acceleration sensor: MEMS, g-force, crash detection
-/// Phase 599
+/// accel sensor: measure, filter, calibrate, alert, log
+/// Phase 1296
 
 #[derive(Debug, Clone)]
 pub struct AccelSensor {
-    pub g_force: f64,
-    pub mems_ok: bool,
-    pub range_ok: bool,
-    pub crash_detect_ok: bool,
-    pub calibrated: bool,
+    pub measure_ok: bool,
+    pub filter_ok: bool,
+    pub calibrate_ok: bool,
+    pub alert_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for AccelSensor {
@@ -19,32 +19,32 @@ impl Default for AccelSensor {
 impl AccelSensor {
     pub fn new() -> Self {
         Self {
-            g_force: 1.0,
-            mems_ok: true,
-            range_ok: true,
-            crash_detect_ok: true,
-            calibrated: true,
+            measure_ok: true,
+            filter_ok: true,
+            calibrate_ok: true,
+            alert_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn reading_ok(&self) -> bool {
-        self.mems_ok && self.range_ok
+    pub fn primary_ok(&self) -> bool {
+        self.measure_ok && self.filter_ok && self.calibrate_ok
     }
 
-    pub fn safety_ok(&self) -> bool {
-        self.crash_detect_ok && self.calibrated
+    pub fn secondary_ok(&self) -> bool {
+        self.alert_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.reading_ok() && self.safety_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.mems_ok || !self.crash_detect_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.measure_ok || !self.filter_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.mems_ok { return 5.0; }
+        if !self.measure_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_reading() {
+    fn test_primary() {
         let c = AccelSensor::new();
-        assert!(c.reading_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_safety() {
+    fn test_secondary() {
         let c = AccelSensor::new();
-        assert!(c.safety_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = AccelSensor::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_mems() {
+    fn test_field_toggle() {
         let mut c = AccelSensor::new();
-        c.mems_ok = false;
-        assert!(c.needs_service());
+        c.measure_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

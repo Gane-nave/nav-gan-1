@@ -1,4 +1,4 @@
 [package]
-name = "aurora-light-sensor"
+name = "aurora-alarm-sys"
 version = "0.1.0"
 edition = "2021"
