@@ -28,7 +28,7 @@ pub struct StateMachine {
     states: HashSet<String>,
     /// Set of terminal (accepting) states.
     terminal_states: HashSet<String>,
-    /// Transitions: (from_state, event) -> Vec<Transition>
+    /// Transitions: (from_state, event) -> `Vec<Transition>`
     transitions: HashMap<(String, String), Vec<Transition>>,
     /// Named guard conditions that block transitions.
     blocked_guards: HashSet<String>,
