@@ -110,6 +110,9 @@ members = [
     "crates/aurora-skiplist",
     "crates/aurora-bitset",
     "crates/aurora-arena",
+    "crates/aurora-trie",
+    "crates/aurora-dag",
+    "crates/aurora-heap",
 ]
 
 [workspace.package]

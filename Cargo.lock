@@ -363,6 +363,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-dag"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy"
 version = "0.1.0"
 
@@ -587,6 +591,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-heap"
 version = "0.1.0"
 
 [[package]]
@@ -1099,6 +1107,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-trie"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-trust"
