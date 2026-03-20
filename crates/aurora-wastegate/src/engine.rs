@@ -1,13 +1,13 @@
-/// Wastegate: turbo boost control, overboost protection, duty cycle
-/// Phase 309
+/// Wastegate: boost control, actuator, spring
+/// Phase 505
 
 #[derive(Debug, Clone)]
 pub struct Wastegate {
     pub position_pct: f64,
-    pub boost_bar: f64,
-    pub target_boost_bar: f64,
-    pub duty_cycle_pct: f64,
+    pub target_pct: f64,
     pub actuator_ok: bool,
+    pub spring_ok: bool,
+    pub stuck: bool,
 }
 
 impl Default for Wastegate {
@@ -19,37 +19,32 @@ impl Default for Wastegate {
 impl Wastegate {
     pub fn new() -> Self {
         Self {
-            position_pct: 50.0,
-            boost_bar: 1.0,
-            target_boost_bar: 1.2,
-            duty_cycle_pct: 40.0,
+            position_pct: 30.0,
+            target_pct: 30.0,
             actuator_ok: true,
+            spring_ok: true,
+            stuck: false,
         }
     }
 
-    pub fn boost_ok(&self) -> bool {
-        (self.boost_bar - self.target_boost_bar).abs() < 0.15
+    pub fn at_target(&self) -> bool {
+        (self.position_pct - self.target_pct).abs() < 5.0
     }
 
-    pub fn overboost(&self) -> bool {
-        self.boost_bar > self.target_boost_bar * 1.2
+    pub fn is_functional(&self) -> bool {
+        self.actuator_ok && self.spring_ok && !self.stuck
     }
 
-    pub fn underboost(&self) -> bool {
-        self.boost_bar < self.target_boost_bar * 0.7
+    pub fn all_ok(&self) -> bool {
+        self.at_target() && self.is_functional()
     }
 
-    pub fn fully_open(&self) -> bool {
-        self.position_pct > 95.0
+    pub fn needs_service(&self) -> bool {
+        self.stuck || !self.actuator_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok {
-            return 0.0;
-        }
-        if self.overboost() {
-            return 20.0;
-        }
+        if self.stuck { return 15.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_boost_ok() {
-        let w = Wastegate::new();
-        assert!(!w.boost_ok());
+    fn test_at_target() {
+        let c = Wastegate::new();
+        assert!(c.at_target());
     }
 
     #[test]
-    fn test_no_overboost() {
-        let w = Wastegate::new();
-        assert!(!w.overboost());
+    fn test_functional() {
+        let c = Wastegate::new();
+        assert!(c.is_functional());
     }
 
     #[test]
-    fn test_no_underboost() {
-        let w = Wastegate::new();
-        assert!(!w.underboost());
+    fn test_all_ok() {
+        let c = Wastegate::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_open() {
-        let w = Wastegate::new();
-        assert!(!w.fully_open());
+    fn test_no_service() {
+        let c = Wastegate::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_overboost() {
-        let mut w = Wastegate::new();
-        w.boost_bar = 2.0;
-        assert!(w.overboost());
+    fn test_stuck() {
+        let mut c = Wastegate::new();
+        c.stuck = true;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let w = Wastegate::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = Wastegate::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

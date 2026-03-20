@@ -1,13 +1,13 @@
-/// Catalytic converter: temperature monitoring, efficiency, light-off detection
-/// Phase 303
+/// Catalytic converter: catalyst temp, efficiency, light-off
+/// Phase 492
 
 #[derive(Debug, Clone)]
 pub struct CatalyticConverter {
-    pub inlet_temp_c: f64,
-    pub outlet_temp_c: f64,
+    pub catalyst_temp_c: f64,
+    pub light_off_temp_c: f64,
     pub efficiency_pct: f64,
-    pub light_off: bool,
     pub substrate_ok: bool,
+    pub poisoned: bool,
 }
 
 impl Default for CatalyticConverter {
@@ -19,37 +19,32 @@ impl Default for CatalyticConverter {
 impl CatalyticConverter {
     pub fn new() -> Self {
         Self {
-            inlet_temp_c: 400.0,
-            outlet_temp_c: 450.0,
+            catalyst_temp_c: 450.0,
+            light_off_temp_c: 300.0,
             efficiency_pct: 95.0,
-            light_off: true,
             substrate_ok: true,
+            poisoned: false,
         }
     }
 
-    pub fn is_active(&self) -> bool {
-        self.light_off && self.inlet_temp_c > 250.0
+    pub fn is_lit_off(&self) -> bool {
+        self.catalyst_temp_c >= self.light_off_temp_c
     }
 
     pub fn efficient(&self) -> bool {
-        self.efficiency_pct > 85.0
+        self.efficiency_pct > 80.0
     }
 
-    pub fn overheating(&self) -> bool {
-        self.inlet_temp_c > 900.0 || self.outlet_temp_c > 1000.0
+    pub fn all_ok(&self) -> bool {
+        self.is_lit_off() && self.efficient() && self.substrate_ok && !self.poisoned
     }
 
     pub fn needs_replacement(&self) -> bool {
-        !self.substrate_ok || self.efficiency_pct < 70.0
+        self.poisoned || self.efficiency_pct < 60.0
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.substrate_ok {
-            return 0.0;
-        }
-        if !self.efficient() {
-            return 40.0;
-        }
+        if self.poisoned { return 10.0; }
         100.0
     }
 }
@@ -59,9 +54,9 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_active() {
+    fn test_lit_off() {
         let c = CatalyticConverter::new();
-        assert!(c.is_active());
+        assert!(c.is_lit_off());
     }
 
     #[test]
@@ -71,9 +66,9 @@ mod tests {
     }
 
     #[test]
-    fn test_not_hot() {
+    fn test_all_ok() {
         let c = CatalyticConverter::new();
-        assert!(!c.overheating());
+        assert!(c.all_ok());
     }
 
     #[test]
@@ -83,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_degraded() {
+    fn test_poisoned() {
         let mut c = CatalyticConverter::new();
-        c.efficiency_pct = 60.0;
+        c.poisoned = true;
         assert!(c.needs_replacement());
     }
 

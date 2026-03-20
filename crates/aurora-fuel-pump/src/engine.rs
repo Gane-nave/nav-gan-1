@@ -1,14 +1,13 @@
-/// Fuel pump monitoring: pressure, flow rate, priming, relay status
-/// Phase 218
+/// Fuel pump: pressure, flow rate, relay
+/// Phase 499
 
 #[derive(Debug, Clone)]
 pub struct FuelPump {
     pub pressure_bar: f64,
     pub target_pressure_bar: f64,
-    pub flow_rate_lph: f64,
-    pub current_draw_a: f64,
+    pub flow_lph: f64,
     pub relay_ok: bool,
-    pub running: bool,
+    pub filter_ok: bool,
 }
 
 impl Default for FuelPump {
@@ -22,10 +21,9 @@ impl FuelPump {
         Self {
             pressure_bar: 3.5,
             target_pressure_bar: 3.5,
-            flow_rate_lph: 80.0,
-            current_draw_a: 5.0,
+            flow_lph: 120.0,
             relay_ok: true,
-            running: true,
+            filter_ok: true,
         }
     }
 
@@ -34,32 +32,20 @@ impl FuelPump {
     }
 
     pub fn flow_ok(&self) -> bool {
-        self.flow_rate_lph > 20.0
+        self.flow_lph > 80.0
     }
 
-    pub fn current_ok(&self) -> bool {
-        self.current_draw_a > 2.0 && self.current_draw_a < 12.0
+    pub fn all_ok(&self) -> bool {
+        self.pressure_ok() && self.flow_ok() && self.relay_ok && self.filter_ok
     }
 
-    pub fn needs_attention(&self) -> bool {
-        !self.pressure_ok() || !self.flow_ok() || !self.relay_ok
+    pub fn needs_service(&self) -> bool {
+        !self.filter_ok || !self.relay_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.relay_ok {
-            score -= 40.0;
-        }
-        if !self.pressure_ok() {
-            score -= 25.0;
-        }
-        if !self.flow_ok() {
-            score -= 25.0;
-        }
-        if !self.current_ok() {
-            score -= 15.0;
-        }
-        score.max(0.0)
+        if !self.relay_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -68,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_pressure_ok() {
-        let f = FuelPump::new();
-        assert!(f.pressure_ok());
+    fn test_pressure() {
+        let c = FuelPump::new();
+        assert!(c.pressure_ok());
     }
 
     #[test]
-    fn test_flow_ok() {
-        let f = FuelPump::new();
-        assert!(f.flow_ok());
+    fn test_flow() {
+        let c = FuelPump::new();
+        assert!(c.flow_ok());
     }
 
     #[test]
-    fn test_current_ok() {
-        let f = FuelPump::new();
-        assert!(f.current_ok());
+    fn test_all_ok() {
+        let c = FuelPump::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_attention() {
-        let f = FuelPump::new();
-        assert!(!f.needs_attention());
+    fn test_no_service() {
+        let c = FuelPump::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
     fn test_relay_fail() {
-        let mut f = FuelPump::new();
-        f.relay_ok = false;
-        assert!(f.needs_attention());
+        let mut c = FuelPump::new();
+        c.relay_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let f = FuelPump::new();
-        assert!((f.health_score() - 100.0).abs() < 0.1);
+        let c = FuelPump::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

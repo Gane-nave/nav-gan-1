@@ -133,6 +133,10 @@ name = "aurora-air-dam"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-air-filter"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-air-quality"
 version = "0.1.0"
 
@@ -497,6 +501,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bloom"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-blow-off"
 version = "0.1.0"
 
 [[package]]
@@ -1314,6 +1322,10 @@ name = "aurora-ethernet-auto"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-evap-system"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-evaporator"
 version = "0.1.0"
 
@@ -1463,6 +1475,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-pump"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-rail"
 version = "0.1.0"
 
 [[package]]
@@ -1809,6 +1825,10 @@ name = "aurora-intake-manif"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-intake-manifold"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-integration-tests"
 version = "0.1.0"
 dependencies = [
@@ -2102,6 +2122,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-mass-airflow"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mesh"
 version = "0.1.0"
 
@@ -2196,6 +2220,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-motor-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-muffler"
 version = "0.1.0"
 
 [[package]]
@@ -2403,6 +2431,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-pcv-valve"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-pedal-sensor"
@@ -2787,6 +2819,10 @@ name = "aurora-scheduler"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-scr-system"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-scratch-det"
 version = "0.1.0"
 
@@ -3166,6 +3202,10 @@ name = "aurora-thread-lock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-throttle-body"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-throttle-map"
 version = "0.1.0"
 
@@ -3310,6 +3350,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-tunnel-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-turbo-charger"
 version = "0.1.0"
 
 [[package]]

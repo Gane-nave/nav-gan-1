@@ -1,13 +1,13 @@
-/// Intercooler monitoring: charge air temp, efficiency, pressure drop
-/// Phase 192
+/// Intercooler: charge air cooling, pressure drop, efficiency
+/// Phase 504
 
 #[derive(Debug, Clone)]
 pub struct Intercooler {
     pub inlet_temp_c: f64,
     pub outlet_temp_c: f64,
-    pub inlet_pressure_bar: f64,
-    pub outlet_pressure_bar: f64,
-    pub ambient_temp_c: f64,
+    pub pressure_drop_kpa: f64,
+    pub max_drop_kpa: f64,
+    pub leak_free: bool,
 }
 
 impl Default for Intercooler {
@@ -21,45 +21,31 @@ impl Intercooler {
         Self {
             inlet_temp_c: 150.0,
             outlet_temp_c: 45.0,
-            inlet_pressure_bar: 2.5,
-            outlet_pressure_bar: 2.4,
-            ambient_temp_c: 25.0,
+            pressure_drop_kpa: 3.0,
+            max_drop_kpa: 10.0,
+            leak_free: true,
         }
     }
 
-    pub fn temp_drop_c(&self) -> f64 {
-        self.inlet_temp_c - self.outlet_temp_c
+    pub fn cooling_efficiency(&self) -> f64 {
+        ((self.inlet_temp_c - self.outlet_temp_c) / self.inlet_temp_c) * 100.0
     }
 
-    pub fn efficiency_pct(&self) -> f64 {
-        let max_drop = self.inlet_temp_c - self.ambient_temp_c;
-        if max_drop <= 0.0 {
-            return 0.0;
-        }
-        ((self.temp_drop_c() / max_drop) * 100.0).clamp(0.0, 100.0)
+    pub fn pressure_ok(&self) -> bool {
+        self.pressure_drop_kpa < self.max_drop_kpa
     }
 
-    pub fn pressure_drop_bar(&self) -> f64 {
-        self.inlet_pressure_bar - self.outlet_pressure_bar
+    pub fn all_ok(&self) -> bool {
+        self.pressure_ok() && self.leak_free
     }
 
-    pub fn pressure_drop_ok(&self) -> bool {
-        self.pressure_drop_bar() < 0.3
-    }
-
-    pub fn needs_cleaning(&self) -> bool {
-        self.efficiency_pct() < 60.0
+    pub fn needs_service(&self) -> bool {
+        !self.leak_free || self.pressure_drop_kpa > self.max_drop_kpa
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if self.efficiency_pct() < 70.0 {
-            score -= 30.0;
-        }
-        if !self.pressure_drop_ok() {
-            score -= 20.0;
-        }
-        score.max(0.0)
+        if !self.leak_free { return 20.0; }
+        100.0
     }
 }
 
@@ -68,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_temp_drop() {
-        let ic = Intercooler::new();
-        assert!((ic.temp_drop_c() - 105.0).abs() < 0.1);
+    fn test_cooling() {
+        let c = Intercooler::new();
+        assert!(c.cooling_efficiency() > 60.0);
     }
 
     #[test]
-    fn test_efficiency() {
-        let ic = Intercooler::new();
-        assert!(ic.efficiency_pct() > 80.0);
+    fn test_pressure() {
+        let c = Intercooler::new();
+        assert!(c.pressure_ok());
     }
 
     #[test]
-    fn test_pressure_drop_ok() {
-        let ic = Intercooler::new();
-        assert!(ic.pressure_drop_ok());
+    fn test_all_ok() {
+        let c = Intercooler::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_cleaning() {
-        let ic = Intercooler::new();
-        assert!(!ic.needs_cleaning());
+    fn test_no_service() {
+        let c = Intercooler::new();
+        assert!(!c.needs_service());
+    }
+
+    #[test]
+    fn test_leak() {
+        let mut c = Intercooler::new();
+        c.leak_free = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let ic = Intercooler::new();
-        assert!((ic.health_score() - 100.0).abs() < 0.1);
-    }
-
-    #[test]
-    fn test_poor_efficiency() {
-        let mut ic = Intercooler::new();
-        ic.outlet_temp_c = 120.0;
-        assert!(ic.needs_cleaning());
+        let c = Intercooler::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
