@@ -1,0 +1,6 @@
+[package]
+name = "aurora-exhaust-note"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

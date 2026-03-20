@@ -1,0 +1,33 @@
+[package]
+name = "aurora-api"
+version.workspace = true
+edition.workspace = true
+description = "REST API server for AURORA NAV / GMIN"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-events = { path = "../aurora-events" }
+aurora-gnss = { path = "../aurora-gnss" }
+aurora-corrections = { path = "../aurora-corrections" }
+aurora-sensors = { path = "../aurora-sensors" }
+aurora-fusion = { path = "../aurora-fusion" }
+aurora-integrity = { path = "../aurora-integrity" }
+aurora-continuity = { path = "../aurora-continuity" }
+aurora-telemetry = { path = "../aurora-telemetry" }
+aurora-metrics = { path = "../aurora-metrics" }
+aurora-observability = { path = "../aurora-observability" }
+aurora-auth = { path = "../aurora-auth" }
+aurora-security = { path = "../aurora-security" }
+aurora-web = { path = "../aurora-web" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+parking_lot = { workspace = true }

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-instrument-clus"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

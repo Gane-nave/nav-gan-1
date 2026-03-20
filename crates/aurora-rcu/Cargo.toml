@@ -1,0 +1,8 @@
+[package]
+name = "aurora-rcu"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Read-Copy-Update for lock-free concurrent reads for AURORA NAV"
+
+[dependencies]

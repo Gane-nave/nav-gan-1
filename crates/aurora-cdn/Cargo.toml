@@ -1,0 +1,11 @@
+[package]
+name = "aurora-cdn"
+version.workspace = true
+edition.workspace = true
+description = "Map tile CDN management and distribution"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ultrasonic"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

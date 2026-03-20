@@ -1,0 +1,6 @@
+[package]
+name = "aurora-headlight-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

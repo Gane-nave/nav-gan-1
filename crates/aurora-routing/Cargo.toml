@@ -1,0 +1,16 @@
+[package]
+name = "aurora-routing"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Routing engine — turn-by-turn navigation, alternative routes, corridor routing"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-map = { path = "../aurora-map" }
+aurora-events = { path = "../aurora-events" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+tracing.workspace = true

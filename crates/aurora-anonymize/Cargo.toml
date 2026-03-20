@@ -1,0 +1,11 @@
+[package]
+name = "aurora-anonymize"
+version.workspace = true
+edition.workspace = true
+description = "Location data anonymization and privacy"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

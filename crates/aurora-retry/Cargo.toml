@@ -1,0 +1,7 @@
+[package]
+name = "aurora-retry"
+version = "0.1.0"
+edition = "2021"
+description = "Advanced retry strategies with backoff, jitter, and budget control for AURORA NAV"
+
+[dependencies]

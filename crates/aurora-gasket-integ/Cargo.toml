@@ -1,0 +1,6 @@
+[package]
+name = "aurora-gasket-integ"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

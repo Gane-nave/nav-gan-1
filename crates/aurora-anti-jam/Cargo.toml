@@ -1,0 +1,11 @@
+[package]
+name = "aurora-anti-jam"
+version.workspace = true
+edition.workspace = true
+description = "Anti-jamming and anti-spoofing detection for GNSS"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

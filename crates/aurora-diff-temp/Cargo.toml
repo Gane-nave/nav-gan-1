@@ -1,0 +1,6 @@
+[package]
+name = "aurora-diff-temp"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

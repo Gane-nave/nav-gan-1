@@ -1,0 +1,6 @@
+[package]
+name = "aurora-mirror-fold"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

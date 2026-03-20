@@ -1,0 +1,6 @@
+[package]
+name = "aurora-bracket-mount"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,18 @@
+[package]
+name = "aurora-micro-nav"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Micro navigation — gate-level arrival, pickup/dropoff routing, indoor handoff, last-metre guidance"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }

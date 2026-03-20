@@ -1,0 +1,6 @@
+[package]
+name = "aurora-steer-angle"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

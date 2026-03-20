@@ -1,0 +1,6 @@
+[package]
+name = "aurora-infotain-scr"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

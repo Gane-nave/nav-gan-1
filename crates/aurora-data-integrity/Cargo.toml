@@ -1,0 +1,8 @@
+[package]
+name = "aurora-data-integrity"
+version = "0.1.0"
+edition = "2021"
+description = "Data integrity verification for maps and traffic data."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

@@ -1,0 +1,15 @@
+[package]
+name = "aurora-lane"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Lane guidance — lane-level positioning, turn guidance, and lane recommendations"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-map = { path = "../aurora-map" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+tracing.workspace = true

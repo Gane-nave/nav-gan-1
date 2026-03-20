@@ -1,0 +1,6 @@
+[package]
+name = "aurora-rust-protect"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-intake-manif"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

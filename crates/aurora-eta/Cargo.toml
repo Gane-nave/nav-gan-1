@@ -1,0 +1,11 @@
+[package]
+name = "aurora-eta"
+version.workspace = true
+edition.workspace = true
+description = "Dynamic ETA prediction with historical and real-time data fusion"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

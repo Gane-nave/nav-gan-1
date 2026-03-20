@@ -1,0 +1,6 @@
+[package]
+name = "aurora-drl-led"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

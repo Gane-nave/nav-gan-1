@@ -1,0 +1,13 @@
+[package]
+name = "aurora-anti-manipulation"
+version.workspace = true
+edition.workspace = true
+description = "Anti-manipulation infrastructure — anomaly detection, adversarial defense, transparency logs"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

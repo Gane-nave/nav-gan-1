@@ -1,0 +1,6 @@
+[package]
+name = "aurora-cross-traffic"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

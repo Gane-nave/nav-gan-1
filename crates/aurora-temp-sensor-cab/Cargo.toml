@@ -1,0 +1,6 @@
+[package]
+name = "aurora-temp-sensor-cab"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,13 @@
+[package]
+name = "aurora-evidence"
+version.workspace = true
+edition.workspace = true
+description = "Evidence system — incident reporting, evidence vault, signed metadata, timeline"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

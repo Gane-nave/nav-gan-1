@@ -1,0 +1,6 @@
+[package]
+name = "aurora-solar-sensor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

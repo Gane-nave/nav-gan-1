@@ -1,0 +1,18 @@
+[package]
+name = "aurora-auth"
+version.workspace = true
+edition.workspace = true
+description = "Authentication, authorization, and session management for AURORA NAV"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+parking_lot = { workspace = true }
+
+# HMAC-SHA256 for JWT
+hmac = "0.12"
+sha2 = "0.10"
+base64 = "0.22"

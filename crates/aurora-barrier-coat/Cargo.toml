@@ -1,0 +1,6 @@
+[package]
+name = "aurora-barrier-coat"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

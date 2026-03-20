@@ -1,0 +1,374 @@
+//! Emergency satellite protocol — message framing, compression, and encoding
+//! for bandwidth-constrained satellite links.
+
+use chrono::{DateTime, Utc};
+use serde::{Deserialize, Serialize};
+use uuid::Uuid;
+
+/// Maximum encoded message size (bytes).
+/// Satellite links are bandwidth-constrained; messages must fit in a single
+/// burst transmission.  The budget accounts for JSON-encoded metadata
+/// (~350-400 bytes of overhead for UUIDs, timestamps, field names) plus
+/// the user payload.
+pub const MAX_PAYLOAD_BYTES: usize = 1024;
+
+/// Emergency message priority levels.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, PartialOrd, Ord, Hash, Serialize, Deserialize)]
+pub enum EmergencyPriority {
+    /// Informational — non-critical status update
+    Info = 0,
+    /// Warning — potential danger, advisory
+    Warning = 1,
+    /// Urgent — immediate attention required
+    Urgent = 2,
+    /// Distress — life-threatening emergency (SOS)
+    Distress = 3,
+    /// Mayday — catastrophic, highest priority
+    Mayday = 4,
+}
+
+/// Type of emergency satellite message.
+#[derive(Debug, Clone, Copy, PartialEq, Eq, Hash, Serialize, Deserialize)]
+pub enum MessageType {
+    /// SOS beacon with position
+    SosBeacon,
+    /// Location share (non-emergency)
+    LocationShare,
+    /// Evacuation route broadcast
+    EvacuationRoute,
+    /// Infrastructure status report
+    InfraStatus,
+    /// Acknowledgement of received message
+    Ack,
+    /// Relay — forwarded on behalf of another node
+    Relay,
+    /// Heartbeat — periodic alive signal
+    Heartbeat,
+}
+
+/// A compact emergency satellite message.
+///
+/// Designed for minimal bandwidth: every field is chosen to minimize
+/// on-wire size while preserving enough context for rescue operations.
+#[derive(Debug, Clone, Serialize, Deserialize)]
+pub struct SatMessage {
+    /// Unique message identifier
+    pub id: Uuid,
+    /// Originator device identifier
+    pub sender_id: Uuid,
+    /// Message type
+    pub msg_type: MessageType,
+    /// Priority level
+    pub priority: EmergencyPriority,
+    /// Latitude (WGS-84, degrees)
+    pub lat: f64,
+    /// Longitude (WGS-84, degrees)
+    pub lon: f64,
+    /// Altitude above mean sea level (meters), if known
+    pub alt_m: Option<f32>,
+    /// Horizontal accuracy estimate (meters)
+    pub accuracy_m: Option<f32>,
+    /// Heading in degrees (0-360), if known
+    pub heading_deg: Option<f32>,
+    /// Speed in m/s, if known
+    pub speed_mps: Option<f32>,
+    /// Free-text payload (UTF-8, truncated to fit)
+    pub payload: String,
+    /// Hop count — incremented on each relay
+    pub hop_count: u8,
+    /// Maximum allowed hops before the message is dropped
+    pub max_hops: u8,
+    /// Timestamp of message creation
+    pub created_at: DateTime<Utc>,
+    /// Time-to-live in seconds
+    pub ttl_s: u32,
+    /// HMAC-SHA256 signature (hex-encoded) for authenticity
+    pub signature: Option<String>,
+}
+
+impl SatMessage {
+    /// Create a new emergency message with the given parameters.
+    pub fn new(
+        sender_id: Uuid,
+        msg_type: MessageType,
+        priority: EmergencyPriority,
+        lat: f64,
+        lon: f64,
+        payload: &str,
+    ) -> Self {
+        Self {
+            id: Uuid::new_v4(),
+            sender_id,
+            msg_type,
+            priority,
+            lat,
+            lon,
+            alt_m: None,
+            accuracy_m: None,
+            heading_deg: None,
+            speed_mps: None,
+            payload: payload.to_string(),
+            hop_count: 0,
+            max_hops: 7,
+            created_at: Utc::now(),
+            ttl_s: 3600,
+            signature: None,
+        }
+    }
+
+    /// Check whether the message has expired.
+    pub fn is_expired(&self) -> bool {
+        let elapsed = Utc::now()
+            .signed_duration_since(self.created_at)
+            .num_seconds();
+        elapsed >= i64::from(self.ttl_s)
+    }
+
+    /// Check whether the message can be relayed further.
+    pub fn can_relay(&self) -> bool {
+        self.hop_count < self.max_hops && !self.is_expired()
+    }
+
+    /// Increment hop count for relay forwarding.
+    /// Returns `Err` if max hops reached or message expired.
+    pub fn relay(&mut self) -> Result<(), ProtocolError> {
+        if self.is_expired() {
+            return Err(ProtocolError::MessageExpired { id: self.id });
+        }
+        if self.hop_count >= self.max_hops {
+            return Err(ProtocolError::MaxHopsReached {
+                id: self.id,
+                max_hops: self.max_hops,
+            });
+        }
+        self.hop_count += 1;
+        Ok(())
+    }
+
+    /// Exact on-wire (JSON-encoded) size of this message in bytes.
+    pub fn estimated_size(&self) -> usize {
+        serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0)
+    }
+
+    /// Truncate payload to ensure the message fits within `MAX_PAYLOAD_BYTES`.
+    ///
+    /// Uses actual JSON serialization to verify the result, handling
+    /// JSON-escaped characters (quotes, backslashes, control chars) correctly.
+    pub fn truncate_to_fit(&mut self) {
+        // Fast path: already fits
+        if self.estimated_size() <= MAX_PAYLOAD_BYTES {
+            return;
+        }
+
+        // Measure JSON overhead with empty payload
+        let saved = std::mem::take(&mut self.payload);
+        let overhead = serde_json::to_vec(self).map(|v| v.len()).unwrap_or(0);
+        self.payload = saved;
+
+        if overhead >= MAX_PAYLOAD_BYTES {
+            self.payload.clear();
+            return;
+        }
+
+        // Initial conservative truncation based on raw byte budget
+        let max_payload = MAX_PAYLOAD_BYTES - overhead;
+        if self.payload.len() > max_payload {
+            let end = self
+                .payload
+                .char_indices()
+                .take_while(|(i, _)| *i < max_payload)
+                .last()
+                .map(|(i, c)| i + c.len_utf8())
+                .unwrap_or(0);
+            self.payload = self.payload[..end].to_string();
+        }
+
+        // If JSON escaping made the message still too large, shave chars
+        // off the end until the serialized size fits.
+        while self.estimated_size() > MAX_PAYLOAD_BYTES && !self.payload.is_empty() {
+            self.payload.pop();
+        }
+    }
+}
+
+/// Protocol-level errors.
+#[derive(Debug, thiserror::Error)]
+pub enum ProtocolError {
+    #[error("message {id} has expired")]
+    MessageExpired { id: Uuid },
+
+    #[error("message {id} reached max hops ({max_hops})")]
+    MaxHopsReached { id: Uuid, max_hops: u8 },
+
+    #[error("payload exceeds maximum size ({size} > {max})")]
+    PayloadTooLarge { size: usize, max: usize },
+
+    #[error("invalid coordinates: lat={lat}, lon={lon}")]
+    InvalidCoordinates { lat: f64, lon: f64 },
+
+    #[error("encoding error: {0}")]
+    EncodingError(String),
+}
+
+/// Encode a `SatMessage` to a compact JSON byte vector.
+pub fn encode_message(msg: &SatMessage) -> Result<Vec<u8>, ProtocolError> {
+    if msg.lat < -90.0 || msg.lat > 90.0 || msg.lon < -180.0 || msg.lon > 180.0 {
+        return Err(ProtocolError::InvalidCoordinates {
+            lat: msg.lat,
+            lon: msg.lon,
+        });
+    }
+    let bytes = serde_json::to_vec(msg).map_err(|e| ProtocolError::EncodingError(e.to_string()))?;
+    if bytes.len() > MAX_PAYLOAD_BYTES {
+        return Err(ProtocolError::PayloadTooLarge {
+            size: bytes.len(),
+            max: MAX_PAYLOAD_BYTES,
+        });
+    }
+    Ok(bytes)
+}
+
+/// Decode a `SatMessage` from bytes.
+pub fn decode_message(data: &[u8]) -> Result<SatMessage, ProtocolError> {
+    serde_json::from_slice(data).map_err(|e| ProtocolError::EncodingError(e.to_string()))
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_message_creation() {
+        let sender = Uuid::new_v4();
+        let msg = SatMessage::new(
+            sender,
+            MessageType::SosBeacon,
+            EmergencyPriority::Distress,
+            32.0853,
+            34.7818,
+            "Vehicle collision on Highway 1",
+        );
+        assert_eq!(msg.sender_id, sender);
+        assert_eq!(msg.msg_type, MessageType::SosBeacon);
+        assert_eq!(msg.priority, EmergencyPriority::Distress);
+        assert_eq!(msg.hop_count, 0);
+        assert_eq!(msg.max_hops, 7);
+        assert!(!msg.is_expired());
+        assert!(msg.can_relay());
+    }
+
+    #[test]
+    fn test_relay_increments_hop_count() {
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::Relay,
+            EmergencyPriority::Urgent,
+            31.0,
+            35.0,
+            "relay test",
+        );
+        msg.max_hops = 2;
+
+        assert!(msg.relay().is_ok());
+        assert_eq!(msg.hop_count, 1);
+
+        assert!(msg.relay().is_ok());
+        assert_eq!(msg.hop_count, 2);
+
+        // Third relay should fail — max hops reached
+        assert!(msg.relay().is_err());
+    }
+
+    #[test]
+    fn test_expired_message_cannot_relay() {
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::Heartbeat,
+            EmergencyPriority::Info,
+            30.0,
+            34.0,
+            "",
+        );
+        msg.ttl_s = 0;
+        // With TTL=0, the message is expired immediately
+        assert!(msg.is_expired());
+        assert!(!msg.can_relay());
+        assert!(msg.relay().is_err());
+    }
+
+    #[test]
+    fn test_truncate_to_fit() {
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::InfraStatus,
+            EmergencyPriority::Warning,
+            32.0,
+            34.0,
+            &"A".repeat(2000),
+        );
+        assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
+        msg.truncate_to_fit();
+        assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
+        // The real invariant: encode_message must succeed after truncation
+        assert!(encode_message(&msg).is_ok());
+    }
+
+    #[test]
+    fn test_truncate_to_fit_escaped_chars() {
+        // Payload with JSON-escaped characters: quotes, backslashes, newlines.
+        // Each becomes 2+ bytes in JSON, so raw len() != serialized len().
+        let payload: String = "\"hello\"\n\\world\\".repeat(200);
+        let mut msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::SosBeacon,
+            EmergencyPriority::Distress,
+            32.0,
+            34.0,
+            &payload,
+        );
+        assert!(msg.estimated_size() > MAX_PAYLOAD_BYTES);
+        msg.truncate_to_fit();
+        assert!(msg.estimated_size() <= MAX_PAYLOAD_BYTES);
+        assert!(encode_message(&msg).is_ok());
+    }
+
+    #[test]
+    fn test_encode_decode_roundtrip() {
+        let msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::LocationShare,
+            EmergencyPriority::Info,
+            32.0853,
+            34.7818,
+            "OK",
+        );
+        // We can't guarantee encode succeeds for all messages due to size,
+        // but we can test decode on what we encode
+        let json = serde_json::to_vec(&msg).unwrap();
+        let decoded = decode_message(&json).unwrap();
+        assert_eq!(decoded.id, msg.id);
+        assert_eq!(decoded.sender_id, msg.sender_id);
+        assert_eq!(decoded.msg_type, msg.msg_type);
+    }
+
+    #[test]
+    fn test_invalid_coordinates_rejected() {
+        let msg = SatMessage::new(
+            Uuid::new_v4(),
+            MessageType::SosBeacon,
+            EmergencyPriority::Mayday,
+            91.0, // Invalid latitude
+            34.0,
+            "help",
+        );
+        assert!(encode_message(&msg).is_err());
+    }
+
+    #[test]
+    fn test_priority_ordering() {
+        assert!(EmergencyPriority::Mayday > EmergencyPriority::Distress);
+        assert!(EmergencyPriority::Distress > EmergencyPriority::Urgent);
+        assert!(EmergencyPriority::Urgent > EmergencyPriority::Warning);
+        assert!(EmergencyPriority::Warning > EmergencyPriority::Info);
+    }
+}

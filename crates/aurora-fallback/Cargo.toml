@@ -1,0 +1,11 @@
+[package]
+name = "aurora-fallback"
+version.workspace = true
+edition.workspace = true
+description = "Fallback hierarchy — GNSS to IMU to Cell to WiFi to trajectory"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

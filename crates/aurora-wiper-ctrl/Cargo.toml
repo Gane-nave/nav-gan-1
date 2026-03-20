@@ -1,0 +1,6 @@
+[package]
+name = "aurora-wiper-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

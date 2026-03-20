@@ -1,0 +1,6 @@
+[package]
+name = "aurora-dtc-reader"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

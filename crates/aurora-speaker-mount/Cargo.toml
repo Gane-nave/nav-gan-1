@@ -1,0 +1,6 @@
+[package]
+name = "aurora-speaker-mount"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

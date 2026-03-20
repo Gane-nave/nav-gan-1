@@ -1,0 +1,15 @@
+[package]
+name = "aurora-map"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Map engine — road graph indexing, tile management, and map matching"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+aurora-events = { path = "../aurora-events" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+tracing.workspace = true

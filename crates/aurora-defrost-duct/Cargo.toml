@@ -1,0 +1,6 @@
+[package]
+name = "aurora-defrost-duct"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

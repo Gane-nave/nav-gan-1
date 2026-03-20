@@ -1,0 +1,7 @@
+[package]
+name = "aurora-lease"
+version = "0.1.0"
+edition = "2021"
+description = "Distributed lease and lock management with TTL for AURORA NAV"
+
+[dependencies]

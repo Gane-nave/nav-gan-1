@@ -1,0 +1,6 @@
+[package]
+name = "aurora-lidar-proc"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

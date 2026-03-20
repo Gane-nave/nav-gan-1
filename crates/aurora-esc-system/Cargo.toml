@@ -1,0 +1,6 @@
+[package]
+name = "aurora-esc-system"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
