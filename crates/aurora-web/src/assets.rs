@@ -100,9 +100,34 @@ body {
   font-weight: 600;
   text-transform: uppercase;
 }
-.status-pill.healthy { background: rgba(16,185,129,0.2); color: var(--accent-green); }
-.status-pill.degraded { background: rgba(245,158,11,0.2); color: var(--accent-amber); }
-.status-pill.critical { background: rgba(239,68,68,0.2); color: var(--accent-red); }
+.status-pill.healthy { background: rgba(16,185,129,0.2); color: var(--accent-green); box-shadow: 0 0 12px rgba(16,185,129,0.3); }
+.status-pill.degraded { background: rgba(245,158,11,0.2); color: var(--accent-amber); box-shadow: 0 0 12px rgba(245,158,11,0.3); }
+.status-pill.critical { background: rgba(239,68,68,0.2); color: var(--accent-red); box-shadow: 0 0 12px rgba(239,68,68,0.3); animation: emergency-flash 1s infinite; }
+/* Progress Bars */
+.progress-bar {
+  height: 4px;
+  background: var(--bg-card);
+  border-radius: 2px;
+  margin-top: 4px;
+  overflow: hidden;
+}
+.progress-bar .fill {
+  height: 100%;
+  border-radius: 2px;
+  transition: width 0.5s ease;
+}
+/* Satellite Canvas */
+.sat-canvas-wrap {
+  width: 100%;
+  padding: 8px 0;
+  display: flex;
+  justify-content: center;
+}
+.sat-canvas-wrap canvas {
+  border-radius: 50%;
+  background: rgba(10,14,23,0.6);
+  border: 1px solid var(--border);
+}
 /* Left Panel */
 #left-panel {
   background: var(--bg-secondary);
@@ -134,6 +159,18 @@ body {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.4; }
 }
+@keyframes glow {
+  0%, 100% { box-shadow: 0 0 8px rgba(59,130,246,0.3); }
+  50% { box-shadow: 0 0 20px rgba(59,130,246,0.6); }
+}
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes countUp {
+  from { opacity: 0.5; }
+  to { opacity: 1; }
+}
 .data-row {
   display: flex;
   justify-content: space-between;
@@ -142,7 +179,8 @@ body {
   font-size: 13px;
 }
 .data-row .label { color: var(--text-secondary); }
-.data-row .value { font-weight: 500; font-variant-numeric: tabular-nums; }
+.data-row .value { font-weight: 500; font-variant-numeric: tabular-nums; transition: color 0.3s, opacity 0.2s; }
+.data-row .value.updated { animation: countUp 0.3s ease; }
 .data-row .value.green { color: var(--accent-green); }
 .data-row .value.amber { color: var(--accent-amber); }
 .data-row .value.red { color: var(--accent-red); }
@@ -153,7 +191,10 @@ body {
   border-radius: 12px;
   padding: 16px;
   margin-top: 8px;
+  border: 1px solid var(--border);
+  transition: border-color 0.3s;
 }
+.route-card:hover { border-color: var(--accent-blue); }
 .route-card .eta {
   font-size: 28px;
   font-weight: 700;
@@ -267,6 +308,8 @@ body {
   display: flex; align-items: center; justify-content: center;
   font-size: 14px; font-weight: 700;
   margin: 0 auto 4px;
+  transition: box-shadow 0.3s;
+  animation: glow 3s ease-in-out infinite;
 }
 .gauge-label {
   font-size: 10px;
@@ -510,6 +553,7 @@ body {
   <aside id="right-panel">
     <div class="panel-section">
       <h3><span class="dot"></span> SATELLITES</h3>
+      <div class="sat-canvas-wrap"><canvas id="sky-canvas" width="180" height="180"></canvas></div>
       <div class="data-row"><span class="label">Tracked</span><span class="value" id="sat-tracked">0</span></div>
       <div class="data-row"><span class="label">In Fix</span><span class="value green" id="sat-fix">0</span></div>
       <div class="data-row"><span class="label">GPS</span><span class="value" id="sat-gps">0</span></div>
@@ -518,6 +562,7 @@ body {
       <div class="data-row"><span class="label">BeiDou</span><span class="value" id="sat-beidou">0</span></div>
       <div class="data-row"><span class="label">HDOP</span><span class="value" id="sat-hdop">--</span></div>
       <div class="data-row"><span class="label">PDOP</span><span class="value" id="sat-pdop">--</span></div>
+      <div class="progress-bar"><div class="fill" id="sat-bar" style="width:0%;background:linear-gradient(90deg,var(--accent-blue),var(--accent-cyan))"></div></div>
     </div>
 
     <div class="panel-section">
@@ -537,6 +582,7 @@ body {
       <div class="data-row"><span class="label">Spoofing</span><span class="value green" id="int-spoof">None</span></div>
       <div class="data-row"><span class="label">RAIM</span><span class="value" id="int-raim">--</span></div>
       <div class="data-row"><span class="label">Corr. Age</span><span class="value" id="int-corr">-- s</span></div>
+      <div class="progress-bar"><div class="fill" id="int-bar" style="width:0%;background:linear-gradient(90deg,var(--accent-green),var(--accent-cyan))"></div></div>
     </div>
 
     <div class="panel-section">
@@ -584,13 +630,17 @@ body {
         <div class="subsystem-chip"><div class="indicator on"></div>Map</div>
         <div class="subsystem-chip"><div class="indicator on"></div>Sensors</div>
         <div class="subsystem-chip"><div class="indicator on"></div>Telemetry</div>
-        <div class="subsystem-chip"><div class="indicator off"></div>Fleet</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>PNT</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>V2X</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>AR Nav</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>Indoor</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>Fleet</div>
         <div class="subsystem-chip"><div class="indicator on"></div>Emergency</div>
         <div class="subsystem-chip"><div class="indicator on"></div>Offline</div>
         <div class="subsystem-chip"><div class="indicator on"></div>Edge</div>
         <div class="subsystem-chip"><div class="indicator off"></div>Satellite</div>
         <div class="subsystem-chip"><div class="indicator on"></div>City</div>
-        <div class="subsystem-chip"><div class="indicator off"></div>Twin</div>
+        <div class="subsystem-chip"><div class="indicator on"></div>Twin</div>
         <div class="subsystem-chip"><div class="indicator on"></div>API</div>
       </div>
     </div>
@@ -715,6 +765,8 @@ function updateDashboard(data) {
   document.getElementById('sat-hdop').textContent = s.hdop.toFixed(1);
   document.getElementById('sat-pdop').textContent = s.pdop.toFixed(1);
   document.getElementById('ov-sats').textContent = s.tracked;
+  document.getElementById('sat-bar').style.width = Math.min(100, (s.tracked / 36) * 100).toFixed(0) + '%';
+  drawSkyView(s);
 
   // Integrity
   const i = data.integrity;
@@ -728,6 +780,7 @@ function updateDashboard(data) {
   document.getElementById('int-spoof').className = 'value ' + (i.spoofing_detected ? 'red' : 'green');
   document.getElementById('int-raim').textContent = i.raim_available ? 'Available' : 'Unavailable';
   document.getElementById('int-corr').textContent = i.correction_age_s.toFixed(1) + ' s';
+  document.getElementById('int-bar').style.width = (i.level === 'Nominal' ? '100' : i.level === 'Degraded' ? '50' : '20') + '%';
 
   // Traffic
   const t = data.traffic;
@@ -842,6 +895,81 @@ function updateDashboard(data) {
   const hrs = Math.floor(up / 3600);
   const mins = Math.floor((up % 3600) / 60);
   document.getElementById('ft-uptime').textContent = 'Uptime: ' + hrs + 'h ' + mins + 'm';
+}
+
+// ========== SATELLITE SKY VIEW ==========
+function drawSkyView(sats) {
+  const canvas = document.getElementById('sky-canvas');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width, h = canvas.height;
+  const cx = w / 2, cy = h / 2, r = w / 2 - 10;
+
+  ctx.clearRect(0, 0, w, h);
+
+  // Draw rings
+  ctx.strokeStyle = '#2a3444';
+  ctx.lineWidth = 0.5;
+  for (let ring = 1; ring <= 3; ring++) {
+    ctx.beginPath();
+    ctx.arc(cx, cy, r * ring / 3, 0, Math.PI * 2);
+    ctx.stroke();
+  }
+
+  // Draw cross
+  ctx.beginPath();
+  ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r);
+  ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy);
+  ctx.stroke();
+
+  // Labels
+  ctx.fillStyle = '#8b95a8';
+  ctx.font = '9px Inter, sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('N', cx, cy - r + 8);
+  ctx.fillText('S', cx, cy + r - 2);
+  ctx.fillText('E', cx + r - 6, cy + 3);
+  ctx.fillText('W', cx - r + 6, cy + 3);
+
+  // Generate satellite positions from counts (deterministic based on time)
+  const now = Date.now() / 1000;
+  const colors = { gps: '#3b82f6', galileo: '#10b981', glonass: '#f59e0b', beidou: '#ef4444' };
+  const groups = [
+    { count: sats.gps_count, color: colors.gps, offset: 0 },
+    { count: sats.galileo_count, color: colors.galileo, offset: 40 },
+    { count: sats.glonass_count, color: colors.glonass, offset: 80 },
+    { count: sats.beidou_count, color: colors.beidou, offset: 120 }
+  ];
+
+  groups.forEach(g => {
+    for (let j = 0; j < g.count; j++) {
+      const az = ((g.offset + j * (360 / Math.max(g.count, 1)) + now * 0.5) % 360) * Math.PI / 180;
+      const el = 0.3 + 0.6 * Math.abs(Math.sin(j * 1.7 + now * 0.02));
+      const dist = r * (1 - el);
+      const sx = cx + dist * Math.sin(az);
+      const sy = cy - dist * Math.cos(az);
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, 4, 0, Math.PI * 2);
+      ctx.fillStyle = g.color;
+      ctx.fill();
+      ctx.strokeStyle = 'rgba(255,255,255,0.3)';
+      ctx.lineWidth = 0.5;
+      ctx.stroke();
+    }
+  });
+
+  // Legend
+  ctx.font = '8px Inter, sans-serif';
+  const legend = [['GPS', colors.gps], ['GAL', colors.galileo], ['GLO', colors.glonass], ['BDS', colors.beidou]];
+  legend.forEach(([name, col], idx) => {
+    const lx = 8 + idx * 42;
+    ctx.fillStyle = col;
+    ctx.fillRect(lx, h - 12, 6, 6);
+    ctx.fillStyle = '#8b95a8';
+    ctx.textAlign = 'left';
+    ctx.fillText(name, lx + 8, h - 6);
+  });
 }
 
 // ========== CLOCK ==========
