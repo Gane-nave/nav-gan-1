@@ -1,13 +1,13 @@
-/// Alternator: charging voltage, current output, diode
-/// Phase 516
+/// Alternator: rotor, stator, regulator, diode
+/// Phase 724
 
 #[derive(Debug, Clone)]
 pub struct Alternator {
-    pub voltage_v: f64,
-    pub current_a: f64,
-    pub max_current_a: f64,
+    pub rotor_ok: bool,
+    pub stator_ok: bool,
+    pub regulator_ok: bool,
     pub diode_ok: bool,
-    pub bearing_ok: bool,
+    pub output_ok: bool,
 }
 
 impl Default for Alternator {
@@ -19,32 +19,32 @@ impl Default for Alternator {
 impl Alternator {
     pub fn new() -> Self {
         Self {
-            voltage_v: 14.2,
-            current_a: 80.0,
-            max_current_a: 150.0,
+            rotor_ok: true,
+            stator_ok: true,
+            regulator_ok: true,
             diode_ok: true,
-            bearing_ok: true,
+            output_ok: true,
         }
     }
 
-    pub fn voltage_ok(&self) -> bool {
-        self.voltage_v > 13.5 && self.voltage_v < 14.8
+    pub fn generation_ok(&self) -> bool {
+        self.rotor_ok && self.stator_ok && self.output_ok
     }
 
-    pub fn current_ok(&self) -> bool {
-        self.current_a < self.max_current_a
+    pub fn regulation_ok(&self) -> bool {
+        self.regulator_ok && self.diode_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.voltage_ok() && self.current_ok() && self.diode_ok && self.bearing_ok
+        self.generation_ok() && self.regulation_ok()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        !self.diode_ok || !self.bearing_ok
+        !self.rotor_ok || !self.diode_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.diode_ok { return 15.0; }
+        if !self.rotor_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_voltage() {
+    fn test_generation() {
         let c = Alternator::new();
-        assert!(c.voltage_ok());
+        assert!(c.generation_ok());
     }
 
     #[test]
-    fn test_current() {
+    fn test_regulation() {
         let c = Alternator::new();
-        assert!(c.current_ok());
+        assert!(c.regulation_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_diode() {
+    fn test_rotor() {
         let mut c = Alternator::new();
-        c.diode_ok = false;
+        c.rotor_ok = false;
         assert!(c.needs_replacement());
     }
 

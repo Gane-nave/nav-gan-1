@@ -1,13 +1,13 @@
-/// Infotainment: display, audio, connectivity, navigation
-/// Phase 541
+/// Infotainment system: display, audio, navigation, connectivity
+/// Phase 714
 
 #[derive(Debug, Clone)]
 pub struct Infotainment {
     pub display_ok: bool,
     pub audio_ok: bool,
-    pub bluetooth_ok: bool,
-    pub wifi_ok: bool,
-    pub gps_ok: bool,
+    pub nav_ok: bool,
+    pub connect_ok: bool,
+    pub touch_ok: bool,
 }
 
 impl Default for Infotainment {
@@ -21,26 +21,26 @@ impl Infotainment {
         Self {
             display_ok: true,
             audio_ok: true,
-            bluetooth_ok: true,
-            wifi_ok: true,
-            gps_ok: true,
+            nav_ok: true,
+            connect_ok: true,
+            touch_ok: true,
         }
     }
 
     pub fn media_ok(&self) -> bool {
-        self.display_ok && self.audio_ok
+        self.display_ok && self.audio_ok && self.touch_ok
     }
 
-    pub fn connectivity_ok(&self) -> bool {
-        self.bluetooth_ok && self.wifi_ok
+    pub fn services_ok(&self) -> bool {
+        self.nav_ok && self.connect_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.media_ok() && self.connectivity_ok() && self.gps_ok
+        self.media_ok() && self.services_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.display_ok
+        !self.display_ok || !self.touch_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_connectivity() {
+    fn test_services() {
         let c = Infotainment::new();
-        assert!(c.connectivity_ok());
+        assert!(c.services_ok());
     }
 
     #[test]

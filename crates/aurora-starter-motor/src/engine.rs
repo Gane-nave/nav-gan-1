@@ -1,13 +1,13 @@
-/// Starter motor: cranking speed, solenoid, bendix
-/// Phase 517
+/// Starter motor: solenoid, armature, drive gear, flywheel ring
+/// Phase 725
 
 #[derive(Debug, Clone)]
 pub struct StarterMotor {
-    pub cranking_rpm: f64,
-    pub min_cranking_rpm: f64,
     pub solenoid_ok: bool,
-    pub bendix_ok: bool,
-    pub brush_ok: bool,
+    pub armature_ok: bool,
+    pub drive_ok: bool,
+    pub ring_gear_ok: bool,
+    pub current_ok: bool,
 }
 
 impl Default for StarterMotor {
@@ -19,32 +19,32 @@ impl Default for StarterMotor {
 impl StarterMotor {
     pub fn new() -> Self {
         Self {
-            cranking_rpm: 200.0,
-            min_cranking_rpm: 100.0,
             solenoid_ok: true,
-            bendix_ok: true,
-            brush_ok: true,
+            armature_ok: true,
+            drive_ok: true,
+            ring_gear_ok: true,
+            current_ok: true,
         }
     }
 
-    pub fn cranking_ok(&self) -> bool {
-        self.cranking_rpm > self.min_cranking_rpm
+    pub fn engagement_ok(&self) -> bool {
+        self.solenoid_ok && self.drive_ok && self.ring_gear_ok
     }
 
-    pub fn mechanical_ok(&self) -> bool {
-        self.solenoid_ok && self.bendix_ok && self.brush_ok
+    pub fn motor_ok(&self) -> bool {
+        self.armature_ok && self.current_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.cranking_ok() && self.mechanical_ok()
+        self.engagement_ok() && self.motor_ok()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        !self.solenoid_ok || !self.brush_ok
+        !self.solenoid_ok || !self.armature_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.solenoid_ok { return 10.0; }
+        if !self.armature_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_cranking() {
+    fn test_engagement() {
         let c = StarterMotor::new();
-        assert!(c.cranking_ok());
+        assert!(c.engagement_ok());
     }
 
     #[test]
-    fn test_mechanical() {
+    fn test_motor() {
         let c = StarterMotor::new();
-        assert!(c.mechanical_ok());
+        assert!(c.motor_ok());
     }
 
     #[test]

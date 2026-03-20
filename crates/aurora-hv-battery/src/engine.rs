@@ -1,14 +1,13 @@
-/// High-voltage battery pack: state of charge, voltage, current, thermal
-/// Phase 297
+/// HV battery pack: module, contactor, BMS, cooling
+/// Phase 722
 
 #[derive(Debug, Clone)]
 pub struct HvBattery {
-    pub soc_pct: f64,
-    pub voltage: f64,
-    pub current_a: f64,
-    pub temp_c: f64,
-    pub capacity_kwh: f64,
-    pub cycle_count: u32,
+    pub module_ok: bool,
+    pub contactor_ok: bool,
+    pub bms_ok: bool,
+    pub cooling_ok: bool,
+    pub isolation_ok: bool,
 }
 
 impl Default for HvBattery {
@@ -20,38 +19,32 @@ impl Default for HvBattery {
 impl HvBattery {
     pub fn new() -> Self {
         Self {
-            soc_pct: 80.0,
-            voltage: 400.0,
-            current_a: 0.0,
-            temp_c: 25.0,
-            capacity_kwh: 75.0,
-            cycle_count: 100,
+            module_ok: true,
+            contactor_ok: true,
+            bms_ok: true,
+            cooling_ok: true,
+            isolation_ok: true,
         }
     }
 
-    pub fn charging(&self) -> bool {
-        self.current_a > 0.0
+    pub fn cells_ok(&self) -> bool {
+        self.module_ok && self.bms_ok
     }
 
-    pub fn discharging(&self) -> bool {
-        self.current_a < 0.0
+    pub fn safety_ok(&self) -> bool {
+        self.contactor_ok && self.isolation_ok && self.cooling_ok
     }
 
-    pub fn soc_low(&self) -> bool {
-        self.soc_pct < 15.0
+    pub fn all_ok(&self) -> bool {
+        self.cells_ok() && self.safety_ok()
     }
 
-    pub fn temp_ok(&self) -> bool {
-        self.temp_c > -10.0 && self.temp_c < 45.0
+    pub fn needs_service(&self) -> bool {
+        !self.module_ok || !self.isolation_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.temp_ok() {
-            return 20.0;
-        }
-        if self.soc_low() {
-            return 40.0;
-        }
+        if !self.module_ok { return 5.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_charging() {
-        let h = HvBattery::new();
-        assert!(!h.charging());
+    fn test_cells() {
+        let c = HvBattery::new();
+        assert!(c.cells_ok());
     }
 
     #[test]
-    fn test_not_discharging() {
-        let h = HvBattery::new();
-        assert!(!h.discharging());
+    fn test_safety() {
+        let c = HvBattery::new();
+        assert!(c.safety_ok());
     }
 
     #[test]
-    fn test_not_low() {
-        let h = HvBattery::new();
-        assert!(!h.soc_low());
+    fn test_all_ok() {
+        let c = HvBattery::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_temp_ok() {
-        let h = HvBattery::new();
-        assert!(h.temp_ok());
+    fn test_no_service() {
+        let c = HvBattery::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_low_soc() {
-        let mut h = HvBattery::new();
-        h.soc_pct = 5.0;
-        assert!(h.soc_low());
+    fn test_module() {
+        let mut c = HvBattery::new();
+        c.module_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let h = HvBattery::new();
-        assert!((h.health_score() - 100.0).abs() < 0.1);
+        let c = HvBattery::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

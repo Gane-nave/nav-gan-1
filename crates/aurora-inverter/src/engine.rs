@@ -1,14 +1,13 @@
-/// Power inverter: DC-AC conversion, PWM control, IGBT monitoring
-/// Phase 295
+/// Inverter: IGBT, DC link, gate driver, cooling
+/// Phase 717
 
 #[derive(Debug, Clone)]
 pub struct Inverter {
-    pub dc_voltage: f64,
-    pub ac_voltage: f64,
-    pub current_a: f64,
-    pub frequency_hz: f64,
-    pub efficiency_pct: f64,
-    pub igbt_temp_c: f64,
+    pub igbt_ok: bool,
+    pub dc_link_ok: bool,
+    pub gate_ok: bool,
+    pub cooling_ok: bool,
+    pub efficiency_ok: bool,
 }
 
 impl Default for Inverter {
@@ -20,38 +19,32 @@ impl Default for Inverter {
 impl Inverter {
     pub fn new() -> Self {
         Self {
-            dc_voltage: 400.0,
-            ac_voltage: 0.0,
-            current_a: 0.0,
-            frequency_hz: 0.0,
-            efficiency_pct: 97.0,
-            igbt_temp_c: 50.0,
+            igbt_ok: true,
+            dc_link_ok: true,
+            gate_ok: true,
+            cooling_ok: true,
+            efficiency_ok: true,
         }
     }
 
-    pub fn is_active(&self) -> bool {
-        self.frequency_hz > 0.0
+    pub fn power_stage_ok(&self) -> bool {
+        self.igbt_ok && self.dc_link_ok && self.gate_ok
     }
 
-    pub fn voltage_ok(&self) -> bool {
-        self.dc_voltage > 300.0 && self.dc_voltage < 500.0
+    pub fn thermal_ok(&self) -> bool {
+        self.cooling_ok && self.efficiency_ok
     }
 
-    pub fn overheating(&self) -> bool {
-        self.igbt_temp_c > 150.0
+    pub fn all_ok(&self) -> bool {
+        self.power_stage_ok() && self.thermal_ok()
     }
 
-    pub fn power_kw(&self) -> f64 {
-        self.ac_voltage * self.current_a * 1.732 / 1000.0
+    pub fn needs_service(&self) -> bool {
+        !self.igbt_ok || !self.cooling_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.overheating() {
-            return 0.0;
-        }
-        if !self.voltage_ok() {
-            return 30.0;
-        }
+        if !self.igbt_ok { return 5.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_active() {
-        let i = Inverter::new();
-        assert!(!i.is_active());
+    fn test_power_stage() {
+        let c = Inverter::new();
+        assert!(c.power_stage_ok());
     }
 
     #[test]
-    fn test_voltage_ok() {
-        let i = Inverter::new();
-        assert!(i.voltage_ok());
+    fn test_thermal() {
+        let c = Inverter::new();
+        assert!(c.thermal_ok());
     }
 
     #[test]
-    fn test_not_hot() {
-        let i = Inverter::new();
-        assert!(!i.overheating());
+    fn test_all_ok() {
+        let c = Inverter::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_zero_power() {
-        let i = Inverter::new();
-        assert!(i.power_kw() < 0.1);
+    fn test_no_service() {
+        let c = Inverter::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_active() {
-        let mut i = Inverter::new();
-        i.frequency_hz = 100.0;
-        assert!(i.is_active());
+    fn test_igbt() {
+        let mut c = Inverter::new();
+        c.igbt_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let i = Inverter::new();
-        assert!((i.health_score() - 100.0).abs() < 0.1);
+        let c = Inverter::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

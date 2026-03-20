@@ -1,86 +1,51 @@
-/// Regenerative braking: energy recovery, brake blending, one-pedal driving
-/// Phase 164
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum RegenLevel {
-    Off,
-    Low,
-    Medium,
-    High,
-    Max,
-}
-
-impl RegenLevel {
-    pub fn decel_g(&self) -> f64 {
-        match self {
-            RegenLevel::Off => 0.0,
-            RegenLevel::Low => 0.05,
-            RegenLevel::Medium => 0.1,
-            RegenLevel::High => 0.2,
-            RegenLevel::Max => 0.3,
-        }
-    }
-
-    pub fn recovery_efficiency_pct(&self) -> f64 {
-        match self {
-            RegenLevel::Off => 0.0,
-            RegenLevel::Low => 60.0,
-            RegenLevel::Medium => 70.0,
-            RegenLevel::High => 75.0,
-            RegenLevel::Max => 80.0,
-        }
-    }
-}
+/// Regenerative braking: energy recovery, blending, control
+/// Phase 721
 
 #[derive(Debug, Clone)]
-pub struct RegenBrakeSystem {
-    pub level: RegenLevel,
-    pub one_pedal_mode: bool,
-    pub battery_soc_pct: f64,
-    pub energy_recovered_kwh: f64,
-    pub speed_kmh: f64,
+pub struct RegenBrake {
+    pub recovery_ok: bool,
+    pub blending_ok: bool,
+    pub control_ok: bool,
+    pub efficiency_ok: bool,
+    pub smooth_ok: bool,
 }
 
-impl Default for RegenBrakeSystem {
+impl Default for RegenBrake {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl RegenBrakeSystem {
+impl RegenBrake {
     pub fn new() -> Self {
         Self {
-            level: RegenLevel::Medium,
-            one_pedal_mode: false,
-            battery_soc_pct: 60.0,
-            energy_recovered_kwh: 0.0,
-            speed_kmh: 0.0,
+            recovery_ok: true,
+            blending_ok: true,
+            control_ok: true,
+            efficiency_ok: true,
+            smooth_ok: true,
         }
     }
 
-    pub fn can_regen(&self) -> bool {
-        self.battery_soc_pct < 95.0 && self.speed_kmh > 5.0
+    pub fn energy_ok(&self) -> bool {
+        self.recovery_ok && self.efficiency_ok
     }
 
-    pub fn current_recovery_kw(&self) -> f64 {
-        if !self.can_regen() {
-            return 0.0;
-        }
-        let speed_factor = (self.speed_kmh / 100.0).min(1.0);
-        let base_kw = self.level.decel_g() * 100.0;
-        base_kw * speed_factor * self.level.recovery_efficiency_pct() / 100.0
+    pub fn feel_ok(&self) -> bool {
+        self.blending_ok && self.control_ok && self.smooth_ok
     }
 
-    pub fn battery_nearly_full(&self) -> bool {
-        self.battery_soc_pct > 90.0
+    pub fn all_ok(&self) -> bool {
+        self.energy_ok() && self.feel_ok()
     }
 
-    pub fn range_extension_km(&self) -> f64 {
-        self.energy_recovered_kwh * 5.0
+    pub fn needs_calibration(&self) -> bool {
+        !self.blending_ok || !self.control_ok
     }
 
-    pub fn effective_one_pedal(&self) -> bool {
-        self.one_pedal_mode && matches!(self.level, RegenLevel::High | RegenLevel::Max)
+    pub fn health_score(&self) -> f64 {
+        if !self.recovery_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -89,57 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_decel_levels() {
-        assert!(RegenLevel::Max.decel_g() > RegenLevel::Low.decel_g());
+    fn test_energy() {
+        let c = RegenBrake::new();
+        assert!(c.energy_ok());
     }
 
     #[test]
-    fn test_efficiency() {
-        assert!(RegenLevel::Max.recovery_efficiency_pct() > 70.0);
+    fn test_feel() {
+        let c = RegenBrake::new();
+        assert!(c.feel_ok());
     }
 
     #[test]
-    fn test_can_regen() {
-        let mut s = RegenBrakeSystem::new();
-        s.speed_kmh = 50.0;
-        assert!(s.can_regen());
+    fn test_all_ok() {
+        let c = RegenBrake::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_regen_full_battery() {
-        let mut s = RegenBrakeSystem::new();
-        s.battery_soc_pct = 98.0;
-        s.speed_kmh = 50.0;
-        assert!(!s.can_regen());
+    fn test_no_cal() {
+        let c = RegenBrake::new();
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_recovery_kw() {
-        let mut s = RegenBrakeSystem::new();
-        s.speed_kmh = 80.0;
-        assert!(s.current_recovery_kw() > 0.0);
+    fn test_blending() {
+        let mut c = RegenBrake::new();
+        c.blending_ok = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]
-    fn test_range_extension() {
-        let mut s = RegenBrakeSystem::new();
-        s.energy_recovered_kwh = 2.0;
-        assert!((s.range_extension_km() - 10.0).abs() < 0.1);
-    }
-
-    #[test]
-    fn test_one_pedal() {
-        let mut s = RegenBrakeSystem::new();
-        s.one_pedal_mode = true;
-        s.level = RegenLevel::High;
-        assert!(s.effective_one_pedal());
-    }
-
-    #[test]
-    fn test_no_one_pedal_low() {
-        let mut s = RegenBrakeSystem::new();
-        s.one_pedal_mode = true;
-        s.level = RegenLevel::Low;
-        assert!(!s.effective_one_pedal());
+    fn test_health() {
+        let c = RegenBrake::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
