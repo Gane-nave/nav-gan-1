@@ -871,6 +871,10 @@ name = "aurora-cargo-cover"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cargo-optim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cargo-route"
 version = "0.1.0"
 
@@ -940,6 +944,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-charge-limit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-plan"
 version = "0.1.0"
 
 [[package]]
@@ -1926,6 +1934,10 @@ name = "aurora-ev-charger-port"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ev-range"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ev-station"
 version = "0.1.0"
 
@@ -2194,6 +2206,10 @@ name = "aurora-fuel-opt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-optim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-pressure"
 version = "0.1.0"
 
@@ -2309,6 +2325,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-geocoder"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-geofence"
@@ -2860,6 +2880,10 @@ name = "aurora-iso-monitor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-isochrone"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-jumphash"
 version = "0.1.0"
 
@@ -3047,6 +3071,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-maf-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-maint-pred"
 version = "0.1.0"
 
 [[package]]
@@ -3635,6 +3663,10 @@ name = "aurora-pki-manager"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-platooning"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-plugins"
 version = "0.1.0"
 
@@ -4107,6 +4139,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-routing-graph"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rubber-trim"
 version = "0.1.0"
 
@@ -4327,6 +4363,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sla-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-smart-park"
 version = "0.1.0"
 
 [[package]]
@@ -4758,6 +4798,10 @@ name = "aurora-tie-rod"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-tile-server"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tiles"
 version = "0.1.0"
 dependencies = [
@@ -4867,6 +4911,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-light"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-traffic-pred"
 version = "0.1.0"
 
 [[package]]

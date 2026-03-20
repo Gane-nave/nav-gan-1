@@ -1,14 +1,13 @@
-/// Geo-fence: virtual boundary, speed limit zones, restricted areas
-/// Phase 285
+/// Geo-fencing: define, monitor, enter, exit, alert
+/// Phase 1086
 
 #[derive(Debug, Clone)]
 pub struct GeoFence {
-    pub active: bool,
-    pub fence_count: u16,
-    pub inside_fence: bool,
-    pub speed_limited: bool,
-    pub max_speed_kmh: f64,
-    pub alert_on_exit: bool,
+    pub define_ok: bool,
+    pub monitor_ok: bool,
+    pub enter_ok: bool,
+    pub exit_ok: bool,
+    pub alert_ok: bool,
 }
 
 impl Default for GeoFence {
@@ -20,32 +19,32 @@ impl Default for GeoFence {
 impl GeoFence {
     pub fn new() -> Self {
         Self {
-            active: true,
-            fence_count: 0,
-            inside_fence: false,
-            speed_limited: false,
-            max_speed_kmh: 200.0,
-            alert_on_exit: true,
+            define_ok: true,
+            monitor_ok: true,
+            enter_ok: true,
+            exit_ok: true,
+            alert_ok: true,
         }
     }
 
-    pub fn has_fences(&self) -> bool {
-        self.fence_count > 0
+    pub fn boundary_ok(&self) -> bool {
+        self.define_ok && self.monitor_ok
     }
 
-    pub fn speed_ok(&self, current_kmh: f64) -> bool {
-        !self.speed_limited || current_kmh <= self.max_speed_kmh
+    pub fn events_ok(&self) -> bool {
+        self.enter_ok && self.exit_ok && self.alert_ok
     }
 
-    pub fn violation(&self, current_kmh: f64) -> bool {
-        self.speed_limited && current_kmh > self.max_speed_kmh
+    pub fn all_ok(&self) -> bool {
+        self.boundary_ok() && self.events_ok()
     }
 
-    pub fn boundary_alert(&self) -> bool {
-        self.alert_on_exit && !self.inside_fence && self.has_fences()
+    pub fn needs_update(&self) -> bool {
+        !self.define_ok || !self.monitor_ok
     }
 
     pub fn health_score(&self) -> f64 {
+        if !self.define_ok { return 5.0; }
         100.0
     }
 }
@@ -55,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_no_fences() {
-        let g = GeoFence::new();
-        assert!(!g.has_fences());
+    fn test_boundary() {
+        let c = GeoFence::new();
+        assert!(c.boundary_ok());
     }
 
     #[test]
-    fn test_speed_ok() {
-        let g = GeoFence::new();
-        assert!(g.speed_ok(100.0));
+    fn test_events() {
+        let c = GeoFence::new();
+        assert!(c.events_ok());
     }
 
     #[test]
-    fn test_no_violation() {
-        let g = GeoFence::new();
-        assert!(!g.violation(100.0));
+    fn test_all_ok() {
+        let c = GeoFence::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_boundary() {
-        let g = GeoFence::new();
-        assert!(!g.boundary_alert());
+    fn test_no_update() {
+        let c = GeoFence::new();
+        assert!(!c.needs_update());
     }
 
     #[test]
-    fn test_violation() {
-        let mut g = GeoFence::new();
-        g.speed_limited = true;
-        g.max_speed_kmh = 50.0;
-        assert!(g.violation(80.0));
+    fn test_define() {
+        let mut c = GeoFence::new();
+        c.define_ok = false;
+        assert!(c.needs_update());
     }
 
     #[test]
     fn test_health() {
-        let g = GeoFence::new();
-        assert!((g.health_score() - 100.0).abs() < 0.1);
+        let c = GeoFence::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

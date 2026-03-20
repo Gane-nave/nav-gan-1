@@ -1,21 +1,13 @@
-/// V2X communication: vehicle-to-everything, DSRC, C-V2X
-/// Phase 281
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum V2xMode {
-    Dsrc,
-    Cv2x,
-    Dual,
-    Off,
-}
+/// V2X communication: beacon, negotiate, coordinate, warn, log
+/// Phase 1101
 
 #[derive(Debug, Clone)]
 pub struct V2xComm {
-    pub mode: V2xMode,
-    pub connected_vehicles: u16,
-    pub infrastructure_msgs: u32,
-    pub signal_dbm: f64,
-    pub radio_ok: bool,
+    pub beacon_ok: bool,
+    pub negotiate_ok: bool,
+    pub coordinate_ok: bool,
+    pub warn_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for V2xComm {
@@ -27,37 +19,32 @@ impl Default for V2xComm {
 impl V2xComm {
     pub fn new() -> Self {
         Self {
-            mode: V2xMode::Cv2x,
-            connected_vehicles: 0,
-            infrastructure_msgs: 0,
-            signal_dbm: -60.0,
-            radio_ok: true,
+            beacon_ok: true,
+            negotiate_ok: true,
+            coordinate_ok: true,
+            warn_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn is_active(&self) -> bool {
-        self.mode != V2xMode::Off && self.radio_ok
+    pub fn communication_ok(&self) -> bool {
+        self.beacon_ok && self.negotiate_ok && self.coordinate_ok
     }
 
-    pub fn has_peers(&self) -> bool {
-        self.connected_vehicles > 0
+    pub fn safety_ok(&self) -> bool {
+        self.warn_ok && self.log_ok
     }
 
-    pub fn signal_ok(&self) -> bool {
-        self.signal_dbm > -80.0
+    pub fn all_ok(&self) -> bool {
+        self.communication_ok() && self.safety_ok()
     }
 
-    pub fn receiving_infra(&self) -> bool {
-        self.infrastructure_msgs > 0
+    pub fn needs_sync(&self) -> bool {
+        !self.beacon_ok || !self.negotiate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.radio_ok {
-            return 0.0;
-        }
-        if !self.signal_ok() {
-            return 40.0;
-        }
+        if !self.beacon_ok { return 5.0; }
         100.0
     }
 }
@@ -67,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_active() {
-        let v = V2xComm::new();
-        assert!(v.is_active());
+    fn test_communication() {
+        let c = V2xComm::new();
+        assert!(c.communication_ok());
     }
 
     #[test]
-    fn test_no_peers() {
-        let v = V2xComm::new();
-        assert!(!v.has_peers());
+    fn test_safety() {
+        let c = V2xComm::new();
+        assert!(c.safety_ok());
     }
 
     #[test]
-    fn test_signal() {
-        let v = V2xComm::new();
-        assert!(v.signal_ok());
+    fn test_all_ok() {
+        let c = V2xComm::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_infra() {
-        let v = V2xComm::new();
-        assert!(!v.receiving_infra());
+    fn test_no_sync() {
+        let c = V2xComm::new();
+        assert!(!c.needs_sync());
     }
 
     #[test]
-    fn test_off() {
-        let mut v = V2xComm::new();
-        v.mode = V2xMode::Off;
-        assert!(!v.is_active());
+    fn test_beacon() {
+        let mut c = V2xComm::new();
+        c.beacon_ok = false;
+        assert!(c.needs_sync());
     }
 
     #[test]
     fn test_health() {
-        let v = V2xComm::new();
-        assert!((v.health_score() - 100.0).abs() < 0.1);
+        let c = V2xComm::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

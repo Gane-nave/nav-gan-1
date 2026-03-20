@@ -1,12 +1,12 @@
-/// Fleet tracking: GPS, geofence, route history, idle alert
-/// Phase 892
+/// Fleet tracking: locate, route, status, dispatch, report
+/// Phase 1094
 
 #[derive(Debug, Clone)]
 pub struct FleetTrack {
-    pub gps_ok: bool,
-    pub geofence_ok: bool,
-    pub history_ok: bool,
-    pub idle_ok: bool,
+    pub locate_ok: bool,
+    pub route_ok: bool,
+    pub status_ok: bool,
+    pub dispatch_ok: bool,
     pub report_ok: bool,
 }
 
@@ -19,32 +19,32 @@ impl Default for FleetTrack {
 impl FleetTrack {
     pub fn new() -> Self {
         Self {
-            gps_ok: true,
-            geofence_ok: true,
-            history_ok: true,
-            idle_ok: true,
+            locate_ok: true,
+            route_ok: true,
+            status_ok: true,
+            dispatch_ok: true,
             report_ok: true,
         }
     }
 
     pub fn tracking_ok(&self) -> bool {
-        self.gps_ok && self.geofence_ok && self.history_ok
+        self.locate_ok && self.route_ok && self.status_ok
     }
 
-    pub fn alerts_ok(&self) -> bool {
-        self.idle_ok && self.report_ok
+    pub fn management_ok(&self) -> bool {
+        self.dispatch_ok && self.report_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.tracking_ok() && self.alerts_ok()
+        self.tracking_ok() && self.management_ok()
     }
 
-    pub fn needs_update(&self) -> bool {
-        !self.gps_ok || !self.geofence_ok
+    pub fn needs_sync(&self) -> bool {
+        !self.locate_ok || !self.route_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.gps_ok { return 5.0; }
+        if !self.locate_ok { return 5.0; }
         100.0
     }
 }
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_alerts() {
+    fn test_management() {
         let c = FleetTrack::new();
-        assert!(c.alerts_ok());
+        assert!(c.management_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_update() {
+    fn test_no_sync() {
         let c = FleetTrack::new();
-        assert!(!c.needs_update());
+        assert!(!c.needs_sync());
     }
 
     #[test]
-    fn test_gps() {
+    fn test_locate() {
         let mut c = FleetTrack::new();
-        c.gps_ok = false;
-        assert!(c.needs_update());
+        c.locate_ok = false;
+        assert!(c.needs_sync());
     }
 
     #[test]
