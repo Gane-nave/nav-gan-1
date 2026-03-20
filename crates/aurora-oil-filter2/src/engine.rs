@@ -1,38 +1,38 @@
-/// heater core: flow, exchange, valve, blend, check
-/// Phase 1262
+/// oil filter: trap, bypass, indicate, flow, check
+/// Phase 1252
 
 #[derive(Debug, Clone)]
-pub struct HeaterCore {
+pub struct OilFilter2 {
+    pub trap_ok: bool,
+    pub bypass_ok: bool,
+    pub indicate_ok: bool,
     pub flow_ok: bool,
-    pub exchange_ok: bool,
-    pub valve_ok: bool,
-    pub blend_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for HeaterCore {
+impl Default for OilFilter2 {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl HeaterCore {
+impl OilFilter2 {
     pub fn new() -> Self {
         Self {
+            trap_ok: true,
+            bypass_ok: true,
+            indicate_ok: true,
             flow_ok: true,
-            exchange_ok: true,
-            valve_ok: true,
-            blend_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.flow_ok && self.exchange_ok && self.valve_ok
+        self.trap_ok && self.bypass_ok && self.indicate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.blend_ok && self.check_ok
+        self.flow_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl HeaterCore {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.flow_ok || !self.exchange_ok
+        !self.trap_ok || !self.bypass_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 5.0; }
+        if !self.trap_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = HeaterCore::new();
+        let c = OilFilter2::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = HeaterCore::new();
+        let c = OilFilter2::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = HeaterCore::new();
+        let c = OilFilter2::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = HeaterCore::new();
+        let c = OilFilter2::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = HeaterCore::new();
-        c.flow_ok = false;
+        let mut c = OilFilter2::new();
+        c.trap_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = HeaterCore::new();
+        let c = OilFilter2::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

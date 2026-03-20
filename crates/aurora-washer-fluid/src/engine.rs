@@ -1,13 +1,13 @@
-/// Washer fluid: level, nozzle, pump, heating
-/// Phase 570
+/// washer fluid: level, pump, heat, spray, check
+/// Phase 1256
 
 #[derive(Debug, Clone)]
 pub struct WasherFluid {
-    pub level_pct: f64,
-    pub nozzle_ok: bool,
+    pub level_ok: bool,
     pub pump_ok: bool,
-    pub heated: bool,
-    pub fluid_ok: bool,
+    pub heat_ok: bool,
+    pub spray_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for WasherFluid {
@@ -19,32 +19,32 @@ impl Default for WasherFluid {
 impl WasherFluid {
     pub fn new() -> Self {
         Self {
-            level_pct: 80.0,
-            nozzle_ok: true,
+            level_ok: true,
             pump_ok: true,
-            heated: true,
-            fluid_ok: true,
+            heat_ok: true,
+            spray_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn level_ok(&self) -> bool {
-        self.level_pct > 10.0
+    pub fn primary_ok(&self) -> bool {
+        self.level_ok && self.pump_ok && self.heat_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.nozzle_ok && self.pump_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.spray_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.level_ok() && self.system_ok() && self.fluid_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_refill(&self) -> bool {
-        self.level_pct < 10.0
+    pub fn needs_attention(&self) -> bool {
+        !self.level_ok || !self.pump_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.pump_ok { return 20.0; }
+        if !self.level_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_level() {
+    fn test_primary() {
         let c = WasherFluid::new();
-        assert!(c.level_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_system() {
+    fn test_secondary() {
         let c = WasherFluid::new();
-        assert!(c.system_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_refill() {
+    fn test_no_attention() {
         let c = WasherFluid::new();
-        assert!(!c.needs_refill());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_low() {
+    fn test_field_toggle() {
         let mut c = WasherFluid::new();
-        c.level_pct = 5.0;
-        assert!(c.needs_refill());
+        c.level_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

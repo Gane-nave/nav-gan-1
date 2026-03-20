@@ -1,13 +1,13 @@
-/// AC compressor: clutch, refrigerant, pressure
-/// Phase 622
+/// ac compressor: engage, compress, cycle, oil, check
+/// Phase 1265
 
 #[derive(Debug, Clone)]
 pub struct AcCompressor {
-    pub clutch_ok: bool,
-    pub refrigerant_ok: bool,
-    pub high_pressure_ok: bool,
-    pub low_pressure_ok: bool,
+    pub engage_ok: bool,
+    pub compress_ok: bool,
+    pub cycle_ok: bool,
     pub oil_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for AcCompressor {
@@ -19,32 +19,32 @@ impl Default for AcCompressor {
 impl AcCompressor {
     pub fn new() -> Self {
         Self {
-            clutch_ok: true,
-            refrigerant_ok: true,
-            high_pressure_ok: true,
-            low_pressure_ok: true,
+            engage_ok: true,
+            compress_ok: true,
+            cycle_ok: true,
             oil_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn mechanical_ok(&self) -> bool {
-        self.clutch_ok && self.oil_ok
+    pub fn primary_ok(&self) -> bool {
+        self.engage_ok && self.compress_ok && self.cycle_ok
     }
 
-    pub fn refrigerant_good(&self) -> bool {
-        self.refrigerant_ok && self.high_pressure_ok && self.low_pressure_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.oil_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.mechanical_ok() && self.refrigerant_good()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.clutch_ok || !self.refrigerant_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.engage_ok || !self.compress_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.clutch_ok { return 10.0; }
+        if !self.engage_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_mechanical() {
+    fn test_primary() {
         let c = AcCompressor::new();
-        assert!(c.mechanical_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_refrigerant() {
+    fn test_secondary() {
         let c = AcCompressor::new();
-        assert!(c.refrigerant_good());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = AcCompressor::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_clutch() {
+    fn test_field_toggle() {
         let mut c = AcCompressor::new();
-        c.clutch_ok = false;
-        assert!(c.needs_service());
+        c.engage_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

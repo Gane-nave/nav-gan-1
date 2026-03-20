@@ -1,38 +1,38 @@
-/// heater core: flow, exchange, valve, blend, check
-/// Phase 1262
+/// ac refrigerant: charge, pressure, temp, leak, check
+/// Phase 1257
 
 #[derive(Debug, Clone)]
-pub struct HeaterCore {
-    pub flow_ok: bool,
-    pub exchange_ok: bool,
-    pub valve_ok: bool,
-    pub blend_ok: bool,
+pub struct AcRefrig {
+    pub charge_ok: bool,
+    pub pressure_ok: bool,
+    pub temp_ok: bool,
+    pub leak_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for HeaterCore {
+impl Default for AcRefrig {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl HeaterCore {
+impl AcRefrig {
     pub fn new() -> Self {
         Self {
-            flow_ok: true,
-            exchange_ok: true,
-            valve_ok: true,
-            blend_ok: true,
+            charge_ok: true,
+            pressure_ok: true,
+            temp_ok: true,
+            leak_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.flow_ok && self.exchange_ok && self.valve_ok
+        self.charge_ok && self.pressure_ok && self.temp_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.blend_ok && self.check_ok
+        self.leak_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl HeaterCore {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.flow_ok || !self.exchange_ok
+        !self.charge_ok || !self.pressure_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 5.0; }
+        if !self.charge_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = HeaterCore::new();
+        let c = AcRefrig::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = HeaterCore::new();
+        let c = AcRefrig::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = HeaterCore::new();
+        let c = AcRefrig::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = HeaterCore::new();
+        let c = AcRefrig::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = HeaterCore::new();
-        c.flow_ok = false;
+        let mut c = AcRefrig::new();
+        c.charge_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = HeaterCore::new();
+        let c = AcRefrig::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,38 +1,38 @@
-/// heater core: flow, exchange, valve, blend, check
-/// Phase 1262
+/// power fluid: level, pressure, filter, cool, check
+/// Phase 1255
 
 #[derive(Debug, Clone)]
-pub struct HeaterCore {
-    pub flow_ok: bool,
-    pub exchange_ok: bool,
-    pub valve_ok: bool,
-    pub blend_ok: bool,
+pub struct PowerFluid {
+    pub level_ok: bool,
+    pub pressure_ok: bool,
+    pub filter_ok: bool,
+    pub cool_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for HeaterCore {
+impl Default for PowerFluid {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl HeaterCore {
+impl PowerFluid {
     pub fn new() -> Self {
         Self {
-            flow_ok: true,
-            exchange_ok: true,
-            valve_ok: true,
-            blend_ok: true,
+            level_ok: true,
+            pressure_ok: true,
+            filter_ok: true,
+            cool_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.flow_ok && self.exchange_ok && self.valve_ok
+        self.level_ok && self.pressure_ok && self.filter_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.blend_ok && self.check_ok
+        self.cool_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl HeaterCore {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.flow_ok || !self.exchange_ok
+        !self.level_ok || !self.pressure_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 5.0; }
+        if !self.level_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = HeaterCore::new();
+        let c = PowerFluid::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = HeaterCore::new();
+        let c = PowerFluid::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = HeaterCore::new();
+        let c = PowerFluid::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = HeaterCore::new();
+        let c = PowerFluid::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = HeaterCore::new();
-        c.flow_ok = false;
+        let mut c = PowerFluid::new();
+        c.level_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = HeaterCore::new();
+        let c = PowerFluid::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

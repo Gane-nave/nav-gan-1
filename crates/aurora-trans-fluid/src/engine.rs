@@ -1,13 +1,13 @@
-/// Transmission fluid: level, color, temp, pressure
-/// Phase 565
+/// trans fluid: level, temp, pressure, filter, check
+/// Phase 1253
 
 #[derive(Debug, Clone)]
 pub struct TransFluid {
-    pub level_pct: f64,
-    pub color_ok: bool,
-    pub temp_c: f64,
-    pub max_temp_c: f64,
+    pub level_ok: bool,
+    pub temp_ok: bool,
     pub pressure_ok: bool,
+    pub filter_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for TransFluid {
@@ -19,32 +19,32 @@ impl Default for TransFluid {
 impl TransFluid {
     pub fn new() -> Self {
         Self {
-            level_pct: 85.0,
-            color_ok: true,
-            temp_c: 80.0,
-            max_temp_c: 120.0,
+            level_ok: true,
+            temp_ok: true,
             pressure_ok: true,
+            filter_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn level_ok(&self) -> bool {
-        self.level_pct > 30.0
+    pub fn primary_ok(&self) -> bool {
+        self.level_ok && self.temp_ok && self.pressure_ok
     }
 
-    pub fn temp_ok(&self) -> bool {
-        self.temp_c < self.max_temp_c
+    pub fn secondary_ok(&self) -> bool {
+        self.filter_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.level_ok() && self.temp_ok() && self.color_ok && self.pressure_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_change(&self) -> bool {
-        !self.color_ok || self.level_pct < 20.0
+    pub fn needs_attention(&self) -> bool {
+        !self.level_ok || !self.temp_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.color_ok { return 20.0; }
+        if !self.level_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_level() {
+    fn test_primary() {
         let c = TransFluid::new();
-        assert!(c.level_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_temp() {
+    fn test_secondary() {
         let c = TransFluid::new();
-        assert!(c.temp_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_change() {
+    fn test_no_attention() {
         let c = TransFluid::new();
-        assert!(!c.needs_change());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_color() {
+    fn test_field_toggle() {
         let mut c = TransFluid::new();
-        c.color_ok = false;
-        assert!(c.needs_change());
+        c.level_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

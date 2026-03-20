@@ -1,38 +1,38 @@
-/// heater core: flow, exchange, valve, blend, check
-/// Phase 1262
+/// fuel tank: level, vapor, vent, seal, check
+/// Phase 1259
 
 #[derive(Debug, Clone)]
-pub struct HeaterCore {
-    pub flow_ok: bool,
-    pub exchange_ok: bool,
-    pub valve_ok: bool,
-    pub blend_ok: bool,
+pub struct FuelTank2 {
+    pub level_ok: bool,
+    pub vapor_ok: bool,
+    pub vent_ok: bool,
+    pub seal_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for HeaterCore {
+impl Default for FuelTank2 {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl HeaterCore {
+impl FuelTank2 {
     pub fn new() -> Self {
         Self {
-            flow_ok: true,
-            exchange_ok: true,
-            valve_ok: true,
-            blend_ok: true,
+            level_ok: true,
+            vapor_ok: true,
+            vent_ok: true,
+            seal_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.flow_ok && self.exchange_ok && self.valve_ok
+        self.level_ok && self.vapor_ok && self.vent_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.blend_ok && self.check_ok
+        self.seal_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl HeaterCore {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.flow_ok || !self.exchange_ok
+        !self.level_ok || !self.vapor_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 5.0; }
+        if !self.level_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = HeaterCore::new();
+        let c = FuelTank2::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = HeaterCore::new();
+        let c = FuelTank2::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = HeaterCore::new();
+        let c = FuelTank2::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = HeaterCore::new();
+        let c = FuelTank2::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = HeaterCore::new();
-        c.flow_ok = false;
+        let mut c = FuelTank2::new();
+        c.level_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = HeaterCore::new();
+        let c = FuelTank2::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

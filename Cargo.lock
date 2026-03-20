@@ -113,6 +113,10 @@ name = "aurora-ac-performance"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ac-refrig"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-acc-ctrl"
 version = "0.1.0"
 
@@ -1323,6 +1327,10 @@ name = "aurora-coolant-pump"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-coolant-tank"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-coolant-temp"
 version = "0.1.0"
 
@@ -2070,6 +2078,10 @@ name = "aurora-evaporator"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-evaporator2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-evasive-steer"
 version = "0.1.0"
 
@@ -2338,6 +2350,10 @@ name = "aurora-fuel-level"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-line"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-opt"
 version = "0.1.0"
 
@@ -2362,7 +2378,15 @@ name = "aurora-fuel-pump-elec"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-pump2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-rail"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-tank2"
 version = "0.1.0"
 
 [[package]]
@@ -3669,6 +3693,10 @@ name = "aurora-oil-filter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-oil-filter2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-oil-level"
 version = "0.1.0"
 
@@ -3690,6 +3718,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-oil-pump"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oil-pump2"
 version = "0.1.0"
 
 [[package]]
@@ -3949,6 +3981,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-power-fluid"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-power-outlet"
@@ -5497,6 +5533,10 @@ name = "aurora-valve-train"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-vapor-canist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-vault-client"
 version = "0.1.0"
 
@@ -5626,6 +5666,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-water-pump-elec"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-water-pump2"
 version = "0.1.0"
 
 [[package]]

@@ -1,13 +1,13 @@
-/// AC condenser: fins, subcooling, fan, debris
-/// Phase 623
+/// condenser: cool, flow, fan, pressure, check
+/// Phase 1263
 
 #[derive(Debug, Clone)]
 pub struct Condenser {
-    pub fins_ok: bool,
-    pub subcooling_ok: bool,
+    pub cool_ok: bool,
+    pub flow_ok: bool,
     pub fan_ok: bool,
-    pub debris_free: bool,
-    pub leak_free: bool,
+    pub pressure_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for Condenser {
@@ -19,32 +19,32 @@ impl Default for Condenser {
 impl Condenser {
     pub fn new() -> Self {
         Self {
-            fins_ok: true,
-            subcooling_ok: true,
+            cool_ok: true,
+            flow_ok: true,
             fan_ok: true,
-            debris_free: true,
-            leak_free: true,
+            pressure_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn cooling_ok(&self) -> bool {
-        self.fins_ok && self.subcooling_ok
+    pub fn primary_ok(&self) -> bool {
+        self.cool_ok && self.flow_ok && self.fan_ok
     }
 
-    pub fn airflow_ok(&self) -> bool {
-        self.fan_ok && self.debris_free
+    pub fn secondary_ok(&self) -> bool {
+        self.pressure_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.cooling_ok() && self.airflow_ok() && self.leak_free
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.fins_ok || !self.leak_free
+    pub fn needs_attention(&self) -> bool {
+        !self.cool_ok || !self.flow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 10.0; }
+        if !self.cool_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_cooling() {
+    fn test_primary() {
         let c = Condenser::new();
-        assert!(c.cooling_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_airflow() {
+    fn test_secondary() {
         let c = Condenser::new();
-        assert!(c.airflow_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = Condenser::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_leak() {
+    fn test_field_toggle() {
         let mut c = Condenser::new();
-        c.leak_free = false;
-        assert!(c.needs_service());
+        c.cool_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
