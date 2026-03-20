@@ -44,7 +44,9 @@ impl Firewall {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bulkhead_ok { return 5.0; }
+        if !self.bulkhead_ok {
+            return 5.0;
+        }
         100.0
     }
 }

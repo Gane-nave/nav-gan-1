@@ -44,7 +44,9 @@ impl GatewayEcu {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.translate_ok { return 5.0; }
+        if !self.translate_ok {
+            return 5.0;
+        }
         100.0
     }
 }

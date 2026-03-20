@@ -44,7 +44,9 @@ impl LoraWan {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.gateway_ok { return 10.0; }
+        if !self.gateway_ok {
+            return 10.0;
+        }
         100.0
     }
 }

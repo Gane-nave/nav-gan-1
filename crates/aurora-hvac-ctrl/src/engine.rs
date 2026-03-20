@@ -44,7 +44,9 @@ impl HvacCtrl {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.heat_ok { return 5.0; }
+        if !self.heat_ok {
+            return 5.0;
+        }
         100.0
     }
 }

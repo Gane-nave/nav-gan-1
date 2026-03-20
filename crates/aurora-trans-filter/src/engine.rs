@@ -44,7 +44,9 @@ impl TransFilter {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.screen_ok { return 15.0; }
+        if !self.screen_ok {
+            return 15.0;
+        }
         100.0
     }
 }

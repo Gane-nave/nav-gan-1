@@ -44,7 +44,9 @@ impl ClimateEcu {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.temp_ctrl_ok { return 15.0; }
+        if !self.temp_ctrl_ok {
+            return 15.0;
+        }
         100.0
     }
 }

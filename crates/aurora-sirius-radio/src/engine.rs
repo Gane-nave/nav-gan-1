@@ -44,7 +44,9 @@ impl SiriusRadio {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.subscribe_ok { return 5.0; }
+        if !self.subscribe_ok {
+            return 5.0;
+        }
         100.0
     }
 }

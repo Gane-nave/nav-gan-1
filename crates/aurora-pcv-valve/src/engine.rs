@@ -44,7 +44,9 @@ impl PcvValve {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stuck { return 15.0; }
+        if self.stuck {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl TestUnit {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.discover_ok { return 5.0; }
+        if !self.discover_ok {
+            return 5.0;
+        }
         100.0
     }
 }

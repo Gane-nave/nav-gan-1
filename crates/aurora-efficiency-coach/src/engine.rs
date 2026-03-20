@@ -44,7 +44,9 @@ impl EfficiencyCoach {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.score_ok { return 15.0; }
+        if !self.score_ok {
+            return 15.0;
+        }
         100.0
     }
 }

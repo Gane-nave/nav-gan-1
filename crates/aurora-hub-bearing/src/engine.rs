@@ -44,7 +44,9 @@ impl HubBearing {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.preload_ok { return 10.0; }
+        if !self.preload_ok {
+            return 10.0;
+        }
         100.0
     }
 }

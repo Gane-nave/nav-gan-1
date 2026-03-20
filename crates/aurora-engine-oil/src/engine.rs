@@ -44,7 +44,9 @@ impl EngineOil {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.life_pct < 10.0 { return 10.0; }
+        if self.life_pct < 10.0 {
+            return 10.0;
+        }
         100.0
     }
 }

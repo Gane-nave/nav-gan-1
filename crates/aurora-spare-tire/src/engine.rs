@@ -44,7 +44,9 @@ impl SpareTire {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.pressure_ok { return 15.0; }
+        if !self.pressure_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl BrakeLine {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.corrosion_free { return 5.0; }
+        if !self.corrosion_free {
+            return 5.0;
+        }
         100.0
     }
 }

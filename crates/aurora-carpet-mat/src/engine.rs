@@ -44,7 +44,9 @@ impl CarpetMat {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.wear_ok { return 20.0; }
+        if !self.wear_ok {
+            return 20.0;
+        }
         100.0
     }
 }

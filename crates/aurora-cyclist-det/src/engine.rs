@@ -44,7 +44,9 @@ impl CyclistDet {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.lidar_ok { return 5.0; }
+        if !self.lidar_ok {
+            return 5.0;
+        }
         100.0
     }
 }

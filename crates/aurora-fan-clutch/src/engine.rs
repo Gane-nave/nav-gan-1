@@ -44,7 +44,9 @@ impl FanClutch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bearing_ok { return 15.0; }
+        if !self.bearing_ok {
+            return 15.0;
+        }
         100.0
     }
 }

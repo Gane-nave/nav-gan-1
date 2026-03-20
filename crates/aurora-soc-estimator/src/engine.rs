@@ -44,7 +44,9 @@ impl SocEstimator {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ekf_ok { return 10.0; }
+        if !self.ekf_ok {
+            return 10.0;
+        }
         100.0
     }
 }

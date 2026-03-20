@@ -44,7 +44,9 @@ impl GlowPlug {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.burned_out { return 0.0; }
+        if self.burned_out {
+            return 0.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl RubberTrim {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flexibility_ok { return 15.0; }
+        if !self.flexibility_ok {
+            return 15.0;
+        }
         100.0
     }
 }

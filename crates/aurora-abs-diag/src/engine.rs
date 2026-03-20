@@ -44,7 +44,9 @@ impl AbsDiag {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bleed_ok { return 5.0; }
+        if !self.bleed_ok {
+            return 5.0;
+        }
         100.0
     }
 }

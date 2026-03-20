@@ -44,7 +44,9 @@ impl IsoMonitor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.resistance_ok { return 5.0; }
+        if !self.resistance_ok {
+            return 5.0;
+        }
         100.0
     }
 }

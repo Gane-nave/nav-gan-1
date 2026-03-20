@@ -44,7 +44,9 @@ impl WiringLoom {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.damaged_count > 0 { return 20.0; }
+        if self.damaged_count > 0 {
+            return 20.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl S3Client {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.upload_ok { return 5.0; }
+        if !self.upload_ok {
+            return 5.0;
+        }
         100.0
     }
 }

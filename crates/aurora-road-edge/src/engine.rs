@@ -44,7 +44,9 @@ impl RoadEdge {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.detect_ok { return 5.0; }
+        if !self.detect_ok {
+            return 5.0;
+        }
         100.0
     }
 }

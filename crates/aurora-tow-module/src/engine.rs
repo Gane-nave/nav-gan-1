@@ -44,7 +44,9 @@ impl TowModule {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.hitch_ok { return 5.0; }
+        if !self.hitch_ok {
+            return 5.0;
+        }
         100.0
     }
 }

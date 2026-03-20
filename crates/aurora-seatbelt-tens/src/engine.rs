@@ -44,7 +44,9 @@ impl SeatbeltTensioner {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.deployed { return 0.0; }
+        if self.deployed {
+            return 0.0;
+        }
         100.0
     }
 }

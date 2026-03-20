@@ -44,7 +44,9 @@ impl HvacDuct {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sealed { return 20.0; }
+        if !self.sealed {
+            return 20.0;
+        }
         100.0
     }
 }

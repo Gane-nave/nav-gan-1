@@ -44,7 +44,9 @@ impl Resonator {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.chamber_ok { return 20.0; }
+        if !self.chamber_ok {
+            return 20.0;
+        }
         100.0
     }
 }

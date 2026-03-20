@@ -44,7 +44,9 @@ impl LightInspect {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.aim_ok { return 15.0; }
+        if !self.aim_ok {
+            return 15.0;
+        }
         100.0
     }
 }

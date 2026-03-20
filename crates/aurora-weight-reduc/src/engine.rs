@@ -44,7 +44,9 @@ impl WeightReduc {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.carbon_ok { return 15.0; }
+        if !self.carbon_ok {
+            return 15.0;
+        }
         100.0
     }
 }

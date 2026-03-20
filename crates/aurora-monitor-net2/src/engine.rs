@@ -44,7 +44,9 @@ impl MonitorNet2 {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sample_ok { return 5.0; }
+        if !self.sample_ok {
+            return 5.0;
+        }
         100.0
     }
 }

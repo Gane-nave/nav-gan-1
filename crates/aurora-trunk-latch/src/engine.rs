@@ -44,7 +44,9 @@ impl TrunkLatch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.striker_ok { return 10.0; }
+        if !self.striker_ok {
+            return 10.0;
+        }
         100.0
     }
 }

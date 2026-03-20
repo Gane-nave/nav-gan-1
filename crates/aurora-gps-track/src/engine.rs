@@ -44,7 +44,9 @@ impl GpsTrack {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.locate_ok { return 5.0; }
+        if !self.locate_ok {
+            return 5.0;
+        }
         100.0
     }
 }

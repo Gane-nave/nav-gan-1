@@ -44,7 +44,9 @@ impl TorqueVector {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok { return 5.0; }
+        if !self.sensor_ok {
+            return 5.0;
+        }
         100.0
     }
 }

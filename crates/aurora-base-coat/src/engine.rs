@@ -44,7 +44,9 @@ impl BaseCoat {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.color_ok { return 15.0; }
+        if !self.color_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl Moonroof {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.drain_ok { return 15.0; }
+        if !self.drain_ok {
+            return 15.0;
+        }
         100.0
     }
 }

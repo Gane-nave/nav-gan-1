@@ -44,7 +44,9 @@ impl ComplyFmvss {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.assess_ok { return 5.0; }
+        if !self.assess_ok {
+            return 5.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl ReportHtml {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.template_ok { return 5.0; }
+        if !self.template_ok {
+            return 5.0;
+        }
         100.0
     }
 }

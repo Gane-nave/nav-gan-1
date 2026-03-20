@@ -44,7 +44,9 @@ impl DoorLatch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok { return 20.0; }
+        if !self.actuator_ok {
+            return 20.0;
+        }
         100.0
     }
 }

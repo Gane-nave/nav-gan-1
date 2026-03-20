@@ -44,7 +44,9 @@ impl GearPump {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.draw_ok { return 5.0; }
+        if !self.draw_ok {
+            return 5.0;
+        }
         100.0
     }
 }

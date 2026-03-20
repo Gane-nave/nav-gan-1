@@ -44,7 +44,9 @@ impl TestE2e2 {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.setup_ok { return 5.0; }
+        if !self.setup_ok {
+            return 5.0;
+        }
         100.0
     }
 }

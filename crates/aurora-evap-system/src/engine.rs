@@ -44,7 +44,9 @@ impl EvapSystem {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leak_detected { return 20.0; }
+        if self.leak_detected {
+            return 20.0;
+        }
         100.0
     }
 }

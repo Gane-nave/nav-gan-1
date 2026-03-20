@@ -44,7 +44,9 @@ impl CupHolder {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.latch_ok { return 20.0; }
+        if !self.latch_ok {
+            return 20.0;
+        }
         100.0
     }
 }

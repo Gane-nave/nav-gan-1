@@ -44,7 +44,9 @@ impl MapSensor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.signal_ok { return 10.0; }
+        if !self.signal_ok {
+            return 10.0;
+        }
         100.0
     }
 }

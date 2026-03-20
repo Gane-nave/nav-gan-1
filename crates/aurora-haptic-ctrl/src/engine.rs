@@ -44,7 +44,9 @@ impl HapticCtrl {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.vibrate_ok { return 5.0; }
+        if !self.vibrate_ok {
+            return 5.0;
+        }
         100.0
     }
 }

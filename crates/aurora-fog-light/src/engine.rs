@@ -44,7 +44,9 @@ impl FogLight {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bulb_ok { return 15.0; }
+        if !self.bulb_ok {
+            return 15.0;
+        }
         100.0
     }
 }

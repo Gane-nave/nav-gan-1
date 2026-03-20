@@ -44,7 +44,9 @@ impl AcRefrig {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.charge_ok { return 5.0; }
+        if !self.charge_ok {
+            return 5.0;
+        }
         100.0
     }
 }

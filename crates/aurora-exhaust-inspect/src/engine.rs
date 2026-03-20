@@ -44,7 +44,9 @@ impl ExhaustInspect {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 5.0; }
+        if !self.leak_free {
+            return 5.0;
+        }
         100.0
     }
 }

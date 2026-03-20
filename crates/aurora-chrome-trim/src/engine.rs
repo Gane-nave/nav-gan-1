@@ -44,7 +44,9 @@ impl ChromeTrim {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.plating_ok { return 15.0; }
+        if !self.plating_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl CloudFunction {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.deploy_ok { return 5.0; }
+        if !self.deploy_ok {
+            return 5.0;
+        }
         100.0
     }
 }

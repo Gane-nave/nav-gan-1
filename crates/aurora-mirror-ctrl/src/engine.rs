@@ -44,7 +44,9 @@ impl MirrorCtrl {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.adjust_ok { return 5.0; }
+        if !self.adjust_ok {
+            return 5.0;
+        }
         100.0
     }
 }

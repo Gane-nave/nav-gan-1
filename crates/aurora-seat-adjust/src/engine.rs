@@ -44,7 +44,9 @@ impl SeatAdjust {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.failed_motors > 0 { return 25.0; }
+        if self.failed_motors > 0 {
+            return 25.0;
+        }
         100.0
     }
 }

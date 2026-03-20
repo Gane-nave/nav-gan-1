@@ -44,7 +44,9 @@ impl OilLevel {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.probe_ok { return 10.0; }
+        if !self.probe_ok {
+            return 10.0;
+        }
         100.0
     }
 }

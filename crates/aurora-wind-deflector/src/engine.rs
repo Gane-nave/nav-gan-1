@@ -44,7 +44,9 @@ impl WindDeflector {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.visor_ok { return 20.0; }
+        if !self.visor_ok {
+            return 20.0;
+        }
         100.0
     }
 }

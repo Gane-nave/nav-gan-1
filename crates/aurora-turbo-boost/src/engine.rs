@@ -44,7 +44,9 @@ impl TurboBoost {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.spool_ok { return 5.0; }
+        if !self.spool_ok {
+            return 5.0;
+        }
         100.0
     }
 }

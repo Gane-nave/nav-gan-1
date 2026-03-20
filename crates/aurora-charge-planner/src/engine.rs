@@ -44,7 +44,9 @@ impl ChargePlanner {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.station_ok { return 10.0; }
+        if !self.station_ok {
+            return 10.0;
+        }
         100.0
     }
 }

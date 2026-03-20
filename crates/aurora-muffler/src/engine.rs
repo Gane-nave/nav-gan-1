@@ -44,7 +44,9 @@ impl Muffler {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.shell_ok { return 15.0; }
+        if !self.shell_ok {
+            return 15.0;
+        }
         100.0
     }
 }

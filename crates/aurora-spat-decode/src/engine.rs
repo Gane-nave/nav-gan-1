@@ -44,7 +44,9 @@ impl SpatDecode {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.phase_ok { return 5.0; }
+        if !self.phase_ok {
+            return 5.0;
+        }
         100.0
     }
 }

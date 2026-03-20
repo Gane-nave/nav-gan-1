@@ -44,7 +44,9 @@ impl TowHitch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.receiver_ok { return 10.0; }
+        if !self.receiver_ok {
+            return 10.0;
+        }
         100.0
     }
 }

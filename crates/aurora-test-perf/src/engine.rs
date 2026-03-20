@@ -44,7 +44,9 @@ impl TestPerf {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.baseline_ok { return 5.0; }
+        if !self.baseline_ok {
+            return 5.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl AcPerformance {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.charge_ok { return 15.0; }
+        if !self.charge_ok {
+            return 15.0;
+        }
         100.0
     }
 }

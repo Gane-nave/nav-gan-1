@@ -44,7 +44,9 @@ impl WiringHarness {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.continuity_ok { return 5.0; }
+        if !self.continuity_ok {
+            return 5.0;
+        }
         100.0
     }
 }

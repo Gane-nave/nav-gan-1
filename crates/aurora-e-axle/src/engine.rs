@@ -44,7 +44,9 @@ impl EAxle {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motor_ok { return 5.0; }
+        if !self.motor_ok {
+            return 5.0;
+        }
         100.0
     }
 }

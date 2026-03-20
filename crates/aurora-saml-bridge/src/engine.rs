@@ -44,7 +44,9 @@ impl SamlBridge {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.assertion_ok { return 5.0; }
+        if !self.assertion_ok {
+            return 5.0;
+        }
         100.0
     }
 }

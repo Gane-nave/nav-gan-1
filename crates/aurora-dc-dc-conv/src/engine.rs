@@ -44,7 +44,9 @@ impl DcDcConv {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.step_up_ok { return 5.0; }
+        if !self.step_up_ok {
+            return 5.0;
+        }
         100.0
     }
 }

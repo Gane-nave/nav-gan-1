@@ -44,7 +44,9 @@ impl FuelDoor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok { return 15.0; }
+        if !self.actuator_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl V2g {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bidir_ok { return 5.0; }
+        if !self.bidir_ok {
+            return 5.0;
+        }
         100.0
     }
 }

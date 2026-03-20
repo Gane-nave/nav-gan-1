@@ -44,7 +44,9 @@ impl ComplyCcpa {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.disclose_ok { return 5.0; }
+        if !self.disclose_ok {
+            return 5.0;
+        }
         100.0
     }
 }

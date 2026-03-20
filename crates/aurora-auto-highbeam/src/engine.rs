@@ -44,7 +44,9 @@ impl AutoHighbeam {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.camera_ok { return 15.0; }
+        if !self.camera_ok {
+            return 15.0;
+        }
         100.0
     }
 }

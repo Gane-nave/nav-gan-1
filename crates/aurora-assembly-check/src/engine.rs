@@ -44,7 +44,9 @@ impl AssemblyCheck {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.verify_ok { return 5.0; }
+        if !self.verify_ok {
+            return 5.0;
+        }
         100.0
     }
 }

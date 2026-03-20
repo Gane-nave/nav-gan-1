@@ -44,7 +44,9 @@ impl MasterData {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.entity_ok { return 5.0; }
+        if !self.entity_ok {
+            return 5.0;
+        }
         100.0
     }
 }

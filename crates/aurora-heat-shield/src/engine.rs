@@ -44,7 +44,9 @@ impl HeatShield {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.material_ok { return 10.0; }
+        if !self.material_ok {
+            return 10.0;
+        }
         100.0
     }
 }

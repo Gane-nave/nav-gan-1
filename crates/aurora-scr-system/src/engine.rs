@@ -44,7 +44,9 @@ impl ScrSystem {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.catalyst_ok { return 15.0; }
+        if !self.catalyst_ok {
+            return 15.0;
+        }
         100.0
     }
 }

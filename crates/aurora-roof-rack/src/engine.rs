@@ -44,7 +44,9 @@ impl RoofRack {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.clamp_ok { return 15.0; }
+        if !self.clamp_ok {
+            return 15.0;
+        }
         100.0
     }
 }

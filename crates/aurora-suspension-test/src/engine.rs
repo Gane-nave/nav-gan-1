@@ -44,7 +44,9 @@ impl SuspensionTest {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bounce_ok { return 10.0; }
+        if !self.bounce_ok {
+            return 10.0;
+        }
         100.0
     }
 }

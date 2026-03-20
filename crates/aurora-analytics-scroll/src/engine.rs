@@ -44,7 +44,9 @@ impl AnalyticsScroll {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.track_ok { return 5.0; }
+        if !self.track_ok {
+            return 5.0;
+        }
         100.0
     }
 }

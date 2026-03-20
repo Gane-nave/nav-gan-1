@@ -44,7 +44,9 @@ impl VaultClient {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.secret_ok { return 5.0; }
+        if !self.secret_ok {
+            return 5.0;
+        }
         100.0
     }
 }

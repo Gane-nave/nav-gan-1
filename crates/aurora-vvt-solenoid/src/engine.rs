@@ -44,7 +44,9 @@ impl VvtSolenoid {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.oil_ctrl_ok { return 10.0; }
+        if !self.oil_ctrl_ok {
+            return 10.0;
+        }
         100.0
     }
 }

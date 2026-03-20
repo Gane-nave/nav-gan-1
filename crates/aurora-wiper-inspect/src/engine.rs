@@ -44,7 +44,9 @@ impl WiperInspect {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.blade_ok { return 15.0; }
+        if !self.blade_ok {
+            return 15.0;
+        }
         100.0
     }
 }

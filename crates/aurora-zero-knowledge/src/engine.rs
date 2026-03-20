@@ -44,7 +44,9 @@ impl ZeroKnowledge {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.proof_ok { return 5.0; }
+        if !self.proof_ok {
+            return 5.0;
+        }
         100.0
     }
 }

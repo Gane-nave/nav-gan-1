@@ -44,7 +44,9 @@ impl ShockAbsorber {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.damping_ok { return 10.0; }
+        if !self.damping_ok {
+            return 10.0;
+        }
         100.0
     }
 }

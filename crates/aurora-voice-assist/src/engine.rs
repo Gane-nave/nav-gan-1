@@ -44,7 +44,9 @@ impl VoiceAssist {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.wake_ok { return 5.0; }
+        if !self.wake_ok {
+            return 5.0;
+        }
         100.0
     }
 }

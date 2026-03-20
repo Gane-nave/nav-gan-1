@@ -44,7 +44,9 @@ impl ParkingSensor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.failed_count > 0 { return 20.0; }
+        if self.failed_count > 0 {
+            return 20.0;
+        }
         100.0
     }
 }

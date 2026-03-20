@@ -44,7 +44,9 @@ impl OilCooler {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 5.0; }
+        if !self.flow_ok {
+            return 5.0;
+        }
         100.0
     }
 }

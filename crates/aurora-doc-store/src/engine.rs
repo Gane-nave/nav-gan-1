@@ -44,7 +44,9 @@ impl DocStore {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.insert_ok { return 5.0; }
+        if !self.insert_ok {
+            return 5.0;
+        }
         100.0
     }
 }

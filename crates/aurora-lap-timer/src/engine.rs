@@ -44,7 +44,9 @@ impl LapTimer {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sector_ok { return 10.0; }
+        if !self.sector_ok {
+            return 10.0;
+        }
         100.0
     }
 }

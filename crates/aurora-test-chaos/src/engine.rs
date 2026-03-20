@@ -44,7 +44,9 @@ impl TestChaos {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.inject_ok { return 5.0; }
+        if !self.inject_ok {
+            return 5.0;
+        }
         100.0
     }
 }

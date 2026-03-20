@@ -44,7 +44,9 @@ impl AirFilter {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.restriction_kpa > self.max_restriction_kpa { return 10.0; }
+        if self.restriction_kpa > self.max_restriction_kpa {
+            return 10.0;
+        }
         100.0
     }
 }

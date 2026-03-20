@@ -44,7 +44,9 @@ impl DpfFilter {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.ash_load_pct > 90.0 { return 10.0; }
+        if self.ash_load_pct > 90.0 {
+            return 10.0;
+        }
         100.0
     }
 }

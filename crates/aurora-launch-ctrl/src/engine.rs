@@ -44,7 +44,9 @@ impl LaunchCtrl {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.rpm_ok { return 10.0; }
+        if !self.rpm_ok {
+            return 10.0;
+        }
         100.0
     }
 }

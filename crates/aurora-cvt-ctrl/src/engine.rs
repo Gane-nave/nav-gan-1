@@ -44,7 +44,9 @@ impl CvtCtrl {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ratio_ok { return 5.0; }
+        if !self.ratio_ok {
+            return 5.0;
+        }
         100.0
     }
 }

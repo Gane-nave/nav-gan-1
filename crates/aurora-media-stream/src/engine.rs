@@ -44,7 +44,9 @@ impl MediaStream {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.bt_ok { return 15.0; }
+        if !self.bt_ok {
+            return 15.0;
+        }
         100.0
     }
 }

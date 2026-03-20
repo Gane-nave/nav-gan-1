@@ -44,7 +44,9 @@ impl DiffFluid {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.metallic_ppm > self.max_metallic_ppm { return 15.0; }
+        if self.metallic_ppm > self.max_metallic_ppm {
+            return 15.0;
+        }
         100.0
     }
 }

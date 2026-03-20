@@ -44,7 +44,9 @@ impl RoutingGraph {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.build_ok { return 5.0; }
+        if !self.build_ok {
+            return 5.0;
+        }
         100.0
     }
 }

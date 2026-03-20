@@ -44,7 +44,9 @@ impl Winch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.cable_ok { return 10.0; }
+        if !self.cable_ok {
+            return 10.0;
+        }
         100.0
     }
 }

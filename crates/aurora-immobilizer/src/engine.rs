@@ -44,7 +44,9 @@ impl Immobilizer {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.challenge_ok { return 5.0; }
+        if !self.challenge_ok {
+            return 5.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl BeltInspect {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.crack_free { return 10.0; }
+        if !self.crack_free {
+            return 10.0;
+        }
         100.0
     }
 }

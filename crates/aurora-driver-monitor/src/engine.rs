@@ -44,7 +44,9 @@ impl DriverMonitor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.ir_cam_ok { return 5.0; }
+        if !self.ir_cam_ok {
+            return 5.0;
+        }
         100.0
     }
 }

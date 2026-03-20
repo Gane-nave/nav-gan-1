@@ -44,7 +44,9 @@ impl HeadGasket {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.coolant_leak { return 5.0; }
+        if self.coolant_leak {
+            return 5.0;
+        }
         100.0
     }
 }

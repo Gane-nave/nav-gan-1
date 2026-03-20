@@ -44,7 +44,9 @@ impl BikeRack {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.hitch_ok { return 15.0; }
+        if !self.hitch_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl TimingChain {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stretch_mm > self.max_stretch_mm { return 5.0; }
+        if self.stretch_mm > self.max_stretch_mm {
+            return 5.0;
+        }
         100.0
     }
 }

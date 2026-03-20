@@ -44,7 +44,9 @@ impl Undercoat {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.thickness_ok { return 15.0; }
+        if !self.thickness_ok {
+            return 15.0;
+        }
         100.0
     }
 }

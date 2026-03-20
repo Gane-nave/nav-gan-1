@@ -44,7 +44,9 @@ impl SplashGuard {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.front_ok { return 20.0; }
+        if !self.front_ok {
+            return 20.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl BrakeBooster {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.diaphragm_ok { return 10.0; }
+        if !self.diaphragm_ok {
+            return 10.0;
+        }
         100.0
     }
 }

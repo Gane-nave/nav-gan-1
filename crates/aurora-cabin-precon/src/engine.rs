@@ -44,7 +44,9 @@ impl CabinPrecon {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.schedule_ok { return 15.0; }
+        if !self.schedule_ok {
+            return 15.0;
+        }
         100.0
     }
 }

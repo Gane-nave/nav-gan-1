@@ -44,7 +44,9 @@ impl Subframe {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.rust_free { return 10.0; }
+        if !self.rust_free {
+            return 10.0;
+        }
         100.0
     }
 }

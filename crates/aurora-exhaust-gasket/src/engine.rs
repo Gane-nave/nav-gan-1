@@ -44,7 +44,9 @@ impl ExhaustGasket {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 10.0; }
+        if !self.leak_free {
+            return 10.0;
+        }
         100.0
     }
 }

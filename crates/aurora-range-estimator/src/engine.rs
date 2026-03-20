@@ -44,7 +44,9 @@ impl RangeEstimator {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.energy_ok { return 10.0; }
+        if !self.energy_ok {
+            return 10.0;
+        }
         100.0
     }
 }

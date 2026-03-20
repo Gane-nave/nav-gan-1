@@ -44,7 +44,9 @@ impl Fragrance {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.level_ok { return 20.0; }
+        if !self.level_ok {
+            return 20.0;
+        }
         100.0
     }
 }

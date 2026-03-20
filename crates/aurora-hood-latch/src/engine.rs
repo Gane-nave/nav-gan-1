@@ -44,7 +44,9 @@ impl HoodLatch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.primary_ok { return 5.0; }
+        if !self.primary_ok {
+            return 5.0;
+        }
         100.0
     }
 }

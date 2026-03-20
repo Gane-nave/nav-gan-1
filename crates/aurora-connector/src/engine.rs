@@ -44,7 +44,9 @@ impl Connector {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.mate_ok { return 5.0; }
+        if !self.mate_ok {
+            return 5.0;
+        }
         100.0
     }
 }

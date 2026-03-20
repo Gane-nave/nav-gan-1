@@ -44,7 +44,9 @@ impl SeatCool {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.fan_ok { return 15.0; }
+        if !self.fan_ok {
+            return 15.0;
+        }
         100.0
     }
 }

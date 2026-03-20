@@ -44,7 +44,9 @@ impl GrpcServer {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.service_ok { return 5.0; }
+        if !self.service_ok {
+            return 5.0;
+        }
         100.0
     }
 }

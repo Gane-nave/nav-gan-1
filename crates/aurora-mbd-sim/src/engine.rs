@@ -44,7 +44,9 @@ impl MbdSim {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.model_ok { return 5.0; }
+        if !self.model_ok {
+            return 5.0;
+        }
         100.0
     }
 }

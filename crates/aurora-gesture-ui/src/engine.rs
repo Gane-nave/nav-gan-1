@@ -44,7 +44,9 @@ impl GestureUi {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.tracking_ok { return 10.0; }
+        if !self.tracking_ok {
+            return 10.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl MassAirflow {
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.contaminated { return 30.0; }
+        if self.contaminated {
+            return 30.0;
+        }
         100.0
     }
 }

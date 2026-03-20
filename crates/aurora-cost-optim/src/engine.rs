@@ -44,7 +44,9 @@ impl CostOptim {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.analyze_ok { return 5.0; }
+        if !self.analyze_ok {
+            return 5.0;
+        }
         100.0
     }
 }

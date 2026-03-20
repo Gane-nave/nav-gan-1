@@ -44,7 +44,9 @@ impl PaintSim {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.spray_ok { return 15.0; }
+        if !self.spray_ok {
+            return 15.0;
+        }
         100.0
     }
 }

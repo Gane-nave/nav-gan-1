@@ -44,7 +44,9 @@ impl DeployEnvoy {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.config_ok { return 5.0; }
+        if !self.config_ok {
+            return 5.0;
+        }
         100.0
     }
 }

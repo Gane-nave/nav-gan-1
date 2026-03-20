@@ -44,7 +44,9 @@ impl AirPurifier {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.filter_ok { return 15.0; }
+        if !self.filter_ok {
+            return 15.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl ValetPark {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.navigate_ok { return 5.0; }
+        if !self.navigate_ok {
+            return 5.0;
+        }
         100.0
     }
 }

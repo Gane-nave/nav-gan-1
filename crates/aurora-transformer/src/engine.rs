@@ -44,7 +44,9 @@ impl Transformer {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.attention_ok { return 5.0; }
+        if !self.attention_ok {
+            return 5.0;
+        }
         100.0
     }
 }

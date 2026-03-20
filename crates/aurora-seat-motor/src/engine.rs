@@ -44,7 +44,9 @@ impl SeatMotor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.track_ok { return 10.0; }
+        if !self.track_ok {
+            return 10.0;
+        }
         100.0
     }
 }

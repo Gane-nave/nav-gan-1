@@ -44,7 +44,9 @@ impl CrossMember {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.weld_ok { return 5.0; }
+        if !self.weld_ok {
+            return 5.0;
+        }
         100.0
     }
 }

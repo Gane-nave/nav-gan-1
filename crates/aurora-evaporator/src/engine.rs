@@ -44,7 +44,9 @@ impl Evaporator {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.coil_ok { return 15.0; }
+        if !self.coil_ok {
+            return 15.0;
+        }
         100.0
     }
 }

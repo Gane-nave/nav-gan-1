@@ -44,7 +44,9 @@ impl OxygenSensor {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.measure_ok { return 5.0; }
+        if !self.measure_ok {
+            return 5.0;
+        }
         100.0
     }
 }

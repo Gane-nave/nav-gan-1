@@ -44,7 +44,9 @@ impl BrakePad {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.press_ok { return 5.0; }
+        if !self.press_ok {
+            return 5.0;
+        }
         100.0
     }
 }

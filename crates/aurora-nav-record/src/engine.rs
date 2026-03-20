@@ -44,7 +44,9 @@ impl NavRecord {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.storage_ok { return 15.0; }
+        if !self.storage_ok {
+            return 15.0;
+        }
         100.0
     }
 }

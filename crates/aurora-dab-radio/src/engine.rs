@@ -44,7 +44,9 @@ impl DabRadio {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.tune_ok { return 5.0; }
+        if !self.tune_ok {
+            return 5.0;
+        }
         100.0
     }
 }

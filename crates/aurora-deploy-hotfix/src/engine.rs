@@ -44,7 +44,9 @@ impl DeployHotfix {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.branch_ok { return 5.0; }
+        if !self.branch_ok {
+            return 5.0;
+        }
         100.0
     }
 }

@@ -44,7 +44,9 @@ impl GanEngine {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.generator_ok { return 5.0; }
+        if !self.generator_ok {
+            return 5.0;
+        }
         100.0
     }
 }

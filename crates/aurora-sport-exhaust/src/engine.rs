@@ -44,7 +44,9 @@ impl SportExhaust {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.valve_ok { return 15.0; }
+        if !self.valve_ok {
+            return 15.0;
+        }
         100.0
     }
 }

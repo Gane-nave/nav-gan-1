@@ -44,7 +44,9 @@ impl BalanceWeight {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.secure_ok { return 15.0; }
+        if !self.secure_ok {
+            return 15.0;
+        }
         100.0
     }
 }
