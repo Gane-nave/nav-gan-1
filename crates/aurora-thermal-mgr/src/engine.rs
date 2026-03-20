@@ -1,38 +1,38 @@
-/// regen brake: capture, convert, store, limit, report
-/// Phase 1143
+/// thermal mgr: heat, cool, circulate, regulate, alert
+/// Phase 1150
 
 #[derive(Debug, Clone)]
-pub struct RegenBrake {
-    pub capture_ok: bool,
-    pub convert_ok: bool,
-    pub store_ok: bool,
-    pub limit_ok: bool,
-    pub report_ok: bool,
+pub struct ThermalMgr {
+    pub heat_ok: bool,
+    pub cool_ok: bool,
+    pub circulate_ok: bool,
+    pub regulate_ok: bool,
+    pub alert_ok: bool,
 }
 
-impl Default for RegenBrake {
+impl Default for ThermalMgr {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl RegenBrake {
+impl ThermalMgr {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            convert_ok: true,
-            store_ok: true,
-            limit_ok: true,
-            report_ok: true,
+            heat_ok: true,
+            cool_ok: true,
+            circulate_ok: true,
+            regulate_ok: true,
+            alert_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.convert_ok && self.store_ok
+        self.heat_ok && self.cool_ok && self.circulate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.limit_ok && self.report_ok
+        self.regulate_ok && self.alert_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl RegenBrake {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.convert_ok
+        !self.heat_ok || !self.cool_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.heat_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = RegenBrake::new();
+        let c = ThermalMgr::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = RegenBrake::new();
+        let c = ThermalMgr::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = RegenBrake::new();
+        let c = ThermalMgr::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = RegenBrake::new();
+        let c = ThermalMgr::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = RegenBrake::new();
-        c.capture_ok = false;
+        let mut c = ThermalMgr::new();
+        c.heat_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = RegenBrake::new();
+        let c = ThermalMgr::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,57 +1,50 @@
-/// DC-DC converter: high voltage to 12V conversion, auxiliary power
-/// Phase 296
+/// dc-dc conv: step_up, step_down, regulate, protect, report
+/// Phase 1147
 
 #[derive(Debug, Clone)]
-pub struct DcDcConverter {
-    pub input_voltage: f64,
-    pub output_voltage: f64,
-    pub output_current_a: f64,
-    pub efficiency_pct: f64,
-    pub temp_c: f64,
-    pub enabled: bool,
+pub struct DcDcConv {
+    pub step_up_ok: bool,
+    pub step_down_ok: bool,
+    pub regulate_ok: bool,
+    pub protect_ok: bool,
+    pub report_ok: bool,
 }
 
-impl Default for DcDcConverter {
+impl Default for DcDcConv {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl DcDcConverter {
+impl DcDcConv {
     pub fn new() -> Self {
         Self {
-            input_voltage: 400.0,
-            output_voltage: 13.8,
-            output_current_a: 20.0,
-            efficiency_pct: 94.0,
-            temp_c: 45.0,
-            enabled: true,
+            step_up_ok: true,
+            step_down_ok: true,
+            regulate_ok: true,
+            protect_ok: true,
+            report_ok: true,
         }
     }
 
-    pub fn output_ok(&self) -> bool {
-        self.output_voltage > 12.0 && self.output_voltage < 15.0
+    pub fn primary_ok(&self) -> bool {
+        self.step_up_ok && self.step_down_ok && self.regulate_ok
     }
 
-    pub fn power_w(&self) -> f64 {
-        self.output_voltage * self.output_current_a
+    pub fn secondary_ok(&self) -> bool {
+        self.protect_ok && self.report_ok
     }
 
-    pub fn overloaded(&self) -> bool {
-        self.output_current_a > 100.0
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn overheating(&self) -> bool {
-        self.temp_c > 100.0
+    pub fn needs_attention(&self) -> bool {
+        !self.step_up_ok || !self.step_down_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.overheating() {
-            return 0.0;
-        }
-        if !self.output_ok() {
-            return 30.0;
-        }
+        if !self.step_up_ok { return 5.0; }
         100.0
     }
 }
@@ -61,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_output_ok() {
-        let d = DcDcConverter::new();
-        assert!(d.output_ok());
+    fn test_primary() {
+        let c = DcDcConv::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_power() {
-        let d = DcDcConverter::new();
-        assert!(d.power_w() > 200.0);
+    fn test_secondary() {
+        let c = DcDcConv::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_not_overloaded() {
-        let d = DcDcConverter::new();
-        assert!(!d.overloaded());
+    fn test_all_ok() {
+        let c = DcDcConv::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_hot() {
-        let d = DcDcConverter::new();
-        assert!(!d.overheating());
+    fn test_no_attention() {
+        let c = DcDcConv::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_low_voltage() {
-        let mut d = DcDcConverter::new();
-        d.output_voltage = 10.0;
-        assert!(!d.output_ok());
+    fn test_field_toggle() {
+        let mut c = DcDcConv::new();
+        c.step_up_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let d = DcDcConverter::new();
-        assert!((d.health_score() - 100.0).abs() < 0.1);
+        let c = DcDcConv::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

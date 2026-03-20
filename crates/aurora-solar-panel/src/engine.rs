@@ -1,38 +1,38 @@
-/// regen brake: capture, convert, store, limit, report
-/// Phase 1143
+/// solar panel: harvest, track, optimize, clean, report
+/// Phase 1144
 
 #[derive(Debug, Clone)]
-pub struct RegenBrake {
-    pub capture_ok: bool,
-    pub convert_ok: bool,
-    pub store_ok: bool,
-    pub limit_ok: bool,
+pub struct SolarPanel {
+    pub harvest_ok: bool,
+    pub track_ok: bool,
+    pub optimize_ok: bool,
+    pub clean_ok: bool,
     pub report_ok: bool,
 }
 
-impl Default for RegenBrake {
+impl Default for SolarPanel {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl RegenBrake {
+impl SolarPanel {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            convert_ok: true,
-            store_ok: true,
-            limit_ok: true,
+            harvest_ok: true,
+            track_ok: true,
+            optimize_ok: true,
+            clean_ok: true,
             report_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.convert_ok && self.store_ok
+        self.harvest_ok && self.track_ok && self.optimize_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.limit_ok && self.report_ok
+        self.clean_ok && self.report_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl RegenBrake {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.convert_ok
+        !self.harvest_ok || !self.track_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.harvest_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = RegenBrake::new();
+        let c = SolarPanel::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = RegenBrake::new();
+        let c = SolarPanel::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = RegenBrake::new();
+        let c = SolarPanel::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = RegenBrake::new();
+        let c = SolarPanel::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = RegenBrake::new();
-        c.capture_ok = false;
+        let mut c = SolarPanel::new();
+        c.harvest_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = RegenBrake::new();
+        let c = SolarPanel::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,4 +1,4 @@
 [package]
-name = "aurora-regen-brake"
+name = "aurora-battery-mgr"
 version = "0.1.0"
 edition = "2021"

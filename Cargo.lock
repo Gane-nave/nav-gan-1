@@ -575,6 +575,10 @@ name = "aurora-battery-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-battery-mgr"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-precon"
 version = "0.1.0"
 
@@ -685,6 +689,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-bms-cell"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bms-core"
 version = "0.1.0"
 
 [[package]]
@@ -975,6 +983,10 @@ name = "aurora-charge-timer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-charger-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-charging"
 version = "0.1.0"
 dependencies = [
@@ -1113,6 +1125,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-compression-test"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-compressor"
 version = "0.1.0"
 
 [[package]]
@@ -2073,6 +2089,10 @@ name = "aurora-fan-clutch"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fan-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fatigue-sim"
 version = "0.1.0"
 
@@ -2214,6 +2234,10 @@ name = "aurora-fuel-cap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-cell"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-door"
 version = "0.1.0"
 
@@ -2263,6 +2287,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuse-box"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuse-monitor"
 version = "0.1.0"
 
 [[package]]
@@ -2438,6 +2466,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-grille-shut"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ground-fault"
 version = "0.1.0"
 
 [[package]]
@@ -3315,6 +3347,10 @@ name = "aurora-motor-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-motor-drive"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-motor-resolver"
 version = "0.1.0"
 
@@ -3885,6 +3921,10 @@ name = "aurora-pulley-sys"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pump-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pump-noise"
 version = "0.1.0"
 
@@ -4005,6 +4045,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-reinforce"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-relay-board"
 version = "0.1.0"
 
 [[package]]
@@ -4489,6 +4533,10 @@ name = "aurora-solar-charge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-solar-panel"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-solar-sensor"
 version = "0.1.0"
 
@@ -4716,6 +4764,10 @@ name = "aurora-sunroof-motor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-super-cap"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-supply-chain"
 version = "0.1.0"
 
@@ -4847,6 +4899,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-thermal-mgmt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-thermal-mgr"
 version = "0.1.0"
 
 [[package]]

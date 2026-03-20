@@ -1,13 +1,13 @@
-/// Inverter: IGBT, DC link, gate driver, cooling
-/// Phase 717
+/// inverter: convert, modulate, filter, sync, protect
+/// Phase 1148
 
 #[derive(Debug, Clone)]
 pub struct Inverter {
-    pub igbt_ok: bool,
-    pub dc_link_ok: bool,
-    pub gate_ok: bool,
-    pub cooling_ok: bool,
-    pub efficiency_ok: bool,
+    pub convert_ok: bool,
+    pub modulate_ok: bool,
+    pub filter_ok: bool,
+    pub sync_ok: bool,
+    pub protect_ok: bool,
 }
 
 impl Default for Inverter {
@@ -19,32 +19,32 @@ impl Default for Inverter {
 impl Inverter {
     pub fn new() -> Self {
         Self {
-            igbt_ok: true,
-            dc_link_ok: true,
-            gate_ok: true,
-            cooling_ok: true,
-            efficiency_ok: true,
+            convert_ok: true,
+            modulate_ok: true,
+            filter_ok: true,
+            sync_ok: true,
+            protect_ok: true,
         }
     }
 
-    pub fn power_stage_ok(&self) -> bool {
-        self.igbt_ok && self.dc_link_ok && self.gate_ok
+    pub fn primary_ok(&self) -> bool {
+        self.convert_ok && self.modulate_ok && self.filter_ok
     }
 
-    pub fn thermal_ok(&self) -> bool {
-        self.cooling_ok && self.efficiency_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.sync_ok && self.protect_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.power_stage_ok() && self.thermal_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.igbt_ok || !self.cooling_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.convert_ok || !self.modulate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.igbt_ok { return 5.0; }
+        if !self.convert_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_power_stage() {
+    fn test_primary() {
         let c = Inverter::new();
-        assert!(c.power_stage_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_thermal() {
+    fn test_secondary() {
         let c = Inverter::new();
-        assert!(c.thermal_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = Inverter::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_igbt() {
+    fn test_field_toggle() {
         let mut c = Inverter::new();
-        c.igbt_ok = false;
-        assert!(c.needs_service());
+        c.convert_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

@@ -1,38 +1,38 @@
-/// regen brake: capture, convert, store, limit, report
-/// Phase 1143
+/// fuel cell: start, generate, cool, purge, shutdown
+/// Phase 1145
 
 #[derive(Debug, Clone)]
-pub struct RegenBrake {
-    pub capture_ok: bool,
-    pub convert_ok: bool,
-    pub store_ok: bool,
-    pub limit_ok: bool,
-    pub report_ok: bool,
+pub struct FuelCell {
+    pub start_ok: bool,
+    pub generate_ok: bool,
+    pub cool_ok: bool,
+    pub purge_ok: bool,
+    pub shutdown_ok: bool,
 }
 
-impl Default for RegenBrake {
+impl Default for FuelCell {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl RegenBrake {
+impl FuelCell {
     pub fn new() -> Self {
         Self {
-            capture_ok: true,
-            convert_ok: true,
-            store_ok: true,
-            limit_ok: true,
-            report_ok: true,
+            start_ok: true,
+            generate_ok: true,
+            cool_ok: true,
+            purge_ok: true,
+            shutdown_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.capture_ok && self.convert_ok && self.store_ok
+        self.start_ok && self.generate_ok && self.cool_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.limit_ok && self.report_ok
+        self.purge_ok && self.shutdown_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl RegenBrake {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.capture_ok || !self.convert_ok
+        !self.start_ok || !self.generate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.capture_ok { return 5.0; }
+        if !self.start_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = RegenBrake::new();
+        let c = FuelCell::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = RegenBrake::new();
+        let c = FuelCell::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = RegenBrake::new();
+        let c = FuelCell::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = RegenBrake::new();
+        let c = FuelCell::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = RegenBrake::new();
-        c.capture_ok = false;
+        let mut c = FuelCell::new();
+        c.start_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = RegenBrake::new();
+        let c = FuelCell::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
