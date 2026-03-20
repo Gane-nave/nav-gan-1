@@ -252,6 +252,9 @@ members = [
     "crates/aurora-haptic",
     "crates/aurora-elevation",
     "crates/aurora-convoy",
+    "crates/aurora-terrain",
+    "crates/aurora-fuel-opt",
+    "crates/aurora-road-surface",
 ]
 
 [workspace.package]

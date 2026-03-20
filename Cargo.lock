@@ -902,6 +902,10 @@ name = "aurora-fsm"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-opt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fusion"
 version = "0.1.0"
 dependencies = [
@@ -1641,6 +1645,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-road-surface"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rollout"
 version = "0.1.0"
 dependencies = [
@@ -1881,6 +1889,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-temporal-prec"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-terrain"
 version = "0.1.0"
 
 [[package]]
