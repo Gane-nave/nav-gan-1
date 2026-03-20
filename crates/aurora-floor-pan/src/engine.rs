@@ -1,38 +1,38 @@
-/// Fender: panel, liner, bracket, clearance
-/// Phase 786
+/// Floor pan: structure, drain, insulation, reinforcement
+/// Phase 793
 
 #[derive(Debug, Clone)]
-pub struct Fender {
-    pub panel_ok: bool,
-    pub liner_ok: bool,
-    pub bracket_ok: bool,
-    pub clearance_ok: bool,
-    pub alignment_ok: bool,
+pub struct FloorPan {
+    pub structure_ok: bool,
+    pub drain_ok: bool,
+    pub insulation_ok: bool,
+    pub reinforcement_ok: bool,
+    pub coating_ok: bool,
 }
 
-impl Default for Fender {
+impl Default for FloorPan {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl Fender {
+impl FloorPan {
     pub fn new() -> Self {
         Self {
-            panel_ok: true,
-            liner_ok: true,
-            bracket_ok: true,
-            clearance_ok: true,
-            alignment_ok: true,
+            structure_ok: true,
+            drain_ok: true,
+            insulation_ok: true,
+            reinforcement_ok: true,
+            coating_ok: true,
         }
     }
 
     pub fn body_ok(&self) -> bool {
-        self.panel_ok && self.alignment_ok
+        self.structure_ok && self.reinforcement_ok
     }
 
     pub fn protection_ok(&self) -> bool {
-        self.liner_ok && self.bracket_ok && self.clearance_ok
+        self.drain_ok && self.insulation_ok && self.coating_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl Fender {
     }
 
     pub fn needs_repair(&self) -> bool {
-        !self.panel_ok || !self.bracket_ok
+        !self.structure_ok || !self.coating_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.panel_ok { return 10.0; }
+        if !self.structure_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_body() {
-        let c = Fender::new();
+        let c = FloorPan::new();
         assert!(c.body_ok());
     }
 
     #[test]
     fn test_protection() {
-        let c = Fender::new();
+        let c = FloorPan::new();
         assert!(c.protection_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = Fender::new();
+        let c = FloorPan::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_repair() {
-        let c = Fender::new();
+        let c = FloorPan::new();
         assert!(!c.needs_repair());
     }
 
     #[test]
-    fn test_panel() {
-        let mut c = Fender::new();
-        c.panel_ok = false;
+    fn test_structure() {
+        let mut c = FloorPan::new();
+        c.structure_ok = false;
         assert!(c.needs_repair());
     }
 
     #[test]
     fn test_health() {
-        let c = Fender::new();
+        let c = FloorPan::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

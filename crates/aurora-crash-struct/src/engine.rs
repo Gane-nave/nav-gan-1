@@ -1,50 +1,50 @@
-/// Crash structure: crumple zone, energy absorption, integrity
-/// Phase 530
+/// Crash structure: crumple zone, reinforcement, energy absorb
+/// Phase 795
 
 #[derive(Debug, Clone)]
-pub struct CrashStructure {
-    pub deformation_mm: f64,
-    pub max_deformation_mm: f64,
-    pub integrity_pct: f64,
+pub struct CrashStruct {
+    pub crumple_ok: bool,
     pub reinforcement_ok: bool,
-    pub corrosion_free: bool,
+    pub absorber_ok: bool,
+    pub intrusion_ok: bool,
+    pub weld_ok: bool,
 }
 
-impl Default for CrashStructure {
+impl Default for CrashStruct {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CrashStructure {
+impl CrashStruct {
     pub fn new() -> Self {
         Self {
-            deformation_mm: 0.0,
-            max_deformation_mm: 50.0,
-            integrity_pct: 100.0,
+            crumple_ok: true,
             reinforcement_ok: true,
-            corrosion_free: true,
+            absorber_ok: true,
+            intrusion_ok: true,
+            weld_ok: true,
         }
     }
 
-    pub fn deformation_ok(&self) -> bool {
-        self.deformation_mm < self.max_deformation_mm
+    pub fn protection_ok(&self) -> bool {
+        self.crumple_ok && self.absorber_ok && self.intrusion_ok
     }
 
-    pub fn structurally_sound(&self) -> bool {
-        self.integrity_pct > 90.0 && self.reinforcement_ok
+    pub fn integrity_ok(&self) -> bool {
+        self.reinforcement_ok && self.weld_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.deformation_ok() && self.structurally_sound() && self.corrosion_free
+        self.protection_ok() && self.integrity_ok()
     }
 
-    pub fn needs_repair(&self) -> bool {
-        self.deformation_mm > 0.0 || !self.reinforcement_ok
+    pub fn needs_inspection(&self) -> bool {
+        !self.crumple_ok || !self.weld_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.integrity_pct < 90.0 { return 10.0; }
+        if !self.crumple_ok { return 5.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_deformation() {
-        let c = CrashStructure::new();
-        assert!(c.deformation_ok());
+    fn test_protection() {
+        let c = CrashStruct::new();
+        assert!(c.protection_ok());
     }
 
     #[test]
-    fn test_sound() {
-        let c = CrashStructure::new();
-        assert!(c.structurally_sound());
+    fn test_integrity() {
+        let c = CrashStruct::new();
+        assert!(c.integrity_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CrashStructure::new();
+        let c = CrashStruct::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_repair() {
-        let c = CrashStructure::new();
-        assert!(!c.needs_repair());
+    fn test_no_inspect() {
+        let c = CrashStruct::new();
+        assert!(!c.needs_inspection());
     }
 
     #[test]
-    fn test_damaged() {
-        let mut c = CrashStructure::new();
-        c.deformation_mm = 60.0;
-        assert!(!c.deformation_ok());
+    fn test_crumple() {
+        let mut c = CrashStruct::new();
+        c.crumple_ok = false;
+        assert!(c.needs_inspection());
     }
 
     #[test]
     fn test_health() {
-        let c = CrashStructure::new();
+        let c = CrashStruct::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
