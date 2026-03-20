@@ -1,38 +1,38 @@
-/// cloud sync: connect, push, pull, merge, disconnect
-/// Phase 1135
+/// fog compute: discover, offload, execute, collect, balance
+/// Phase 1137
 
 #[derive(Debug, Clone)]
-pub struct CloudSync {
-    pub connect_ok: bool,
-    pub push_ok: bool,
-    pub pull_ok: bool,
-    pub merge_ok: bool,
-    pub disconnect_ok: bool,
+pub struct FogCompute {
+    pub discover_ok: bool,
+    pub offload_ok: bool,
+    pub execute_ok: bool,
+    pub collect_ok: bool,
+    pub balance_ok: bool,
 }
 
-impl Default for CloudSync {
+impl Default for FogCompute {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CloudSync {
+impl FogCompute {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
-            push_ok: true,
-            pull_ok: true,
-            merge_ok: true,
-            disconnect_ok: true,
+            discover_ok: true,
+            offload_ok: true,
+            execute_ok: true,
+            collect_ok: true,
+            balance_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.push_ok && self.pull_ok
+        self.discover_ok && self.offload_ok && self.execute_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.merge_ok && self.disconnect_ok
+        self.collect_ok && self.balance_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CloudSync {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.push_ok
+        !self.discover_ok || !self.offload_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok { return 5.0; }
+        if !self.discover_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CloudSync::new();
+        let c = FogCompute::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CloudSync::new();
+        let c = FogCompute::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CloudSync::new();
+        let c = FogCompute::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CloudSync::new();
+        let c = FogCompute::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CloudSync::new();
-        c.connect_ok = false;
+        let mut c = FogCompute::new();
+        c.discover_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CloudSync::new();
+        let c = FogCompute::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

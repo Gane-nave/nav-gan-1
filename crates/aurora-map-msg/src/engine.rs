@@ -1,38 +1,38 @@
-/// cloud sync: connect, push, pull, merge, disconnect
-/// Phase 1135
+/// map message: lane, intersection, geometry, approach, egress
+/// Phase 1130
 
 #[derive(Debug, Clone)]
-pub struct CloudSync {
-    pub connect_ok: bool,
-    pub push_ok: bool,
-    pub pull_ok: bool,
-    pub merge_ok: bool,
-    pub disconnect_ok: bool,
+pub struct MapMsg {
+    pub lane_ok: bool,
+    pub intersection_ok: bool,
+    pub geometry_ok: bool,
+    pub approach_ok: bool,
+    pub egress_ok: bool,
 }
 
-impl Default for CloudSync {
+impl Default for MapMsg {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CloudSync {
+impl MapMsg {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
-            push_ok: true,
-            pull_ok: true,
-            merge_ok: true,
-            disconnect_ok: true,
+            lane_ok: true,
+            intersection_ok: true,
+            geometry_ok: true,
+            approach_ok: true,
+            egress_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.push_ok && self.pull_ok
+        self.lane_ok && self.intersection_ok && self.geometry_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.merge_ok && self.disconnect_ok
+        self.approach_ok && self.egress_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CloudSync {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.push_ok
+        !self.lane_ok || !self.intersection_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok { return 5.0; }
+        if !self.lane_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CloudSync::new();
+        let c = MapMsg::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CloudSync::new();
+        let c = MapMsg::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CloudSync::new();
+        let c = MapMsg::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CloudSync::new();
+        let c = MapMsg::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CloudSync::new();
-        c.connect_ok = false;
+        let mut c = MapMsg::new();
+        c.lane_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CloudSync::new();
+        let c = MapMsg::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,13 +1,13 @@
-/// Mesh network: peer, relay, route, heal, discover
-/// Phase 983
+/// mesh network: join, route, forward, heal, leave
+/// Phase 1138
 
 #[derive(Debug, Clone)]
 pub struct MeshNet {
-    pub peer_ok: bool,
-    pub relay_ok: bool,
+    pub join_ok: bool,
     pub route_ok: bool,
+    pub forward_ok: bool,
     pub heal_ok: bool,
-    pub discover_ok: bool,
+    pub leave_ok: bool,
 }
 
 impl Default for MeshNet {
@@ -19,32 +19,32 @@ impl Default for MeshNet {
 impl MeshNet {
     pub fn new() -> Self {
         Self {
-            peer_ok: true,
-            relay_ok: true,
+            join_ok: true,
             route_ok: true,
+            forward_ok: true,
             heal_ok: true,
-            discover_ok: true,
+            leave_ok: true,
         }
     }
 
-    pub fn topology_ok(&self) -> bool {
-        self.peer_ok && self.relay_ok && self.discover_ok
+    pub fn primary_ok(&self) -> bool {
+        self.join_ok && self.route_ok && self.forward_ok
     }
 
-    pub fn resilience_ok(&self) -> bool {
-        self.route_ok && self.heal_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.heal_ok && self.leave_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.topology_ok() && self.resilience_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_update(&self) -> bool {
-        !self.peer_ok || !self.discover_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.join_ok || !self.route_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.peer_ok { return 10.0; }
+        if !self.join_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_topology() {
+    fn test_primary() {
         let c = MeshNet::new();
-        assert!(c.topology_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_resilience() {
+    fn test_secondary() {
         let c = MeshNet::new();
-        assert!(c.resilience_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_update() {
+    fn test_no_attention() {
         let c = MeshNet::new();
-        assert!(!c.needs_update());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_peer() {
+    fn test_field_toggle() {
         let mut c = MeshNet::new();
-        c.peer_ok = false;
-        assert!(c.needs_update());
+        c.join_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

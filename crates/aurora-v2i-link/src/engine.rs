@@ -1,38 +1,38 @@
-/// cloud sync: connect, push, pull, merge, disconnect
-/// Phase 1135
+/// v2i link: infra, signal, priority, preempt, feedback
+/// Phase 1123
 
 #[derive(Debug, Clone)]
-pub struct CloudSync {
-    pub connect_ok: bool,
-    pub push_ok: bool,
-    pub pull_ok: bool,
-    pub merge_ok: bool,
-    pub disconnect_ok: bool,
+pub struct V2iLink {
+    pub infra_ok: bool,
+    pub signal_ok: bool,
+    pub priority_ok: bool,
+    pub preempt_ok: bool,
+    pub feedback_ok: bool,
 }
 
-impl Default for CloudSync {
+impl Default for V2iLink {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CloudSync {
+impl V2iLink {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
-            push_ok: true,
-            pull_ok: true,
-            merge_ok: true,
-            disconnect_ok: true,
+            infra_ok: true,
+            signal_ok: true,
+            priority_ok: true,
+            preempt_ok: true,
+            feedback_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.push_ok && self.pull_ok
+        self.infra_ok && self.signal_ok && self.priority_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.merge_ok && self.disconnect_ok
+        self.preempt_ok && self.feedback_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CloudSync {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.push_ok
+        !self.infra_ok || !self.signal_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok { return 5.0; }
+        if !self.infra_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CloudSync::new();
+        let c = V2iLink::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CloudSync::new();
+        let c = V2iLink::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CloudSync::new();
+        let c = V2iLink::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CloudSync::new();
+        let c = V2iLink::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CloudSync::new();
-        c.connect_ok = false;
+        let mut c = V2iLink::new();
+        c.infra_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CloudSync::new();
+        let c = V2iLink::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,38 +1,38 @@
-/// cloud sync: connect, push, pull, merge, disconnect
-/// Phase 1135
+/// v2p safety: detect, warn, brake, track, log
+/// Phase 1125
 
 #[derive(Debug, Clone)]
-pub struct CloudSync {
-    pub connect_ok: bool,
-    pub push_ok: bool,
-    pub pull_ok: bool,
-    pub merge_ok: bool,
-    pub disconnect_ok: bool,
+pub struct V2pSafety {
+    pub detect_ok: bool,
+    pub warn_ok: bool,
+    pub brake_ok: bool,
+    pub track_ok: bool,
+    pub log_ok: bool,
 }
 
-impl Default for CloudSync {
+impl Default for V2pSafety {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CloudSync {
+impl V2pSafety {
     pub fn new() -> Self {
         Self {
-            connect_ok: true,
-            push_ok: true,
-            pull_ok: true,
-            merge_ok: true,
-            disconnect_ok: true,
+            detect_ok: true,
+            warn_ok: true,
+            brake_ok: true,
+            track_ok: true,
+            log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.connect_ok && self.push_ok && self.pull_ok
+        self.detect_ok && self.warn_ok && self.brake_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.merge_ok && self.disconnect_ok
+        self.track_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CloudSync {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.connect_ok || !self.push_ok
+        !self.detect_ok || !self.warn_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.connect_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CloudSync::new();
+        let c = V2pSafety::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CloudSync::new();
+        let c = V2pSafety::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CloudSync::new();
+        let c = V2pSafety::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CloudSync::new();
+        let c = V2pSafety::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CloudSync::new();
-        c.connect_ok = false;
+        let mut c = V2pSafety::new();
+        c.detect_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CloudSync::new();
+        let c = V2pSafety::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

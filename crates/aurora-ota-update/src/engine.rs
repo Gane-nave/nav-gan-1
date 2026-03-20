@@ -1,13 +1,13 @@
-/// OTA update: download, verify, install, rollback, schedule
-/// Phase 885
+/// ota update: check, download, verify, install, rollback
+/// Phase 1133
 
 #[derive(Debug, Clone)]
 pub struct OtaUpdate {
+    pub check_ok: bool,
     pub download_ok: bool,
     pub verify_ok: bool,
     pub install_ok: bool,
     pub rollback_ok: bool,
-    pub schedule_ok: bool,
 }
 
 impl Default for OtaUpdate {
@@ -19,32 +19,32 @@ impl Default for OtaUpdate {
 impl OtaUpdate {
     pub fn new() -> Self {
         Self {
+            check_ok: true,
             download_ok: true,
             verify_ok: true,
             install_ok: true,
             rollback_ok: true,
-            schedule_ok: true,
         }
     }
 
-    pub fn delivery_ok(&self) -> bool {
-        self.download_ok && self.verify_ok
+    pub fn primary_ok(&self) -> bool {
+        self.check_ok && self.download_ok && self.verify_ok
     }
 
-    pub fn deployment_ok(&self) -> bool {
-        self.install_ok && self.rollback_ok && self.schedule_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.install_ok && self.rollback_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.delivery_ok() && self.deployment_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_retry(&self) -> bool {
-        !self.download_ok || !self.verify_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.check_ok || !self.download_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.verify_ok { return 5.0; }
+        if !self.check_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_delivery() {
+    fn test_primary() {
         let c = OtaUpdate::new();
-        assert!(c.delivery_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_deployment() {
+    fn test_secondary() {
         let c = OtaUpdate::new();
-        assert!(c.deployment_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_retry() {
+    fn test_no_attention() {
         let c = OtaUpdate::new();
-        assert!(!c.needs_retry());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_verify() {
+    fn test_field_toggle() {
         let mut c = OtaUpdate::new();
-        c.verify_ok = false;
-        assert!(c.needs_retry());
+        c.check_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

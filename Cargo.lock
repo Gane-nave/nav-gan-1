@@ -788,6 +788,10 @@ name = "aurora-bridge-nav"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bsm-proc"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-btree"
 version = "0.1.0"
 
@@ -1382,6 +1386,10 @@ name = "aurora-cv-joint"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cv2x-modem"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cyclist-det"
 version = "0.1.0"
 
@@ -1783,6 +1791,10 @@ name = "aurora-edge-compute"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-edge-infer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-efficiency-coach"
 version = "0.1.0"
 
@@ -2147,6 +2159,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-flywheel-mon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fog-compute"
 version = "0.1.0"
 
 [[package]]
@@ -3122,6 +3138,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-map-msg"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map-sensor"
 version = "0.1.0"
 
@@ -3992,6 +4012,10 @@ name = "aurora-remote-access"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-remote-diag"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-remote-start"
 version = "0.1.0"
 
@@ -4497,6 +4521,10 @@ name = "aurora-spark-plug"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-spat-decode"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-speaker-mount"
 version = "0.1.0"
 
@@ -4708,6 +4736,10 @@ name = "aurora-svc-disc"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-swarm-coord"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sway-bar"
 version = "0.1.0"
 
@@ -4733,6 +4765,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-teen-driver"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-telem-up"
 version = "0.1.0"
 
 [[package]]
@@ -4864,6 +4900,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-tim-alert"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-time-series"
@@ -5162,11 +5202,27 @@ name = "aurora-v2g"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-v2i-link"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-v2p-safety"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-v2v-mesh"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-v2x"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-v2x-basic"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-v2x-comm"

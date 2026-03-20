@@ -1,13 +1,13 @@
-/// DSRC radio: V2V, V2I, BSM, SPaT, MAP
-/// Phase 981
+/// dsrc radio: channel, power, modulate, demodulate, scan
+/// Phase 1126
 
 #[derive(Debug, Clone)]
 pub struct DsrcRadio {
-    pub v2v_ok: bool,
-    pub v2i_ok: bool,
-    pub bsm_ok: bool,
-    pub spat_ok: bool,
-    pub map_ok: bool,
+    pub channel_ok: bool,
+    pub power_ok: bool,
+    pub modulate_ok: bool,
+    pub demodulate_ok: bool,
+    pub scan_ok: bool,
 }
 
 impl Default for DsrcRadio {
@@ -19,32 +19,32 @@ impl Default for DsrcRadio {
 impl DsrcRadio {
     pub fn new() -> Self {
         Self {
-            v2v_ok: true,
-            v2i_ok: true,
-            bsm_ok: true,
-            spat_ok: true,
-            map_ok: true,
+            channel_ok: true,
+            power_ok: true,
+            modulate_ok: true,
+            demodulate_ok: true,
+            scan_ok: true,
         }
     }
 
-    pub fn vehicle_ok(&self) -> bool {
-        self.v2v_ok && self.bsm_ok
+    pub fn primary_ok(&self) -> bool {
+        self.channel_ok && self.power_ok && self.modulate_ok
     }
 
-    pub fn infrastructure_ok(&self) -> bool {
-        self.v2i_ok && self.spat_ok && self.map_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.demodulate_ok && self.scan_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.vehicle_ok() && self.infrastructure_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_config(&self) -> bool {
-        !self.v2v_ok || !self.v2i_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.channel_ok || !self.power_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.v2v_ok { return 5.0; }
+        if !self.channel_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_vehicle() {
+    fn test_primary() {
         let c = DsrcRadio::new();
-        assert!(c.vehicle_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_infrastructure() {
+    fn test_secondary() {
         let c = DsrcRadio::new();
-        assert!(c.infrastructure_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_config() {
+    fn test_no_attention() {
         let c = DsrcRadio::new();
-        assert!(!c.needs_config());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_v2v() {
+    fn test_field_toggle() {
         let mut c = DsrcRadio::new();
-        c.v2v_ok = false;
-        assert!(c.needs_config());
+        c.channel_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
