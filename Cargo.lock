@@ -141,6 +141,10 @@ name = "aurora-air-filter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-air-intake"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-air-quality"
 version = "0.1.0"
 
@@ -1183,6 +1187,10 @@ name = "aurora-downforce"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-downpipe"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dpf-filter"
 version = "0.1.0"
 
@@ -1450,6 +1458,10 @@ name = "aurora-exhaust-note"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-exhaust-tip"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-explain"
 version = "0.1.0"
 dependencies = [
@@ -1500,6 +1512,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-flex-pipe"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-flexray-bus"
@@ -1862,11 +1878,19 @@ name = "aurora-idle-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-idle-valve"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ignition-coil"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-ignition-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ignition-module"
 version = "0.1.0"
 
 [[package]]
@@ -1926,6 +1950,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-infotainment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-injector"
 version = "0.1.0"
 
 [[package]]
@@ -2769,6 +2797,10 @@ name = "aurora-pump-noise"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-purge-valve"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-quality-ctrl"
 version = "0.1.0"
 dependencies = [
@@ -3569,6 +3601,10 @@ name = "aurora-tunnel-detect"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-turbo-actuator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-turbo-charger"
 version = "0.1.0"
 
@@ -3714,6 +3750,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-vortex-gen"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vvt-solenoid"
 version = "0.1.0"
 
 [[package]]

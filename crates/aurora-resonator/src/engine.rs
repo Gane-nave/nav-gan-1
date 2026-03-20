@@ -1,13 +1,13 @@
-/// Resonator: Helmholtz, quarter-wave, acoustic tuning
-/// Phase 381
+/// Exhaust resonator: tuning, chamber, pipe connection
+/// Phase 615
 
 #[derive(Debug, Clone)]
 pub struct Resonator {
-    pub target_freq_hz: f64,
-    pub bandwidth_hz: f64,
-    pub attenuation_db: f64,
-    pub intact: bool,
-    pub tuned: bool,
+    pub tuning_ok: bool,
+    pub chamber_ok: bool,
+    pub pipe_ok: bool,
+    pub seal_ok: bool,
+    pub mount_ok: bool,
 }
 
 impl Default for Resonator {
@@ -19,40 +19,32 @@ impl Default for Resonator {
 impl Resonator {
     pub fn new() -> Self {
         Self {
-            target_freq_hz: 200.0,
-            bandwidth_hz: 50.0,
-            attenuation_db: 15.0,
-            intact: true,
-            tuned: true,
+            tuning_ok: true,
+            chamber_ok: true,
+            pipe_ok: true,
+            seal_ok: true,
+            mount_ok: true,
         }
     }
 
-    pub fn effective(&self) -> bool {
-        self.attenuation_db > 10.0 && self.intact && self.tuned
+    pub fn acoustics_ok(&self) -> bool {
+        self.tuning_ok && self.chamber_ok
     }
 
-    pub fn freq_range(&self) -> (f64, f64) {
-        (
-            self.target_freq_hz - self.bandwidth_hz / 2.0,
-            self.target_freq_hz + self.bandwidth_hz / 2.0,
-        )
+    pub fn connection_ok(&self) -> bool {
+        self.pipe_ok && self.seal_ok && self.mount_ok
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.intact || !self.tuned
+    pub fn all_ok(&self) -> bool {
+        self.acoustics_ok() && self.connection_ok()
     }
 
-    pub fn broadband(&self) -> bool {
-        self.bandwidth_hz > 100.0
+    pub fn needs_replacement(&self) -> bool {
+        !self.chamber_ok || !self.pipe_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.intact {
-            return 0.0;
-        }
-        if !self.tuned {
-            return 40.0;
-        }
+        if !self.chamber_ok { return 20.0; }
         100.0
     }
 }
@@ -62,40 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_effective() {
-        let r = Resonator::new();
-        assert!(r.effective());
+    fn test_acoustics() {
+        let c = Resonator::new();
+        assert!(c.acoustics_ok());
     }
 
     #[test]
-    fn test_range() {
-        let r = Resonator::new();
-        let (lo, hi) = r.freq_range();
-        assert!(lo < 200.0 && hi > 200.0);
+    fn test_connection() {
+        let c = Resonator::new();
+        assert!(c.connection_ok());
     }
 
     #[test]
-    fn test_no_service() {
-        let r = Resonator::new();
-        assert!(!r.needs_service());
+    fn test_all_ok() {
+        let c = Resonator::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_broadband() {
-        let r = Resonator::new();
-        assert!(!r.broadband());
+    fn test_no_replace() {
+        let c = Resonator::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_damaged() {
-        let mut r = Resonator::new();
-        r.intact = false;
-        assert!(r.needs_service());
+    fn test_chamber() {
+        let mut c = Resonator::new();
+        c.chamber_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let r = Resonator::new();
-        assert!((r.health_score() - 100.0).abs() < 0.1);
+        let c = Resonator::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

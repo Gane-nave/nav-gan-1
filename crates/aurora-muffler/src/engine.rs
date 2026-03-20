@@ -1,13 +1,13 @@
-/// Muffler: sound attenuation, backpressure, corrosion
-/// Phase 493
+/// Muffler: baffles, packing, shell, resonance
+/// Phase 614
 
 #[derive(Debug, Clone)]
 pub struct Muffler {
-    pub attenuation_db: f64,
-    pub backpressure_kpa: f64,
-    pub max_backpressure_kpa: f64,
-    pub corroded: bool,
-    pub leak_free: bool,
+    pub baffles_ok: bool,
+    pub packing_ok: bool,
+    pub shell_ok: bool,
+    pub resonance_ok: bool,
+    pub mount_ok: bool,
 }
 
 impl Default for Muffler {
@@ -19,32 +19,32 @@ impl Default for Muffler {
 impl Muffler {
     pub fn new() -> Self {
         Self {
-            attenuation_db: 25.0,
-            backpressure_kpa: 5.0,
-            max_backpressure_kpa: 15.0,
-            corroded: false,
-            leak_free: true,
+            baffles_ok: true,
+            packing_ok: true,
+            shell_ok: true,
+            resonance_ok: true,
+            mount_ok: true,
         }
     }
 
-    pub fn attenuation_ok(&self) -> bool {
-        self.attenuation_db > 15.0
+    pub fn internals_ok(&self) -> bool {
+        self.baffles_ok && self.packing_ok
     }
 
-    pub fn backpressure_ok(&self) -> bool {
-        self.backpressure_kpa < self.max_backpressure_kpa
+    pub fn structure_ok(&self) -> bool {
+        self.shell_ok && self.mount_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.attenuation_ok() && self.backpressure_ok() && !self.corroded && self.leak_free
+        self.internals_ok() && self.structure_ok() && self.resonance_ok
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.corroded || !self.leak_free
+        !self.baffles_ok || !self.shell_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.corroded { return 20.0; }
+        if !self.shell_ok { return 15.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_attenuation() {
+    fn test_internals() {
         let c = Muffler::new();
-        assert!(c.attenuation_ok());
+        assert!(c.internals_ok());
     }
 
     #[test]
-    fn test_backpressure() {
+    fn test_structure() {
         let c = Muffler::new();
-        assert!(c.backpressure_ok());
+        assert!(c.structure_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_corroded() {
+    fn test_shell() {
         let mut c = Muffler::new();
-        c.corroded = true;
+        c.shell_ok = false;
         assert!(c.needs_replacement());
     }
 

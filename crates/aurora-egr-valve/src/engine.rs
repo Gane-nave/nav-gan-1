@@ -1,13 +1,13 @@
-/// EGR valve: exhaust gas recirculation, position, carbon
-/// Phase 494
+/// EGR valve: actuator, position, carbon buildup
+/// Phase 602
 
 #[derive(Debug, Clone)]
 pub struct EgrValve {
-    pub position_pct: f64,
-    pub target_pct: f64,
-    pub carbon_buildup: bool,
-    pub stuck: bool,
-    pub sensor_ok: bool,
+    pub actuator_ok: bool,
+    pub position_ok: bool,
+    pub carbon_free: bool,
+    pub signal_ok: bool,
+    pub flow_ok: bool,
 }
 
 impl Default for EgrValve {
@@ -19,32 +19,32 @@ impl Default for EgrValve {
 impl EgrValve {
     pub fn new() -> Self {
         Self {
-            position_pct: 15.0,
-            target_pct: 15.0,
-            carbon_buildup: false,
-            stuck: false,
-            sensor_ok: true,
+            actuator_ok: true,
+            position_ok: true,
+            carbon_free: true,
+            signal_ok: true,
+            flow_ok: true,
         }
     }
 
-    pub fn at_target(&self) -> bool {
-        (self.position_pct - self.target_pct).abs() < 3.0
+    pub fn valve_ok(&self) -> bool {
+        self.actuator_ok && self.position_ok
     }
 
-    pub fn is_clean(&self) -> bool {
-        !self.carbon_buildup
+    pub fn clean(&self) -> bool {
+        self.carbon_free && self.flow_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.at_target() && self.is_clean() && !self.stuck && self.sensor_ok
+        self.valve_ok() && self.clean() && self.signal_ok
     }
 
     pub fn needs_cleaning(&self) -> bool {
-        self.carbon_buildup || self.stuck
+        !self.carbon_free || !self.flow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stuck { return 15.0; }
+        if !self.actuator_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_at_target() {
+    fn test_valve() {
         let c = EgrValve::new();
-        assert!(c.at_target());
+        assert!(c.valve_ok());
     }
 
     #[test]
     fn test_clean() {
         let c = EgrValve::new();
-        assert!(c.is_clean());
+        assert!(c.clean());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_stuck() {
+    fn test_carbon() {
         let mut c = EgrValve::new();
-        c.stuck = true;
+        c.carbon_free = false;
         assert!(c.needs_cleaning());
     }
 

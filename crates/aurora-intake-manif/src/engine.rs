@@ -1,13 +1,13 @@
-/// Intake manifold: runner length, plenum pressure, IMRC control
-/// Phase 318
+/// Intake manifold: runner, flap, vacuum, gasket
+/// Phase 609
 
 #[derive(Debug, Clone)]
 pub struct IntakeManifold {
-    pub pressure_kpa: f64,
-    pub temp_c: f64,
-    pub runner_flap_ok: bool,
+    pub runner_ok: bool,
+    pub flap_ok: bool,
     pub vacuum_ok: bool,
-    pub leak_detected: bool,
+    pub gasket_ok: bool,
+    pub clean: bool,
 }
 
 impl Default for IntakeManifold {
@@ -19,37 +19,32 @@ impl Default for IntakeManifold {
 impl IntakeManifold {
     pub fn new() -> Self {
         Self {
-            pressure_kpa: 95.0,
-            temp_c: 35.0,
-            runner_flap_ok: true,
+            runner_ok: true,
+            flap_ok: true,
             vacuum_ok: true,
-            leak_detected: false,
+            gasket_ok: true,
+            clean: true,
         }
     }
 
-    pub fn pressure_ok(&self) -> bool {
-        self.pressure_kpa > 20.0 && self.pressure_kpa < 105.0
+    pub fn airflow_ok(&self) -> bool {
+        self.runner_ok && self.flap_ok && self.vacuum_ok
+    }
+
+    pub fn sealing_ok(&self) -> bool {
+        self.gasket_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.runner_flap_ok && self.vacuum_ok && !self.leak_detected
-    }
-
-    pub fn boost_present(&self) -> bool {
-        self.pressure_kpa > 101.3
+        self.airflow_ok() && self.sealing_ok() && self.clean
     }
 
     pub fn needs_service(&self) -> bool {
-        self.leak_detected || !self.runner_flap_ok
+        !self.gasket_ok || !self.flap_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leak_detected {
-            return 20.0;
-        }
-        if !self.runner_flap_ok {
-            return 50.0;
-        }
+        if !self.gasket_ok { return 10.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_pressure() {
-        let i = IntakeManifold::new();
-        assert!(i.pressure_ok());
+    fn test_airflow() {
+        let c = IntakeManifold::new();
+        assert!(c.airflow_ok());
+    }
+
+    #[test]
+    fn test_sealing() {
+        let c = IntakeManifold::new();
+        assert!(c.sealing_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let i = IntakeManifold::new();
-        assert!(i.all_ok());
-    }
-
-    #[test]
-    fn test_no_boost() {
-        let i = IntakeManifold::new();
-        assert!(!i.boost_present());
+        let c = IntakeManifold::new();
+        assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_service() {
-        let i = IntakeManifold::new();
-        assert!(!i.needs_service());
+        let c = IntakeManifold::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_leak() {
-        let mut i = IntakeManifold::new();
-        i.leak_detected = true;
-        assert!(i.needs_service());
+    fn test_gasket() {
+        let mut c = IntakeManifold::new();
+        c.gasket_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let i = IntakeManifold::new();
-        assert!((i.health_score() - 100.0).abs() < 0.1);
+        let c = IntakeManifold::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

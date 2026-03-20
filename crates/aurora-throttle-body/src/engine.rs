@@ -1,13 +1,13 @@
-/// Throttle body: butterfly valve, position sensor, idle
-/// Phase 501
+/// Throttle body: bore, butterfly, motor, TPS
+/// Phase 608
 
 #[derive(Debug, Clone)]
 pub struct ThrottleBody {
-    pub position_pct: f64,
-    pub target_pct: f64,
+    pub bore_ok: bool,
+    pub butterfly_ok: bool,
     pub motor_ok: bool,
-    pub sensor_ok: bool,
-    pub carbon_free: bool,
+    pub tps_ok: bool,
+    pub clean: bool,
 }
 
 impl Default for ThrottleBody {
@@ -19,28 +19,28 @@ impl Default for ThrottleBody {
 impl ThrottleBody {
     pub fn new() -> Self {
         Self {
-            position_pct: 15.0,
-            target_pct: 15.0,
+            bore_ok: true,
+            butterfly_ok: true,
             motor_ok: true,
-            sensor_ok: true,
-            carbon_free: true,
+            tps_ok: true,
+            clean: true,
         }
     }
 
-    pub fn at_target(&self) -> bool {
-        (self.position_pct - self.target_pct).abs() < 2.0
+    pub fn mechanical_ok(&self) -> bool {
+        self.bore_ok && self.butterfly_ok
     }
 
-    pub fn is_idle(&self) -> bool {
-        self.position_pct < 5.0
+    pub fn electronic_ok(&self) -> bool {
+        self.motor_ok && self.tps_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.at_target() && self.motor_ok && self.sensor_ok && self.carbon_free
+        self.mechanical_ok() && self.electronic_ok() && self.clean
     }
 
     pub fn needs_cleaning(&self) -> bool {
-        !self.carbon_free
+        !self.clean || !self.bore_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_at_target() {
+    fn test_mechanical() {
         let c = ThrottleBody::new();
-        assert!(c.at_target());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_not_idle() {
+    fn test_electronic() {
         let c = ThrottleBody::new();
-        assert!(!c.is_idle());
+        assert!(c.electronic_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_carbon() {
+    fn test_dirty() {
         let mut c = ThrottleBody::new();
-        c.carbon_free = false;
+        c.clean = false;
         assert!(c.needs_cleaning());
     }
 

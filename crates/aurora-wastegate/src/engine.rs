@@ -1,13 +1,13 @@
-/// Wastegate: boost control, actuator, spring
-/// Phase 505
+/// Wastegate: actuator, spring, diaphragm, boost control
+/// Phase 603
 
 #[derive(Debug, Clone)]
 pub struct Wastegate {
-    pub position_pct: f64,
-    pub target_pct: f64,
     pub actuator_ok: bool,
     pub spring_ok: bool,
-    pub stuck: bool,
+    pub diaphragm_ok: bool,
+    pub boost_ctrl_ok: bool,
+    pub linkage_ok: bool,
 }
 
 impl Default for Wastegate {
@@ -19,32 +19,32 @@ impl Default for Wastegate {
 impl Wastegate {
     pub fn new() -> Self {
         Self {
-            position_pct: 30.0,
-            target_pct: 30.0,
             actuator_ok: true,
             spring_ok: true,
-            stuck: false,
+            diaphragm_ok: true,
+            boost_ctrl_ok: true,
+            linkage_ok: true,
         }
     }
 
-    pub fn at_target(&self) -> bool {
-        (self.position_pct - self.target_pct).abs() < 5.0
+    pub fn mechanical_ok(&self) -> bool {
+        self.spring_ok && self.diaphragm_ok && self.linkage_ok
     }
 
-    pub fn is_functional(&self) -> bool {
-        self.actuator_ok && self.spring_ok && !self.stuck
+    pub fn control_ok(&self) -> bool {
+        self.actuator_ok && self.boost_ctrl_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.at_target() && self.is_functional()
+        self.mechanical_ok() && self.control_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        self.stuck || !self.actuator_ok
+        !self.diaphragm_ok || !self.actuator_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stuck { return 15.0; }
+        if !self.diaphragm_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_at_target() {
+    fn test_mechanical() {
         let c = Wastegate::new();
-        assert!(c.at_target());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_functional() {
+    fn test_control() {
         let c = Wastegate::new();
-        assert!(c.is_functional());
+        assert!(c.control_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_stuck() {
+    fn test_diaphragm() {
         let mut c = Wastegate::new();
-        c.stuck = true;
+        c.diaphragm_ok = false;
         assert!(c.needs_service());
     }
 

@@ -1,13 +1,13 @@
-/// Blow-off valve: compressor surge protection, diverter
-/// Phase 506
+/// Blow-off valve: piston, spring, recirculation
+/// Phase 604
 
 #[derive(Debug, Clone)]
 pub struct BlowOffValve {
-    pub spring_tension_n: f64,
+    pub piston_ok: bool,
+    pub spring_ok: bool,
+    pub recirc_ok: bool,
     pub seal_ok: bool,
-    pub diaphragm_ok: bool,
-    pub stuck_open: bool,
-    pub stuck_closed: bool,
+    pub response_ok: bool,
 }
 
 impl Default for BlowOffValve {
@@ -19,32 +19,32 @@ impl Default for BlowOffValve {
 impl BlowOffValve {
     pub fn new() -> Self {
         Self {
-            spring_tension_n: 50.0,
+            piston_ok: true,
+            spring_ok: true,
+            recirc_ok: true,
             seal_ok: true,
-            diaphragm_ok: true,
-            stuck_open: false,
-            stuck_closed: false,
+            response_ok: true,
         }
     }
 
-    pub fn tension_ok(&self) -> bool {
-        self.spring_tension_n > 20.0 && self.spring_tension_n < 100.0
+    pub fn valve_ok(&self) -> bool {
+        self.piston_ok && self.spring_ok && self.seal_ok
     }
 
-    pub fn seals_ok(&self) -> bool {
-        self.seal_ok && self.diaphragm_ok
+    pub fn system_ok(&self) -> bool {
+        self.valve_ok() && self.recirc_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.tension_ok() && self.seals_ok() && !self.stuck_open && !self.stuck_closed
+        self.system_ok() && self.response_ok
     }
 
     pub fn needs_service(&self) -> bool {
-        self.stuck_open || self.stuck_closed
+        !self.piston_ok || !self.seal_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stuck_open || self.stuck_closed { return 10.0; }
+        if !self.piston_ok { return 15.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_tension() {
+    fn test_valve() {
         let c = BlowOffValve::new();
-        assert!(c.tension_ok());
+        assert!(c.valve_ok());
     }
 
     #[test]
-    fn test_seals() {
+    fn test_system() {
         let c = BlowOffValve::new();
-        assert!(c.seals_ok());
+        assert!(c.system_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_stuck_open() {
+    fn test_piston() {
         let mut c = BlowOffValve::new();
-        c.stuck_open = true;
+        c.piston_ok = false;
         assert!(c.needs_service());
     }
 

@@ -1,13 +1,13 @@
-/// Intercooler: charge air cooling, pressure drop, efficiency
-/// Phase 504
+/// Intercooler: efficiency, pressure drop, leak test
+/// Phase 611
 
 #[derive(Debug, Clone)]
 pub struct Intercooler {
-    pub inlet_temp_c: f64,
-    pub outlet_temp_c: f64,
-    pub pressure_drop_kpa: f64,
-    pub max_drop_kpa: f64,
+    pub efficiency_pct: f64,
+    pub pressure_drop_ok: bool,
     pub leak_free: bool,
+    pub fins_ok: bool,
+    pub piping_ok: bool,
 }
 
 impl Default for Intercooler {
@@ -19,32 +19,32 @@ impl Default for Intercooler {
 impl Intercooler {
     pub fn new() -> Self {
         Self {
-            inlet_temp_c: 150.0,
-            outlet_temp_c: 45.0,
-            pressure_drop_kpa: 3.0,
-            max_drop_kpa: 10.0,
+            efficiency_pct: 85.0,
+            pressure_drop_ok: true,
             leak_free: true,
+            fins_ok: true,
+            piping_ok: true,
         }
     }
 
-    pub fn cooling_efficiency(&self) -> f64 {
-        ((self.inlet_temp_c - self.outlet_temp_c) / self.inlet_temp_c) * 100.0
+    pub fn cooling_ok(&self) -> bool {
+        self.efficiency_pct > 60.0 && self.fins_ok
     }
 
-    pub fn pressure_ok(&self) -> bool {
-        self.pressure_drop_kpa < self.max_drop_kpa
+    pub fn integrity_ok(&self) -> bool {
+        self.leak_free && self.pressure_drop_ok && self.piping_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.pressure_ok() && self.leak_free
+        self.cooling_ok() && self.integrity_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.leak_free || self.pressure_drop_kpa > self.max_drop_kpa
+        !self.leak_free || !self.fins_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 20.0; }
+        if !self.leak_free { return 15.0; }
         100.0
     }
 }
@@ -56,13 +56,13 @@ mod tests {
     #[test]
     fn test_cooling() {
         let c = Intercooler::new();
-        assert!(c.cooling_efficiency() > 60.0);
+        assert!(c.cooling_ok());
     }
 
     #[test]
-    fn test_pressure() {
+    fn test_integrity() {
         let c = Intercooler::new();
-        assert!(c.pressure_ok());
+        assert!(c.integrity_ok());
     }
 
     #[test]
