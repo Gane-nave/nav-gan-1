@@ -73,6 +73,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-abs-system"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-adaptive"
 version = "0.1.0"
 dependencies = [
@@ -339,6 +343,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-awd-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-axle-monitor"
 version = "0.1.0"
 
@@ -396,11 +404,19 @@ name = "aurora-bounded-queue"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-brake-assist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bridge-nav"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-btree"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cabin-press"
 version = "0.1.0"
 
 [[package]]
@@ -567,6 +583,10 @@ name = "aurora-convoy-plan"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-coolant-mgmt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-core"
 version = "0.1.0"
 dependencies = [
@@ -612,6 +632,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-cruise-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-cuckoo"
@@ -703,6 +727,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-diff-lock"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-distribution"
@@ -860,6 +888,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-energy-harvest"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-error-accum"
 version = "0.1.0"
 dependencies = [
@@ -916,6 +948,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-exhaust-monitor"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-explain"
@@ -1541,6 +1577,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-oil-monitor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-orchestrator"
 version = "0.1.0"
 dependencies = [
@@ -1561,6 +1601,10 @@ dependencies = [
  "aurora-snapshot",
  "aurora-structured-log",
 ]
+
+[[package]]
+name = "aurora-park-brake"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-parking"
@@ -1713,6 +1757,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rcu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-regen-brake"
 version = "0.1.0"
 
 [[package]]
@@ -1921,6 +1969,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-solar-charge"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-source-select"
 version = "0.1.0"
 dependencies = [
@@ -1960,6 +2012,14 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-stability-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steer-assist"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-storage"
@@ -2038,6 +2098,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-throttle-map"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-tiles"
 version = "0.1.0"
 dependencies = [
@@ -2065,6 +2129,10 @@ name = "aurora-tracing-dist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-traction-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-traffic"
 version = "0.1.0"
 dependencies = [
@@ -2087,6 +2155,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-sign"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trans-shift"
 version = "0.1.0"
 
 [[package]]

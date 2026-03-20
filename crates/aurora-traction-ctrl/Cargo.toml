@@ -1,0 +1,6 @@
+[package]
+name = "aurora-traction-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

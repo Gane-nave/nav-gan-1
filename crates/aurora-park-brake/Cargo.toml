@@ -1,0 +1,6 @@
+[package]
+name = "aurora-park-brake"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
