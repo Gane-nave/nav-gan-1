@@ -1,13 +1,13 @@
-/// Fleet tracking: locate, route, status, dispatch, report
-/// Phase 1094
+/// fleet track: locate, route, assign, report, log
+/// Phase 1410
 
 #[derive(Debug, Clone)]
 pub struct FleetTrack {
     pub locate_ok: bool,
     pub route_ok: bool,
-    pub status_ok: bool,
-    pub dispatch_ok: bool,
+    pub assign_ok: bool,
     pub report_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for FleetTrack {
@@ -21,25 +21,25 @@ impl FleetTrack {
         Self {
             locate_ok: true,
             route_ok: true,
-            status_ok: true,
-            dispatch_ok: true,
+            assign_ok: true,
             report_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn tracking_ok(&self) -> bool {
-        self.locate_ok && self.route_ok && self.status_ok
+    pub fn primary_ok(&self) -> bool {
+        self.locate_ok && self.route_ok && self.assign_ok
     }
 
-    pub fn management_ok(&self) -> bool {
-        self.dispatch_ok && self.report_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.report_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.tracking_ok() && self.management_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_sync(&self) -> bool {
+    pub fn needs_attention(&self) -> bool {
         !self.locate_ok || !self.route_ok
     }
 
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_tracking() {
+    fn test_primary() {
         let c = FleetTrack::new();
-        assert!(c.tracking_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_management() {
+    fn test_secondary() {
         let c = FleetTrack::new();
-        assert!(c.management_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_sync() {
+    fn test_no_attention() {
         let c = FleetTrack::new();
-        assert!(!c.needs_sync());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_locate() {
+    fn test_field_toggle() {
         let mut c = FleetTrack::new();
         c.locate_ok = false;
-        assert!(c.needs_sync());
+        assert!(c.needs_attention());
     }
 
     #[test]

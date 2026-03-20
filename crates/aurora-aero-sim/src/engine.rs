@@ -1,13 +1,13 @@
-/// Aero simulation: CFD, drag, lift, turbulence, validation
-/// Phase 960
+/// aero sim: mesh, flow, pressure, drag, log
+/// Phase 1407
 
 #[derive(Debug, Clone)]
 pub struct AeroSim {
-    pub cfd_ok: bool,
+    pub mesh_ok: bool,
+    pub flow_ok: bool,
+    pub pressure_ok: bool,
     pub drag_ok: bool,
-    pub lift_ok: bool,
-    pub turbulence_ok: bool,
-    pub validation_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for AeroSim {
@@ -19,32 +19,32 @@ impl Default for AeroSim {
 impl AeroSim {
     pub fn new() -> Self {
         Self {
-            cfd_ok: true,
+            mesh_ok: true,
+            flow_ok: true,
+            pressure_ok: true,
             drag_ok: true,
-            lift_ok: true,
-            turbulence_ok: true,
-            validation_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn simulation_ok(&self) -> bool {
-        self.cfd_ok && self.drag_ok && self.lift_ok
+    pub fn primary_ok(&self) -> bool {
+        self.mesh_ok && self.flow_ok && self.pressure_ok
     }
 
-    pub fn accuracy_ok(&self) -> bool {
-        self.turbulence_ok && self.validation_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.drag_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.simulation_ok() && self.accuracy_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_update(&self) -> bool {
-        !self.cfd_ok || !self.validation_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.mesh_ok || !self.flow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.cfd_ok { return 10.0; }
+        if !self.mesh_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_simulation() {
+    fn test_primary() {
         let c = AeroSim::new();
-        assert!(c.simulation_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_accuracy() {
+    fn test_secondary() {
         let c = AeroSim::new();
-        assert!(c.accuracy_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_update() {
+    fn test_no_attention() {
         let c = AeroSim::new();
-        assert!(!c.needs_update());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_cfd() {
+    fn test_field_toggle() {
         let mut c = AeroSim::new();
-        c.cfd_ok = false;
-        assert!(c.needs_update());
+        c.mesh_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

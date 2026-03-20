@@ -1,13 +1,13 @@
-/// Crash simulation: impact, deform, occupant, structure
-/// Phase 961
+/// crash sim: model, impact, analyze, report, log
+/// Phase 1401
 
 #[derive(Debug, Clone)]
 pub struct CrashSim {
+    pub model_ok: bool,
     pub impact_ok: bool,
-    pub deform_ok: bool,
-    pub occupant_ok: bool,
-    pub structure_ok: bool,
-    pub validate_ok: bool,
+    pub analyze_ok: bool,
+    pub report_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for CrashSim {
@@ -19,32 +19,32 @@ impl Default for CrashSim {
 impl CrashSim {
     pub fn new() -> Self {
         Self {
+            model_ok: true,
             impact_ok: true,
-            deform_ok: true,
-            occupant_ok: true,
-            structure_ok: true,
-            validate_ok: true,
+            analyze_ok: true,
+            report_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn physics_ok(&self) -> bool {
-        self.impact_ok && self.deform_ok && self.structure_ok
+    pub fn primary_ok(&self) -> bool {
+        self.model_ok && self.impact_ok && self.analyze_ok
     }
 
-    pub fn safety_ok(&self) -> bool {
-        self.occupant_ok && self.validate_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.report_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.physics_ok() && self.safety_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_review(&self) -> bool {
-        !self.validate_ok || !self.impact_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.model_ok || !self.impact_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.impact_ok { return 5.0; }
+        if !self.model_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_physics() {
+    fn test_primary() {
         let c = CrashSim::new();
-        assert!(c.physics_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_safety() {
+    fn test_secondary() {
         let c = CrashSim::new();
-        assert!(c.safety_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_review() {
+    fn test_no_attention() {
         let c = CrashSim::new();
-        assert!(!c.needs_review());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_validate() {
+    fn test_field_toggle() {
         let mut c = CrashSim::new();
-        c.validate_ok = false;
-        assert!(c.needs_review());
+        c.model_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

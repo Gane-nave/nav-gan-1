@@ -1,13 +1,13 @@
-/// Fatigue simulation: stress cycle, crack, life, endurance
-/// Phase 964
+/// fatigue sim: load, cycle, crack, predict, log
+/// Phase 1402
 
 #[derive(Debug, Clone)]
 pub struct FatigueSim {
-    pub stress_ok: bool,
+    pub load_ok: bool,
+    pub cycle_ok: bool,
     pub crack_ok: bool,
-    pub life_ok: bool,
-    pub endurance_ok: bool,
-    pub validate_ok: bool,
+    pub predict_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for FatigueSim {
@@ -19,32 +19,32 @@ impl Default for FatigueSim {
 impl FatigueSim {
     pub fn new() -> Self {
         Self {
-            stress_ok: true,
+            load_ok: true,
+            cycle_ok: true,
             crack_ok: true,
-            life_ok: true,
-            endurance_ok: true,
-            validate_ok: true,
+            predict_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn analysis_ok(&self) -> bool {
-        self.stress_ok && self.crack_ok && self.life_ok
+    pub fn primary_ok(&self) -> bool {
+        self.load_ok && self.cycle_ok && self.crack_ok
     }
 
-    pub fn prediction_ok(&self) -> bool {
-        self.endurance_ok && self.validate_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.predict_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.analysis_ok() && self.prediction_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_review(&self) -> bool {
-        !self.validate_ok || !self.stress_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.load_ok || !self.cycle_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.stress_ok { return 10.0; }
+        if !self.load_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_analysis() {
+    fn test_primary() {
         let c = FatigueSim::new();
-        assert!(c.analysis_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_prediction() {
+    fn test_secondary() {
         let c = FatigueSim::new();
-        assert!(c.prediction_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_review() {
+    fn test_no_attention() {
         let c = FatigueSim::new();
-        assert!(!c.needs_review());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_validate() {
+    fn test_field_toggle() {
         let mut c = FatigueSim::new();
-        c.validate_ok = false;
-        assert!(c.needs_review());
+        c.load_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

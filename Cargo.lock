@@ -513,6 +513,10 @@ name = "aurora-arena"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-assembly-check"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-assembly-sim"
 version = "0.1.0"
 
@@ -1071,6 +1075,10 @@ name = "aurora-ceramic-coat"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cfd-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-chain-drive"
 version = "0.1.0"
 
@@ -1209,7 +1217,75 @@ name = "aurora-clock"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cloud-backup"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-cdn"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-cert"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-config"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-deploy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-dns"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-function"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-lb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-log"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-metric"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-queue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-restore"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-scale"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-secret"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-stream"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cloud-sync"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-trace"
 version = "0.1.0"
 
 [[package]]
@@ -1955,6 +2031,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-durability-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-e-axle"
 version = "0.1.0"
 
@@ -2051,6 +2131,10 @@ name = "aurora-elevation"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-emc-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-emer-brake"
 version = "0.1.0"
 
@@ -2089,6 +2173,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-emission-test"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-endurance-test"
 version = "0.1.0"
 
 [[package]]
@@ -2321,6 +2409,10 @@ name = "aurora-favorite-mgr"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fea-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-features"
 version = "0.1.0"
 
@@ -2362,7 +2454,75 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-fleet-alert"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-auction"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-cargo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-comply"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-cost"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-driver"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-fuel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-geofence"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-inspect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-insure"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-lease"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-maint"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-park2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-report"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-route"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-sched"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fleet-track"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fleet-wash"
 version = "0.1.0"
 
 [[package]]
@@ -3371,6 +3531,10 @@ name = "aurora-leaf-spring"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-leak-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lease"
 version = "0.1.0"
 
@@ -3498,6 +3662,30 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-map-3d"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-charging"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-geocode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-icon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-indoor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-label"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map-match"
 version = "0.1.0"
 dependencies = [
@@ -3510,7 +3698,55 @@ name = "aurora-map-msg"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-map-parking"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-poi2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-reverse"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-route2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-satellite"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-search2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-street"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-style"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-terrain"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-tile"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-traffic2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-map-transit"
 version = "0.1.0"
 
 [[package]]
@@ -3555,6 +3791,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-matter-bridge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mbd-sim"
 version = "0.1.0"
 
 [[package]]
@@ -3798,6 +4038,10 @@ name = "aurora-noise-sim"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-noise-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-notifications"
 version = "0.1.0"
 dependencies = [
@@ -3825,6 +4069,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-nv-harshness"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-nvh-sim"
 version = "0.1.0"
 
 [[package]]
@@ -3980,6 +4228,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-oxygen-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-paint-inspect"
 version = "0.1.0"
 
 [[package]]
@@ -5426,6 +5678,10 @@ name = "aurora-thermal-sim"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-thermal-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-thermo-valve"
 version = "0.1.0"
 
@@ -5926,6 +6182,10 @@ name = "aurora-vibr-damp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-vibration-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-vin-decode"
 version = "0.1.0"
 
@@ -6075,6 +6335,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-weight-reduc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-weld-inspect"
 version = "0.1.0"
 
 [[package]]
