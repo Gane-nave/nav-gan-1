@@ -1,13 +1,13 @@
-/// Roof rack: cross bars, mounts, load capacity, wind noise
-/// Phase 558
+/// Roof rack: crossbar, foot, clamp, load rating
+/// Phase 848
 
 #[derive(Debug, Clone)]
 pub struct RoofRack {
-    pub max_load_kg: f64,
-    pub current_load_kg: f64,
-    pub mounts_ok: bool,
-    pub bars_ok: bool,
-    pub wind_strip_ok: bool,
+    pub crossbar_ok: bool,
+    pub foot_ok: bool,
+    pub clamp_ok: bool,
+    pub load_ok: bool,
+    pub aero_ok: bool,
 }
 
 impl Default for RoofRack {
@@ -19,32 +19,32 @@ impl Default for RoofRack {
 impl RoofRack {
     pub fn new() -> Self {
         Self {
-            max_load_kg: 75.0,
-            current_load_kg: 0.0,
-            mounts_ok: true,
-            bars_ok: true,
-            wind_strip_ok: true,
+            crossbar_ok: true,
+            foot_ok: true,
+            clamp_ok: true,
+            load_ok: true,
+            aero_ok: true,
         }
     }
 
-    pub fn load_ok(&self) -> bool {
-        self.current_load_kg < self.max_load_kg
+    pub fn structure_ok(&self) -> bool {
+        self.crossbar_ok && self.foot_ok && self.clamp_ok
     }
 
-    pub fn structural_ok(&self) -> bool {
-        self.mounts_ok && self.bars_ok
+    pub fn performance_ok(&self) -> bool {
+        self.load_ok && self.aero_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.load_ok() && self.structural_ok() && self.wind_strip_ok
+        self.structure_ok() && self.performance_ok()
     }
 
     pub fn needs_service(&self) -> bool {
-        !self.mounts_ok || !self.bars_ok
+        !self.clamp_ok || !self.crossbar_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.mounts_ok { return 15.0; }
+        if !self.clamp_ok { return 15.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_load() {
+    fn test_structure() {
         let c = RoofRack::new();
-        assert!(c.load_ok());
+        assert!(c.structure_ok());
     }
 
     #[test]
-    fn test_structural() {
+    fn test_performance() {
         let c = RoofRack::new();
-        assert!(c.structural_ok());
+        assert!(c.performance_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_mounts() {
+    fn test_clamp() {
         let mut c = RoofRack::new();
-        c.mounts_ok = false;
+        c.clamp_ok = false;
         assert!(c.needs_service());
     }
 

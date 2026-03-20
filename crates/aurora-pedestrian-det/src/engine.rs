@@ -1,57 +1,50 @@
-/// Pedestrian detection: camera-based detection, auto emergency braking
-/// Phase 229
+/// Pedestrian detection: camera, radar, algorithm, alert
+/// Phase 838
 
 #[derive(Debug, Clone)]
-pub struct PedestrianDetector {
-    pub pedestrians_detected: u32,
-    pub closest_distance_m: f64,
-    pub collision_risk_pct: f64,
-    pub aeb_armed: bool,
-    pub aeb_activated: bool,
+pub struct PedestrianDet {
     pub camera_ok: bool,
+    pub radar_ok: bool,
+    pub algo_ok: bool,
+    pub alert_ok: bool,
+    pub brake_ok: bool,
 }
 
-impl Default for PedestrianDetector {
+impl Default for PedestrianDet {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl PedestrianDetector {
+impl PedestrianDet {
     pub fn new() -> Self {
         Self {
-            pedestrians_detected: 0,
-            closest_distance_m: 100.0,
-            collision_risk_pct: 0.0,
-            aeb_armed: true,
-            aeb_activated: false,
             camera_ok: true,
+            radar_ok: true,
+            algo_ok: true,
+            alert_ok: true,
+            brake_ok: true,
         }
     }
 
-    pub fn any_detected(&self) -> bool {
-        self.pedestrians_detected > 0
+    pub fn sensing_ok(&self) -> bool {
+        self.camera_ok && self.radar_ok
     }
 
-    pub fn danger_zone(&self) -> bool {
-        self.closest_distance_m < 5.0
+    pub fn response_ok(&self) -> bool {
+        self.algo_ok && self.alert_ok && self.brake_ok
     }
 
-    pub fn should_brake(&self) -> bool {
-        self.aeb_armed && self.collision_risk_pct > 80.0
+    pub fn all_ok(&self) -> bool {
+        self.sensing_ok() && self.response_ok()
     }
 
-    pub fn should_warn(&self) -> bool {
-        self.collision_risk_pct > 50.0
+    pub fn needs_calibration(&self) -> bool {
+        !self.camera_ok || !self.algo_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.camera_ok {
-            return 20.0;
-        }
-        if !self.aeb_armed {
-            return 60.0;
-        }
+        if !self.camera_ok { return 5.0; }
         100.0
     }
 }
@@ -61,41 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_none_detected() {
-        let p = PedestrianDetector::new();
-        assert!(!p.any_detected());
+    fn test_sensing() {
+        let c = PedestrianDet::new();
+        assert!(c.sensing_ok());
     }
 
     #[test]
-    fn test_no_danger() {
-        let p = PedestrianDetector::new();
-        assert!(!p.danger_zone());
+    fn test_response() {
+        let c = PedestrianDet::new();
+        assert!(c.response_ok());
     }
 
     #[test]
-    fn test_no_brake() {
-        let p = PedestrianDetector::new();
-        assert!(!p.should_brake());
+    fn test_all_ok() {
+        let c = PedestrianDet::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_warn() {
-        let p = PedestrianDetector::new();
-        assert!(!p.should_warn());
+    fn test_no_calibration() {
+        let c = PedestrianDet::new();
+        assert!(!c.needs_calibration());
     }
 
     #[test]
-    fn test_detected() {
-        let mut p = PedestrianDetector::new();
-        p.pedestrians_detected = 2;
-        p.closest_distance_m = 3.0;
-        assert!(p.any_detected());
-        assert!(p.danger_zone());
+    fn test_cam() {
+        let mut c = PedestrianDet::new();
+        c.camera_ok = false;
+        assert!(c.needs_calibration());
     }
 
     #[test]
     fn test_health() {
-        let p = PedestrianDetector::new();
-        assert!((p.health_score() - 100.0).abs() < 0.1);
+        let c = PedestrianDet::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

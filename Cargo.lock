@@ -568,6 +568,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-bike-rack"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bitset"
 version = "0.1.0"
 
@@ -751,6 +755,10 @@ name = "aurora-can-gateway"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cargo-box"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cargo-cover"
 version = "0.1.0"
 
@@ -825,6 +833,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-check-strap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-child-seat"
 version = "0.1.0"
 
 [[package]]
@@ -1139,6 +1151,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cv-joint"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cyclist-det"
 version = "0.1.0"
 
 [[package]]
@@ -1499,6 +1515,10 @@ name = "aurora-elevation"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-emer-brake"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-emergency"
 version = "0.1.0"
 dependencies = [
@@ -1611,6 +1631,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-evaporator"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-evasive-steer"
 version = "0.1.0"
 
 [[package]]
@@ -3083,6 +3107,10 @@ name = "aurora-pollen-filter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-post-crash"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-power"
 version = "0.1.0"
 dependencies = [
@@ -3387,6 +3415,10 @@ name = "aurora-rollover-det"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rollover-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-roof-panel"
 version = "0.1.0"
 
@@ -3498,6 +3530,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-seat-adjust"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-seat-belt-pre"
 version = "0.1.0"
 
 [[package]]
@@ -3619,6 +3655,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-snapshot"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-snow-plow"
 version = "0.1.0"
 
 [[package]]
@@ -3910,6 +3950,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-theft-alarm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-thermal-mgmt"
 version = "0.1.0"
 
@@ -3959,6 +4003,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-tire-cavity"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tire-chain"
 version = "0.1.0"
 
 [[package]]
@@ -4039,6 +4087,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-traffic-sign"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trailer-brake"
 version = "0.1.0"
 
 [[package]]
@@ -4410,6 +4462,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wheel-well"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-winch"
 version = "0.1.0"
 
 [[package]]
