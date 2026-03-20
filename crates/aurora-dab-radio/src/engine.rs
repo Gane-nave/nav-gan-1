@@ -1,38 +1,38 @@
-/// dsrc radio: tune, transmit, receive, decode, log
-/// Phase 1342
+/// dab radio: tune, decode, ensemble, scan, log
+/// Phase 1349
 
 #[derive(Debug, Clone)]
-pub struct DsrcRadio {
+pub struct DabRadio {
     pub tune_ok: bool,
-    pub transmit_ok: bool,
-    pub receive_ok: bool,
     pub decode_ok: bool,
+    pub ensemble_ok: bool,
+    pub scan_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for DsrcRadio {
+impl Default for DabRadio {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl DsrcRadio {
+impl DabRadio {
     pub fn new() -> Self {
         Self {
             tune_ok: true,
-            transmit_ok: true,
-            receive_ok: true,
             decode_ok: true,
+            ensemble_ok: true,
+            scan_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.tune_ok && self.transmit_ok && self.receive_ok
+        self.tune_ok && self.decode_ok && self.ensemble_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.decode_ok && self.log_ok
+        self.scan_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl DsrcRadio {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.tune_ok || !self.transmit_ok
+        !self.tune_ok || !self.decode_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = DsrcRadio::new();
+        let c = DabRadio::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = DsrcRadio::new();
+        let c = DabRadio::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = DsrcRadio::new();
+        let c = DabRadio::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = DsrcRadio::new();
+        let c = DabRadio::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = DsrcRadio::new();
+        let mut c = DabRadio::new();
         c.tune_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = DsrcRadio::new();
+        let c = DabRadio::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

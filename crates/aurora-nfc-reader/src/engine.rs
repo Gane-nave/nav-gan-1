@@ -1,38 +1,38 @@
-/// dsrc radio: tune, transmit, receive, decode, log
-/// Phase 1342
+/// nfc reader: poll, detect, read, write, log
+/// Phase 1354
 
 #[derive(Debug, Clone)]
-pub struct DsrcRadio {
-    pub tune_ok: bool,
-    pub transmit_ok: bool,
-    pub receive_ok: bool,
-    pub decode_ok: bool,
+pub struct NfcReader {
+    pub poll_ok: bool,
+    pub detect_ok: bool,
+    pub read_ok: bool,
+    pub write_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for DsrcRadio {
+impl Default for NfcReader {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl DsrcRadio {
+impl NfcReader {
     pub fn new() -> Self {
         Self {
-            tune_ok: true,
-            transmit_ok: true,
-            receive_ok: true,
-            decode_ok: true,
+            poll_ok: true,
+            detect_ok: true,
+            read_ok: true,
+            write_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.tune_ok && self.transmit_ok && self.receive_ok
+        self.poll_ok && self.detect_ok && self.read_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.decode_ok && self.log_ok
+        self.write_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl DsrcRadio {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.tune_ok || !self.transmit_ok
+        !self.poll_ok || !self.detect_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.tune_ok { return 5.0; }
+        if !self.poll_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = DsrcRadio::new();
+        let c = NfcReader::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = DsrcRadio::new();
+        let c = NfcReader::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = DsrcRadio::new();
+        let c = NfcReader::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = DsrcRadio::new();
+        let c = NfcReader::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = DsrcRadio::new();
-        c.tune_ok = false;
+        let mut c = NfcReader::new();
+        c.poll_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = DsrcRadio::new();
+        let c = NfcReader::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

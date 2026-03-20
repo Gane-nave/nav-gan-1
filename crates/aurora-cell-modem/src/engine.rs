@@ -1,38 +1,38 @@
-/// dsrc radio: tune, transmit, receive, decode, log
-/// Phase 1342
+/// cell modem: attach, connect, transfer, roam, log
+/// Phase 1351
 
 #[derive(Debug, Clone)]
-pub struct DsrcRadio {
-    pub tune_ok: bool,
-    pub transmit_ok: bool,
-    pub receive_ok: bool,
-    pub decode_ok: bool,
+pub struct CellModem {
+    pub attach_ok: bool,
+    pub connect_ok: bool,
+    pub transfer_ok: bool,
+    pub roam_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for DsrcRadio {
+impl Default for CellModem {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl DsrcRadio {
+impl CellModem {
     pub fn new() -> Self {
         Self {
-            tune_ok: true,
-            transmit_ok: true,
-            receive_ok: true,
-            decode_ok: true,
+            attach_ok: true,
+            connect_ok: true,
+            transfer_ok: true,
+            roam_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.tune_ok && self.transmit_ok && self.receive_ok
+        self.attach_ok && self.connect_ok && self.transfer_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.decode_ok && self.log_ok
+        self.roam_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl DsrcRadio {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.tune_ok || !self.transmit_ok
+        !self.attach_ok || !self.connect_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.tune_ok { return 5.0; }
+        if !self.attach_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = DsrcRadio::new();
+        let c = CellModem::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = DsrcRadio::new();
+        let c = CellModem::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = DsrcRadio::new();
+        let c = CellModem::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = DsrcRadio::new();
+        let c = CellModem::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = DsrcRadio::new();
-        c.tune_ok = false;
+        let mut c = CellModem::new();
+        c.attach_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = DsrcRadio::new();
+        let c = CellModem::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

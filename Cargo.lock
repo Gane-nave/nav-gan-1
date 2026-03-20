@@ -868,6 +868,10 @@ name = "aurora-bt-audio"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bt-modem"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-btree"
 version = "0.1.0"
 
@@ -1020,6 +1024,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-cell-balance"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cell-modem"
 version = "0.1.0"
 
 [[package]]
@@ -1518,6 +1526,10 @@ name = "aurora-cv2x-modem"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cv2x-radio"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cvt-ctrl"
 version = "0.1.0"
 
@@ -1531,6 +1543,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cylinder-head"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dab-radio"
 version = "0.1.0"
 
 [[package]]
@@ -2331,6 +2347,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-flywheel-mon"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fm-radio"
 version = "0.1.0"
 
 [[package]]
@@ -3354,6 +3374,10 @@ name = "aurora-long-accel"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lora-radio"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lora-wan"
 version = "0.1.0"
 
@@ -3655,6 +3679,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-neural-net"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-nfc-reader"
 version = "0.1.0"
 
 [[package]]
@@ -4437,6 +4465,10 @@ name = "aurora-reverse-light"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rfid-reader"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ride-height"
 version = "0.1.0"
 
@@ -4615,6 +4647,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sat-link"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sat-radio"
 version = "0.1.0"
 
 [[package]]
@@ -4808,6 +4844,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-sirius-radio"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-skiplist"
@@ -5629,6 +5669,10 @@ name = "aurora-uwb-anchor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-uwb-radio"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ux"
 version = "0.1.0"
 dependencies = [
@@ -5646,11 +5690,27 @@ name = "aurora-v2g"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-v2i-comm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-v2i-link"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-v2n-comm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-v2p-comm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-v2p-safety"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-v2v-comm"
 version = "0.1.0"
 
 [[package]]
@@ -5953,6 +6013,10 @@ name = "aurora-wide-column"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-wifi-modem"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-winch"
 version = "0.1.0"
 
@@ -6054,6 +6118,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-zigbee-hub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-zigbee-radio"
 version = "0.1.0"
 
 [[package]]
