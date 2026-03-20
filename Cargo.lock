@@ -281,6 +281,46 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-analytics-ab"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-click"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-cohort"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-error"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-event"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-funnel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-heatmap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-perf2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-scroll"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-analytics-session"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-android-auto"
 version = "0.1.0"
 
@@ -1834,6 +1874,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-deploy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-ab2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-ansible"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-artifact"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-blue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-canary"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-consul"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-docker2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-envoy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-feature"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-helm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-hotfix"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-istio"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-k8s"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-registry2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-rollback"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-rolling"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-terraform"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deploy-vault"
 version = "0.1.0"
 
 [[package]]
@@ -3995,6 +4107,78 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-monitor-anomaly"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-budget"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-cache"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-conn"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-cpu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-disk"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-gc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-health2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-jit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-mem"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-net2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-pool"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-queue2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-request"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-response"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-sla"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-monitor-thread"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-monitoring"
 version = "0.1.0"
 dependencies = [
@@ -4084,6 +4268,78 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-net-amqp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-coap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-dns2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-ftp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-grpc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-http"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-imap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-ldap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-memcache"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-mqtt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-ntp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-redis"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-smtp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-snmp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-ssh"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-stomp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-tcp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-net-udp"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-neural-net"
@@ -4845,6 +5101,38 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-remote-start"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-chart"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-csv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-dashboard"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-excel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-html"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-json"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-pdf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-report-xml"
 version = "0.1.0"
 
 [[package]]
