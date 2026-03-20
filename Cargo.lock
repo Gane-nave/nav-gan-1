@@ -776,6 +776,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-migration"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml"
 version = "0.1.0"
 dependencies = [
@@ -911,6 +915,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-pubsub"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-quota"
 version = "0.1.0"
 
@@ -930,6 +938,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-retry"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-risk"
