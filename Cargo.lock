@@ -93,6 +93,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-air-quality"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alerts"
 version = "0.1.0"
 dependencies = [
@@ -335,6 +339,10 @@ name = "aurora-backpressure"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-battery-mgmt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bench"
 version = "0.1.0"
 dependencies = [
@@ -380,6 +388,10 @@ name = "aurora-bounded-queue"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bridge-nav"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-btree"
 version = "0.1.0"
 
@@ -393,6 +405,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-cargo-route"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-carplay"
@@ -535,6 +551,10 @@ name = "aurora-convoy"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-convoy-plan"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-core"
 version = "0.1.0"
 dependencies = [
@@ -583,6 +603,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-cuckoo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cyclist-detect"
 version = "0.1.0"
 
 [[package]]
@@ -790,6 +814,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-emergency-route"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-emergency-sat"
@@ -1009,11 +1037,19 @@ name = "aurora-hashring"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hazmat-route"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-health"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-heap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-highway-merge"
 version = "0.1.0"
 
 [[package]]
@@ -1168,6 +1204,10 @@ name = "aurora-intent"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-intersection"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-interval"
 version = "0.1.0"
 
@@ -1200,6 +1240,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-lane-change"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-latency-comp"
 version = "0.1.0"
 dependencies = [
@@ -1217,6 +1261,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-light-adapt"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-load-shed"
@@ -1390,6 +1438,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-noise-map"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-notifications"
 version = "0.1.0"
 dependencies = [
@@ -1472,6 +1524,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-parking-nav"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-payments"
 version = "0.1.0"
 dependencies = [
@@ -1483,6 +1539,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-pedestrian"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-perceptual"
@@ -1663,6 +1723,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-roundabout"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-route-learn"
 version = "0.1.0"
 dependencies = [
@@ -1809,6 +1873,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-speed-advisor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-speed-alerts"
 version = "0.1.0"
 dependencies = [
@@ -1862,6 +1930,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-suspension-adapt"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-telemetry"
@@ -1918,6 +1990,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-tire-monitor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-toll-calc"
 version = "0.1.0"
 
@@ -1954,6 +2030,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-traffic-sign"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trie"
 version = "0.1.0"
 
@@ -1975,6 +2055,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-tunnel-detect"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-twin"
