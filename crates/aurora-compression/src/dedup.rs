@@ -77,6 +77,7 @@ impl DedupStore {
     pub fn release(&mut self, hash: ContentHash) -> bool {
         if let Some(chunk) = self.chunks.get_mut(&hash) {
             chunk.ref_count -= 1;
+            self.total_logical -= chunk.data.len();
             if chunk.ref_count == 0 {
                 self.total_physical -= chunk.data.len();
                 self.chunks.remove(&hash);

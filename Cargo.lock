@@ -590,6 +590,10 @@ name = "aurora-graphdb"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-histogram"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-i18n"
 version = "0.1.0"
 dependencies = [
@@ -1046,6 +1050,10 @@ name = "aurora-streaming"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-structured-log"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -1082,6 +1090,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-tracing-dist"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-traffic"

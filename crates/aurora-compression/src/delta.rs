@@ -100,9 +100,9 @@ pub fn delta_stats(values: &[i64]) -> DeltaStats {
     let deltas = encode_i64(values);
     let zero_deltas = deltas.iter().skip(1).filter(|&&d| d == 0).count();
     let max_delta = deltas.iter().skip(1).map(|d| d.abs()).max().unwrap_or(0);
-    let sum: i64 = deltas.iter().skip(1).map(|d| d.abs()).sum();
+    let sum: f64 = deltas.iter().skip(1).map(|&d| (d as f64).abs()).sum();
     let avg_delta = if deltas.len() > 1 {
-        sum as f64 / (deltas.len() - 1) as f64
+        sum / (deltas.len() - 1) as f64
     } else {
         0.0
     };

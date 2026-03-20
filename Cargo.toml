@@ -89,6 +89,9 @@ members = [
     "crates/aurora-websocket",
     "crates/aurora-compression",
     "crates/aurora-geo",
+    "crates/aurora-structured-log",
+    "crates/aurora-histogram",
+    "crates/aurora-tracing-dist",
 ]
 
 [workspace.package]

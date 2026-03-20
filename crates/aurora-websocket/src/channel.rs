@@ -95,7 +95,7 @@ impl Channel {
         self.members
             .iter()
             .copied()
-            .filter(|&id| sender.map_or(true, |s| id != s))
+            .filter(|&id| sender != Some(id))
             .collect()
     }
 
