@@ -68,7 +68,9 @@ impl ImuSensor {
         if self.accel.magnitude() < 0.01 {
             return 0.0;
         }
-        (self.accel.z.abs() / self.accel.magnitude()).acos().to_degrees()
+        (self.accel.z.abs() / self.accel.magnitude())
+            .acos()
+            .to_degrees()
     }
 
     pub fn needs_calibration(&self) -> bool {

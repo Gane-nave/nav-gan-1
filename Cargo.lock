@@ -359,6 +359,10 @@ name = "aurora-backpressure"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ball-joint"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-mgmt"
 version = "0.1.0"
 
@@ -443,6 +447,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-can-bus"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cargo-route"
 version = "0.1.0"
 
@@ -453,6 +461,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-catalytic"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-cdn"
@@ -587,6 +599,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-control-arm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-convoy"
 version = "0.1.0"
 
@@ -651,6 +667,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cuckoo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cv-joint"
 version = "0.1.0"
 
 [[package]]
@@ -811,7 +831,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-drive-shaft"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-driver-score"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dtc-reader"
 version = "0.1.0"
 
 [[package]]
@@ -852,6 +880,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-effortless"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-egr-valve"
 version = "0.1.0"
 
 [[package]]
@@ -1014,6 +1046,10 @@ name = "aurora-fuel-cap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-inject"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-opt"
 version = "0.1.0"
 
@@ -1154,6 +1190,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-horn-pattern"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hub-bearing"
 version = "0.1.0"
 
 [[package]]
@@ -1305,6 +1345,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-intent"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-intercooler"
 version = "0.1.0"
 
 [[package]]
@@ -1519,6 +1563,10 @@ name = "aurora-motion-data"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-muffler-mon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-multi-gnss"
 version = "0.1.0"
 dependencies = [
@@ -1574,6 +1622,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-obd-diag"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-observability"
@@ -2097,6 +2149,10 @@ name = "aurora-structured-log"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-strut-mount"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-subsystem-sync"
 version = "0.1.0"
 dependencies = [
@@ -2109,6 +2165,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-suspension-adapt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sway-bar"
 version = "0.1.0"
 
 [[package]]
@@ -2159,6 +2219,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-throttle-map"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tie-rod"
 version = "0.1.0"
 
 [[package]]
@@ -2257,6 +2321,10 @@ name = "aurora-tunnel-detect"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-turbo-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-twin"
 version = "0.1.0"
 dependencies = [
@@ -2323,6 +2391,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-vertical-int"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vin-decode"
 version = "0.1.0"
 
 [[package]]
