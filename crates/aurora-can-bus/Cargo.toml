@@ -1,0 +1,6 @@
+[package]
+name = "aurora-can-bus"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

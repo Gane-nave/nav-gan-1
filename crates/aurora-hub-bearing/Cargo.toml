@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hub-bearing"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

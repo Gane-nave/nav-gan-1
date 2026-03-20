@@ -1,0 +1,6 @@
+[package]
+name = "aurora-cv-joint"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

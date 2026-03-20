@@ -1,0 +1,6 @@
+[package]
+name = "aurora-intercooler"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

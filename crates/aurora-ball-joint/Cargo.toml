@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ball-joint"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

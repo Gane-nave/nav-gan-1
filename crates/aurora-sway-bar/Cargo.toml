@@ -1,0 +1,6 @@
+[package]
+name = "aurora-sway-bar"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

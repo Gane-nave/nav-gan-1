@@ -1,0 +1,6 @@
+[package]
+name = "aurora-egr-valve"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
