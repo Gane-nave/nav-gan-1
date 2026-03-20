@@ -1,13 +1,13 @@
-/// Cabin filter: pollen, activated carbon, flow
-/// Phase 573
+/// Cabin filter: pollen, carbon, flow, replacement
+/// Phase 833
 
 #[derive(Debug, Clone)]
 pub struct CabinFilter {
     pub pollen_ok: bool,
     pub carbon_ok: bool,
     pub flow_ok: bool,
-    pub service_km: f64,
-    pub max_service_km: f64,
+    pub clean: bool,
+    pub seal_ok: bool,
 }
 
 impl Default for CabinFilter {
@@ -22,8 +22,8 @@ impl CabinFilter {
             pollen_ok: true,
             carbon_ok: true,
             flow_ok: true,
-            service_km: 8000.0,
-            max_service_km: 20000.0,
+            clean: true,
+            seal_ok: true,
         }
     }
 
@@ -31,20 +31,20 @@ impl CabinFilter {
         self.pollen_ok && self.carbon_ok
     }
 
-    pub fn airflow_ok(&self) -> bool {
-        self.flow_ok
+    pub fn performance_ok(&self) -> bool {
+        self.flow_ok && self.clean && self.seal_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.filtration_ok() && self.airflow_ok() && self.service_km < self.max_service_km
+        self.filtration_ok() && self.performance_ok()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.service_km > self.max_service_km || !self.flow_ok
+        !self.clean || !self.flow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.flow_ok { return 20.0; }
+        if !self.clean { return 15.0; }
         100.0
     }
 }
@@ -60,9 +60,9 @@ mod tests {
     }
 
     #[test]
-    fn test_airflow() {
+    fn test_performance() {
         let c = CabinFilter::new();
-        assert!(c.airflow_ok());
+        assert!(c.performance_ok());
     }
 
     #[test]
@@ -78,9 +78,9 @@ mod tests {
     }
 
     #[test]
-    fn test_worn() {
+    fn test_clean() {
         let mut c = CabinFilter::new();
-        c.service_km = 25000.0;
+        c.clean = false;
         assert!(c.needs_replacement());
     }
 
