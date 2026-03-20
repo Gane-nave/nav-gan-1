@@ -262,6 +262,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-circuit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-city"
 version = "0.1.0"
 dependencies = [
@@ -587,6 +591,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-health"
 version = "0.1.0"
 
 [[package]]
@@ -1006,6 +1014,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-serialization"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-simulation"
