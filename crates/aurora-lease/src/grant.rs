@@ -218,7 +218,7 @@ mod tests {
     fn test_held_duration_after_renewal() {
         let mut g = LeaseGrant::new(1, "r", "h", 1000, 5000);
         g.renew(4000, 5000); // renew at t=4000
-        // held_duration should be from original grant (1000), not renewal time (4000)
+                             // held_duration should be from original grant (1000), not renewal time (4000)
         assert_eq!(g.held_duration_ms(6000), 5000); // 6000 - 1000 = 5000
     }
 

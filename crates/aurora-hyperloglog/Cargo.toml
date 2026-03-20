@@ -1,0 +1,8 @@
+[package]
+name = "aurora-hyperloglog"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "HyperLogLog for cardinality estimation for AURORA NAV"
+
+[dependencies]

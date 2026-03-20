@@ -6,14 +6,14 @@ fn adversarial_interval_overlap_containment_removal() {
 
     // Phase 1: Insert overlapping intervals (time ranges for events)
     // Simulate a schedule: meeting, lunch, call, break, review
-    tree.insert(Interval::new(900, 1000, "meeting"));    // 9:00-10:00
-    tree.insert(Interval::new(1030, 1100, "standup"));   // 10:30-11:00
-    tree.insert(Interval::new(1100, 1200, "coding"));    // 11:00-12:00
-    tree.insert(Interval::new(1200, 1300, "lunch"));     // 12:00-13:00
-    tree.insert(Interval::new(1300, 1400, "call"));      // 13:00-14:00
-    tree.insert(Interval::new(1330, 1500, "review"));    // 13:30-15:00 (overlaps with call)
-    tree.insert(Interval::new(1500, 1600, "break"));     // 15:00-16:00
-    tree.insert(Interval::new(800, 1700, "workday"));    // 8:00-17:00 (spans all)
+    tree.insert(Interval::new(900, 1000, "meeting")); // 9:00-10:00
+    tree.insert(Interval::new(1030, 1100, "standup")); // 10:30-11:00
+    tree.insert(Interval::new(1100, 1200, "coding")); // 11:00-12:00
+    tree.insert(Interval::new(1200, 1300, "lunch")); // 12:00-13:00
+    tree.insert(Interval::new(1300, 1400, "call")); // 13:00-14:00
+    tree.insert(Interval::new(1330, 1500, "review")); // 13:30-15:00 (overlaps with call)
+    tree.insert(Interval::new(1500, 1600, "break")); // 15:00-16:00
+    tree.insert(Interval::new(800, 1700, "workday")); // 8:00-17:00 (spans all)
     assert_eq!(tree.len(), 8);
 
     // Phase 2: Point queries
@@ -44,10 +44,10 @@ fn adversarial_interval_overlap_containment_removal() {
     // What overlaps with 10:00-11:00?
     let overlaps = tree.query_overlap(1000, 1100);
     let labels: Vec<&str> = overlaps.iter().map(|i| i.label()).collect();
-    assert!(labels.contains(&"meeting"));   // ends at 1000, overlaps at boundary
-    assert!(labels.contains(&"standup"));   // 1030-1100
-    assert!(labels.contains(&"coding"));    // starts at 1100, boundary overlap
-    assert!(labels.contains(&"workday"));   // spans all
+    assert!(labels.contains(&"meeting")); // ends at 1000, overlaps at boundary
+    assert!(labels.contains(&"standup")); // 1030-1100
+    assert!(labels.contains(&"coding")); // starts at 1100, boundary overlap
+    assert!(labels.contains(&"workday")); // spans all
 
     // What overlaps with 18:00-19:00? Nothing
     assert!(tree.query_overlap(1800, 1900).is_empty());
@@ -56,9 +56,9 @@ fn adversarial_interval_overlap_containment_removal() {
     // Which intervals fully contain 13:30-14:00?
     let containers = tree.query_containing(1330, 1400);
     let labels: Vec<&str> = containers.iter().map(|i| i.label()).collect();
-    assert!(labels.contains(&"review"));    // 1330-1500 contains 1330-1400
-    assert!(labels.contains(&"workday"));   // 800-1700 contains 1330-1400
-    assert!(labels.contains(&"call"));      // 1300-1400 contains 1330-1400
+    assert!(labels.contains(&"review")); // 1330-1500 contains 1330-1400
+    assert!(labels.contains(&"workday")); // 800-1700 contains 1330-1400
+    assert!(labels.contains(&"call")); // 1300-1400 contains 1330-1400
 
     // Phase 5: Remove and re-query
     assert_eq!(tree.remove_by_label("lunch"), 1);
@@ -76,8 +76,8 @@ fn adversarial_interval_overlap_containment_removal() {
 
     // Phase 6: Span
     let span = tree.span().unwrap();
-    assert_eq!(span.0, 900);   // earliest low
-    assert_eq!(span.1, 1600);  // latest high
+    assert_eq!(span.0, 900); // earliest low
+    assert_eq!(span.1, 1600); // latest high
 
     // Phase 7: Count overlaps
     assert_eq!(tree.count_overlaps(1300, 1500), 3); // call, review, break

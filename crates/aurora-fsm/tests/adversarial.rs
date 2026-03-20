@@ -7,8 +7,12 @@ fn adversarial_fsm_guards_terminal_reset_history() {
     // Guards: has_key (for unlock), is_clear (for open)
     let mut fsm = StateMachine::new("locked");
     fsm.add_terminal_state("broken");
-    fsm.add_transition(Transition::with_guard("locked", "unlock", "unlocked", "has_key"));
-    fsm.add_transition(Transition::with_guard("unlocked", "open", "open", "is_clear"));
+    fsm.add_transition(Transition::with_guard(
+        "locked", "unlock", "unlocked", "has_key",
+    ));
+    fsm.add_transition(Transition::with_guard(
+        "unlocked", "open", "open", "is_clear",
+    ));
     fsm.add_transition(Transition::new("open", "close", "unlocked"));
     fsm.add_transition(Transition::new("unlocked", "lock", "locked"));
     fsm.add_transition(Transition::new("locked", "break", "broken"));
@@ -45,8 +49,14 @@ fn adversarial_fsm_guards_terminal_reset_history() {
     assert_eq!(result, TransitionResult::Success("open".to_string()));
 
     // Phase 6: Close and lock (full cycle)
-    assert_eq!(fsm.send("close"), TransitionResult::Success("unlocked".to_string()));
-    assert_eq!(fsm.send("lock"), TransitionResult::Success("locked".to_string()));
+    assert_eq!(
+        fsm.send("close"),
+        TransitionResult::Success("unlocked".to_string())
+    );
+    assert_eq!(
+        fsm.send("lock"),
+        TransitionResult::Success("locked".to_string())
+    );
     assert_eq!(fsm.current_state(), "locked");
 
     // Phase 7: Verify history
@@ -87,9 +97,9 @@ fn adversarial_fsm_guards_terminal_reset_history() {
     // Phase 11: Rapid cycling (stress)
     for _ in 0..100 {
         fsm.send("unlock"); // locked -> unlocked
-        fsm.send("open");   // unlocked -> open
-        fsm.send("close");  // open -> unlocked
-        fsm.send("lock");   // unlocked -> locked
+        fsm.send("open"); // unlocked -> open
+        fsm.send("close"); // open -> unlocked
+        fsm.send("lock"); // unlocked -> locked
     }
     assert_eq!(fsm.current_state(), "locked");
     assert_eq!(fsm.transition_count(), 400);

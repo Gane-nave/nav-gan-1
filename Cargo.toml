@@ -125,6 +125,15 @@ members = [
     "crates/aurora-merkle",
     "crates/aurora-prioritymap",
     "crates/aurora-slab",
+    "crates/aurora-btree",
+    "crates/aurora-cuckoo",
+    "crates/aurora-hyperloglog",
+    "crates/aurora-jumphash",
+    "crates/aurora-crdt",
+    "crates/aurora-clock",
+    "crates/aurora-rcu",
+    "crates/aurora-worksteal",
+    "crates/aurora-bounded-queue",
 ]
 
 [workspace.package]

@@ -115,7 +115,10 @@ impl IntervalTree {
             if entry.interval.low() > low {
                 break;
             }
-            if entry.interval.contains_interval(&Interval::new(low, high, "")) {
+            if entry
+                .interval
+                .contains_interval(&Interval::new(low, high, ""))
+            {
                 results.push(&entry.interval);
             }
         }

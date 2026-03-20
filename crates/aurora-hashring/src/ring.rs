@@ -22,7 +22,11 @@ pub struct HashRing {
 impl HashRing {
     /// Create a new hash ring with the given replication factor.
     pub fn new(replication_factor: u32) -> Self {
-        let rf = if replication_factor == 0 { 1 } else { replication_factor };
+        let rf = if replication_factor == 0 {
+            1
+        } else {
+            replication_factor
+        };
         Self {
             nodes: Vec::new(),
             physical_nodes: HashSet::new(),

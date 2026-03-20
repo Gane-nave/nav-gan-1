@@ -23,7 +23,11 @@ fn adversarial_consistent_hashing_rebalance_and_replication() {
     assert_eq!(dist.len(), 5);
     for i in 0..5 {
         let name = format!("node-{}", i);
-        assert!(dist.contains_key(name.as_str()), "node-{} missing from distribution", i);
+        assert!(
+            dist.contains_key(name.as_str()),
+            "node-{} missing from distribution",
+            i
+        );
     }
 
     // Phase 3: Remove one node and measure key movement
@@ -42,8 +46,16 @@ fn adversarial_consistent_hashing_rebalance_and_replication() {
     }
     // With consistent hashing, roughly 1/5 of keys should move (the ones on removed node)
     // Allow generous bounds: at least some moved, but not all
-    assert!(moved > 50, "too few keys moved after node removal: {}", moved);
-    assert!(moved < 500, "too many keys moved after node removal: {}", moved);
+    assert!(
+        moved > 50,
+        "too few keys moved after node removal: {}",
+        moved
+    );
+    assert!(
+        moved < 500,
+        "too many keys moved after node removal: {}",
+        moved
+    );
 
     // Phase 4: Test replication with lookup_n
     ring.add_node("node-5"); // add replacement

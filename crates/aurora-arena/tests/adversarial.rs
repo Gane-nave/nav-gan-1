@@ -35,7 +35,11 @@ fn adversarial_alloc_free_reuse_stale_handle() {
 
     // CRITICAL: Stale handle h2 must NOT access the new data
     assert_eq!(pool.get(h2), None, "Stale handle must return None");
-    assert_eq!(pool.free(h2, 7000), None, "Stale handle free must return None");
+    assert_eq!(
+        pool.free(h2, 7000),
+        None,
+        "Stale handle free must return None"
+    );
 
     // Mutate through handle
     if let Some(val) = pool.get_mut(h4) {

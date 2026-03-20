@@ -12,10 +12,7 @@ pub enum TransitionResult {
         reason: String,
     },
     /// No transition defined for this event in the current state.
-    NoTransition {
-        state: String,
-        event: String,
-    },
+    NoTransition { state: String, event: String },
 }
 
 /// A transition definition in the state machine.

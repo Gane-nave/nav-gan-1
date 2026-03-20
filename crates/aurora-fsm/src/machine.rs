@@ -70,7 +70,10 @@ impl StateMachine {
     pub fn add_transition(&mut self, transition: Transition) {
         self.states.insert(transition.from().to_string());
         self.states.insert(transition.to().to_string());
-        let key = (transition.from().to_string(), transition.event().to_string());
+        let key = (
+            transition.from().to_string(),
+            transition.event().to_string(),
+        );
         self.transitions.entry(key).or_default().push(transition);
     }
 
@@ -197,10 +200,9 @@ impl StateMachine {
         let key = (self.current.clone(), event.to_string());
         match self.transitions.get(&key) {
             None => false,
-            Some(ts) => ts.iter().any(|t| {
-                t.guard()
-                    .is_none_or(|g| !self.blocked_guards.contains(g))
-            }),
+            Some(ts) => ts
+                .iter()
+                .any(|t| t.guard().is_none_or(|g| !self.blocked_guards.contains(g))),
         }
     }
 
@@ -232,10 +234,19 @@ mod tests {
     #[test]
     fn test_simple_transitions() {
         let mut fsm = traffic_light();
-        assert_eq!(fsm.send("timer"), TransitionResult::Success("green".to_string()));
+        assert_eq!(
+            fsm.send("timer"),
+            TransitionResult::Success("green".to_string())
+        );
         assert_eq!(fsm.current_state(), "green");
-        assert_eq!(fsm.send("timer"), TransitionResult::Success("yellow".to_string()));
-        assert_eq!(fsm.send("timer"), TransitionResult::Success("red".to_string()));
+        assert_eq!(
+            fsm.send("timer"),
+            TransitionResult::Success("yellow".to_string())
+        );
+        assert_eq!(
+            fsm.send("timer"),
+            TransitionResult::Success("red".to_string())
+        );
     }
 
     #[test]
@@ -249,7 +260,9 @@ mod tests {
     #[test]
     fn test_guard_blocks_transition() {
         let mut fsm = StateMachine::new("locked");
-        fsm.add_transition(Transition::with_guard("locked", "unlock", "unlocked", "has_key"));
+        fsm.add_transition(Transition::with_guard(
+            "locked", "unlock", "unlocked", "has_key",
+        ));
         fsm.block_guard("has_key");
         let result = fsm.send("unlock");
         assert!(matches!(result, TransitionResult::GuardRejected { .. }));
@@ -259,12 +272,17 @@ mod tests {
     #[test]
     fn test_guard_unblock() {
         let mut fsm = StateMachine::new("locked");
-        fsm.add_transition(Transition::with_guard("locked", "unlock", "unlocked", "has_key"));
+        fsm.add_transition(Transition::with_guard(
+            "locked", "unlock", "unlocked", "has_key",
+        ));
         fsm.block_guard("has_key");
         assert!(!fsm.can_send("unlock"));
         fsm.unblock_guard("has_key");
         assert!(fsm.can_send("unlock"));
-        assert_eq!(fsm.send("unlock"), TransitionResult::Success("unlocked".to_string()));
+        assert_eq!(
+            fsm.send("unlock"),
+            TransitionResult::Success("unlocked".to_string())
+        );
     }
 
     #[test]

@@ -52,7 +52,11 @@ fn adversarial_set_ops_jaccard_subset() {
 
     // Jaccard: |A ∩ B| / |A ∪ B| = 4/10 = 0.4
     let j = ops::jaccard(&a, &b);
-    assert!((j - 0.4).abs() < f64::EPSILON, "Jaccard should be 0.4, got {}", j);
+    assert!(
+        (j - 0.4).abs() < f64::EPSILON,
+        "Jaccard should be 0.4, got {}",
+        j
+    );
 
     // first_set / last_set
     assert_eq!(a.first_set(), Some(0));

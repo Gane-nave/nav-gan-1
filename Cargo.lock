@@ -186,6 +186,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-arena"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-audit"
 version = "0.1.0"
 
@@ -210,6 +214,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-backpressure"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-bench"
@@ -245,6 +253,22 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-bitset"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bloom"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bounded-queue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-btree"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cache"
 version = "0.1.0"
 
@@ -262,6 +286,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-circuit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-city"
 version = "0.1.0"
 dependencies = [
@@ -275,6 +303,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-clock"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-compliance"
 version = "0.1.0"
 dependencies = [
@@ -284,6 +316,10 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-compression"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-confidence"
@@ -353,6 +389,22 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-crdt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cuckoo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-debounce"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-deploy"
@@ -567,6 +619,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-geo"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -587,6 +643,22 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-hashring"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-health"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-heap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-histogram"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hyperloglog"
 version = "0.1.0"
 
 [[package]]
@@ -699,6 +771,10 @@ name = "aurora-interval"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-jumphash"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lane"
 version = "0.1.0"
 dependencies = [
@@ -709,6 +785,14 @@ dependencies = [
  "serde_json",
  "tracing",
 ]
+
+[[package]]
+name = "aurora-lease"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lru"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-map"
@@ -762,6 +846,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-migration"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-ml"
@@ -899,7 +987,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-pubsub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-quota"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rcu"
 version = "0.1.0"
 
 [[package]]
@@ -914,6 +1014,14 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-retry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ringbuf"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-risk"
@@ -993,6 +1101,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-semaphore"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sensors"
 version = "0.1.0"
 dependencies = [
@@ -1008,11 +1120,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-serialization"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-skiplist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-snapshot"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-social"
@@ -1047,6 +1171,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-streaming"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-structured-log"
 version = "0.1.0"
 
 [[package]]
@@ -1088,6 +1216,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-tracing-dist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-traffic"
 version = "0.1.0"
 dependencies = [
@@ -1099,6 +1231,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-trie"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-trust"
@@ -1159,11 +1295,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-websocket"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-wellness"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-worksteal"
+version = "0.1.0"
 
 [[package]]
 name = "aurora_merkle"
