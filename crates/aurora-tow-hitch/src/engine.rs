@@ -1,13 +1,13 @@
-/// Tow hitch: receiver, ball mount, wiring, capacity
-/// Phase 557
+/// Tow hitch: receiver, ball mount, wiring, controller
+/// Phase 759
 
 #[derive(Debug, Clone)]
 pub struct TowHitch {
-    pub capacity_kg: f64,
-    pub load_kg: f64,
-    pub wiring_ok: bool,
-    pub ball_ok: bool,
     pub receiver_ok: bool,
+    pub ball_ok: bool,
+    pub wiring_ok: bool,
+    pub controller_ok: bool,
+    pub rating_ok: bool,
 }
 
 impl Default for TowHitch {
@@ -19,24 +19,24 @@ impl Default for TowHitch {
 impl TowHitch {
     pub fn new() -> Self {
         Self {
-            capacity_kg: 2500.0,
-            load_kg: 500.0,
-            wiring_ok: true,
-            ball_ok: true,
             receiver_ok: true,
+            ball_ok: true,
+            wiring_ok: true,
+            controller_ok: true,
+            rating_ok: true,
         }
     }
 
-    pub fn within_capacity(&self) -> bool {
-        self.load_kg < self.capacity_kg
+    pub fn mechanical_ok(&self) -> bool {
+        self.receiver_ok && self.ball_ok && self.rating_ok
     }
 
-    pub fn hardware_ok(&self) -> bool {
-        self.ball_ok && self.receiver_ok
+    pub fn electrical_ok(&self) -> bool {
+        self.wiring_ok && self.controller_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.within_capacity() && self.hardware_ok() && self.wiring_ok
+        self.mechanical_ok() && self.electrical_ok()
     }
 
     pub fn needs_service(&self) -> bool {
@@ -44,7 +44,7 @@ impl TowHitch {
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.receiver_ok { return 15.0; }
+        if !self.receiver_ok { return 10.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_capacity() {
+    fn test_mechanical() {
         let c = TowHitch::new();
-        assert!(c.within_capacity());
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_hardware() {
+    fn test_electrical() {
         let c = TowHitch::new();
-        assert!(c.hardware_ok());
+        assert!(c.electrical_ok());
     }
 
     #[test]

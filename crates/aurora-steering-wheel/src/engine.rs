@@ -1,14 +1,13 @@
-/// Steering wheel: angle sensor, torque sensor, buttons, paddle shifters
-/// Phase 258
+/// Steering wheel: heated rim, controls, paddle shift
+/// Phase 750
 
 #[derive(Debug, Clone)]
 pub struct SteeringWheel {
-    pub angle_deg: f64,
-    pub torque_nm: f64,
-    pub buttons_ok: bool,
-    pub heated: bool,
-    pub paddle_left: bool,
-    pub paddle_right: bool,
+    pub heated_ok: bool,
+    pub controls_ok: bool,
+    pub paddle_ok: bool,
+    pub airbag_ok: bool,
+    pub clock_spring_ok: bool,
 }
 
 impl Default for SteeringWheel {
@@ -20,35 +19,32 @@ impl Default for SteeringWheel {
 impl SteeringWheel {
     pub fn new() -> Self {
         Self {
-            angle_deg: 0.0,
-            torque_nm: 0.0,
-            buttons_ok: true,
-            heated: false,
-            paddle_left: false,
-            paddle_right: false,
+            heated_ok: true,
+            controls_ok: true,
+            paddle_ok: true,
+            airbag_ok: true,
+            clock_spring_ok: true,
         }
     }
 
-    pub fn centered(&self) -> bool {
-        self.angle_deg.abs() < 5.0
+    pub fn comfort_ok(&self) -> bool {
+        self.heated_ok && self.controls_ok && self.paddle_ok
     }
 
-    pub fn full_lock(&self) -> bool {
-        self.angle_deg.abs() > 450.0
+    pub fn safety_ok(&self) -> bool {
+        self.airbag_ok && self.clock_spring_ok
     }
 
-    pub fn turns(&self) -> f64 {
-        self.angle_deg.abs() / 360.0
+    pub fn all_ok(&self) -> bool {
+        self.comfort_ok() && self.safety_ok()
     }
 
-    pub fn driver_input(&self) -> bool {
-        self.torque_nm.abs() > 0.5
+    pub fn needs_service(&self) -> bool {
+        !self.clock_spring_ok || !self.airbag_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.buttons_ok {
-            return 70.0;
-        }
+        if !self.clock_spring_ok { return 5.0; }
         100.0
     }
 }
@@ -58,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_centered() {
-        let s = SteeringWheel::new();
-        assert!(s.centered());
+    fn test_comfort() {
+        let c = SteeringWheel::new();
+        assert!(c.comfort_ok());
     }
 
     #[test]
-    fn test_not_full_lock() {
-        let s = SteeringWheel::new();
-        assert!(!s.full_lock());
+    fn test_safety() {
+        let c = SteeringWheel::new();
+        assert!(c.safety_ok());
     }
 
     #[test]
-    fn test_zero_turns() {
-        let s = SteeringWheel::new();
-        assert!(s.turns() < 0.1);
+    fn test_all_ok() {
+        let c = SteeringWheel::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_input() {
-        let s = SteeringWheel::new();
-        assert!(!s.driver_input());
+    fn test_no_service() {
+        let c = SteeringWheel::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_turned() {
-        let mut s = SteeringWheel::new();
-        s.angle_deg = 90.0;
-        assert!(!s.centered());
+    fn test_clockspring() {
+        let mut c = SteeringWheel::new();
+        c.clock_spring_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let s = SteeringWheel::new();
-        assert!((s.health_score() - 100.0).abs() < 0.1);
+        let c = SteeringWheel::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
