@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hud-display"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

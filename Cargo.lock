@@ -153,6 +153,10 @@ name = "aurora-ambient-light"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-amplifier-mon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-analytics"
 version = "0.1.0"
 dependencies = [
@@ -481,6 +485,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-blower-motor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bluetooth-mod"
 version = "0.1.0"
 
 [[package]]
@@ -1087,6 +1095,10 @@ name = "aurora-driver-score"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-drl-led"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-drl-system"
 version = "0.1.0"
 
@@ -1326,6 +1338,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-flexray-bus"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-flexray-ctrl"
 version = "0.1.0"
 
@@ -1335,6 +1351,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-flywheel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fog-lamp"
 version = "0.1.0"
 
 [[package]]
@@ -1419,6 +1439,10 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-gauge-cluster"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-gear-whine"
@@ -1521,6 +1545,10 @@ name = "aurora-head-up-disp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-headlamp-aim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-headlight-aim"
 version = "0.1.0"
 
@@ -1583,6 +1611,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-hud-display"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-hv-battery"
@@ -1666,6 +1698,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-infotain-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-infotain-scr"
 version = "0.1.0"
 
 [[package]]
@@ -1769,6 +1805,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-interior-cam"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-interior-led"
 version = "0.1.0"
 
 [[package]]
@@ -1949,6 +1989,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-marker-lamp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-market-strategy"
 version = "0.1.0"
 
@@ -2083,6 +2127,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nav-antenna"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-nav-state"
 version = "0.1.0"
 dependencies = [
@@ -2133,6 +2181,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-obd-diag"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-obd-port"
 version = "0.1.0"
 
 [[package]]
@@ -2394,6 +2446,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-pubsub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-puddle-light"
 version = "0.1.0"
 
 [[package]]
@@ -2757,6 +2813,10 @@ name = "aurora-spark-plug"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-speaker-mount"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-speed-advisor"
 version = "0.1.0"
 
@@ -2864,6 +2924,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-subwoofer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sunroof-ctrl"
 version = "0.1.0"
 
@@ -2881,6 +2945,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sway-bar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tail-lamp"
 version = "0.1.0"
 
 [[package]]
@@ -3122,6 +3190,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-underbody"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-usb-hub"
 version = "0.1.0"
 
 [[package]]
