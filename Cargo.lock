@@ -1629,7 +1629,47 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-config-aws-ssm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-azure-kv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-consul2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-env"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-etcd"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-file2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-gcp-secret"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-remote"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-config-srv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-vault2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-config-zookeeper"
 version = "0.1.0"
 
 [[package]]
@@ -2930,6 +2970,38 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fea-sim"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-audit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-experiment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-override"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-rollout"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-sdk"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-segment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-toggle"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-feature-webhook2"
 version = "0.1.0"
 
 [[package]]
@@ -5071,6 +5143,78 @@ name = "aurora-ota-update"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-otel-baggage"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-collector"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-context"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-datadog"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-exporter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-grafana"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-jaeger"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-log"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-meter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-metric"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-newrelic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-prometheus"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-propagator"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-resource"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-sampler"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-span"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-trace"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-otel-zipkin"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-owner-manual"
 version = "0.1.0"
 
@@ -5248,6 +5392,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-pki-manager"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-android"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-cloudrun"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-docker3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-embedded"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-fargate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-fly"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-heroku"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-ios"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-k8s2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-lambda"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-linux"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-macos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-railway"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-render"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-rtos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-vercel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-wasm2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-platform-windows"
 version = "0.1.0"
 
 [[package]]
@@ -5856,6 +6072,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-runbook-exec"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-actor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-barrier"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-channel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-condvar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-fiber"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-isolate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-lua"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-mutex"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-once"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-pool2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-python"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-queue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-rwlock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-sandbox"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-semaphore2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-thread"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-v8"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-runtime-wasm"
 version = "0.1.0"
 
 [[package]]
