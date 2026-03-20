@@ -1,13 +1,13 @@
-/// Knock sensor: piezoelectric, frequency, threshold
-/// Phase 587
+/// knock sensor: detect, retard, filter, adapt, check
+/// Phase 1244
 
 #[derive(Debug, Clone)]
 pub struct KnockSensor {
-    pub piezo_ok: bool,
-    pub frequency_ok: bool,
-    pub threshold_ok: bool,
-    pub signal_ok: bool,
-    pub calibrated: bool,
+    pub detect_ok: bool,
+    pub retard_ok: bool,
+    pub filter_ok: bool,
+    pub adapt_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for KnockSensor {
@@ -19,32 +19,32 @@ impl Default for KnockSensor {
 impl KnockSensor {
     pub fn new() -> Self {
         Self {
-            piezo_ok: true,
-            frequency_ok: true,
-            threshold_ok: true,
-            signal_ok: true,
-            calibrated: true,
+            detect_ok: true,
+            retard_ok: true,
+            filter_ok: true,
+            adapt_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn detection_ok(&self) -> bool {
-        self.piezo_ok && self.frequency_ok
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.retard_ok && self.filter_ok
     }
 
-    pub fn system_ok(&self) -> bool {
-        self.detection_ok() && self.threshold_ok && self.signal_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.adapt_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.system_ok() && self.calibrated
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.piezo_ok || !self.signal_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.retard_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.piezo_ok { return 10.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_detection() {
+    fn test_primary() {
         let c = KnockSensor::new();
-        assert!(c.detection_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_system() {
+    fn test_secondary() {
         let c = KnockSensor::new();
-        assert!(c.system_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = KnockSensor::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_piezo() {
+    fn test_field_toggle() {
         let mut c = KnockSensor::new();
-        c.piezo_ok = false;
-        assert!(c.needs_replacement());
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

@@ -1,38 +1,38 @@
-/// crank sensor: pulse, sync, position, speed, check
-/// Phase 1245
+/// dpf sys: trap, regenerate, sense, clean, check
+/// Phase 1240
 
 #[derive(Debug, Clone)]
-pub struct CrankSensor {
-    pub pulse_ok: bool,
-    pub sync_ok: bool,
-    pub position_ok: bool,
-    pub speed_ok: bool,
+pub struct DpfSys {
+    pub trap_ok: bool,
+    pub regenerate_ok: bool,
+    pub sense_ok: bool,
+    pub clean_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for CrankSensor {
+impl Default for DpfSys {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CrankSensor {
+impl DpfSys {
     pub fn new() -> Self {
         Self {
-            pulse_ok: true,
-            sync_ok: true,
-            position_ok: true,
-            speed_ok: true,
+            trap_ok: true,
+            regenerate_ok: true,
+            sense_ok: true,
+            clean_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.pulse_ok && self.sync_ok && self.position_ok
+        self.trap_ok && self.regenerate_ok && self.sense_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.speed_ok && self.check_ok
+        self.clean_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CrankSensor {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.pulse_ok || !self.sync_ok
+        !self.trap_ok || !self.regenerate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.pulse_ok { return 5.0; }
+        if !self.trap_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CrankSensor::new();
+        let c = DpfSys::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CrankSensor::new();
+        let c = DpfSys::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CrankSensor::new();
+        let c = DpfSys::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CrankSensor::new();
+        let c = DpfSys::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CrankSensor::new();
-        c.pulse_ok = false;
+        let mut c = DpfSys::new();
+        c.trap_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CrankSensor::new();
+        let c = DpfSys::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

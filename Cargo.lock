@@ -887,7 +887,15 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-cam-phase"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cam-phaser"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cam-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -1748,6 +1756,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-dpf-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dpf-sys"
 version = "0.1.0"
 
 [[package]]
@@ -2814,6 +2826,10 @@ name = "aurora-ignition-module"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ignition-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-immersive"
 version = "0.1.0"
 dependencies = [
@@ -2910,6 +2926,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-intake-gasket"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-intake-mani"
 version = "0.1.0"
 
 [[package]]
@@ -3077,6 +3097,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-kv-store"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-lambda-probe"
 version = "0.1.0"
 
 [[package]]
@@ -4455,6 +4479,10 @@ name = "aurora-school-zone"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-scr-sys"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-scr-system"
 version = "0.1.0"
 
@@ -5326,6 +5354,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-turbo-actuator"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-turbo-boost"
 version = "0.1.0"
 
 [[package]]

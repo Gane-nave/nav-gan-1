@@ -1,13 +1,13 @@
-/// Throttle body: bore, butterfly, motor, TPS
-/// Phase 608
+/// throttle body: open, close, idle, adapt, check
+/// Phase 1231
 
 #[derive(Debug, Clone)]
 pub struct ThrottleBody {
-    pub bore_ok: bool,
-    pub butterfly_ok: bool,
-    pub motor_ok: bool,
-    pub tps_ok: bool,
-    pub clean: bool,
+    pub open_ok: bool,
+    pub close_ok: bool,
+    pub idle_ok: bool,
+    pub adapt_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for ThrottleBody {
@@ -19,32 +19,32 @@ impl Default for ThrottleBody {
 impl ThrottleBody {
     pub fn new() -> Self {
         Self {
-            bore_ok: true,
-            butterfly_ok: true,
-            motor_ok: true,
-            tps_ok: true,
-            clean: true,
+            open_ok: true,
+            close_ok: true,
+            idle_ok: true,
+            adapt_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn mechanical_ok(&self) -> bool {
-        self.bore_ok && self.butterfly_ok
+    pub fn primary_ok(&self) -> bool {
+        self.open_ok && self.close_ok && self.idle_ok
     }
 
-    pub fn electronic_ok(&self) -> bool {
-        self.motor_ok && self.tps_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.adapt_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.mechanical_ok() && self.electronic_ok() && self.clean
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_cleaning(&self) -> bool {
-        !self.clean || !self.bore_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.open_ok || !self.close_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motor_ok { return 10.0; }
+        if !self.open_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_mechanical() {
+    fn test_primary() {
         let c = ThrottleBody::new();
-        assert!(c.mechanical_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_electronic() {
+    fn test_secondary() {
         let c = ThrottleBody::new();
-        assert!(c.electronic_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_clean() {
+    fn test_no_attention() {
         let c = ThrottleBody::new();
-        assert!(!c.needs_cleaning());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_dirty() {
+    fn test_field_toggle() {
         let mut c = ThrottleBody::new();
-        c.clean = false;
-        assert!(c.needs_cleaning());
+        c.open_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

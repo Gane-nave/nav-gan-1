@@ -1,38 +1,38 @@
-/// crank sensor: pulse, sync, position, speed, check
-/// Phase 1245
+/// cam sensor: detect, phase, sync, signal, check
+/// Phase 1246
 
 #[derive(Debug, Clone)]
-pub struct CrankSensor {
-    pub pulse_ok: bool,
+pub struct CamSensor {
+    pub detect_ok: bool,
+    pub phase_ok: bool,
     pub sync_ok: bool,
-    pub position_ok: bool,
-    pub speed_ok: bool,
+    pub signal_ok: bool,
     pub check_ok: bool,
 }
 
-impl Default for CrankSensor {
+impl Default for CamSensor {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CrankSensor {
+impl CamSensor {
     pub fn new() -> Self {
         Self {
-            pulse_ok: true,
+            detect_ok: true,
+            phase_ok: true,
             sync_ok: true,
-            position_ok: true,
-            speed_ok: true,
+            signal_ok: true,
             check_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.pulse_ok && self.sync_ok && self.position_ok
+        self.detect_ok && self.phase_ok && self.sync_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.speed_ok && self.check_ok
+        self.signal_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CrankSensor {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.pulse_ok || !self.sync_ok
+        !self.detect_ok || !self.phase_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.pulse_ok { return 5.0; }
+        if !self.detect_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = CrankSensor::new();
+        let c = CamSensor::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = CrankSensor::new();
+        let c = CamSensor::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CrankSensor::new();
+        let c = CamSensor::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = CrankSensor::new();
+        let c = CamSensor::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = CrankSensor::new();
-        c.pulse_ok = false;
+        let mut c = CamSensor::new();
+        c.detect_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CrankSensor::new();
+        let c = CamSensor::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

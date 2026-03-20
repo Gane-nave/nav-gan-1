@@ -1,13 +1,13 @@
-/// EGR valve: actuator, position, carbon buildup
-/// Phase 602
+/// egr valve: open, close, recirculate, cool, check
+/// Phase 1238
 
 #[derive(Debug, Clone)]
 pub struct EgrValve {
-    pub actuator_ok: bool,
-    pub position_ok: bool,
-    pub carbon_free: bool,
-    pub signal_ok: bool,
-    pub flow_ok: bool,
+    pub open_ok: bool,
+    pub close_ok: bool,
+    pub recirculate_ok: bool,
+    pub cool_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for EgrValve {
@@ -19,32 +19,32 @@ impl Default for EgrValve {
 impl EgrValve {
     pub fn new() -> Self {
         Self {
-            actuator_ok: true,
-            position_ok: true,
-            carbon_free: true,
-            signal_ok: true,
-            flow_ok: true,
+            open_ok: true,
+            close_ok: true,
+            recirculate_ok: true,
+            cool_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn valve_ok(&self) -> bool {
-        self.actuator_ok && self.position_ok
+    pub fn primary_ok(&self) -> bool {
+        self.open_ok && self.close_ok && self.recirculate_ok
     }
 
-    pub fn clean(&self) -> bool {
-        self.carbon_free && self.flow_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.cool_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.valve_ok() && self.clean() && self.signal_ok
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_cleaning(&self) -> bool {
-        !self.carbon_free || !self.flow_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.open_ok || !self.close_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.actuator_ok { return 10.0; }
+        if !self.open_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_valve() {
+    fn test_primary() {
         let c = EgrValve::new();
-        assert!(c.valve_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_clean() {
+    fn test_secondary() {
         let c = EgrValve::new();
-        assert!(c.clean());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_clean() {
+    fn test_no_attention() {
         let c = EgrValve::new();
-        assert!(!c.needs_cleaning());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_carbon() {
+    fn test_field_toggle() {
         let mut c = EgrValve::new();
-        c.carbon_free = false;
-        assert!(c.needs_cleaning());
+        c.open_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

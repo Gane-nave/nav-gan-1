@@ -1,13 +1,13 @@
-/// Intercooler: efficiency, pressure drop, leak test
-/// Phase 611
+/// intercooler: cool, flow, pressure, condense, check
+/// Phase 1237
 
 #[derive(Debug, Clone)]
 pub struct Intercooler {
-    pub efficiency_pct: f64,
-    pub pressure_drop_ok: bool,
-    pub leak_free: bool,
-    pub fins_ok: bool,
-    pub piping_ok: bool,
+    pub cool_ok: bool,
+    pub flow_ok: bool,
+    pub pressure_ok: bool,
+    pub condense_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for Intercooler {
@@ -19,32 +19,32 @@ impl Default for Intercooler {
 impl Intercooler {
     pub fn new() -> Self {
         Self {
-            efficiency_pct: 85.0,
-            pressure_drop_ok: true,
-            leak_free: true,
-            fins_ok: true,
-            piping_ok: true,
+            cool_ok: true,
+            flow_ok: true,
+            pressure_ok: true,
+            condense_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn cooling_ok(&self) -> bool {
-        self.efficiency_pct > 60.0 && self.fins_ok
+    pub fn primary_ok(&self) -> bool {
+        self.cool_ok && self.flow_ok && self.pressure_ok
     }
 
-    pub fn integrity_ok(&self) -> bool {
-        self.leak_free && self.pressure_drop_ok && self.piping_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.condense_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.cooling_ok() && self.integrity_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.leak_free || !self.fins_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.cool_ok || !self.flow_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.leak_free { return 15.0; }
+        if !self.cool_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_cooling() {
+    fn test_primary() {
         let c = Intercooler::new();
-        assert!(c.cooling_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_integrity() {
+    fn test_secondary() {
         let c = Intercooler::new();
-        assert!(c.integrity_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = Intercooler::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_leak() {
+    fn test_field_toggle() {
         let mut c = Intercooler::new();
-        c.leak_free = false;
-        assert!(c.needs_service());
+        c.cool_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

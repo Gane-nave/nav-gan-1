@@ -1,50 +1,50 @@
-/// Catalytic converter: catalyst temp, efficiency, light-off
-/// Phase 492
+/// catalytic conv: oxidize, reduce, heat, monitor, check
+/// Phase 1239
 
 #[derive(Debug, Clone)]
-pub struct CatalyticConverter {
-    pub catalyst_temp_c: f64,
-    pub light_off_temp_c: f64,
-    pub efficiency_pct: f64,
-    pub substrate_ok: bool,
-    pub poisoned: bool,
+pub struct CatalyticConv {
+    pub oxidize_ok: bool,
+    pub reduce_ok: bool,
+    pub heat_ok: bool,
+    pub monitor_ok: bool,
+    pub check_ok: bool,
 }
 
-impl Default for CatalyticConverter {
+impl Default for CatalyticConv {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl CatalyticConverter {
+impl CatalyticConv {
     pub fn new() -> Self {
         Self {
-            catalyst_temp_c: 450.0,
-            light_off_temp_c: 300.0,
-            efficiency_pct: 95.0,
-            substrate_ok: true,
-            poisoned: false,
+            oxidize_ok: true,
+            reduce_ok: true,
+            heat_ok: true,
+            monitor_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn is_lit_off(&self) -> bool {
-        self.catalyst_temp_c >= self.light_off_temp_c
+    pub fn primary_ok(&self) -> bool {
+        self.oxidize_ok && self.reduce_ok && self.heat_ok
     }
 
-    pub fn efficient(&self) -> bool {
-        self.efficiency_pct > 80.0
+    pub fn secondary_ok(&self) -> bool {
+        self.monitor_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.is_lit_off() && self.efficient() && self.substrate_ok && !self.poisoned
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.poisoned || self.efficiency_pct < 60.0
+    pub fn needs_attention(&self) -> bool {
+        !self.oxidize_ok || !self.reduce_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.poisoned { return 10.0; }
+        if !self.oxidize_ok { return 5.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_lit_off() {
-        let c = CatalyticConverter::new();
-        assert!(c.is_lit_off());
+    fn test_primary() {
+        let c = CatalyticConv::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_efficient() {
-        let c = CatalyticConverter::new();
-        assert!(c.efficient());
+    fn test_secondary() {
+        let c = CatalyticConv::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = CatalyticConverter::new();
+        let c = CatalyticConv::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_replace() {
-        let c = CatalyticConverter::new();
-        assert!(!c.needs_replacement());
+    fn test_no_attention() {
+        let c = CatalyticConv::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_poisoned() {
-        let mut c = CatalyticConverter::new();
-        c.poisoned = true;
-        assert!(c.needs_replacement());
+    fn test_field_toggle() {
+        let mut c = CatalyticConv::new();
+        c.oxidize_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = CatalyticConverter::new();
+        let c = CatalyticConv::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

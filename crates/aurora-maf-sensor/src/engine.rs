@@ -1,13 +1,13 @@
-/// MAF sensor: air mass flow, hot wire, contamination
-/// Phase 585
+/// maf sensor: measure, heat, clean, trim, check
+/// Phase 1247
 
 #[derive(Debug, Clone)]
 pub struct MafSensor {
-    pub flow_gs: f64,
-    pub hot_wire_ok: bool,
-    pub clean: bool,
-    pub signal_ok: bool,
-    pub calibrated: bool,
+    pub measure_ok: bool,
+    pub heat_ok: bool,
+    pub clean_ok: bool,
+    pub trim_ok: bool,
+    pub check_ok: bool,
 }
 
 impl Default for MafSensor {
@@ -19,32 +19,32 @@ impl Default for MafSensor {
 impl MafSensor {
     pub fn new() -> Self {
         Self {
-            flow_gs: 15.0,
-            hot_wire_ok: true,
-            clean: true,
-            signal_ok: true,
-            calibrated: true,
+            measure_ok: true,
+            heat_ok: true,
+            clean_ok: true,
+            trim_ok: true,
+            check_ok: true,
         }
     }
 
-    pub fn flow_valid(&self) -> bool {
-        self.signal_ok && self.flow_gs > 0.0
+    pub fn primary_ok(&self) -> bool {
+        self.measure_ok && self.heat_ok && self.clean_ok
     }
 
-    pub fn sensor_clean(&self) -> bool {
-        self.clean && self.hot_wire_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.trim_ok && self.check_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.flow_valid() && self.sensor_clean() && self.calibrated
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_cleaning(&self) -> bool {
-        !self.clean || !self.hot_wire_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.measure_ok || !self.heat_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.hot_wire_ok { return 15.0; }
+        if !self.measure_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_flow() {
+    fn test_primary() {
         let c = MafSensor::new();
-        assert!(c.flow_valid());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_clean() {
+    fn test_secondary() {
         let c = MafSensor::new();
-        assert!(c.sensor_clean());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_clean() {
+    fn test_no_attention() {
         let c = MafSensor::new();
-        assert!(!c.needs_cleaning());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_dirty() {
+    fn test_field_toggle() {
         let mut c = MafSensor::new();
-        c.clean = false;
-        assert!(c.needs_cleaning());
+        c.measure_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

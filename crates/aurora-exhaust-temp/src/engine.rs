@@ -1,50 +1,50 @@
-/// Exhaust gas temperature sensor: thermocouple, range
-/// Phase 692
+/// exhaust temp: sense, protect, warn, cool, log
+/// Phase 1242
 
 #[derive(Debug, Clone)]
-pub struct ExhaustTempSensor {
-    pub thermocouple_ok: bool,
-    pub range_ok: bool,
-    pub response_ok: bool,
-    pub sheath_ok: bool,
-    pub calibrated: bool,
+pub struct ExhaustTemp {
+    pub sense_ok: bool,
+    pub protect_ok: bool,
+    pub warn_ok: bool,
+    pub cool_ok: bool,
+    pub log_ok: bool,
 }
 
-impl Default for ExhaustTempSensor {
+impl Default for ExhaustTemp {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ExhaustTempSensor {
+impl ExhaustTemp {
     pub fn new() -> Self {
         Self {
-            thermocouple_ok: true,
-            range_ok: true,
-            response_ok: true,
-            sheath_ok: true,
-            calibrated: true,
+            sense_ok: true,
+            protect_ok: true,
+            warn_ok: true,
+            cool_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn sensing_ok(&self) -> bool {
-        self.thermocouple_ok && self.range_ok
+    pub fn primary_ok(&self) -> bool {
+        self.sense_ok && self.protect_ok && self.warn_ok
     }
 
-    pub fn physical_ok(&self) -> bool {
-        self.sheath_ok && self.response_ok && self.calibrated
+    pub fn secondary_ok(&self) -> bool {
+        self.cool_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.sensing_ok() && self.physical_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        !self.thermocouple_ok || !self.sheath_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.sense_ok || !self.protect_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.thermocouple_ok { return 10.0; }
+        if !self.sense_ok { return 5.0; }
         100.0
     }
 }
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_sensing() {
-        let c = ExhaustTempSensor::new();
-        assert!(c.sensing_ok());
+    fn test_primary() {
+        let c = ExhaustTemp::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_physical() {
-        let c = ExhaustTempSensor::new();
-        assert!(c.physical_ok());
+    fn test_secondary() {
+        let c = ExhaustTemp::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = ExhaustTempSensor::new();
+        let c = ExhaustTemp::new();
         assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_replace() {
-        let c = ExhaustTempSensor::new();
-        assert!(!c.needs_replacement());
+    fn test_no_attention() {
+        let c = ExhaustTemp::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_thermocouple() {
-        let mut c = ExhaustTempSensor::new();
-        c.thermocouple_ok = false;
-        assert!(c.needs_replacement());
+    fn test_field_toggle() {
+        let mut c = ExhaustTemp::new();
+        c.sense_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = ExhaustTempSensor::new();
+        let c = ExhaustTemp::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
