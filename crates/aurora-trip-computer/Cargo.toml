@@ -1,0 +1,6 @@
+[package]
+name = "aurora-trip-computer"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

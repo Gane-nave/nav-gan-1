@@ -81,6 +81,10 @@ name = "aurora-abs-system"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ac-charge"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-adaptive"
 version = "0.1.0"
 dependencies = [
@@ -491,6 +495,10 @@ name = "aurora-can-bus"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-can-gateway"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cargo-route"
 version = "0.1.0"
 
@@ -516,6 +524,14 @@ dependencies = [
 
 [[package]]
 name = "aurora-chaos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-port"
 version = "0.1.0"
 
 [[package]]
@@ -757,6 +773,10 @@ name = "aurora-data-network"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dc-fast-charge"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dead-reckoning"
 version = "0.1.0"
 dependencies = [
@@ -931,6 +951,10 @@ name = "aurora-economics"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ecu-flash"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-edge"
 version = "0.1.0"
 dependencies = [
@@ -1042,6 +1066,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ethernet-auto"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-evaporator"
 version = "0.1.0"
 
@@ -1114,6 +1142,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-flexray-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fog-light"
 version = "0.1.0"
 
@@ -1127,6 +1159,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-cap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-economy"
 version = "0.1.0"
 
 [[package]]
@@ -1190,6 +1226,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-geo-fence"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-geo-shard"
@@ -1583,6 +1623,10 @@ name = "aurora-light-adapt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lin-bus"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-load-shed"
 version = "0.1.0"
 dependencies = [
@@ -1871,6 +1915,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ota-update"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-park-assist"
 version = "0.1.0"
 
@@ -1979,6 +2027,10 @@ name = "aurora-power-window"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-precondit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-prediction-mh"
 version = "0.1.0"
 
@@ -2052,6 +2104,10 @@ name = "aurora-rain-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-range-calc"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
@@ -2065,6 +2121,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-regen-brake"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-remote-start"
 version = "0.1.0"
 
 [[package]]
@@ -2420,6 +2480,10 @@ name = "aurora-sway-bar"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-telematics"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-telemetry"
 version = "0.1.0"
 dependencies = [
@@ -2550,6 +2614,10 @@ name = "aurora-trie"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-trip-computer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-trunk-assist"
 version = "0.1.0"
 
@@ -2631,6 +2699,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-v2x-comm"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-vehicle"

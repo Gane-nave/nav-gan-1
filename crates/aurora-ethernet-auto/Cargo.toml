@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ethernet-auto"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

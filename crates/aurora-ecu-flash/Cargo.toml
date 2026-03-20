@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ecu-flash"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

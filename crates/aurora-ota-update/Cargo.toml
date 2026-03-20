@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ota-update"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
