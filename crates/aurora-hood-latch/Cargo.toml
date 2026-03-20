@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hood-latch"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

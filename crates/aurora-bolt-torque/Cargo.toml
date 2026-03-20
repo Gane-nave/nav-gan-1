@@ -1,0 +1,6 @@
+[package]
+name = "aurora-bolt-torque"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-gas-strut"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

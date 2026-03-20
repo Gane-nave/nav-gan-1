@@ -1,0 +1,6 @@
+[package]
+name = "aurora-pin-retain"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

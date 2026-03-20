@@ -1,0 +1,6 @@
+[package]
+name = "aurora-trunk-latch"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

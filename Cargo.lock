@@ -181,6 +181,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-antenna-mount"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-antenna-tune"
 version = "0.1.0"
 
@@ -492,7 +496,15 @@ name = "aurora-body-height"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bolt-torque"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bounded-queue"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bracket-mount"
 version = "0.1.0"
 
 [[package]]
@@ -612,6 +624,10 @@ name = "aurora-chassis-flex"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-check-strap"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-circuit"
 version = "0.1.0"
 
@@ -638,6 +654,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-climate-zone"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-clip-fasten"
 version = "0.1.0"
 
 [[package]]
@@ -1334,6 +1354,10 @@ name = "aurora-fuel-cap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fuel-door"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fuel-economy"
 version = "0.1.0"
 
@@ -1375,6 +1399,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-gas-strut"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-gasket-integ"
@@ -1525,7 +1553,15 @@ name = "aurora-hill-hold"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-hinge-mech"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-histogram"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hood-latch"
 version = "0.1.0"
 
 [[package]]
@@ -1808,6 +1844,10 @@ name = "aurora-lat-accel"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-latch-lock"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-latency-comp"
 version = "0.1.0"
 dependencies = [
@@ -2084,6 +2124,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nut-prev"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-nv-harshness"
 version = "0.1.0"
 
@@ -2236,6 +2280,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-peripheral-viz"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-pin-retain"
 version = "0.1.0"
 
 [[package]]
@@ -2793,6 +2841,10 @@ name = "aurora-streaming"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-striker-plate"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-structured-log"
 version = "0.1.0"
 
@@ -2813,6 +2865,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-sunroof-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sunroof-mech"
 version = "0.1.0"
 
 [[package]]
@@ -2887,6 +2943,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-thermostat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-thread-lock"
 version = "0.1.0"
 
 [[package]]
@@ -2999,6 +3059,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-trunk-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-trunk-latch"
 version = "0.1.0"
 
 [[package]]
@@ -3161,6 +3225,10 @@ name = "aurora-washer-fluid"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-washer-load"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-wastegate"
 version = "0.1.0"
 
@@ -3254,6 +3322,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wiper-mech"
 version = "0.1.0"
 
 [[package]]
