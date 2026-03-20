@@ -1,0 +1,6 @@
+[package]
+name = "aurora-shock-absorb"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

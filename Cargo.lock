@@ -460,6 +460,10 @@ name = "aurora-bms-cell"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-body-height"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bounded-queue"
 version = "0.1.0"
 
@@ -481,6 +485,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-btree"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-bump-stop"
 version = "0.1.0"
 
 [[package]]
@@ -566,6 +574,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-chassis-flex"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-circuit"
@@ -721,6 +733,10 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-corner-weight"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-corrections"
@@ -1676,6 +1692,10 @@ name = "aurora-lane-keep"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lat-accel"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-latency-comp"
 version = "0.1.0"
 dependencies = [
@@ -1711,6 +1731,10 @@ name = "aurora-lin-bus"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-load-level"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-load-shed"
 version = "0.1.0"
 dependencies = [
@@ -1724,6 +1748,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-long-accel"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-lru"
@@ -2091,6 +2119,10 @@ name = "aurora-piston-ring"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pitch-rate"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-plugins"
 version = "0.1.0"
 
@@ -2277,6 +2309,10 @@ name = "aurora-reverse-light"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ride-height"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ringbuf"
 version = "0.1.0"
 
@@ -2297,6 +2333,10 @@ name = "aurora-road-surface"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-roll-rate"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rollout"
 version = "0.1.0"
 dependencies = [
@@ -2308,6 +2348,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-rollover-det"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-roof-rack"
 version = "0.1.0"
 
 [[package]]
@@ -2443,6 +2487,10 @@ name = "aurora-serialization"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-shock-absorb"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-side-camera"
 version = "0.1.0"
 
@@ -2509,6 +2557,10 @@ name = "aurora-speed-scale"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-spring-damper"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sre"
 version = "0.1.0"
 
@@ -2534,7 +2586,15 @@ name = "aurora-starter-motor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-steer-angle"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-steer-assist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steer-column"
 version = "0.1.0"
 
 [[package]]
@@ -2566,6 +2626,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-strut-mount"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-subframe"
 version = "0.1.0"
 
 [[package]]
@@ -2698,6 +2762,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-torque-conv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tow-hitch"
 version = "0.1.0"
 
 [[package]]
@@ -2978,6 +3046,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-worksteal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-yaw-rate"
 version = "0.1.0"
 
 [[package]]
