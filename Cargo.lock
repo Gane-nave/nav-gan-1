@@ -153,6 +153,10 @@ name = "aurora-aero-coeff"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-aero-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-agnss"
 version = "0.1.0"
 dependencies = [
@@ -434,6 +438,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-arena"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-assembly-sim"
 version = "0.1.0"
 
 [[package]]
@@ -969,6 +977,10 @@ name = "aurora-clutch-wear"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-co2-track"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-coil-spring"
 version = "0.1.0"
 
@@ -1178,6 +1190,10 @@ name = "aurora-crash-sensor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-crash-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crash-struct"
 version = "0.1.0"
 
@@ -1307,6 +1323,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-dealer-net"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-debounce"
@@ -1854,6 +1874,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fan-clutch"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fatigue-sim"
 version = "0.1.0"
 
 [[package]]
@@ -3022,6 +3046,10 @@ name = "aurora-noise-map"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-noise-sim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-notifications"
 version = "0.1.0"
 dependencies = [
@@ -3171,7 +3199,15 @@ name = "aurora-ota-update"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-owner-manual"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-oxygen-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-paint-sim"
 version = "0.1.0"
 
 [[package]]
@@ -3221,6 +3257,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-parking-sensor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-parts-cat"
 version = "0.1.0"
 
 [[package]]
@@ -3464,6 +3504,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-quality-gate"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-quarter-glass"
 version = "0.1.0"
 
@@ -3524,6 +3568,10 @@ name = "aurora-rear-window"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-recall-mgr"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-receiver-drier"
 version = "0.1.0"
 
@@ -3537,6 +3585,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-recirc-flap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-recycl-plan"
 version = "0.1.0"
 
 [[package]]
@@ -3562,6 +3614,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-resale-val"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-resilience"
@@ -4160,6 +4216,10 @@ name = "aurora-sunroof-motor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-supply-chain"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-surround-view"
 version = "0.1.0"
 
@@ -4271,6 +4331,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-thermal-mgmt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-thermal-sim"
 version = "0.1.0"
 
 [[package]]
@@ -4717,6 +4781,10 @@ name = "aurora-vvt-system"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-warranty-mgr"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-washer-fluid"
 version = "0.1.0"
 
@@ -4791,6 +4859,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-weld-integ"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-weld-sim"
 version = "0.1.0"
 
 [[package]]
