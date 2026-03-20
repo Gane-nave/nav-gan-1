@@ -101,6 +101,9 @@ members = [
     "crates/aurora-migration",
     "crates/aurora-retry",
     "crates/aurora-pubsub",
+    "crates/aurora-semaphore",
+    "crates/aurora-lease",
+    "crates/aurora-debounce",
 ]
 
 [workspace.package]

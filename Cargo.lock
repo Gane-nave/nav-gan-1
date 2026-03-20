@@ -367,6 +367,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-debounce"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-deploy"
 version = "0.1.0"
 
@@ -723,6 +727,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-lease"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map"
 version = "0.1.0"
 dependencies = [
@@ -1019,6 +1027,10 @@ dependencies = [
  "serde_json",
  "thiserror",
 ]
+
+[[package]]
+name = "aurora-semaphore"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-sensors"
