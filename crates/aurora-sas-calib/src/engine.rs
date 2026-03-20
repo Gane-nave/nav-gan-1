@@ -1,38 +1,38 @@
-/// emission test: measure, compare, evaluate, report, log
-/// Phase 1380
+/// sas calib: measure, offset, center, validate, log
+/// Phase 1387
 
 #[derive(Debug, Clone)]
-pub struct EmissionTest {
+pub struct SasCalib {
     pub measure_ok: bool,
-    pub compare_ok: bool,
-    pub evaluate_ok: bool,
-    pub report_ok: bool,
+    pub offset_ok: bool,
+    pub center_ok: bool,
+    pub validate_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for EmissionTest {
+impl Default for SasCalib {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl EmissionTest {
+impl SasCalib {
     pub fn new() -> Self {
         Self {
             measure_ok: true,
-            compare_ok: true,
-            evaluate_ok: true,
-            report_ok: true,
+            offset_ok: true,
+            center_ok: true,
+            validate_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.measure_ok && self.compare_ok && self.evaluate_ok
+        self.measure_ok && self.offset_ok && self.center_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.report_ok && self.log_ok
+        self.validate_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl EmissionTest {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.measure_ok || !self.compare_ok
+        !self.measure_ok || !self.offset_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = EmissionTest::new();
+        let c = SasCalib::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = EmissionTest::new();
+        let c = SasCalib::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = EmissionTest::new();
+        let c = SasCalib::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = EmissionTest::new();
+        let c = SasCalib::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = EmissionTest::new();
+        let mut c = SasCalib::new();
         c.measure_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = EmissionTest::new();
+        let c = SasCalib::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

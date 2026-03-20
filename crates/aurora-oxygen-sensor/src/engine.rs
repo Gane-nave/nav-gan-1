@@ -1,13 +1,13 @@
-/// Oxygen sensor: lambda, wideband, heater circuit
-/// Phase 498
+/// oxygen sensor: measure, voltage, heater, age, log
+/// Phase 1382
 
 #[derive(Debug, Clone)]
 pub struct OxygenSensor {
-    pub lambda_value: f64,
+    pub measure_ok: bool,
+    pub voltage_ok: bool,
     pub heater_ok: bool,
-    pub response_ms: f64,
-    pub max_response_ms: f64,
-    pub aged: bool,
+    pub age_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for OxygenSensor {
@@ -19,32 +19,32 @@ impl Default for OxygenSensor {
 impl OxygenSensor {
     pub fn new() -> Self {
         Self {
-            lambda_value: 1.0,
+            measure_ok: true,
+            voltage_ok: true,
             heater_ok: true,
-            response_ms: 50.0,
-            max_response_ms: 150.0,
-            aged: false,
+            age_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn stoichiometric(&self) -> bool {
-        (self.lambda_value - 1.0).abs() < 0.05
+    pub fn primary_ok(&self) -> bool {
+        self.measure_ok && self.voltage_ok && self.heater_ok
     }
 
-    pub fn response_ok(&self) -> bool {
-        self.response_ms < self.max_response_ms
+    pub fn secondary_ok(&self) -> bool {
+        self.age_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.stoichiometric() && self.response_ok() && self.heater_ok && !self.aged
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_replacement(&self) -> bool {
-        self.aged || !self.heater_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.measure_ok || !self.voltage_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.aged { return 20.0; }
+        if !self.measure_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stoich() {
+    fn test_primary() {
         let c = OxygenSensor::new();
-        assert!(c.stoichiometric());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_response() {
+    fn test_secondary() {
         let c = OxygenSensor::new();
-        assert!(c.response_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_replace() {
+    fn test_no_attention() {
         let c = OxygenSensor::new();
-        assert!(!c.needs_replacement());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_aged() {
+    fn test_field_toggle() {
         let mut c = OxygenSensor::new();
-        c.aged = true;
-        assert!(c.needs_replacement());
+        c.measure_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

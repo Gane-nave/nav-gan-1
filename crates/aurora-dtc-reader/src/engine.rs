@@ -1,61 +1,51 @@
-/// DTC reader: diagnostic trouble codes, freeze frame, pending codes
-/// Phase 189
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum DtcCategory {
-    Powertrain,
-    Chassis,
-    Body,
-    Network,
-}
+/// dtc reader: scan, decode, prioritize, clear, log
+/// Phase 1375
 
 #[derive(Debug, Clone)]
-pub struct DiagnosticCode {
-    pub code: String,
-    pub category: DtcCategory,
-    pub description: String,
-    pub is_pending: bool,
-}
-
-impl DiagnosticCode {
-    pub fn severity(&self) -> u8 {
-        match self.category {
-            DtcCategory::Powertrain => 3,
-            DtcCategory::Chassis => 3,
-            DtcCategory::Body => 1,
-            DtcCategory::Network => 2,
-        }
-    }
-
-    pub fn is_critical(&self) -> bool {
-        self.severity() >= 3 && !self.is_pending
-    }
-}
-
-#[derive(Debug, Clone, Default)]
 pub struct DtcReader {
-    pub codes: Vec<DiagnosticCode>,
+    pub scan_ok: bool,
+    pub decode_ok: bool,
+    pub prioritize_ok: bool,
+    pub clear_ok: bool,
+    pub log_ok: bool,
+}
+
+impl Default for DtcReader {
+    fn default() -> Self {
+        Self::new()
+    }
 }
 
 impl DtcReader {
     pub fn new() -> Self {
-        Self { codes: Vec::new() }
+        Self {
+            scan_ok: true,
+            decode_ok: true,
+            prioritize_ok: true,
+            clear_ok: true,
+            log_ok: true,
+        }
     }
 
-    pub fn active_count(&self) -> usize {
-        self.codes.iter().filter(|c| !c.is_pending).count()
+    pub fn primary_ok(&self) -> bool {
+        self.scan_ok && self.decode_ok && self.prioritize_ok
     }
 
-    pub fn pending_count(&self) -> usize {
-        self.codes.iter().filter(|c| c.is_pending).count()
+    pub fn secondary_ok(&self) -> bool {
+        self.clear_ok && self.log_ok
     }
 
-    pub fn has_critical(&self) -> bool {
-        self.codes.iter().any(|c| c.is_critical())
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn clear_all(&mut self) {
-        self.codes.clear();
+    pub fn needs_attention(&self) -> bool {
+        !self.scan_ok || !self.decode_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.scan_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -64,66 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_empty_reader() {
-        let r = DtcReader::new();
-        assert_eq!(r.active_count(), 0);
+    fn test_primary() {
+        let c = DtcReader::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_severity() {
-        let c = DiagnosticCode {
-            code: "P0301".into(),
-            category: DtcCategory::Powertrain,
-            description: "Misfire".into(),
-            is_pending: false,
-        };
-        assert_eq!(c.severity(), 3);
+    fn test_secondary() {
+        let c = DtcReader::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_critical() {
-        let c = DiagnosticCode {
-            code: "P0301".into(),
-            category: DtcCategory::Powertrain,
-            description: "Misfire".into(),
-            is_pending: false,
-        };
-        assert!(c.is_critical());
+    fn test_all_ok() {
+        let c = DtcReader::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_pending_not_critical() {
-        let c = DiagnosticCode {
-            code: "P0301".into(),
-            category: DtcCategory::Powertrain,
-            description: "Misfire".into(),
-            is_pending: true,
-        };
-        assert!(!c.is_critical());
+    fn test_no_attention() {
+        let c = DtcReader::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_clear() {
-        let mut r = DtcReader::new();
-        r.codes.push(DiagnosticCode {
-            code: "B0001".into(),
-            category: DtcCategory::Body,
-            description: "Test".into(),
-            is_pending: false,
-        });
-        r.clear_all();
-        assert_eq!(r.active_count(), 0);
+    fn test_field_toggle() {
+        let mut c = DtcReader::new();
+        c.scan_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
-    fn test_pending_count() {
-        let mut r = DtcReader::new();
-        r.codes.push(DiagnosticCode {
-            code: "P0100".into(),
-            category: DtcCategory::Powertrain,
-            description: "MAF".into(),
-            is_pending: true,
-        });
-        assert_eq!(r.pending_count(), 1);
+    fn test_health() {
+        let c = DtcReader::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

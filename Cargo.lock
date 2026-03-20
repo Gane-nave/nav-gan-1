@@ -85,6 +85,10 @@ name = "aurora-abs-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-abs-diag"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-abs-module"
 version = "0.1.0"
 
@@ -214,6 +218,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-airbag-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-airbag-diag"
 version = "0.1.0"
 
 [[package]]
@@ -1020,6 +1028,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-carplay-ext"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-catalyst-mon"
 version = "0.1.0"
 
 [[package]]
@@ -2011,6 +2023,10 @@ name = "aurora-egr-temp"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-egr-test"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-egr-valve"
 version = "0.1.0"
 
@@ -2179,6 +2195,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-evap-system"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-evap-test"
 version = "0.1.0"
 
 [[package]]
@@ -2418,6 +2438,10 @@ name = "aurora-free-space"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-freeze-frame"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-front-camera"
 version = "0.1.0"
 
@@ -2503,6 +2527,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-tank2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-trim"
 version = "0.1.0"
 
 [[package]]
@@ -3244,6 +3272,10 @@ name = "aurora-key-fob"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-key-prog"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-keyless-entry"
 version = "0.1.0"
 
@@ -3598,6 +3630,10 @@ name = "aurora-mirrorlink"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-misfire-mon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml"
 version = "0.1.0"
 dependencies = [
@@ -3616,6 +3652,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-modal-damp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mode6-test"
 version = "0.1.0"
 
 [[package]]
@@ -4083,6 +4123,10 @@ name = "aurora-peripheral-viz"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-pid-monitor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-pillar-trim"
 version = "0.1.0"
 
@@ -4365,6 +4409,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-rcu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-readiness-mon"
 version = "0.1.0"
 
 [[package]]
@@ -4695,6 +4743,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-sandbox-exec"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sas-calib"
 version = "0.1.0"
 
 [[package]]
@@ -5510,6 +5562,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-tow-module"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-tpms-diag"
 version = "0.1.0"
 
 [[package]]

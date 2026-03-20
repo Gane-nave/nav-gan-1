@@ -1,26 +1,26 @@
-/// emission test: measure, compare, evaluate, report, log
-/// Phase 1380
+/// mode6 test: request, decode, evaluate, report, log
+/// Phase 1378
 
 #[derive(Debug, Clone)]
-pub struct EmissionTest {
-    pub measure_ok: bool,
-    pub compare_ok: bool,
+pub struct Mode6Test {
+    pub request_ok: bool,
+    pub decode_ok: bool,
     pub evaluate_ok: bool,
     pub report_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for EmissionTest {
+impl Default for Mode6Test {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl EmissionTest {
+impl Mode6Test {
     pub fn new() -> Self {
         Self {
-            measure_ok: true,
-            compare_ok: true,
+            request_ok: true,
+            decode_ok: true,
             evaluate_ok: true,
             report_ok: true,
             log_ok: true,
@@ -28,7 +28,7 @@ impl EmissionTest {
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.measure_ok && self.compare_ok && self.evaluate_ok
+        self.request_ok && self.decode_ok && self.evaluate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl EmissionTest {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.measure_ok || !self.compare_ok
+        !self.request_ok || !self.decode_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.measure_ok { return 5.0; }
+        if !self.request_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = EmissionTest::new();
+        let c = Mode6Test::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = EmissionTest::new();
+        let c = Mode6Test::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = EmissionTest::new();
+        let c = Mode6Test::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = EmissionTest::new();
+        let c = Mode6Test::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = EmissionTest::new();
-        c.measure_ok = false;
+        let mut c = Mode6Test::new();
+        c.request_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = EmissionTest::new();
+        let c = Mode6Test::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

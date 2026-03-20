@@ -1,13 +1,13 @@
-/// OBD scanner: PID read, DTC clear, freeze frame, monitor
-/// Phase 816
+/// obd scanner: connect, read, decode, clear, log
+/// Phase 1374
 
 #[derive(Debug, Clone)]
 pub struct ObdScanner {
-    pub pid_ok: bool,
-    pub dtc_ok: bool,
-    pub freeze_ok: bool,
-    pub monitor_ok: bool,
-    pub comm_ok: bool,
+    pub connect_ok: bool,
+    pub read_ok: bool,
+    pub decode_ok: bool,
+    pub clear_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for ObdScanner {
@@ -19,32 +19,32 @@ impl Default for ObdScanner {
 impl ObdScanner {
     pub fn new() -> Self {
         Self {
-            pid_ok: true,
-            dtc_ok: true,
-            freeze_ok: true,
-            monitor_ok: true,
-            comm_ok: true,
+            connect_ok: true,
+            read_ok: true,
+            decode_ok: true,
+            clear_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn reading_ok(&self) -> bool {
-        self.pid_ok && self.freeze_ok && self.comm_ok
+    pub fn primary_ok(&self) -> bool {
+        self.connect_ok && self.read_ok && self.decode_ok
     }
 
-    pub fn diagnostics_ok(&self) -> bool {
-        self.dtc_ok && self.monitor_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.clear_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.reading_ok() && self.diagnostics_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.pid_ok || !self.comm_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.connect_ok || !self.read_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.comm_ok { return 10.0; }
+        if !self.connect_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_reading() {
+    fn test_primary() {
         let c = ObdScanner::new();
-        assert!(c.reading_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_diagnostics() {
+    fn test_secondary() {
         let c = ObdScanner::new();
-        assert!(c.diagnostics_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = ObdScanner::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_comm() {
+    fn test_field_toggle() {
         let mut c = ObdScanner::new();
-        c.comm_ok = false;
-        assert!(c.needs_service());
+        c.connect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
