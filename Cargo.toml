@@ -258,6 +258,9 @@ members = [
     "crates/aurora-weather-nav",
     "crates/aurora-toll-calc",
     "crates/aurora-driver-score",
+    "crates/aurora-speed-advisor",
+    "crates/aurora-parking-nav",
+    "crates/aurora-emergency-route",
 ]
 
 [workspace.package]
