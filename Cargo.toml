@@ -586,6 +586,19 @@ members = [
     "crates/aurora-usb-hub",
     "crates/aurora-obd-port",
     "crates/aurora-flexray-bus",
+    "crates/aurora-condenser-fan",
+    "crates/aurora-thermostat-val",
+    "crates/aurora-recirc-flap",
+    "crates/aurora-defrost-duct",
+    "crates/aurora-vent-actuator",
+    "crates/aurora-temp-sensor-cab",
+    "crates/aurora-humidity-sens",
+    "crates/aurora-solar-sensor",
+    "crates/aurora-auto-climate",
+    "crates/aurora-seat-heater",
+    "crates/aurora-seat-cooler",
+    "crates/aurora-steering-heat",
+    "crates/aurora-mirror-defog",
 ]
 
 [workspace.package]

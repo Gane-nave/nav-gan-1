@@ -388,6 +388,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-auto-climate"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auto-park"
 version = "0.1.0"
 
@@ -700,6 +704,10 @@ name = "aurora-compressor-vib"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-condenser-fan"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-confidence"
 version = "0.1.0"
 dependencies = [
@@ -942,6 +950,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-defog-system"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-defrost-duct"
 version = "0.1.0"
 
 [[package]]
@@ -1617,6 +1629,10 @@ name = "aurora-hud-display"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-humidity-sens"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-hv-battery"
 version = "0.1.0"
 
@@ -2047,6 +2063,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-mirror-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mirror-defog"
 version = "0.1.0"
 
 [[package]]
@@ -2504,6 +2524,10 @@ name = "aurora-rear-camera"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-recirc-flap"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-regen-brake"
 version = "0.1.0"
 
@@ -2701,11 +2725,19 @@ name = "aurora-seat-comfort"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-seat-cooler"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-seat-ctrl"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-seat-heat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-seat-heater"
 version = "0.1.0"
 
 [[package]]
@@ -2797,6 +2829,10 @@ name = "aurora-solar-charge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-solar-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sound-dead"
 version = "0.1.0"
 
@@ -2879,6 +2915,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-steering-col"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-steering-heat"
 version = "0.1.0"
 
 [[package]]
@@ -2971,6 +3011,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-temp-sensor-cab"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-temporal"
 version = "0.1.0"
 dependencies = [
@@ -3011,6 +3055,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-thermostat"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-thermostat-val"
 version = "0.1.0"
 
 [[package]]
@@ -3237,6 +3285,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-vent-actuator"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-version-sync"
