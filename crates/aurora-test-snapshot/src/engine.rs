@@ -1,12 +1,12 @@
-/// test snapshot: capture, compare, update, approve, log
-/// Phase 1527
+/// test snapshot: capture, compare, update, review, log
+/// Phase 2103
 
 #[derive(Debug, Clone)]
 pub struct TestSnapshot {
     pub capture_ok: bool,
     pub compare_ok: bool,
     pub update_ok: bool,
-    pub approve_ok: bool,
+    pub review_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl TestSnapshot {
             capture_ok: true,
             compare_ok: true,
             update_ok: true,
-            approve_ok: true,
+            review_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl TestSnapshot {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.approve_ok && self.log_ok
+        self.review_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {

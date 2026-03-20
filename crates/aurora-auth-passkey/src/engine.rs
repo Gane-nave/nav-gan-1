@@ -1,11 +1,11 @@
-/// auth passkey: register, auth, verify, revoke, log
-/// Phase 1632
+/// auth passkey: create, authenticate, manage, revoke, log
+/// Phase 2068
 
 #[derive(Debug, Clone)]
 pub struct AuthPasskey {
-    pub register_ok: bool,
-    pub auth_ok: bool,
-    pub verify_ok: bool,
+    pub create_ok: bool,
+    pub authenticate_ok: bool,
+    pub manage_ok: bool,
     pub revoke_ok: bool,
     pub log_ok: bool,
 }
@@ -19,16 +19,16 @@ impl Default for AuthPasskey {
 impl AuthPasskey {
     pub fn new() -> Self {
         Self {
-            register_ok: true,
-            auth_ok: true,
-            verify_ok: true,
+            create_ok: true,
+            authenticate_ok: true,
+            manage_ok: true,
             revoke_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.register_ok && self.auth_ok && self.verify_ok
+        self.create_ok && self.authenticate_ok && self.manage_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl AuthPasskey {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.register_ok || !self.auth_ok
+        !self.create_ok || !self.authenticate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.register_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = AuthPasskey::new();
-        c.register_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

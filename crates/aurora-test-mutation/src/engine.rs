@@ -1,11 +1,11 @@
-/// test mutation: mutate, run, detect, report, log
-/// Phase 1532
+/// test mutation: mutate, run, score, report, log
+/// Phase 2106
 
 #[derive(Debug, Clone)]
 pub struct TestMutation {
     pub mutate_ok: bool,
     pub run_ok: bool,
-    pub detect_ok: bool,
+    pub score_ok: bool,
     pub report_ok: bool,
     pub log_ok: bool,
 }
@@ -21,14 +21,14 @@ impl TestMutation {
         Self {
             mutate_ok: true,
             run_ok: true,
-            detect_ok: true,
+            score_ok: true,
             report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.mutate_ok && self.run_ok && self.detect_ok
+        self.mutate_ok && self.run_ok && self.score_ok
     }
 
     pub fn secondary_ok(&self) -> bool {

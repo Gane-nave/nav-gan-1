@@ -1,11 +1,11 @@
-/// auth kerberos: auth, ticket, renew, validate, log
-/// Phase 1630
+/// auth kerberos: init, tgt, service, validate, log
+/// Phase 2065
 
 #[derive(Debug, Clone)]
 pub struct AuthKerberos {
-    pub auth_ok: bool,
-    pub ticket_ok: bool,
-    pub renew_ok: bool,
+    pub init_ok: bool,
+    pub tgt_ok: bool,
+    pub service_ok: bool,
     pub validate_ok: bool,
     pub log_ok: bool,
 }
@@ -19,16 +19,16 @@ impl Default for AuthKerberos {
 impl AuthKerberos {
     pub fn new() -> Self {
         Self {
-            auth_ok: true,
-            ticket_ok: true,
-            renew_ok: true,
+            init_ok: true,
+            tgt_ok: true,
+            service_ok: true,
             validate_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.auth_ok && self.ticket_ok && self.renew_ok
+        self.init_ok && self.tgt_ok && self.service_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl AuthKerberos {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.auth_ok || !self.ticket_ok
+        !self.init_ok || !self.tgt_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.auth_ok {
+        if !self.init_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = AuthKerberos::new();
-        c.auth_ok = false;
+        c.init_ok = false;
         assert!(c.needs_attention());
     }
 

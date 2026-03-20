@@ -696,11 +696,35 @@ name = "aurora-auth-apikey"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auth-apikey2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-basic"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auth-biometric"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-auth-certificate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-consent"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-delegate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-federation"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-impersonate"
 version = "0.1.0"
 
 [[package]]
@@ -716,7 +740,15 @@ name = "aurora-auth-ldap"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auth-ldap2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auth-mfa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-mfa2"
 version = "0.1.0"
 
 [[package]]
@@ -732,6 +764,14 @@ name = "aurora-auth-passkey"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auth-policy2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-radius"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auth-rbac"
 version = "0.1.0"
 
@@ -744,11 +784,27 @@ name = "aurora-auth-scim"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auth-scope"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auth-session"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-auth-session2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auth-sso"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-sso2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-token2"
 version = "0.1.0"
 
 [[package]]
@@ -757,6 +813,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-auth-webauthn"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-x509"
 version = "0.1.0"
 
 [[package]]
@@ -7085,6 +7145,78 @@ name = "aurora-seatbelt-tens"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sec-abac"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-acl2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-audit2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-cert2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-hash2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-hmac2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-hsm"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-ids"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-jwt2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-kms"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-oauth3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-oidc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-pki"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-rbac2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-saml"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-scan2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-vault2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sec-waf"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-secure-enclave"
 version = "0.1.0"
 
@@ -7736,11 +7868,19 @@ name = "aurora-test-chaos"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-chaos2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-contract"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-test-coverage"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-coverage2"
 version = "0.1.0"
 
 [[package]]
@@ -7753,6 +7893,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-test-fixture"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-fixture2"
 version = "0.1.0"
 
 [[package]]
@@ -7770,6 +7914,10 @@ name = "aurora-test-fuzz"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-fuzz2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-golden"
 version = "0.1.0"
 
@@ -7778,11 +7926,23 @@ name = "aurora-test-integ"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-integ2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-load"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-load2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-mock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-mock2"
 version = "0.1.0"
 
 [[package]]
@@ -7791,6 +7951,14 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-test-perf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-perf2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-prop2"
 version = "0.1.0"
 
 [[package]]
@@ -7806,7 +7974,15 @@ name = "aurora-test-stress"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-stub"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-unit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-unit2"
 version = "0.1.0"
 
 [[package]]
@@ -8342,6 +8518,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-valet-park"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-address"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-binary"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-charset"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-csv3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-currency"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-date"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-email2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-geo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-ip2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-json3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-locale"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-mime"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-number"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-phone"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-string"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-url2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-xml3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-valid-yaml3"
 version = "0.1.0"
 
 [[package]]

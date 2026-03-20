@@ -1,12 +1,12 @@
-/// test e2e: setup, navigate, interact, verify, log
-/// Phase 1520
+/// test e2e2: setup, run, validate, report, log
+/// Phase 2096
 
 #[derive(Debug, Clone)]
 pub struct TestE2e2 {
     pub setup_ok: bool,
-    pub navigate_ok: bool,
-    pub interact_ok: bool,
-    pub verify_ok: bool,
+    pub run_ok: bool,
+    pub validate_ok: bool,
+    pub report_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl TestE2e2 {
     pub fn new() -> Self {
         Self {
             setup_ok: true,
-            navigate_ok: true,
-            interact_ok: true,
-            verify_ok: true,
+            run_ok: true,
+            validate_ok: true,
+            report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.setup_ok && self.navigate_ok && self.interact_ok
+        self.setup_ok && self.run_ok && self.validate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.verify_ok && self.log_ok
+        self.report_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl TestE2e2 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.setup_ok || !self.navigate_ok
+        !self.setup_ok || !self.run_ok
     }
 
     pub fn health_score(&self) -> f64 {

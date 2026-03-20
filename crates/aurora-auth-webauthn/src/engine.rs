@@ -1,12 +1,12 @@
-/// auth webauthn: register, auth, verify, revoke, log
-/// Phase 1641
+/// auth webauthn: register, authenticate, verify, list, log
+/// Phase 2067
 
 #[derive(Debug, Clone)]
 pub struct AuthWebauthn {
     pub register_ok: bool,
-    pub auth_ok: bool,
+    pub authenticate_ok: bool,
     pub verify_ok: bool,
-    pub revoke_ok: bool,
+    pub list_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl AuthWebauthn {
     pub fn new() -> Self {
         Self {
             register_ok: true,
-            auth_ok: true,
+            authenticate_ok: true,
             verify_ok: true,
-            revoke_ok: true,
+            list_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.register_ok && self.auth_ok && self.verify_ok
+        self.register_ok && self.authenticate_ok && self.verify_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.revoke_ok && self.log_ok
+        self.list_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl AuthWebauthn {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.register_ok || !self.auth_ok
+        !self.register_ok || !self.authenticate_ok
     }
 
     pub fn health_score(&self) -> f64 {

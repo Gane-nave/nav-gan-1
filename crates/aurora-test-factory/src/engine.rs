@@ -1,11 +1,11 @@
-/// test factory: define, build, override, sequence, log
-/// Phase 1530
+/// test factory: define, build, create, sequence, log
+/// Phase 2111
 
 #[derive(Debug, Clone)]
 pub struct TestFactory {
     pub define_ok: bool,
     pub build_ok: bool,
-    pub override_ok: bool,
+    pub create_ok: bool,
     pub sequence_ok: bool,
     pub log_ok: bool,
 }
@@ -21,14 +21,14 @@ impl TestFactory {
         Self {
             define_ok: true,
             build_ok: true,
-            override_ok: true,
+            create_ok: true,
             sequence_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.build_ok && self.override_ok
+        self.define_ok && self.build_ok && self.create_ok
     }
 
     pub fn secondary_ok(&self) -> bool {

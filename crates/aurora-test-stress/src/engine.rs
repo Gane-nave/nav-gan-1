@@ -1,12 +1,12 @@
-/// test stress: saturate, monitor, degrade, recover, log
-/// Phase 1523
+/// test stress: saturate, measure, recover, report, log
+/// Phase 2099
 
 #[derive(Debug, Clone)]
 pub struct TestStress {
     pub saturate_ok: bool,
-    pub monitor_ok: bool,
-    pub degrade_ok: bool,
+    pub measure_ok: bool,
     pub recover_ok: bool,
+    pub report_ok: bool,
     pub log_ok: bool,
 }
 
@@ -20,19 +20,19 @@ impl TestStress {
     pub fn new() -> Self {
         Self {
             saturate_ok: true,
-            monitor_ok: true,
-            degrade_ok: true,
+            measure_ok: true,
             recover_ok: true,
+            report_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.saturate_ok && self.monitor_ok && self.degrade_ok
+        self.saturate_ok && self.measure_ok && self.recover_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.recover_ok && self.log_ok
+        self.report_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl TestStress {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.saturate_ok || !self.monitor_ok
+        !self.saturate_ok || !self.measure_ok
     }
 
     pub fn health_score(&self) -> f64 {

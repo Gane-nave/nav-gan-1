@@ -1,12 +1,12 @@
-/// test contract: define, verify, publish, validate, log
-/// Phase 1526
+/// test contract: define, verify, publish, consume, log
+/// Phase 2105
 
 #[derive(Debug, Clone)]
 pub struct TestContract {
     pub define_ok: bool,
     pub verify_ok: bool,
     pub publish_ok: bool,
-    pub validate_ok: bool,
+    pub consume_ok: bool,
     pub log_ok: bool,
 }
 
@@ -22,7 +22,7 @@ impl TestContract {
             define_ok: true,
             verify_ok: true,
             publish_ok: true,
-            validate_ok: true,
+            consume_ok: true,
             log_ok: true,
         }
     }
@@ -32,7 +32,7 @@ impl TestContract {
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.validate_ok && self.log_ok
+        self.consume_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
