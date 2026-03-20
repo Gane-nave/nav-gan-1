@@ -1348,6 +1348,54 @@ name = "aurora-compliance-chk"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-comply-ccpa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-fedramp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-fmvss"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-gdpr"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-hipaa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-iso"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-ncap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-pci"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-rde"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-soc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-unece"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-comply-wltp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-compression"
 version = "0.1.0"
 
@@ -3887,6 +3935,46 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ml-data"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-deploy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-experiment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-feature"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-infer"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-model"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-monitor2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-pipeline2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-registry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-train"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-moat"
 version = "0.1.0"
 
@@ -4620,6 +4708,10 @@ name = "aurora-radar-proc"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-radar-proc2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-radar-unit"
 version = "0.1.0"
 
@@ -4980,6 +5072,30 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-s3-client"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-alert2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-audit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-gate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-log"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-mgr"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-safety-train2"
 version = "0.1.0"
 
 [[package]]
@@ -5652,6 +5768,34 @@ name = "aurora-terrain-map"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-test-bench2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-chaos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-contract"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-coverage"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-e2e2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-factory"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-fixture"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-test-framework"
 version = "0.1.0"
 dependencies = [
@@ -5660,6 +5804,50 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-test-fuzz"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-golden"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-integ"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-load"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-mock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-mutation"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-perf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-property"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-snapshot"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-stress"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-test-unit"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-theft-alarm"
@@ -6062,6 +6250,78 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ux-animation"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-carousel"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-dropdown"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-feedback"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-filter"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-gesture2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-layout"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-modal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-onboard"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-paginate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-search"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-sort"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-theme"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-toast"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-tooltip"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-transition"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-tutorial"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ux-widget"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-v2g"
 version = "0.1.0"
 
@@ -6195,6 +6455,30 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-viscous-coup"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-calib"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-depth"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-flow"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-segment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-vision-slam"
 version = "0.1.0"
 
 [[package]]

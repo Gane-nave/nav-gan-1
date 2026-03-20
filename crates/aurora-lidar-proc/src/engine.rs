@@ -1,13 +1,13 @@
-/// LiDAR processing: scan, filter, cluster, classify, fuse
-/// Phase 1105
+/// lidar proc: capture, filter, segment, classify, log
+/// Phase 1480
 
 #[derive(Debug, Clone)]
 pub struct LidarProc {
-    pub scan_ok: bool,
+    pub capture_ok: bool,
     pub filter_ok: bool,
-    pub cluster_ok: bool,
+    pub segment_ok: bool,
     pub classify_ok: bool,
-    pub fuse_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for LidarProc {
@@ -19,32 +19,32 @@ impl Default for LidarProc {
 impl LidarProc {
     pub fn new() -> Self {
         Self {
-            scan_ok: true,
+            capture_ok: true,
             filter_ok: true,
-            cluster_ok: true,
+            segment_ok: true,
             classify_ok: true,
-            fuse_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn processing_ok(&self) -> bool {
-        self.scan_ok && self.filter_ok && self.cluster_ok
+    pub fn primary_ok(&self) -> bool {
+        self.capture_ok && self.filter_ok && self.segment_ok
     }
 
-    pub fn understanding_ok(&self) -> bool {
-        self.classify_ok && self.fuse_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.classify_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.processing_ok() && self.understanding_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_calibrate(&self) -> bool {
-        !self.scan_ok || !self.filter_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.capture_ok || !self.filter_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.scan_ok { return 5.0; }
+        if !self.capture_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_processing() {
+    fn test_primary() {
         let c = LidarProc::new();
-        assert!(c.processing_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_understanding() {
+    fn test_secondary() {
         let c = LidarProc::new();
-        assert!(c.understanding_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_calibrate() {
+    fn test_no_attention() {
         let c = LidarProc::new();
-        assert!(!c.needs_calibrate());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_scan() {
+    fn test_field_toggle() {
         let mut c = LidarProc::new();
-        c.scan_ok = false;
-        assert!(c.needs_calibrate());
+        c.capture_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
