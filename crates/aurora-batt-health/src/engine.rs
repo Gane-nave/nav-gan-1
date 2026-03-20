@@ -1,38 +1,38 @@
-/// solar panel: track, harvest, convert, store, log
-/// Phase 1364
+/// batt health: capacity, resistance, cycle, predict, log
+/// Phase 1358
 
 #[derive(Debug, Clone)]
-pub struct SolarPanel {
-    pub track_ok: bool,
-    pub harvest_ok: bool,
-    pub convert_ok: bool,
-    pub store_ok: bool,
+pub struct BattHealth {
+    pub capacity_ok: bool,
+    pub resistance_ok: bool,
+    pub cycle_ok: bool,
+    pub predict_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for SolarPanel {
+impl Default for BattHealth {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SolarPanel {
+impl BattHealth {
     pub fn new() -> Self {
         Self {
-            track_ok: true,
-            harvest_ok: true,
-            convert_ok: true,
-            store_ok: true,
+            capacity_ok: true,
+            resistance_ok: true,
+            cycle_ok: true,
+            predict_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.track_ok && self.harvest_ok && self.convert_ok
+        self.capacity_ok && self.resistance_ok && self.cycle_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.store_ok && self.log_ok
+        self.predict_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SolarPanel {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.track_ok || !self.harvest_ok
+        !self.capacity_ok || !self.resistance_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.track_ok { return 5.0; }
+        if !self.capacity_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SolarPanel::new();
+        let c = BattHealth::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SolarPanel::new();
+        let c = BattHealth::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SolarPanel::new();
+        let c = BattHealth::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SolarPanel::new();
+        let c = BattHealth::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SolarPanel::new();
-        c.track_ok = false;
+        let mut c = BattHealth::new();
+        c.capacity_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SolarPanel::new();
+        let c = BattHealth::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -105,6 +105,10 @@ name = "aurora-ac-compressor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ac-convert"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ac-line"
 version = "0.1.0"
 
@@ -619,6 +623,22 @@ name = "aurora-base-coat"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-batt-health"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-batt-manage"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-batt-pack"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-batt-thermal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-mgmt"
 version = "0.1.0"
 
@@ -1080,6 +1100,14 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-charger-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charger-dc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charger-onboard"
 version = "0.1.0"
 
 [[package]]
@@ -1606,6 +1634,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-data-vault"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dc-convert"
 version = "0.1.0"
 
 [[package]]
@@ -2669,6 +2701,10 @@ name = "aurora-ground-fault"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ground-net"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ground-point"
 version = "0.1.0"
 
@@ -3352,6 +3388,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-load-level"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-load-manage"
 version = "0.1.0"
 
 [[package]]
@@ -4115,6 +4155,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-power-dist"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-power-fluid"
 version = "0.1.0"
 
@@ -4384,11 +4428,19 @@ name = "aurora-regen-brake"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-regen-brake2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-reinforce"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-relay-board"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-relay-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -4803,6 +4855,10 @@ name = "aurora-service-interval"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-shield-emi"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-shift-fork"
 version = "0.1.0"
 
@@ -4859,6 +4915,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-slam-engine"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sleep-mode"
 version = "0.1.0"
 
 [[package]]
@@ -5161,6 +5221,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-supply-chain"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-surge-protect"
 version = "0.1.0"
 
 [[package]]

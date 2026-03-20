@@ -1,13 +1,13 @@
-/// Fuse box: relay, fuse, terminal, cover
-/// Phase 688
+/// fuse box: monitor, protect, isolate, reset, log
+/// Phase 1367
 
 #[derive(Debug, Clone)]
 pub struct FuseBox {
-    pub relay_ok: bool,
-    pub fuse_ok: bool,
-    pub terminal_ok: bool,
-    pub cover_ok: bool,
-    pub corrosion_free: bool,
+    pub monitor_ok: bool,
+    pub protect_ok: bool,
+    pub isolate_ok: bool,
+    pub reset_ok: bool,
+    pub log_ok: bool,
 }
 
 impl Default for FuseBox {
@@ -19,32 +19,32 @@ impl Default for FuseBox {
 impl FuseBox {
     pub fn new() -> Self {
         Self {
-            relay_ok: true,
-            fuse_ok: true,
-            terminal_ok: true,
-            cover_ok: true,
-            corrosion_free: true,
+            monitor_ok: true,
+            protect_ok: true,
+            isolate_ok: true,
+            reset_ok: true,
+            log_ok: true,
         }
     }
 
-    pub fn protection_ok(&self) -> bool {
-        self.fuse_ok && self.relay_ok
+    pub fn primary_ok(&self) -> bool {
+        self.monitor_ok && self.protect_ok && self.isolate_ok
     }
 
-    pub fn condition_ok(&self) -> bool {
-        self.terminal_ok && self.corrosion_free && self.cover_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.reset_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.protection_ok() && self.condition_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_service(&self) -> bool {
-        !self.fuse_ok || !self.corrosion_free
+    pub fn needs_attention(&self) -> bool {
+        !self.monitor_ok || !self.protect_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.fuse_ok { return 10.0; }
+        if !self.monitor_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_protection() {
+    fn test_primary() {
         let c = FuseBox::new();
-        assert!(c.protection_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_condition() {
+    fn test_secondary() {
         let c = FuseBox::new();
-        assert!(c.condition_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_service() {
+    fn test_no_attention() {
         let c = FuseBox::new();
-        assert!(!c.needs_service());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_fuse() {
+    fn test_field_toggle() {
         let mut c = FuseBox::new();
-        c.fuse_ok = false;
-        assert!(c.needs_service());
+        c.monitor_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

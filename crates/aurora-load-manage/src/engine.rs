@@ -1,38 +1,38 @@
-/// solar panel: track, harvest, convert, store, log
-/// Phase 1364
+/// load manage: prioritize, shed, restore, balance, log
+/// Phase 1372
 
 #[derive(Debug, Clone)]
-pub struct SolarPanel {
-    pub track_ok: bool,
-    pub harvest_ok: bool,
-    pub convert_ok: bool,
-    pub store_ok: bool,
+pub struct LoadManage {
+    pub prioritize_ok: bool,
+    pub shed_ok: bool,
+    pub restore_ok: bool,
+    pub balance_ok: bool,
     pub log_ok: bool,
 }
 
-impl Default for SolarPanel {
+impl Default for LoadManage {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SolarPanel {
+impl LoadManage {
     pub fn new() -> Self {
         Self {
-            track_ok: true,
-            harvest_ok: true,
-            convert_ok: true,
-            store_ok: true,
+            prioritize_ok: true,
+            shed_ok: true,
+            restore_ok: true,
+            balance_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.track_ok && self.harvest_ok && self.convert_ok
+        self.prioritize_ok && self.shed_ok && self.restore_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.store_ok && self.log_ok
+        self.balance_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SolarPanel {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.track_ok || !self.harvest_ok
+        !self.prioritize_ok || !self.shed_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.track_ok { return 5.0; }
+        if !self.prioritize_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SolarPanel::new();
+        let c = LoadManage::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SolarPanel::new();
+        let c = LoadManage::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SolarPanel::new();
+        let c = LoadManage::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SolarPanel::new();
+        let c = LoadManage::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SolarPanel::new();
-        c.track_ok = false;
+        let mut c = LoadManage::new();
+        c.prioritize_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SolarPanel::new();
+        let c = LoadManage::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
