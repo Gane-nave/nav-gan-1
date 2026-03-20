@@ -723,6 +723,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-driver-score"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dual-freq"
 version = "0.1.0"
 dependencies = [
@@ -1914,6 +1918,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-toll-calc"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-topology"
 version = "0.1.0"
 dependencies = [
@@ -2063,6 +2071,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-weather-nav"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-web"

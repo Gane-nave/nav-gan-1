@@ -255,6 +255,9 @@ members = [
     "crates/aurora-terrain",
     "crates/aurora-fuel-opt",
     "crates/aurora-road-surface",
+    "crates/aurora-weather-nav",
+    "crates/aurora-toll-calc",
+    "crates/aurora-driver-score",
 ]
 
 [workspace.package]
