@@ -107,6 +107,9 @@ members = [
     "crates/aurora-bloom",
     "crates/aurora-lru",
     "crates/aurora-ringbuf",
+    "crates/aurora-skiplist",
+    "crates/aurora-bitset",
+    "crates/aurora-arena",
 ]
 
 [workspace.package]

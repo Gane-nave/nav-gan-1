@@ -186,6 +186,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-arena"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-audit"
 version = "0.1.0"
 
@@ -210,10 +214,6 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
-
-[[package]]
-name = "aurora-backpressure"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-bench"
@@ -249,7 +249,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-bloom"
+name = "aurora-bitset"
 version = "0.1.0"
 
 [[package]]
@@ -268,10 +268,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-circuit"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-city"
@@ -296,10 +292,6 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-compression"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-confidence"
@@ -369,10 +361,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-debounce"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-deploy"
@@ -583,10 +571,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-geo"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-gnss"
 version = "0.1.0"
 dependencies = [
@@ -603,14 +587,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-health"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-histogram"
 version = "0.1.0"
 
 [[package]]
@@ -731,14 +707,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-lease"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lru"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-map"
 version = "0.1.0"
 dependencies = [
@@ -790,10 +758,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-migration"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-ml"
@@ -931,14 +895,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-pubsub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-quota"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
@@ -954,14 +910,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-retry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ringbuf"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-risk"
@@ -1041,10 +989,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-semaphore"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-sensors"
 version = "0.1.0"
 dependencies = [
@@ -1060,10 +1004,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-serialization"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
@@ -1071,7 +1011,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-snapshot"
+name = "aurora-skiplist"
 version = "0.1.0"
 
 [[package]]
@@ -1107,10 +1047,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-streaming"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-structured-log"
 version = "0.1.0"
 
 [[package]]
@@ -1150,10 +1086,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-tracing-dist"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-traffic"
@@ -1225,10 +1157,6 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
-
-[[package]]
-name = "aurora-websocket"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-wellness"
