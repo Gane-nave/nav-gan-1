@@ -532,6 +532,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-fsm"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fusion"
 version = "0.1.0"
 dependencies = [
@@ -579,6 +583,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hashring"
 version = "0.1.0"
 
 [[package]]
@@ -685,6 +693,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-interval"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-lane"
