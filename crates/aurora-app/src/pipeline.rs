@@ -114,8 +114,19 @@ impl NavigationPipeline {
     }
 
     /// Check if external calls are allowed (circuit breaker).
+    ///
+    /// Read-only check — does NOT trigger Open→HalfOpen recovery.
+    /// Use [`try_external_call`] before actually making a request.
     pub fn can_call_external(&self) -> bool {
         self.services.read().can_call_external()
+    }
+
+    /// Attempt an external call through the circuit breaker.
+    ///
+    /// Triggers state transitions (Open→HalfOpen after cooldown) and returns
+    /// whether the call is permitted.
+    pub fn try_external_call(&self) -> bool {
+        self.services.write().try_external_call()
     }
 
     /// Returns subsystem status summary.

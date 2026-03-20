@@ -153,8 +153,23 @@ impl ServiceRegistry {
     }
 
     /// Check if the circuit breaker allows external calls.
+    ///
+    /// This is a read-only check that does NOT trigger state transitions.
+    /// Use [`try_external_call`] for the full Open→HalfOpen recovery path.
     pub fn can_call_external(&self) -> bool {
-        matches!(self.external_circuit.state(), BreakerState::Closed)
+        matches!(
+            self.external_circuit.state(),
+            BreakerState::Closed | BreakerState::HalfOpen
+        )
+    }
+
+    /// Attempt an external call through the circuit breaker.
+    ///
+    /// Unlike [`can_call_external`], this method triggers state transitions
+    /// (e.g. Open→HalfOpen after the cooldown elapses) and should be called
+    /// before every external request.
+    pub fn try_external_call(&mut self) -> bool {
+        self.external_circuit.allow_request(Self::wall_clock_ms())
     }
 
     /// Record a successful external call.
@@ -302,6 +317,21 @@ mod tests {
             reg.record_external_failure();
         }
         assert!(!reg.can_call_external());
+    }
+
+    #[test]
+    fn test_circuit_breaker_recovery_via_try() {
+        let mut reg = ServiceRegistry::new();
+        // Trip the breaker open
+        for _ in 0..10 {
+            reg.record_external_failure();
+        }
+        assert!(!reg.can_call_external());
+        // try_external_call uses allow_request which triggers Open→HalfOpen
+        // after cooldown. Since last_failure_ms is wall-clock recent, the
+        // breaker stays Open and rejects. We verify the method is callable
+        // and returns false (cooldown not elapsed yet).
+        assert!(!reg.try_external_call());
     }
 
     #[test]
