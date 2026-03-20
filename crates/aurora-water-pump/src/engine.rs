@@ -1,14 +1,13 @@
-/// Water pump monitoring: flow rate, bearing condition, impeller wear
-/// Phase 219
+/// Water pump: impeller, bearing, seal, flow rate
+/// Phase 511
 
 #[derive(Debug, Clone)]
 pub struct WaterPump {
-    pub flow_rate_lpm: f64,
-    pub bearing_noise_db: f64,
-    pub impeller_wear_pct: f64,
-    pub leak_detected: bool,
-    pub electric: bool,
-    pub rpm: f64,
+    pub flow_lpm: f64,
+    pub min_flow_lpm: f64,
+    pub bearing_ok: bool,
+    pub seal_ok: bool,
+    pub impeller_ok: bool,
 }
 
 impl Default for WaterPump {
@@ -20,46 +19,33 @@ impl Default for WaterPump {
 impl WaterPump {
     pub fn new() -> Self {
         Self {
-            flow_rate_lpm: 60.0,
-            bearing_noise_db: 15.0,
-            impeller_wear_pct: 10.0,
-            leak_detected: false,
-            electric: false,
-            rpm: 3000.0,
+            flow_lpm: 80.0,
+            min_flow_lpm: 40.0,
+            bearing_ok: true,
+            seal_ok: true,
+            impeller_ok: true,
         }
     }
 
     pub fn flow_ok(&self) -> bool {
-        self.flow_rate_lpm > 20.0
+        self.flow_lpm > self.min_flow_lpm
     }
 
-    pub fn bearing_ok(&self) -> bool {
-        self.bearing_noise_db < 40.0
+    pub fn mechanical_ok(&self) -> bool {
+        self.bearing_ok && self.seal_ok && self.impeller_ok
     }
 
-    pub fn impeller_ok(&self) -> bool {
-        self.impeller_wear_pct < 50.0
+    pub fn all_ok(&self) -> bool {
+        self.flow_ok() && self.mechanical_ok()
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.leak_detected || !self.bearing_ok() || self.impeller_wear_pct > 70.0
+        !self.bearing_ok || !self.seal_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if self.leak_detected {
-            score -= 40.0;
-        }
-        if !self.bearing_ok() {
-            score -= 25.0;
-        }
-        if !self.impeller_ok() {
-            score -= 20.0;
-        }
-        if !self.flow_ok() {
-            score -= 15.0;
-        }
-        score.max(0.0)
+        if !self.bearing_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -68,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_flow_ok() {
-        let w = WaterPump::new();
-        assert!(w.flow_ok());
+    fn test_flow() {
+        let c = WaterPump::new();
+        assert!(c.flow_ok());
     }
 
     #[test]
-    fn test_bearing_ok() {
-        let w = WaterPump::new();
-        assert!(w.bearing_ok());
+    fn test_mechanical() {
+        let c = WaterPump::new();
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_impeller_ok() {
-        let w = WaterPump::new();
-        assert!(w.impeller_ok());
+    fn test_all_ok() {
+        let c = WaterPump::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_replacement() {
-        let w = WaterPump::new();
-        assert!(!w.needs_replacement());
+    fn test_no_replace() {
+        let c = WaterPump::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_leak() {
-        let mut w = WaterPump::new();
-        w.leak_detected = true;
-        assert!(w.needs_replacement());
+    fn test_bearing() {
+        let mut c = WaterPump::new();
+        c.bearing_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let w = WaterPump::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = WaterPump::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -520,6 +520,10 @@ name = "aurora-bms-cell"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-body-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-body-fit"
 version = "0.1.0"
 
@@ -1397,6 +1401,10 @@ name = "aurora-fan-balance"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fan-clutch"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-features"
 version = "0.1.0"
 
@@ -1479,6 +1487,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-rail"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuse-box"
 version = "0.1.0"
 
 [[package]]
@@ -1613,6 +1625,10 @@ name = "aurora-grille-shut"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ground-point"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-haptic"
 version = "0.1.0"
 
@@ -1743,6 +1759,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-idle-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ignition-coil"
 version = "0.1.0"
 
 [[package]]
@@ -2341,6 +2361,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-oil-cooler"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-oil-monitor"
 version = "0.1.0"
 
@@ -2613,6 +2637,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-radar-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-radiator"
 version = "0.1.0"
 
 [[package]]
@@ -3606,6 +3634,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-wiper-mech"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wiring-loom"
 version = "0.1.0"
 
 [[package]]

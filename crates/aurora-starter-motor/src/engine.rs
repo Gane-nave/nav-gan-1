@@ -1,13 +1,13 @@
-/// Starter motor monitoring: cranking speed, battery draw, start reliability
-/// Phase 174
+/// Starter motor: cranking speed, solenoid, bendix
+/// Phase 517
 
 #[derive(Debug, Clone)]
 pub struct StarterMotor {
     pub cranking_rpm: f64,
-    pub draw_amps: f64,
-    pub start_time_ms: u64,
-    pub attempts: u32,
-    pub successful_starts: u32,
+    pub min_cranking_rpm: f64,
+    pub solenoid_ok: bool,
+    pub bendix_ok: bool,
+    pub brush_ok: bool,
 }
 
 impl Default for StarterMotor {
@@ -20,41 +20,32 @@ impl StarterMotor {
     pub fn new() -> Self {
         Self {
             cranking_rpm: 200.0,
-            draw_amps: 150.0,
-            start_time_ms: 800,
-            attempts: 100,
-            successful_starts: 100,
+            min_cranking_rpm: 100.0,
+            solenoid_ok: true,
+            bendix_ok: true,
+            brush_ok: true,
         }
     }
 
     pub fn cranking_ok(&self) -> bool {
-        self.cranking_rpm > 150.0
+        self.cranking_rpm > self.min_cranking_rpm
     }
 
-    pub fn draw_normal(&self) -> bool {
-        self.draw_amps < 250.0
+    pub fn mechanical_ok(&self) -> bool {
+        self.solenoid_ok && self.bendix_ok && self.brush_ok
     }
 
-    pub fn start_reliability_pct(&self) -> f64 {
-        if self.attempts == 0 {
-            return 100.0;
-        }
-        self.successful_starts as f64 / self.attempts as f64 * 100.0
+    pub fn all_ok(&self) -> bool {
+        self.cranking_ok() && self.mechanical_ok()
     }
 
-    pub fn quick_start(&self) -> bool {
-        self.start_time_ms < 1500
+    pub fn needs_replacement(&self) -> bool {
+        !self.solenoid_ok || !self.brush_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let crank_s = if self.cranking_ok() { 30.0 } else { 10.0 };
-        let draw_s = if self.draw_normal() { 30.0 } else { 10.0 };
-        let rel_s = self.start_reliability_pct() / 100.0 * 40.0;
-        crank_s + draw_s + rel_s
-    }
-
-    pub fn needs_attention(&self) -> bool {
-        !self.cranking_ok() || !self.draw_normal() || self.start_reliability_pct() < 90.0
+        if !self.solenoid_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -63,45 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_cranking_ok() {
-        let s = StarterMotor::new();
-        assert!(s.cranking_ok());
+    fn test_cranking() {
+        let c = StarterMotor::new();
+        assert!(c.cranking_ok());
     }
 
     #[test]
-    fn test_draw_normal() {
-        let s = StarterMotor::new();
-        assert!(s.draw_normal());
+    fn test_mechanical() {
+        let c = StarterMotor::new();
+        assert!(c.mechanical_ok());
     }
 
     #[test]
-    fn test_reliability() {
-        let s = StarterMotor::new();
-        assert!((s.start_reliability_pct() - 100.0).abs() < 0.1);
+    fn test_all_ok() {
+        let c = StarterMotor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_quick_start() {
-        let s = StarterMotor::new();
-        assert!(s.quick_start());
+    fn test_no_replace() {
+        let c = StarterMotor::new();
+        assert!(!c.needs_replacement());
+    }
+
+    #[test]
+    fn test_solenoid() {
+        let mut c = StarterMotor::new();
+        c.solenoid_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let s = StarterMotor::new();
-        assert!(s.health_score() > 90.0);
-    }
-
-    #[test]
-    fn test_no_attention() {
-        let s = StarterMotor::new();
-        assert!(!s.needs_attention());
-    }
-
-    #[test]
-    fn test_low_reliability() {
-        let mut s = StarterMotor::new();
-        s.successful_starts = 80;
-        assert!(s.needs_attention());
+        let c = StarterMotor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

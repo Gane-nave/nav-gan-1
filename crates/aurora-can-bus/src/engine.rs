@@ -1,39 +1,13 @@
-/// CAN bus communication: message parsing, filtering, bus monitoring
-/// Phase 187
-
-#[derive(Debug, Clone)]
-pub struct CanMessage {
-    pub id: u32,
-    pub data: Vec<u8>,
-    pub timestamp_us: u64,
-    pub extended: bool,
-}
-
-impl CanMessage {
-    pub fn new(id: u32, data: Vec<u8>) -> Self {
-        Self {
-            id,
-            data,
-            timestamp_us: 0,
-            extended: false,
-        }
-    }
-
-    pub fn data_len(&self) -> usize {
-        self.data.len()
-    }
-
-    pub fn is_standard(&self) -> bool {
-        !self.extended && self.id <= 0x7FF
-    }
-}
+/// CAN bus: communication, termination, error frames
+/// Phase 524
 
 #[derive(Debug, Clone)]
 pub struct CanBus {
-    pub bus_speed_kbps: u32,
-    pub messages_received: u64,
-    pub errors: u64,
+    pub baud_rate_kbps: u32,
+    pub error_count: u32,
+    pub termination_ok: bool,
     pub bus_load_pct: f64,
+    pub shielding_ok: bool,
 }
 
 impl Default for CanBus {
@@ -45,26 +19,33 @@ impl Default for CanBus {
 impl CanBus {
     pub fn new() -> Self {
         Self {
-            bus_speed_kbps: 500,
-            messages_received: 0,
-            errors: 0,
-            bus_load_pct: 0.0,
+            baud_rate_kbps: 500,
+            error_count: 0,
+            termination_ok: true,
+            bus_load_pct: 35.0,
+            shielding_ok: true,
         }
     }
 
-    pub fn error_rate(&self) -> f64 {
-        if self.messages_received == 0 {
-            return 0.0;
-        }
-        self.errors as f64 / self.messages_received as f64
+    pub fn no_errors(&self) -> bool {
+        self.error_count == 0
     }
 
-    pub fn bus_healthy(&self) -> bool {
-        self.error_rate() < 0.01 && self.bus_load_pct < 80.0
+    pub fn load_ok(&self) -> bool {
+        self.bus_load_pct < 70.0
     }
 
-    pub fn is_high_speed(&self) -> bool {
-        self.bus_speed_kbps >= 500
+    pub fn all_ok(&self) -> bool {
+        self.no_errors() && self.load_ok() && self.termination_ok && self.shielding_ok
+    }
+
+    pub fn needs_service(&self) -> bool {
+        self.error_count > 10 || !self.termination_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if self.error_count > 10 { return 20.0; }
+        100.0
     }
 }
 
@@ -73,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_message() {
-        let m = CanMessage::new(0x100, vec![1, 2, 3]);
-        assert_eq!(m.data_len(), 3);
+    fn test_no_errors() {
+        let c = CanBus::new();
+        assert!(c.no_errors());
     }
 
     #[test]
-    fn test_standard() {
-        let m = CanMessage::new(0x100, vec![]);
-        assert!(m.is_standard());
+    fn test_load() {
+        let c = CanBus::new();
+        assert!(c.load_ok());
     }
 
     #[test]
-    fn test_bus_healthy() {
-        let b = CanBus::new();
-        assert!(b.bus_healthy());
+    fn test_all_ok() {
+        let c = CanBus::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_error_rate_zero() {
-        let b = CanBus::new();
-        assert!((b.error_rate()).abs() < 0.01);
+    fn test_no_service() {
+        let c = CanBus::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_high_speed() {
-        let b = CanBus::new();
-        assert!(b.is_high_speed());
+    fn test_errors() {
+        let mut c = CanBus::new();
+        c.error_count = 15;
+        assert!(c.needs_service());
     }
 
     #[test]
-    fn test_bus_overloaded() {
-        let mut b = CanBus::new();
-        b.bus_load_pct = 90.0;
-        assert!(!b.bus_healthy());
+    fn test_health() {
+        let c = CanBus::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

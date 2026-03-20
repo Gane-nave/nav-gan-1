@@ -1,13 +1,13 @@
-/// Immobilizer: transponder authentication, engine lock, anti-theft
-/// Phase 254
+/// Immobilizer: transponder, antenna, ECU authorization
+/// Phase 527
 
 #[derive(Debug, Clone)]
 pub struct Immobilizer {
-    pub authenticated: bool,
-    pub engine_locked: bool,
-    pub transponder_detected: bool,
-    pub tamper_detected: bool,
-    pub system_armed: bool,
+    pub key_detected: bool,
+    pub transponder_ok: bool,
+    pub antenna_ok: bool,
+    pub authorized: bool,
+    pub ecu_ok: bool,
 }
 
 impl Default for Immobilizer {
@@ -19,37 +19,32 @@ impl Default for Immobilizer {
 impl Immobilizer {
     pub fn new() -> Self {
         Self {
-            authenticated: true,
-            engine_locked: false,
-            transponder_detected: true,
-            tamper_detected: false,
-            system_armed: true,
+            key_detected: true,
+            transponder_ok: true,
+            antenna_ok: true,
+            authorized: true,
+            ecu_ok: true,
         }
     }
 
-    pub fn can_start(&self) -> bool {
-        self.authenticated && self.transponder_detected && !self.engine_locked
+    pub fn key_ok(&self) -> bool {
+        self.key_detected && self.transponder_ok
     }
 
-    pub fn is_secure(&self) -> bool {
-        self.system_armed && !self.tamper_detected
+    pub fn comm_ok(&self) -> bool {
+        self.antenna_ok && self.ecu_ok
     }
 
-    pub fn theft_attempt(&self) -> bool {
-        self.tamper_detected && self.system_armed
+    pub fn all_ok(&self) -> bool {
+        self.key_ok() && self.comm_ok() && self.authorized
     }
 
-    pub fn should_lock(&self) -> bool {
-        !self.transponder_detected && self.system_armed
+    pub fn needs_service(&self) -> bool {
+        !self.ecu_ok || !self.antenna_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.tamper_detected {
-            return 20.0;
-        }
-        if !self.system_armed {
-            return 50.0;
-        }
+        if !self.ecu_ok { return 10.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_can_start() {
-        let i = Immobilizer::new();
-        assert!(i.can_start());
+    fn test_key() {
+        let c = Immobilizer::new();
+        assert!(c.key_ok());
     }
 
     #[test]
-    fn test_secure() {
-        let i = Immobilizer::new();
-        assert!(i.is_secure());
+    fn test_comm() {
+        let c = Immobilizer::new();
+        assert!(c.comm_ok());
     }
 
     #[test]
-    fn test_no_theft() {
-        let i = Immobilizer::new();
-        assert!(!i.theft_attempt());
+    fn test_all_ok() {
+        let c = Immobilizer::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_lock() {
-        let i = Immobilizer::new();
-        assert!(!i.should_lock());
+    fn test_no_service() {
+        let c = Immobilizer::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_tamper() {
-        let mut i = Immobilizer::new();
-        i.tamper_detected = true;
-        assert!(i.theft_attempt());
+    fn test_ecu_fail() {
+        let mut c = Immobilizer::new();
+        c.ecu_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let i = Immobilizer::new();
-        assert!((i.health_score() - 100.0).abs() < 0.1);
+        let c = Immobilizer::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

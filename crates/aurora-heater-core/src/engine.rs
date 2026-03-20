@@ -1,13 +1,13 @@
-/// Heater core: coolant flow, cabin heating, blend door position
-/// Phase 237
+/// Heater core: cabin heat, coolant flow, blend door
+/// Phase 513
 
 #[derive(Debug, Clone)]
 pub struct HeaterCore {
     pub inlet_temp_c: f64,
     pub outlet_temp_c: f64,
-    pub flow_rate_lpm: f64,
-    pub blend_door_pct: f64,
-    pub leak_detected: bool,
+    pub flow_ok: bool,
+    pub leak_free: bool,
+    pub blend_door_ok: bool,
 }
 
 impl Default for HeaterCore {
@@ -21,40 +21,31 @@ impl HeaterCore {
         Self {
             inlet_temp_c: 85.0,
             outlet_temp_c: 70.0,
-            flow_rate_lpm: 10.0,
-            blend_door_pct: 50.0,
-            leak_detected: false,
+            flow_ok: true,
+            leak_free: true,
+            blend_door_ok: true,
         }
     }
 
-    pub fn heat_output_c(&self) -> f64 {
+    pub fn heat_transfer(&self) -> f64 {
         self.inlet_temp_c - self.outlet_temp_c
     }
 
-    pub fn flow_ok(&self) -> bool {
-        self.flow_rate_lpm > 3.0
+    pub fn heating_ok(&self) -> bool {
+        self.heat_transfer() > 5.0 && self.flow_ok
     }
 
-    pub fn heating_ok(&self) -> bool {
-        self.heat_output_c() > 10.0 && self.flow_ok()
+    pub fn all_ok(&self) -> bool {
+        self.heating_ok() && self.leak_free && self.blend_door_ok
     }
 
     pub fn needs_replacement(&self) -> bool {
-        self.leak_detected || !self.flow_ok()
+        !self.leak_free
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.leak_detected {
-            return 10.0;
-        }
-        let mut score: f64 = 100.0;
-        if !self.flow_ok() {
-            score -= 40.0;
-        }
-        if !self.heating_ok() {
-            score -= 20.0;
-        }
-        score.max(0.0)
+        if !self.leak_free { return 5.0; }
+        100.0
     }
 }
 
@@ -63,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_heat_output() {
-        let h = HeaterCore::new();
-        assert!((h.heat_output_c() - 15.0).abs() < 0.1);
+    fn test_transfer() {
+        let c = HeaterCore::new();
+        assert!(c.heat_transfer() > 10.0);
     }
 
     #[test]
-    fn test_flow_ok() {
-        let h = HeaterCore::new();
-        assert!(h.flow_ok());
+    fn test_heating() {
+        let c = HeaterCore::new();
+        assert!(c.heating_ok());
     }
 
     #[test]
-    fn test_heating_ok() {
-        let h = HeaterCore::new();
-        assert!(h.heating_ok());
+    fn test_all_ok() {
+        let c = HeaterCore::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_replacement() {
-        let h = HeaterCore::new();
-        assert!(!h.needs_replacement());
+    fn test_no_replace() {
+        let c = HeaterCore::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
     fn test_leak() {
-        let mut h = HeaterCore::new();
-        h.leak_detected = true;
-        assert!(h.needs_replacement());
+        let mut c = HeaterCore::new();
+        c.leak_free = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let h = HeaterCore::new();
-        assert!((h.health_score() - 100.0).abs() < 0.1);
+        let c = HeaterCore::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

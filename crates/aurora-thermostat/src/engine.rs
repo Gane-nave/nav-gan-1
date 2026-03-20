@@ -1,13 +1,13 @@
-/// Thermostat: coolant temperature regulation, opening/closing, wax element
-/// Phase 321
+/// Thermostat: wax pellet, opening temp, bypass
+/// Phase 512
 
 #[derive(Debug, Clone)]
 pub struct Thermostat {
-    pub coolant_temp_c: f64,
     pub opening_temp_c: f64,
-    pub position_pct: f64,
-    pub stuck_open: bool,
-    pub stuck_closed: bool,
+    pub current_temp_c: f64,
+    pub is_open: bool,
+    pub stuck: bool,
+    pub bypass_ok: bool,
 }
 
 impl Default for Thermostat {
@@ -19,37 +19,32 @@ impl Default for Thermostat {
 impl Thermostat {
     pub fn new() -> Self {
         Self {
-            coolant_temp_c: 85.0,
             opening_temp_c: 82.0,
-            position_pct: 50.0,
-            stuck_open: false,
-            stuck_closed: false,
+            current_temp_c: 90.0,
+            is_open: true,
+            stuck: false,
+            bypass_ok: true,
         }
-    }
-
-    pub fn is_open(&self) -> bool {
-        self.position_pct > 10.0
     }
 
     pub fn should_be_open(&self) -> bool {
-        self.coolant_temp_c >= self.opening_temp_c
+        self.current_temp_c > self.opening_temp_c
     }
 
-    pub fn functioning(&self) -> bool {
-        !self.stuck_open && !self.stuck_closed
+    pub fn position_correct(&self) -> bool {
+        self.should_be_open() == self.is_open
     }
 
-    pub fn temp_ok(&self) -> bool {
-        self.coolant_temp_c > 70.0 && self.coolant_temp_c < 110.0
+    pub fn all_ok(&self) -> bool {
+        self.position_correct() && !self.stuck && self.bypass_ok
+    }
+
+    pub fn needs_replacement(&self) -> bool {
+        self.stuck
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.stuck_closed {
-            return 0.0;
-        }
-        if self.stuck_open {
-            return 30.0;
-        }
+        if self.stuck { return 10.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_open() {
-        let t = Thermostat::new();
-        assert!(t.is_open());
-    }
-
-    #[test]
     fn test_should_open() {
-        let t = Thermostat::new();
-        assert!(t.should_be_open());
+        let c = Thermostat::new();
+        assert!(c.should_be_open());
     }
 
     #[test]
-    fn test_functioning() {
-        let t = Thermostat::new();
-        assert!(t.functioning());
+    fn test_position() {
+        let c = Thermostat::new();
+        assert!(c.position_correct());
     }
 
     #[test]
-    fn test_temp() {
-        let t = Thermostat::new();
-        assert!(t.temp_ok());
+    fn test_all_ok() {
+        let c = Thermostat::new();
+        assert!(c.all_ok());
+    }
+
+    #[test]
+    fn test_no_replace() {
+        let c = Thermostat::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
     fn test_stuck() {
-        let mut t = Thermostat::new();
-        t.stuck_closed = true;
-        assert!(!t.functioning());
+        let mut c = Thermostat::new();
+        c.stuck = true;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let t = Thermostat::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = Thermostat::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
