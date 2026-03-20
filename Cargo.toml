@@ -95,6 +95,9 @@ members = [
     "crates/aurora-circuit",
     "crates/aurora-serialization",
     "crates/aurora-health",
+    "crates/aurora-backpressure",
+    "crates/aurora-snapshot",
+    "crates/aurora-quota",
 ]
 
 [workspace.package]
