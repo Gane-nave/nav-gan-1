@@ -1,38 +1,38 @@
-/// sunroof ctrl: open, close, tilt, vent, shade
-/// Phase 1189
+/// speech synth: load, generate, queue, play, stop
+/// Phase 1181
 
 #[derive(Debug, Clone)]
-pub struct SunroofCtrl {
-    pub open_ok: bool,
-    pub close_ok: bool,
-    pub tilt_ok: bool,
-    pub vent_ok: bool,
-    pub shade_ok: bool,
+pub struct SpeechSynth {
+    pub load_ok: bool,
+    pub generate_ok: bool,
+    pub queue_ok: bool,
+    pub play_ok: bool,
+    pub stop_ok: bool,
 }
 
-impl Default for SunroofCtrl {
+impl Default for SpeechSynth {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SunroofCtrl {
+impl SpeechSynth {
     pub fn new() -> Self {
         Self {
-            open_ok: true,
-            close_ok: true,
-            tilt_ok: true,
-            vent_ok: true,
-            shade_ok: true,
+            load_ok: true,
+            generate_ok: true,
+            queue_ok: true,
+            play_ok: true,
+            stop_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.open_ok && self.close_ok && self.tilt_ok
+        self.load_ok && self.generate_ok && self.queue_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.vent_ok && self.shade_ok
+        self.play_ok && self.stop_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SunroofCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.open_ok || !self.close_ok
+        !self.load_ok || !self.generate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.open_ok { return 5.0; }
+        if !self.load_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SunroofCtrl::new();
+        let c = SpeechSynth::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SunroofCtrl::new();
+        let c = SpeechSynth::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SunroofCtrl::new();
+        let c = SpeechSynth::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SunroofCtrl::new();
+        let c = SpeechSynth::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SunroofCtrl::new();
-        c.open_ok = false;
+        let mut c = SpeechSynth::new();
+        c.load_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SunroofCtrl::new();
+        let c = SpeechSynth::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

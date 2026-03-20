@@ -1,61 +1,50 @@
-/// Ambient light sensor: auto headlights, dashboard dimming, tunnel detection
-/// Phase 232
+/// ambient light: color, brightness, zone, animate, sync
+/// Phase 1185
 
 #[derive(Debug, Clone)]
-pub struct AmbientLightSensor {
-    pub lux: f64,
-    pub auto_lights_on: bool,
-    pub dashboard_brightness_pct: f64,
-    pub tunnel_detected: bool,
-    pub sensor_ok: bool,
+pub struct AmbientLight {
+    pub color_ok: bool,
+    pub brightness_ok: bool,
+    pub zone_ok: bool,
+    pub animate_ok: bool,
+    pub sync_ok: bool,
 }
 
-impl Default for AmbientLightSensor {
+impl Default for AmbientLight {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl AmbientLightSensor {
+impl AmbientLight {
     pub fn new() -> Self {
         Self {
-            lux: 500.0,
-            auto_lights_on: false,
-            dashboard_brightness_pct: 80.0,
-            tunnel_detected: false,
-            sensor_ok: true,
+            color_ok: true,
+            brightness_ok: true,
+            zone_ok: true,
+            animate_ok: true,
+            sync_ok: true,
         }
     }
 
-    pub fn is_dark(&self) -> bool {
-        self.lux < 50.0
+    pub fn primary_ok(&self) -> bool {
+        self.color_ok && self.brightness_ok && self.zone_ok
     }
 
-    pub fn is_twilight(&self) -> bool {
-        self.lux >= 50.0 && self.lux < 200.0
+    pub fn secondary_ok(&self) -> bool {
+        self.animate_ok && self.sync_ok
     }
 
-    pub fn headlights_needed(&self) -> bool {
-        self.is_dark() || self.tunnel_detected
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn recommended_brightness(&self) -> f64 {
-        if self.lux < 10.0 {
-            return 20.0;
-        }
-        if self.lux < 100.0 {
-            return 50.0;
-        }
-        if self.lux < 1000.0 {
-            return 80.0;
-        }
-        100.0
+    pub fn needs_attention(&self) -> bool {
+        !self.color_ok || !self.brightness_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok {
-            return 0.0;
-        }
+        if !self.color_ok { return 5.0; }
         100.0
     }
 }
@@ -65,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_dark() {
-        let a = AmbientLightSensor::new();
-        assert!(!a.is_dark());
+    fn test_primary() {
+        let c = AmbientLight::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_not_twilight() {
-        let a = AmbientLightSensor::new();
-        assert!(!a.is_twilight());
+    fn test_secondary() {
+        let c = AmbientLight::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_no_headlights() {
-        let a = AmbientLightSensor::new();
-        assert!(!a.headlights_needed());
+    fn test_all_ok() {
+        let c = AmbientLight::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_brightness() {
-        let a = AmbientLightSensor::new();
-        assert!((a.recommended_brightness() - 80.0).abs() < 0.1);
+    fn test_no_attention() {
+        let c = AmbientLight::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_dark() {
-        let mut a = AmbientLightSensor::new();
-        a.lux = 5.0;
-        assert!(a.headlights_needed());
+    fn test_field_toggle() {
+        let mut c = AmbientLight::new();
+        c.color_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let a = AmbientLightSensor::new();
-        assert!((a.health_score() - 100.0).abs() < 0.1);
+        let c = AmbientLight::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

@@ -1,38 +1,38 @@
-/// sunroof ctrl: open, close, tilt, vent, shade
-/// Phase 1189
+/// cluster disp: speed, rpm, fuel, temp, warning
+/// Phase 1184
 
 #[derive(Debug, Clone)]
-pub struct SunroofCtrl {
-    pub open_ok: bool,
-    pub close_ok: bool,
-    pub tilt_ok: bool,
-    pub vent_ok: bool,
-    pub shade_ok: bool,
+pub struct ClusterDisp {
+    pub speed_ok: bool,
+    pub rpm_ok: bool,
+    pub fuel_ok: bool,
+    pub temp_ok: bool,
+    pub warning_ok: bool,
 }
 
-impl Default for SunroofCtrl {
+impl Default for ClusterDisp {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SunroofCtrl {
+impl ClusterDisp {
     pub fn new() -> Self {
         Self {
-            open_ok: true,
-            close_ok: true,
-            tilt_ok: true,
-            vent_ok: true,
-            shade_ok: true,
+            speed_ok: true,
+            rpm_ok: true,
+            fuel_ok: true,
+            temp_ok: true,
+            warning_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.open_ok && self.close_ok && self.tilt_ok
+        self.speed_ok && self.rpm_ok && self.fuel_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.vent_ok && self.shade_ok
+        self.temp_ok && self.warning_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SunroofCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.open_ok || !self.close_ok
+        !self.speed_ok || !self.rpm_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.open_ok { return 5.0; }
+        if !self.speed_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SunroofCtrl::new();
+        let c = ClusterDisp::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SunroofCtrl::new();
+        let c = ClusterDisp::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SunroofCtrl::new();
+        let c = ClusterDisp::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SunroofCtrl::new();
+        let c = ClusterDisp::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SunroofCtrl::new();
-        c.open_ok = false;
+        let mut c = ClusterDisp::new();
+        c.speed_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SunroofCtrl::new();
+        let c = ClusterDisp::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

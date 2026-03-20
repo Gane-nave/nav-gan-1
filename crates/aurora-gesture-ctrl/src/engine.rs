@@ -1,125 +1,51 @@
-/// Gesture control: hand tracking, swipe recognition, air gestures
-/// Phase 147
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum GestureType {
-    SwipeLeft,
-    SwipeRight,
-    SwipeUp,
-    SwipeDown,
-    Pinch,
-    Spread,
-    Tap,
-    Wave,
-    Point,
-}
-
-impl GestureType {
-    pub fn is_navigation(&self) -> bool {
-        matches!(self, GestureType::SwipeLeft | GestureType::SwipeRight)
-    }
-
-    pub fn is_volume(&self) -> bool {
-        matches!(self, GestureType::SwipeUp | GestureType::SwipeDown)
-    }
-
-    pub fn is_zoom(&self) -> bool {
-        matches!(self, GestureType::Pinch | GestureType::Spread)
-    }
-
-    pub fn complexity(&self) -> u8 {
-        match self {
-            GestureType::Tap => 1,
-            GestureType::SwipeLeft | GestureType::SwipeRight => 2,
-            GestureType::SwipeUp | GestureType::SwipeDown => 2,
-            GestureType::Wave => 3,
-            GestureType::Point => 3,
-            GestureType::Pinch | GestureType::Spread => 4,
-        }
-    }
-}
+/// gesture ctrl: detect, classify, interpret, execute, feedback
+/// Phase 1182
 
 #[derive(Debug, Clone)]
-pub struct GestureEvent {
-    pub gesture: GestureType,
-    pub confidence: f64,
-    pub duration_ms: u64,
+pub struct GestureCtrl {
+    pub detect_ok: bool,
+    pub classify_ok: bool,
+    pub interpret_ok: bool,
+    pub execute_ok: bool,
+    pub feedback_ok: bool,
 }
 
-impl GestureEvent {
-    pub fn new(gesture: GestureType, confidence: f64, duration_ms: u64) -> Self {
-        Self {
-            gesture,
-            confidence,
-            duration_ms,
-        }
-    }
-
-    pub fn is_valid(&self) -> bool {
-        self.confidence > 0.7
-    }
-
-    pub fn is_deliberate(&self) -> bool {
-        self.duration_ms > 200 && self.confidence > 0.8
-    }
-
-    pub fn action_label(&self) -> &'static str {
-        match self.gesture {
-            GestureType::SwipeLeft => "previous",
-            GestureType::SwipeRight => "next",
-            GestureType::SwipeUp => "volume_up",
-            GestureType::SwipeDown => "volume_down",
-            GestureType::Pinch => "zoom_out",
-            GestureType::Spread => "zoom_in",
-            GestureType::Tap => "select",
-            GestureType::Wave => "dismiss",
-            GestureType::Point => "point",
-        }
-    }
-}
-
-#[derive(Debug, Clone)]
-pub struct GestureSystem {
-    pub enabled: bool,
-    pub sensitivity: f64,
-    pub min_confidence: f64,
-    pub recent_gestures: Vec<GestureEvent>,
-}
-
-impl Default for GestureSystem {
+impl Default for GestureCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl GestureSystem {
+impl GestureCtrl {
     pub fn new() -> Self {
         Self {
-            enabled: true,
-            sensitivity: 0.8,
-            min_confidence: 0.7,
-            recent_gestures: Vec::new(),
+            detect_ok: true,
+            classify_ok: true,
+            interpret_ok: true,
+            execute_ok: true,
+            feedback_ok: true,
         }
     }
 
-    pub fn process(&mut self, event: GestureEvent) -> bool {
-        if !self.enabled || event.confidence < self.min_confidence {
-            return false;
-        }
-        self.recent_gestures.push(event);
-        true
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.classify_ok && self.interpret_ok
     }
 
-    pub fn last_action(&self) -> Option<&'static str> {
-        self.recent_gestures.last().map(|g| g.action_label())
+    pub fn secondary_ok(&self) -> bool {
+        self.execute_ok && self.feedback_ok
     }
 
-    pub fn gesture_count(&self) -> usize {
-        self.recent_gestures.len()
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn clear_history(&mut self) {
-        self.recent_gestures.clear();
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.classify_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.detect_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -128,69 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_is_navigation() {
-        assert!(GestureType::SwipeLeft.is_navigation());
-        assert!(!GestureType::Tap.is_navigation());
+    fn test_primary() {
+        let c = GestureCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_is_volume() {
-        assert!(GestureType::SwipeUp.is_volume());
+    fn test_secondary() {
+        let c = GestureCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_is_zoom() {
-        assert!(GestureType::Pinch.is_zoom());
+    fn test_all_ok() {
+        let c = GestureCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_complexity() {
-        assert!(GestureType::Pinch.complexity() > GestureType::Tap.complexity());
+    fn test_no_attention() {
+        let c = GestureCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_event_valid() {
-        let e = GestureEvent::new(GestureType::SwipeRight, 0.9, 300);
-        assert!(e.is_valid());
+    fn test_field_toggle() {
+        let mut c = GestureCtrl::new();
+        c.detect_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
-    fn test_event_invalid() {
-        let e = GestureEvent::new(GestureType::Tap, 0.3, 100);
-        assert!(!e.is_valid());
-    }
-
-    #[test]
-    fn test_deliberate() {
-        let e = GestureEvent::new(GestureType::Wave, 0.95, 500);
-        assert!(e.is_deliberate());
-    }
-
-    #[test]
-    fn test_action_label() {
-        let e = GestureEvent::new(GestureType::SwipeLeft, 0.9, 200);
-        assert_eq!(e.action_label(), "previous");
-    }
-
-    #[test]
-    fn test_system_process() {
-        let mut s = GestureSystem::new();
-        let accepted = s.process(GestureEvent::new(GestureType::Tap, 0.9, 150));
-        assert!(accepted);
-        assert_eq!(s.gesture_count(), 1);
-    }
-
-    #[test]
-    fn test_system_reject() {
-        let mut s = GestureSystem::new();
-        let accepted = s.process(GestureEvent::new(GestureType::Tap, 0.3, 100));
-        assert!(!accepted);
-    }
-
-    #[test]
-    fn test_last_action() {
-        let mut s = GestureSystem::new();
-        s.process(GestureEvent::new(GestureType::SwipeRight, 0.9, 300));
-        assert_eq!(s.last_action(), Some("next"));
+    fn test_health() {
+        let c = GestureCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

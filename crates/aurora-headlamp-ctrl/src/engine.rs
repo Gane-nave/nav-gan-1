@@ -1,38 +1,38 @@
-/// sunroof ctrl: open, close, tilt, vent, shade
-/// Phase 1189
+/// headlamp ctrl: low, high, auto, adaptive, drl
+/// Phase 1193
 
 #[derive(Debug, Clone)]
-pub struct SunroofCtrl {
-    pub open_ok: bool,
-    pub close_ok: bool,
-    pub tilt_ok: bool,
-    pub vent_ok: bool,
-    pub shade_ok: bool,
+pub struct HeadlampCtrl {
+    pub low_ok: bool,
+    pub high_ok: bool,
+    pub auto_ok: bool,
+    pub adaptive_ok: bool,
+    pub drl_ok: bool,
 }
 
-impl Default for SunroofCtrl {
+impl Default for HeadlampCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SunroofCtrl {
+impl HeadlampCtrl {
     pub fn new() -> Self {
         Self {
-            open_ok: true,
-            close_ok: true,
-            tilt_ok: true,
-            vent_ok: true,
-            shade_ok: true,
+            low_ok: true,
+            high_ok: true,
+            auto_ok: true,
+            adaptive_ok: true,
+            drl_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.open_ok && self.close_ok && self.tilt_ok
+        self.low_ok && self.high_ok && self.auto_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.vent_ok && self.shade_ok
+        self.adaptive_ok && self.drl_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SunroofCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.open_ok || !self.close_ok
+        !self.low_ok || !self.high_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.open_ok { return 5.0; }
+        if !self.low_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SunroofCtrl::new();
+        let c = HeadlampCtrl::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SunroofCtrl::new();
+        let c = HeadlampCtrl::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SunroofCtrl::new();
+        let c = HeadlampCtrl::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SunroofCtrl::new();
+        let c = HeadlampCtrl::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SunroofCtrl::new();
-        c.open_ok = false;
+        let mut c = HeadlampCtrl::new();
+        c.low_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SunroofCtrl::new();
+        let c = HeadlampCtrl::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

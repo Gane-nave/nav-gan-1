@@ -1,38 +1,38 @@
-/// sunroof ctrl: open, close, tilt, vent, shade
-/// Phase 1189
+/// radio tuner: scan, tune, seek, store, recall
+/// Phase 1177
 
 #[derive(Debug, Clone)]
-pub struct SunroofCtrl {
-    pub open_ok: bool,
-    pub close_ok: bool,
-    pub tilt_ok: bool,
-    pub vent_ok: bool,
-    pub shade_ok: bool,
+pub struct RadioTuner {
+    pub scan_ok: bool,
+    pub tune_ok: bool,
+    pub seek_ok: bool,
+    pub store_ok: bool,
+    pub recall_ok: bool,
 }
 
-impl Default for SunroofCtrl {
+impl Default for RadioTuner {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SunroofCtrl {
+impl RadioTuner {
     pub fn new() -> Self {
         Self {
-            open_ok: true,
-            close_ok: true,
-            tilt_ok: true,
-            vent_ok: true,
-            shade_ok: true,
+            scan_ok: true,
+            tune_ok: true,
+            seek_ok: true,
+            store_ok: true,
+            recall_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.open_ok && self.close_ok && self.tilt_ok
+        self.scan_ok && self.tune_ok && self.seek_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.vent_ok && self.shade_ok
+        self.store_ok && self.recall_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl SunroofCtrl {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.open_ok || !self.close_ok
+        !self.scan_ok || !self.tune_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.open_ok { return 5.0; }
+        if !self.scan_ok { return 5.0; }
         100.0
     }
 }
@@ -55,38 +55,38 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = SunroofCtrl::new();
+        let c = RadioTuner::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = SunroofCtrl::new();
+        let c = RadioTuner::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = SunroofCtrl::new();
+        let c = RadioTuner::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = SunroofCtrl::new();
+        let c = RadioTuner::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = SunroofCtrl::new();
-        c.open_ok = false;
+        let mut c = RadioTuner::new();
+        c.scan_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = SunroofCtrl::new();
+        let c = RadioTuner::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

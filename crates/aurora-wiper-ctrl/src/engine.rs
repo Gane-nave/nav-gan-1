@@ -1,59 +1,50 @@
-/// Wiper control: intermittent timing, speed stages, park position
-/// Phase 240
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum WiperSpeed {
-    Off,
-    Intermittent,
-    Low,
-    High,
-}
+/// wiper ctrl: low, high, interval, wash, park
+/// Phase 1192
 
 #[derive(Debug, Clone)]
-pub struct WiperController {
-    pub speed: WiperSpeed,
-    pub intermittent_delay_s: f64,
-    pub parked: bool,
-    pub motor_current_a: f64,
-    pub motor_ok: bool,
+pub struct WiperCtrl {
+    pub low_ok: bool,
+    pub high_ok: bool,
+    pub interval_ok: bool,
+    pub wash_ok: bool,
+    pub park_ok: bool,
 }
 
-impl Default for WiperController {
+impl Default for WiperCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl WiperController {
+impl WiperCtrl {
     pub fn new() -> Self {
         Self {
-            speed: WiperSpeed::Off,
-            intermittent_delay_s: 5.0,
-            parked: true,
-            motor_current_a: 0.0,
-            motor_ok: true,
+            low_ok: true,
+            high_ok: true,
+            interval_ok: true,
+            wash_ok: true,
+            park_ok: true,
         }
     }
 
-    pub fn is_running(&self) -> bool {
-        self.speed != WiperSpeed::Off
+    pub fn primary_ok(&self) -> bool {
+        self.low_ok && self.high_ok && self.interval_ok
     }
 
-    pub fn current_ok(&self) -> bool {
-        self.motor_current_a < 15.0
+    pub fn secondary_ok(&self) -> bool {
+        self.wash_ok && self.park_ok
     }
 
-    pub fn motor_stalled(&self) -> bool {
-        self.is_running() && self.motor_current_a > 20.0
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
+    }
+
+    pub fn needs_attention(&self) -> bool {
+        !self.low_ok || !self.high_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motor_ok {
-            return 0.0;
-        }
-        if self.motor_stalled() {
-            return 20.0;
-        }
+        if !self.low_ok { return 5.0; }
         100.0
     }
 }
@@ -63,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_off() {
-        let w = WiperController::new();
-        assert!(!w.is_running());
+    fn test_primary() {
+        let c = WiperCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_parked() {
-        let w = WiperController::new();
-        assert!(w.parked);
+    fn test_secondary() {
+        let c = WiperCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_current_ok() {
-        let w = WiperController::new();
-        assert!(w.current_ok());
+    fn test_all_ok() {
+        let c = WiperCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_stalled() {
-        let w = WiperController::new();
-        assert!(!w.motor_stalled());
+    fn test_no_attention() {
+        let c = WiperCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_running() {
-        let mut w = WiperController::new();
-        w.speed = WiperSpeed::Low;
-        assert!(w.is_running());
+    fn test_field_toggle() {
+        let mut c = WiperCtrl::new();
+        c.low_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let w = WiperController::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = WiperCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

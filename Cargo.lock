@@ -816,6 +816,10 @@ name = "aurora-bsw-sys"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bt-audio"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-btree"
 version = "0.1.0"
 
@@ -1082,6 +1086,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-cloud-sync"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cluster-disp"
 version = "0.1.0"
 
 [[package]]
@@ -2561,6 +2569,10 @@ name = "aurora-headlamp-aim"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-headlamp-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-headlight"
 version = "0.1.0"
 
@@ -2649,6 +2661,10 @@ name = "aurora-horn"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-horn-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-horn-module"
 version = "0.1.0"
 
@@ -2686,6 +2702,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-hud-display"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-hud-render"
 version = "0.1.0"
 
 [[package]]
@@ -3259,6 +3279,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-matter-bridge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-media-player"
 version = "0.1.0"
 
 [[package]]
@@ -4024,6 +4048,10 @@ name = "aurora-radiator-mount"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-radio-tuner"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rain-sensor"
 version = "0.1.0"
 
@@ -4634,6 +4662,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-speech-rec"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-speech-synth"
 version = "0.1.0"
 
 [[package]]
@@ -5294,6 +5326,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-usb-hub"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-usb-media"
 version = "0.1.0"
 
 [[package]]

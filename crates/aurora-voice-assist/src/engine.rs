@@ -1,13 +1,13 @@
-/// Voice assistant: wake word, NLU, TTS, command, context
-/// Phase 896
+/// voice assist: wake, listen, parse, respond, learn
+/// Phase 1180
 
 #[derive(Debug, Clone)]
 pub struct VoiceAssist {
     pub wake_ok: bool,
-    pub nlu_ok: bool,
-    pub tts_ok: bool,
-    pub command_ok: bool,
-    pub context_ok: bool,
+    pub listen_ok: bool,
+    pub parse_ok: bool,
+    pub respond_ok: bool,
+    pub learn_ok: bool,
 }
 
 impl Default for VoiceAssist {
@@ -20,31 +20,31 @@ impl VoiceAssist {
     pub fn new() -> Self {
         Self {
             wake_ok: true,
-            nlu_ok: true,
-            tts_ok: true,
-            command_ok: true,
-            context_ok: true,
+            listen_ok: true,
+            parse_ok: true,
+            respond_ok: true,
+            learn_ok: true,
         }
     }
 
-    pub fn recognition_ok(&self) -> bool {
-        self.wake_ok && self.nlu_ok && self.context_ok
+    pub fn primary_ok(&self) -> bool {
+        self.wake_ok && self.listen_ok && self.parse_ok
     }
 
-    pub fn output_ok(&self) -> bool {
-        self.tts_ok && self.command_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.respond_ok && self.learn_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.recognition_ok() && self.output_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_update(&self) -> bool {
-        !self.nlu_ok || !self.wake_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.wake_ok || !self.listen_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.nlu_ok { return 10.0; }
+        if !self.wake_ok { return 5.0; }
         100.0
     }
 }
@@ -54,15 +54,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_recognition() {
+    fn test_primary() {
         let c = VoiceAssist::new();
-        assert!(c.recognition_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_output() {
+    fn test_secondary() {
         let c = VoiceAssist::new();
-        assert!(c.output_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -72,16 +72,16 @@ mod tests {
     }
 
     #[test]
-    fn test_no_update() {
+    fn test_no_attention() {
         let c = VoiceAssist::new();
-        assert!(!c.needs_update());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_nlu() {
+    fn test_field_toggle() {
         let mut c = VoiceAssist::new();
-        c.nlu_ok = false;
-        assert!(c.needs_update());
+        c.wake_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]

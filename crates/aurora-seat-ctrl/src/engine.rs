@@ -1,57 +1,50 @@
-/// Seat control: position memory, adjustment motors, occupancy sensing
-/// Phase 256
+/// seat ctrl: position, heat, cool, massage, memory
+/// Phase 1186
 
 #[derive(Debug, Clone)]
-pub struct SeatController {
-    pub position_forward_mm: f64,
-    pub recline_deg: f64,
-    pub height_mm: f64,
-    pub memory_slots: u8,
-    pub occupied: bool,
-    pub motors_ok: bool,
+pub struct SeatCtrl {
+    pub position_ok: bool,
+    pub heat_ok: bool,
+    pub cool_ok: bool,
+    pub massage_ok: bool,
+    pub memory_ok: bool,
 }
 
-impl Default for SeatController {
+impl Default for SeatCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl SeatController {
+impl SeatCtrl {
     pub fn new() -> Self {
         Self {
-            position_forward_mm: 200.0,
-            recline_deg: 15.0,
-            height_mm: 50.0,
-            memory_slots: 3,
-            occupied: true,
-            motors_ok: true,
+            position_ok: true,
+            heat_ok: true,
+            cool_ok: true,
+            massage_ok: true,
+            memory_ok: true,
         }
     }
 
-    pub fn in_range(&self) -> bool {
-        self.position_forward_mm >= 0.0
-            && self.position_forward_mm <= 300.0
-            && self.recline_deg >= 0.0
-            && self.recline_deg <= 60.0
+    pub fn primary_ok(&self) -> bool {
+        self.position_ok && self.heat_ok && self.cool_ok
     }
 
-    pub fn has_memory(&self) -> bool {
-        self.memory_slots > 0
+    pub fn secondary_ok(&self) -> bool {
+        self.massage_ok && self.memory_ok
     }
 
-    pub fn can_adjust(&self) -> bool {
-        self.motors_ok
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn fully_upright(&self) -> bool {
-        self.recline_deg < 5.0
+    pub fn needs_attention(&self) -> bool {
+        !self.position_ok || !self.heat_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motors_ok {
-            return 30.0;
-        }
+        if !self.position_ok { return 5.0; }
         100.0
     }
 }
@@ -61,38 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_in_range() {
-        let s = SeatController::new();
-        assert!(s.in_range());
+    fn test_primary() {
+        let c = SeatCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_has_memory() {
-        let s = SeatController::new();
-        assert!(s.has_memory());
+    fn test_secondary() {
+        let c = SeatCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_can_adjust() {
-        let s = SeatController::new();
-        assert!(s.can_adjust());
+    fn test_all_ok() {
+        let c = SeatCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_upright() {
-        let s = SeatController::new();
-        assert!(!s.fully_upright());
+    fn test_no_attention() {
+        let c = SeatCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_occupied() {
-        let s = SeatController::new();
-        assert!(s.occupied);
+    fn test_field_toggle() {
+        let mut c = SeatCtrl::new();
+        c.position_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let s = SeatController::new();
-        assert!((s.health_score() - 100.0).abs() < 0.1);
+        let c = SeatCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

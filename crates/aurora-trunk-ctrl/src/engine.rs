@@ -1,62 +1,51 @@
-/// Trunk control: power liftgate, latch sensor, kick sensor
-/// Phase 255
+/// trunk ctrl: unlock, open, close, lock, kick
+/// Phase 1190
 
 #[derive(Debug, Clone)]
-pub struct TrunkController {
-    pub is_open: bool,
-    pub latch_ok: bool,
-    pub power_liftgate: bool,
-    pub kick_sensor_ok: bool,
-    pub motor_ok: bool,
-    pub position_pct: f64,
+pub struct TrunkCtrl {
+    pub unlock_ok: bool,
+    pub open_ok: bool,
+    pub close_ok: bool,
+    pub lock_ok: bool,
+    pub kick_ok: bool,
 }
 
-impl Default for TrunkController {
+impl Default for TrunkCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TrunkController {
+impl TrunkCtrl {
     pub fn new() -> Self {
         Self {
-            is_open: false,
-            latch_ok: true,
-            power_liftgate: true,
-            kick_sensor_ok: true,
-            motor_ok: true,
-            position_pct: 0.0,
+            unlock_ok: true,
+            open_ok: true,
+            close_ok: true,
+            lock_ok: true,
+            kick_ok: true,
         }
     }
 
-    pub fn fully_open(&self) -> bool {
-        self.position_pct >= 99.0
+    pub fn primary_ok(&self) -> bool {
+        self.unlock_ok && self.open_ok && self.close_ok
     }
 
-    pub fn fully_closed(&self) -> bool {
-        self.position_pct <= 1.0 && self.latch_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.lock_ok && self.kick_ok
     }
 
-    pub fn can_open(&self) -> bool {
-        self.motor_ok && self.power_liftgate
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn ajar(&self) -> bool {
-        self.position_pct > 5.0 && self.position_pct < 95.0
+    pub fn needs_attention(&self) -> bool {
+        !self.unlock_ok || !self.open_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.motor_ok {
-            score -= 40.0;
-        }
-        if !self.latch_ok {
-            score -= 30.0;
-        }
-        if !self.kick_sensor_ok {
-            score -= 10.0;
-        }
-        score.max(0.0)
+        if !self.unlock_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -65,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_open() {
-        let t = TrunkController::new();
-        assert!(!t.fully_open());
+    fn test_primary() {
+        let c = TrunkCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_closed() {
-        let t = TrunkController::new();
-        assert!(t.fully_closed());
+    fn test_secondary() {
+        let c = TrunkCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_can_open() {
-        let t = TrunkController::new();
-        assert!(t.can_open());
+    fn test_all_ok() {
+        let c = TrunkCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_not_ajar() {
-        let t = TrunkController::new();
-        assert!(!t.ajar());
+    fn test_no_attention() {
+        let c = TrunkCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_ajar() {
-        let mut t = TrunkController::new();
-        t.position_pct = 50.0;
-        assert!(t.ajar());
+    fn test_field_toggle() {
+        let mut c = TrunkCtrl::new();
+        c.unlock_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let t = TrunkController::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = TrunkCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

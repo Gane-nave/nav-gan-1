@@ -1,51 +1,51 @@
-/// Window control: power windows, auto up/down, pinch protection
-/// Phase 251
+/// window ctrl: up, down, lock, auto, pinch
+/// Phase 1188
 
 #[derive(Debug, Clone)]
-pub struct WindowController {
-    pub position_pct: [f64; 4],
-    pub pinch_protection: bool,
-    pub auto_up_down: bool,
-    pub child_lock: bool,
-    pub motor_ok: [bool; 4],
+pub struct WindowCtrl {
+    pub up_ok: bool,
+    pub down_ok: bool,
+    pub lock_ok: bool,
+    pub auto_ok: bool,
+    pub pinch_ok: bool,
 }
 
-impl Default for WindowController {
+impl Default for WindowCtrl {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl WindowController {
+impl WindowCtrl {
     pub fn new() -> Self {
         Self {
-            position_pct: [100.0; 4],
-            pinch_protection: true,
-            auto_up_down: true,
-            child_lock: false,
-            motor_ok: [true; 4],
+            up_ok: true,
+            down_ok: true,
+            lock_ok: true,
+            auto_ok: true,
+            pinch_ok: true,
         }
     }
 
-    pub fn all_closed(&self) -> bool {
-        self.position_pct.iter().all(|&p| p >= 99.0)
+    pub fn primary_ok(&self) -> bool {
+        self.up_ok && self.down_ok && self.lock_ok
     }
 
-    pub fn all_open(&self) -> bool {
-        self.position_pct.iter().all(|&p| p <= 1.0)
+    pub fn secondary_ok(&self) -> bool {
+        self.auto_ok && self.pinch_ok
     }
 
-    pub fn any_open(&self) -> bool {
-        self.position_pct.iter().any(|&p| p < 99.0)
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn all_motors_ok(&self) -> bool {
-        self.motor_ok.iter().all(|&ok| ok)
+    pub fn needs_attention(&self) -> bool {
+        !self.up_ok || !self.down_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let working = self.motor_ok.iter().filter(|&&ok| ok).count();
-        working as f64 / 4.0 * 100.0
+        if !self.up_ok { return 5.0; }
+        100.0
     }
 }
 
@@ -54,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_all_closed() {
-        let w = WindowController::new();
-        assert!(w.all_closed());
+    fn test_primary() {
+        let c = WindowCtrl::new();
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_not_all_open() {
-        let w = WindowController::new();
-        assert!(!w.all_open());
+    fn test_secondary() {
+        let c = WindowCtrl::new();
+        assert!(c.secondary_ok());
     }
 
     #[test]
-    fn test_none_open() {
-        let w = WindowController::new();
-        assert!(!w.any_open());
+    fn test_all_ok() {
+        let c = WindowCtrl::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_all_motors() {
-        let w = WindowController::new();
-        assert!(w.all_motors_ok());
+    fn test_no_attention() {
+        let c = WindowCtrl::new();
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_open_window() {
-        let mut w = WindowController::new();
-        w.position_pct[0] = 50.0;
-        assert!(w.any_open());
+    fn test_field_toggle() {
+        let mut c = WindowCtrl::new();
+        c.up_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let w = WindowController::new();
-        assert!((w.health_score() - 100.0).abs() < 0.1);
+        let c = WindowCtrl::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
