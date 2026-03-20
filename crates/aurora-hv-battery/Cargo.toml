@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hv-battery"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

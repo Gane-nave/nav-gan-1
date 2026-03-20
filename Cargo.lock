@@ -448,6 +448,10 @@ name = "aurora-blower-motor"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-bms-cell"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bounded-queue"
 version = "0.1.0"
 
@@ -491,6 +495,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-cam-phaser"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-can-bus"
 version = "0.1.0"
 
@@ -512,6 +520,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-catalytic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-catalytic-conv"
 version = "0.1.0"
 
 [[package]]
@@ -675,6 +687,10 @@ name = "aurora-coolant-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-coolant-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-coolant-temp"
 version = "0.1.0"
 
@@ -704,6 +720,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-crank-sensor"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-crash-sensor"
@@ -770,6 +790,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-data-network"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dc-dc-conv"
 version = "0.1.0"
 
 [[package]]
@@ -904,6 +928,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-door-lock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-dpf-filter"
 version = "0.1.0"
 
 [[package]]
@@ -1100,6 +1128,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-exhaust-ctrl"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-exhaust-monitor"
@@ -1361,6 +1393,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-hv-battery"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-hvac-ctrl"
 version = "0.1.0"
 
@@ -1379,6 +1415,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-idle-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ignition-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -1540,6 +1580,10 @@ name = "aurora-interval"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-inverter"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-investor"
 version = "0.1.0"
 
@@ -1561,6 +1605,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-knock-detect"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-knock-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -1787,6 +1835,10 @@ name = "aurora-motion-data"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-motor-ctrl"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-muffler-mon"
 version = "0.1.0"
 
@@ -1893,6 +1945,10 @@ name = "aurora-oil-press"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-oil-pump"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-orchestrator"
 version = "0.1.0"
 dependencies = [
@@ -1916,6 +1972,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-ota-update"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oxygen-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -2097,6 +2157,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-radar-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-radiator-fan"
 version = "0.1.0"
 
 [[package]]
@@ -2530,6 +2594,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-thermal-mgmt"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-thermo-valve"
 version = "0.1.0"
 
@@ -2766,6 +2834,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-washer-fluid"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-wastegate"
 version = "0.1.0"
 
 [[package]]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-catalytic-conv"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
