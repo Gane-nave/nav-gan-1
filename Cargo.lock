@@ -81,6 +81,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-adaptive-contrast"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-agnss"
 version = "0.1.0"
 dependencies = [
@@ -143,6 +147,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-anti-overlap"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-api"
@@ -293,6 +301,10 @@ name = "aurora-arena"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-attention-steer"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-audit"
 version = "0.1.0"
 
@@ -399,6 +411,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-chaos"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-charging"
 version = "0.1.0"
 dependencies = [
@@ -494,6 +510,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-context-total"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-continuity"
 version = "0.1.0"
 dependencies = [
@@ -573,6 +593,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-data-network"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dead-reckoning"
 version = "0.1.0"
 dependencies = [
@@ -582,6 +606,14 @@ dependencies = [
 
 [[package]]
 name = "aurora-debounce"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-decision-rt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-deep-personal"
 version = "0.1.0"
 
 [[package]]
@@ -623,6 +655,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-distribution"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-docs"
@@ -695,6 +731,10 @@ name = "aurora-e2e-tests"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-economics"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-edge"
 version = "0.1.0"
 dependencies = [
@@ -713,6 +753,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-effortless"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-ekf"
@@ -757,6 +801,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-error-prevent"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-errors"
@@ -811,6 +859,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-ext-benchmark"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-fallback"
@@ -1005,6 +1057,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-info-hierarchy"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-instruments"
 version = "0.1.0"
 dependencies = [
@@ -1088,7 +1144,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-intent"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-interval"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-investor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-invisible-ui"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ip-protect"
 version = "0.1.0"
 
 [[package]]
@@ -1173,6 +1245,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-market-strategy"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-marketplace"
 version = "0.1.0"
 dependencies = [
@@ -1231,6 +1307,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-moat"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-moderation"
 version = "0.1.0"
 dependencies = [
@@ -1249,6 +1329,10 @@ dependencies = [
  "serde_json",
  "thiserror",
 ]
+
+[[package]]
+name = "aurora-motion-data"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-multi-gnss"
@@ -1381,6 +1465,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-perceptual"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-perf"
 version = "0.1.0"
 dependencies = [
@@ -1389,6 +1477,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-peripheral-viz"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-pipeline"
@@ -1423,12 +1515,20 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-prediction-mh"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-predictive"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-preemptive-ui"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-prefetch"
@@ -1506,6 +1606,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-retry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-revenue"
 version = "0.1.0"
 
 [[package]]
@@ -1689,6 +1793,14 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-speed-scale"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sre"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-stability"
 version = "0.1.0"
 dependencies = [
@@ -1754,6 +1866,10 @@ dependencies = [
  "tracing",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-temporal-prec"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-test-framework"
@@ -1890,6 +2006,26 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-vertical-int"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-visual-density"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-visual-dynamic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-visual-hierarchy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-visual-lang"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-voice"
 version = "0.1.0"
 dependencies = [
@@ -1926,6 +2062,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-worksteal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-zero-friction"
 version = "0.1.0"
 
 [[package]]

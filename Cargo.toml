@@ -208,6 +208,46 @@ members = [
     "crates/aurora-v2x",
     "crates/aurora-indoor",
     "crates/aurora-ar-nav",
+    # Group 1: Strategic Moat
+    "crates/aurora-moat",
+    "crates/aurora-ext-benchmark",
+    "crates/aurora-distribution",
+    "crates/aurora-revenue",
+    "crates/aurora-economics",
+    "crates/aurora-market-strategy",
+    "crates/aurora-ip-protect",
+    # Group 2: Deep Moat
+    "crates/aurora-vertical-int",
+    "crates/aurora-data-network",
+    "crates/aurora-decision-rt",
+    "crates/aurora-intent",
+    "crates/aurora-prediction-mh",
+    # Group 3: SRE & Operations
+    "crates/aurora-sre",
+    "crates/aurora-chaos",
+    "crates/aurora-investor",
+    # Group 4: UX/Interaction
+    "crates/aurora-zero-friction",
+    "crates/aurora-invisible-ui",
+    "crates/aurora-context-total",
+    "crates/aurora-perceptual",
+    "crates/aurora-temporal-prec",
+    "crates/aurora-info-hierarchy",
+    "crates/aurora-deep-personal",
+    "crates/aurora-preemptive-ui",
+    "crates/aurora-error-prevent",
+    "crates/aurora-effortless",
+    # Group 5: Visual System
+    "crates/aurora-visual-hierarchy",
+    "crates/aurora-visual-dynamic",
+    "crates/aurora-motion-data",
+    "crates/aurora-adaptive-contrast",
+    "crates/aurora-attention-steer",
+    "crates/aurora-speed-scale",
+    "crates/aurora-visual-density",
+    "crates/aurora-peripheral-viz",
+    "crates/aurora-anti-overlap",
+    "crates/aurora-visual-lang",
 ]
 
 [workspace.package]
