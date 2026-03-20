@@ -93,6 +93,10 @@ name = "aurora-ac-charge"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-accel-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-adaptive"
 version = "0.1.0"
 dependencies = [
@@ -544,6 +548,10 @@ name = "aurora-bolt-torque"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-boost-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-bounded-queue"
 version = "0.1.0"
 
@@ -620,6 +628,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-cam-phaser"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-camshaft-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -914,6 +926,10 @@ name = "aurora-crankcase"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-crankshaft-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-crash-sensor"
 version = "0.1.0"
 
@@ -1171,6 +1187,10 @@ name = "aurora-dpf-filter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dpf-temp"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-drag-reduce"
 version = "0.1.0"
 
@@ -1227,6 +1247,10 @@ name = "aurora-economics"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ect-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ecu-flash"
 version = "0.1.0"
 
@@ -1252,6 +1276,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-effortless"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-egr-temp"
 version = "0.1.0"
 
 [[package]]
@@ -1531,6 +1559,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-fuel-opt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fuel-pressure"
 version = "0.1.0"
 
 [[package]]
@@ -1820,6 +1852,10 @@ dependencies = [
  "serde",
  "serde_json",
 ]
+
+[[package]]
+name = "aurora-iat-sensor"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-idle-ctrl"
@@ -2397,6 +2433,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-nox-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-numerical"
 version = "0.1.0"
 dependencies = [
@@ -2466,6 +2506,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-oil-press"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-oil-pressure-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -3137,6 +3181,10 @@ name = "aurora-speed-scale"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-speed-sensor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-splash-guard"
 version = "0.1.0"
 
@@ -3798,6 +3846,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-yaw-rate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-yaw-sensor"
 version = "0.1.0"
 
 [[package]]

@@ -1,14 +1,13 @@
-/// Lambda/O2 sensor: air-fuel ratio, wideband reading, heater circuit
-/// Phase 213
+/// Lambda sensor: wideband, heater, response time
+/// Phase 588
 
 #[derive(Debug, Clone)]
 pub struct LambdaSensor {
-    pub position: String,
-    pub lambda_value: f64,
-    pub voltage: f64,
-    pub heater_on: bool,
-    pub heater_current_a: f64,
-    pub ready: bool,
+    pub wideband_ok: bool,
+    pub heater_ok: bool,
+    pub response_ms: f64,
+    pub max_response_ms: f64,
+    pub signal_ok: bool,
 }
 
 impl Default for LambdaSensor {
@@ -20,43 +19,33 @@ impl Default for LambdaSensor {
 impl LambdaSensor {
     pub fn new() -> Self {
         Self {
-            position: "upstream".into(),
-            lambda_value: 1.0,
-            voltage: 0.45,
-            heater_on: true,
-            heater_current_a: 1.5,
-            ready: true,
+            wideband_ok: true,
+            heater_ok: true,
+            response_ms: 50.0,
+            max_response_ms: 200.0,
+            signal_ok: true,
         }
     }
 
-    pub fn stoichiometric(&self) -> bool {
-        (self.lambda_value - 1.0).abs() < 0.03
+    pub fn response_ok(&self) -> bool {
+        self.response_ms < self.max_response_ms
     }
 
-    pub fn running_rich(&self) -> bool {
-        self.lambda_value < 0.97
+    pub fn heater_good(&self) -> bool {
+        self.heater_ok && self.wideband_ok
     }
 
-    pub fn running_lean(&self) -> bool {
-        self.lambda_value > 1.03
+    pub fn all_ok(&self) -> bool {
+        self.response_ok() && self.heater_good() && self.signal_ok
     }
 
-    pub fn heater_ok(&self) -> bool {
-        self.heater_on && self.heater_current_a > 0.5 && self.heater_current_a < 3.0
+    pub fn needs_replacement(&self) -> bool {
+        !self.wideband_ok || !self.heater_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.ready {
-            score -= 30.0;
-        }
-        if !self.heater_ok() {
-            score -= 25.0;
-        }
-        if !self.stoichiometric() {
-            score -= 15.0;
-        }
-        score.max(0.0)
+        if !self.wideband_ok { return 10.0; }
+        100.0
     }
 }
 
@@ -65,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_stoich() {
-        let l = LambdaSensor::new();
-        assert!(l.stoichiometric());
+    fn test_response() {
+        let c = LambdaSensor::new();
+        assert!(c.response_ok());
     }
 
     #[test]
-    fn test_not_rich() {
-        let l = LambdaSensor::new();
-        assert!(!l.running_rich());
+    fn test_heater() {
+        let c = LambdaSensor::new();
+        assert!(c.heater_good());
     }
 
     #[test]
-    fn test_not_lean() {
-        let l = LambdaSensor::new();
-        assert!(!l.running_lean());
+    fn test_all_ok() {
+        let c = LambdaSensor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_heater_ok() {
-        let l = LambdaSensor::new();
-        assert!(l.heater_ok());
+    fn test_no_replace() {
+        let c = LambdaSensor::new();
+        assert!(!c.needs_replacement());
     }
 
     #[test]
-    fn test_rich() {
-        let mut l = LambdaSensor::new();
-        l.lambda_value = 0.85;
-        assert!(l.running_rich());
+    fn test_wideband() {
+        let mut c = LambdaSensor::new();
+        c.wideband_ok = false;
+        assert!(c.needs_replacement());
     }
 
     #[test]
     fn test_health() {
-        let l = LambdaSensor::new();
-        assert!((l.health_score() - 100.0).abs() < 0.1);
+        let c = LambdaSensor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

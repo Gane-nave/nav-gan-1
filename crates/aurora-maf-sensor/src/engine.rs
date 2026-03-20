@@ -1,13 +1,13 @@
-/// MAF sensor: mass air flow measurement, air density, fuel calculation
-/// Phase 215
+/// MAF sensor: air mass flow, hot wire, contamination
+/// Phase 585
 
 #[derive(Debug, Clone)]
 pub struct MafSensor {
-    pub flow_gps: f64,
-    pub voltage: f64,
-    pub air_temp_c: f64,
-    pub sensor_ok: bool,
-    pub contamination_pct: f64,
+    pub flow_gs: f64,
+    pub hot_wire_ok: bool,
+    pub clean: bool,
+    pub signal_ok: bool,
+    pub calibrated: bool,
 }
 
 impl Default for MafSensor {
@@ -19,46 +19,33 @@ impl Default for MafSensor {
 impl MafSensor {
     pub fn new() -> Self {
         Self {
-            flow_gps: 15.0,
-            voltage: 2.5,
-            air_temp_c: 25.0,
-            sensor_ok: true,
-            contamination_pct: 5.0,
+            flow_gs: 15.0,
+            hot_wire_ok: true,
+            clean: true,
+            signal_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn flow_ok(&self) -> bool {
-        self.flow_gps > 2.0 && self.flow_gps < 300.0
+    pub fn flow_valid(&self) -> bool {
+        self.signal_ok && self.flow_gs > 0.0
     }
 
-    pub fn air_density_factor(&self) -> f64 {
-        273.15 / (self.air_temp_c + 273.15)
+    pub fn sensor_clean(&self) -> bool {
+        self.clean && self.hot_wire_ok
     }
 
-    pub fn corrected_flow(&self) -> f64 {
-        self.flow_gps * self.air_density_factor()
+    pub fn all_ok(&self) -> bool {
+        self.flow_valid() && self.sensor_clean() && self.calibrated
     }
 
     pub fn needs_cleaning(&self) -> bool {
-        self.contamination_pct > 20.0
-    }
-
-    pub fn voltage_ok(&self) -> bool {
-        self.voltage > 0.2 && self.voltage < 4.9
+        !self.clean || !self.hot_wire_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        let mut score: f64 = 100.0;
-        if !self.sensor_ok {
-            score -= 50.0;
-        }
-        if self.needs_cleaning() {
-            score -= 25.0;
-        }
-        if !self.voltage_ok() {
-            score -= 20.0;
-        }
-        score.max(0.0)
+        if !self.hot_wire_ok { return 15.0; }
+        100.0
     }
 }
 
@@ -67,38 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_flow_ok() {
-        let m = MafSensor::new();
-        assert!(m.flow_ok());
+    fn test_flow() {
+        let c = MafSensor::new();
+        assert!(c.flow_valid());
     }
 
     #[test]
-    fn test_density_factor() {
-        let m = MafSensor::new();
-        assert!(m.air_density_factor() < 1.0);
+    fn test_clean() {
+        let c = MafSensor::new();
+        assert!(c.sensor_clean());
     }
 
     #[test]
-    fn test_corrected_flow() {
-        let m = MafSensor::new();
-        assert!(m.corrected_flow() < m.flow_gps);
+    fn test_all_ok() {
+        let c = MafSensor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_cleaning() {
-        let m = MafSensor::new();
-        assert!(!m.needs_cleaning());
+    fn test_no_clean() {
+        let c = MafSensor::new();
+        assert!(!c.needs_cleaning());
     }
 
     #[test]
-    fn test_voltage_ok() {
-        let m = MafSensor::new();
-        assert!(m.voltage_ok());
+    fn test_dirty() {
+        let mut c = MafSensor::new();
+        c.clean = false;
+        assert!(c.needs_cleaning());
     }
 
     #[test]
     fn test_health() {
-        let m = MafSensor::new();
-        assert!((m.health_score() - 100.0).abs() < 0.1);
+        let c = MafSensor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

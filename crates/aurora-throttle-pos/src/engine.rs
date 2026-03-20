@@ -1,55 +1,50 @@
-/// Throttle position: butterfly valve angle, electronic throttle body
-/// Phase 260
+/// Throttle position sensor: angle, linearity, idle
+/// Phase 586
 
 #[derive(Debug, Clone)]
-pub struct ThrottlePosition {
-    pub position_pct: f64,
-    pub target_pct: f64,
-    pub voltage: f64,
-    pub motor_ok: bool,
-    pub spring_ok: bool,
+pub struct ThrottlePos {
+    pub angle_deg: f64,
+    pub linearity_ok: bool,
+    pub idle_ok: bool,
+    pub signal_ok: bool,
+    pub calibrated: bool,
 }
 
-impl Default for ThrottlePosition {
+impl Default for ThrottlePos {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl ThrottlePosition {
+impl ThrottlePos {
     pub fn new() -> Self {
         Self {
-            position_pct: 0.0,
-            target_pct: 0.0,
-            voltage: 0.5,
-            motor_ok: true,
-            spring_ok: true,
+            angle_deg: 15.0,
+            linearity_ok: true,
+            idle_ok: true,
+            signal_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn at_target(&self) -> bool {
-        (self.position_pct - self.target_pct).abs() < 2.0
+    pub fn position_valid(&self) -> bool {
+        self.signal_ok && self.angle_deg >= 0.0
     }
 
-    pub fn wide_open(&self) -> bool {
-        self.position_pct > 95.0
+    pub fn response_ok(&self) -> bool {
+        self.linearity_ok && self.idle_ok
     }
 
-    pub fn closed(&self) -> bool {
-        self.position_pct < 3.0
+    pub fn all_ok(&self) -> bool {
+        self.position_valid() && self.response_ok() && self.calibrated
     }
 
-    pub fn position_error(&self) -> f64 {
-        (self.position_pct - self.target_pct).abs()
+    pub fn needs_service(&self) -> bool {
+        !self.signal_ok || !self.linearity_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.motor_ok {
-            return 0.0;
-        }
-        if !self.spring_ok {
-            return 30.0;
-        }
+        if !self.signal_ok { return 10.0; }
         100.0
     }
 }
@@ -59,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_at_target() {
-        let t = ThrottlePosition::new();
-        assert!(t.at_target());
+    fn test_position() {
+        let c = ThrottlePos::new();
+        assert!(c.position_valid());
     }
 
     #[test]
-    fn test_not_open() {
-        let t = ThrottlePosition::new();
-        assert!(!t.wide_open());
+    fn test_response() {
+        let c = ThrottlePos::new();
+        assert!(c.response_ok());
     }
 
     #[test]
-    fn test_closed() {
-        let t = ThrottlePosition::new();
-        assert!(t.closed());
+    fn test_all_ok() {
+        let c = ThrottlePos::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_no_error() {
-        let t = ThrottlePosition::new();
-        assert!(t.position_error() < 0.1);
+    fn test_no_service() {
+        let c = ThrottlePos::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_open() {
-        let mut t = ThrottlePosition::new();
-        t.position_pct = 100.0;
-        assert!(t.wide_open());
+    fn test_signal() {
+        let mut c = ThrottlePos::new();
+        c.signal_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let t = ThrottlePosition::new();
-        assert!((t.health_score() - 100.0).abs() < 0.1);
+        let c = ThrottlePos::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

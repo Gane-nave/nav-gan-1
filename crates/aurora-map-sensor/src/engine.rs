@@ -1,12 +1,13 @@
-/// MAP sensor: manifold absolute pressure, boost measurement, load calculation
-/// Phase 214
+/// MAP sensor: manifold pressure, vacuum, barometric
+/// Phase 584
 
 #[derive(Debug, Clone)]
 pub struct MapSensor {
     pub pressure_kpa: f64,
-    pub barometric_kpa: f64,
-    pub voltage: f64,
-    pub sensor_ok: bool,
+    pub vacuum_ok: bool,
+    pub baro_ok: bool,
+    pub signal_ok: bool,
+    pub calibrated: bool,
 }
 
 impl Default for MapSensor {
@@ -18,43 +19,32 @@ impl Default for MapSensor {
 impl MapSensor {
     pub fn new() -> Self {
         Self {
-            pressure_kpa: 95.0,
-            barometric_kpa: 101.3,
-            voltage: 4.0,
-            sensor_ok: true,
+            pressure_kpa: 40.0,
+            vacuum_ok: true,
+            baro_ok: true,
+            signal_ok: true,
+            calibrated: true,
         }
     }
 
-    pub fn vacuum_kpa(&self) -> f64 {
-        (self.barometric_kpa - self.pressure_kpa).max(0.0)
+    pub fn pressure_valid(&self) -> bool {
+        self.signal_ok && self.pressure_kpa > 0.0
     }
 
-    pub fn boost_kpa(&self) -> f64 {
-        (self.pressure_kpa - self.barometric_kpa).max(0.0)
+    pub fn system_ok(&self) -> bool {
+        self.vacuum_ok && self.baro_ok
     }
 
-    pub fn is_boosted(&self) -> bool {
-        self.pressure_kpa > self.barometric_kpa
+    pub fn all_ok(&self) -> bool {
+        self.pressure_valid() && self.system_ok() && self.calibrated
     }
 
-    pub fn engine_load_pct(&self) -> f64 {
-        if self.barometric_kpa <= 0.0 {
-            return 0.0;
-        }
-        (self.pressure_kpa / self.barometric_kpa * 100.0).clamp(0.0, 200.0)
-    }
-
-    pub fn voltage_ok(&self) -> bool {
-        self.voltage > 0.5 && self.voltage < 4.8
+    pub fn needs_service(&self) -> bool {
+        !self.signal_ok || !self.calibrated
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.sensor_ok {
-            return 0.0;
-        }
-        if !self.voltage_ok() {
-            return 40.0;
-        }
+        if !self.signal_ok { return 10.0; }
         100.0
     }
 }
@@ -64,39 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_vacuum() {
-        let m = MapSensor::new();
-        assert!(m.vacuum_kpa() > 5.0);
+    fn test_pressure() {
+        let c = MapSensor::new();
+        assert!(c.pressure_valid());
     }
 
     #[test]
-    fn test_no_boost() {
-        let m = MapSensor::new();
-        assert!(!m.is_boosted());
+    fn test_system() {
+        let c = MapSensor::new();
+        assert!(c.system_ok());
     }
 
     #[test]
-    fn test_engine_load() {
-        let m = MapSensor::new();
-        assert!(m.engine_load_pct() > 90.0);
+    fn test_all_ok() {
+        let c = MapSensor::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_voltage_ok() {
-        let m = MapSensor::new();
-        assert!(m.voltage_ok());
+    fn test_no_service() {
+        let c = MapSensor::new();
+        assert!(!c.needs_service());
     }
 
     #[test]
-    fn test_boost() {
-        let mut m = MapSensor::new();
-        m.pressure_kpa = 150.0;
-        assert!(m.is_boosted());
+    fn test_signal() {
+        let mut c = MapSensor::new();
+        c.signal_ok = false;
+        assert!(c.needs_service());
     }
 
     #[test]
     fn test_health() {
-        let m = MapSensor::new();
-        assert!((m.health_score() - 100.0).abs() < 0.1);
+        let c = MapSensor::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }
