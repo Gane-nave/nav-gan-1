@@ -1,0 +1,7 @@
+[package]
+name = "aurora-backpressure"
+version = "0.1.0"
+edition = "2021"
+description = "Backpressure management and flow control for AURORA NAV"
+
+[dependencies]
