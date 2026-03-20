@@ -1,6 +1,71 @@
 # Testing AURORA NAV
 
 ## Overview
+AURORA NAV is a Rust workspace with 10 crates implementing a multi-GNSS navigation pipeline.
+
+## Crate Structure
+| Crate | Tests | Purpose |
+|---|---|---|
+| aurora-core | 0 | Data model (no logic to test) |
+| aurora-events | 3 | Event bus pub/sub |
+| aurora-gnss | 5 | GNSS receiver, quality scoring |
+| aurora-corrections | 0 | Correction source stubs |
+| aurora-sensors | 2 | IMU processing |
+| aurora-fusion | 6 | EKF, coordinate transforms |
+| aurora-integrity | 8 | Anomaly detection, trust scoring |
+| aurora-continuity | 12 | Mode switching, health FSM |
+| aurora-telemetry | 3 | Ring-buffer recorder, audit |
+| aurora-api | 4 | REST API endpoints |
+| **Total** | **43** | |
+
+## Build & Test Commands
+```bash
+cargo build          # Build all crates (should be zero warnings)
+cargo clippy         # Lint (may have style warnings — not errors)
+cargo test           # Run all 43 unit tests
+```
+
+## Running the API Server
+The `aurora-api` crate is a library, not a binary. To run the server:
+1. Create a temporary `src/bin/test_server.rs` in `crates/aurora-api/`:
+```rust
+use std::net::SocketAddr;
+#[tokio::main]
+async fn main() {
+    let addr = SocketAddr::from(([127, 0, 0, 1], 9876));
+    aurora_api::run_server(addr).await.unwrap();
+}
+```
+2. Run with `cargo run --bin test_server`
+3. Clean up the bin directory after testing
+
+## API Endpoints (default state)
+| Endpoint | Status | Notes |
+|---|---|---|
+| GET /health | 200 | `status: "operational"`, `version: "0.1.0"` |
+| GET /position | 503 | No GNSS fix = SERVICE_UNAVAILABLE |
+| GET /integrity | 200 | `level: "NoSolution"`, `continuity_mode: "E: Emergency Bounded"` |
+| GET /status | 200 | All counters at 0 in fresh state |
+| GET /telemetry | 200 | Empty samples array |
+| GET /constellation | 200 | Empty JSON array |
+
+## Known Issues
+- `cargo clippy` produces ~3 style warnings (if_same_then_else, manual_clamp, comparison_chain) — these are not bugs
+- No CI workflow is configured yet (no `.github/workflows`)
+- No binary entry point for `aurora-api` — must create temporary bin to run server
+- The repo may be hosted under a different name on GitHub (e.g. `Trade` instead of `aurora-nav`) due to GitHub App permission limitations for repo creation
+
+## Coordinate Transform Verification
+To verify the EKF math, test the `geodetic_to_enu` and `enu_to_geodetic` functions in `aurora-fusion/src/engine.rs`:
+- Use a known origin (e.g. Tel Aviv: 32.0853°N, 34.7818°E)
+- Move ~1km north (32.0943°N) — expect ENU north ~1000m, east ~0m
+- Round-trip error should be < 0.0001°
+
+## Devin Secrets Needed
+- GITHUB_PAT: GitHub Personal Access Token with `repo` scope — needed if creating new repos (the GitHub App integration cannot create repos)
+# Testing AURORA NAV
+
+## Overview
 AURORA NAV is a Rust workspace with 83+ crates. Testing is done via `cargo test`, `cargo clippy`, and adversarial integration tests.
 
 ## Build Pipeline
