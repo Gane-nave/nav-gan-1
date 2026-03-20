@@ -1156,6 +1156,42 @@ name = "aurora-cache"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cache-arc2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-dist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-lfu"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-local"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-lru2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-read"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-tier"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-ttl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cache-write"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-calendar-nav"
 version = "0.1.0"
 
@@ -3681,6 +3717,78 @@ name = "aurora-grade-assist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-graph-algo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-cluster"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-constraint"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-edge"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-embed"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-export"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-import"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-index2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-label"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-node"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-partition2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-path"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-property"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-query2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-schema"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-temporal"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-traverse"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-graph-visual"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-graphdb"
 version = "0.1.0"
 
@@ -4710,6 +4818,42 @@ name = "aurora-media-stream"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mem-arena2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-bump"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-gc2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-map"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-pool3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-ref"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-region"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-shared"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-slab2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mesh"
 version = "0.1.0"
 
@@ -4791,11 +4935,27 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-ml-attention"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-augment"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-checkpoint"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml-data"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-ml-deploy"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-embed2"
 version = "0.1.0"
 
 [[package]]
@@ -4811,6 +4971,14 @@ name = "aurora-ml-infer"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ml-label"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-loss"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml-model"
 version = "0.1.0"
 
@@ -4819,11 +4987,27 @@ name = "aurora-ml-monitor2"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ml-optim"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml-pipeline2"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-ml-quantize"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ml-registry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-serving"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ml-tokenize"
 version = "0.1.0"
 
 [[package]]
@@ -5912,6 +6096,42 @@ name = "aurora-quarter-glass"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-queue-bounded"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-delay2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-fifo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-lifo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-mpmc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-mpsc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-priority2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-spsc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-queue-unbounded"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-quota"
 version = "0.1.0"
 
@@ -6989,7 +7209,43 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-stream-buffer"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-dedup"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-join"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-map"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-merge2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-stream-proc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-reduce"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-split"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-throttle"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-stream-window"
 version = "0.1.0"
 
 [[package]]
