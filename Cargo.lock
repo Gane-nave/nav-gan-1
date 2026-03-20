@@ -249,6 +249,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-bloom"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cache"
 version = "0.1.0"
 
@@ -731,6 +735,10 @@ name = "aurora-lease"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lru"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-map"
 version = "0.1.0"
 dependencies = [
@@ -949,6 +957,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-retry"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-ringbuf"
 version = "0.1.0"
 
 [[package]]

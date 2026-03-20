@@ -104,6 +104,9 @@ members = [
     "crates/aurora-semaphore",
     "crates/aurora-lease",
     "crates/aurora-debounce",
+    "crates/aurora-bloom",
+    "crates/aurora-lru",
+    "crates/aurora-ringbuf",
 ]
 
 [workspace.package]
