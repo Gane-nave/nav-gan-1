@@ -85,7 +85,7 @@ fn adversarial_prefix_search_autocomplete_remove() {
 
     // Hit rate tracking
     let rate = trie.hit_rate();
-    assert!(rate >= 0.0 && rate <= 1.0);
+    assert!((0.0..=1.0).contains(&rate));
 
     // Stats
     assert_eq!(trie.total_inserts(), 10);
