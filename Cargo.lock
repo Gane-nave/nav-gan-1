@@ -5522,6 +5522,10 @@ name = "aurora-media-stream"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mem-align"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mem-arena2"
 version = "0.1.0"
 
@@ -5530,11 +5534,47 @@ name = "aurora-mem-bump"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mem-bump2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-cache3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-compress"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-cow"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mem-gc2"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-mem-guard"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-limit"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-mem-map"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-mapped2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-pin"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-pool2"
 version = "0.1.0"
 
 [[package]]
@@ -5543,6 +5583,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-mem-ref"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-ref2"
 version = "0.1.0"
 
 [[package]]
@@ -5555,6 +5599,18 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-mem-slab2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-stack2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-track"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mem-zero"
 version = "0.1.0"
 
 [[package]]
@@ -7443,6 +7499,78 @@ name = "aurora-rpa-sys"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-rt-async2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-coroutine"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-embed"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-fiber"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-green"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-hook"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-interp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-io2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-isolate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-jit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-plugin2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-sandbox2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-signal2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-sync2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-thread2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-timer2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-wasm2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-rt-work2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-rubber-trim"
 version = "0.1.0"
 
@@ -7599,6 +7727,14 @@ name = "aurora-scenic-route"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-adaptive"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-affinity"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-backoff"
 version = "0.1.0"
 
@@ -7607,11 +7743,23 @@ name = "aurora-sched-batch"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-batch3"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-choreo"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-coop"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-cron"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-cron2"
 version = "0.1.0"
 
 [[package]]
@@ -7623,7 +7771,27 @@ name = "aurora-sched-deadline"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-deadline2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-delay"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-delay2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-fair2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-fifo2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-gang"
 version = "0.1.0"
 
 [[package]]
@@ -7631,7 +7799,19 @@ name = "aurora-sched-interval"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-lifo"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-pipeline"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-predict2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-preempt"
 version = "0.1.0"
 
 [[package]]
@@ -7639,11 +7819,31 @@ name = "aurora-sched-priority"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-priority3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-quota2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-rate2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-ratelimit"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-sched-round2"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-sched-saga"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sched-weighted2"
 version = "0.1.0"
 
 [[package]]
@@ -8401,6 +8601,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sway-bar"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-atomic2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-barrier2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-broadcast3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-condvar2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-exchanger"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-latch"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-mpmc2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-mpsc2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-mutex2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-once2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-oneshot2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-phaser"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-rwlock2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-semaphore3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-seqlock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-spinlock2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-spsc2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sync-watch2"
 version = "0.1.0"
 
 [[package]]

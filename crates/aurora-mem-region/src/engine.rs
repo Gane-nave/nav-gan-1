@@ -1,12 +1,12 @@
-/// mem region: alloc, free, merge, split, log
-/// Phase 1945
+/// mem region: create, allocate, protect, destroy, log
+/// Phase 2369
 
 #[derive(Debug, Clone)]
 pub struct MemRegion {
-    pub alloc_ok: bool,
-    pub free_ok: bool,
-    pub merge_ok: bool,
-    pub split_ok: bool,
+    pub create_ok: bool,
+    pub allocate_ok: bool,
+    pub protect_ok: bool,
+    pub destroy_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MemRegion {
 impl MemRegion {
     pub fn new() -> Self {
         Self {
-            alloc_ok: true,
-            free_ok: true,
-            merge_ok: true,
-            split_ok: true,
+            create_ok: true,
+            allocate_ok: true,
+            protect_ok: true,
+            destroy_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.alloc_ok && self.free_ok && self.merge_ok
+        self.create_ok && self.allocate_ok && self.protect_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.split_ok && self.log_ok
+        self.destroy_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MemRegion {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.alloc_ok || !self.free_ok
+        !self.create_ok || !self.allocate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.alloc_ok {
+        if !self.create_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MemRegion::new();
-        c.alloc_ok = false;
+        c.create_ok = false;
         assert!(c.needs_attention());
     }
 

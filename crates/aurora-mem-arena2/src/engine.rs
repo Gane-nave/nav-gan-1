@@ -1,12 +1,12 @@
-/// mem arena2: alloc, reset, stats, compact, log
-/// Phase 1942
+/// mem arena2: allocate, reset, grow, stats, log
+/// Phase 2365
 
 #[derive(Debug, Clone)]
 pub struct MemArena2 {
-    pub alloc_ok: bool,
+    pub allocate_ok: bool,
     pub reset_ok: bool,
+    pub grow_ok: bool,
     pub stats_ok: bool,
-    pub compact_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MemArena2 {
 impl MemArena2 {
     pub fn new() -> Self {
         Self {
-            alloc_ok: true,
+            allocate_ok: true,
             reset_ok: true,
+            grow_ok: true,
             stats_ok: true,
-            compact_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.alloc_ok && self.reset_ok && self.stats_ok
+        self.allocate_ok && self.reset_ok && self.grow_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.compact_ok && self.log_ok
+        self.stats_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MemArena2 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.alloc_ok || !self.reset_ok
+        !self.allocate_ok || !self.reset_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.alloc_ok {
+        if !self.allocate_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MemArena2::new();
-        c.alloc_ok = false;
+        c.allocate_ok = false;
         assert!(c.needs_attention());
     }
 

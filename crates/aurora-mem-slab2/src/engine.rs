@@ -1,12 +1,12 @@
-/// mem slab2: alloc, free, stats, compact, log
-/// Phase 1943
+/// mem slab2: allocate, deallocate, grow, stats, log
+/// Phase 2366
 
 #[derive(Debug, Clone)]
 pub struct MemSlab2 {
-    pub alloc_ok: bool,
-    pub free_ok: bool,
+    pub allocate_ok: bool,
+    pub deallocate_ok: bool,
+    pub grow_ok: bool,
     pub stats_ok: bool,
-    pub compact_ok: bool,
     pub log_ok: bool,
 }
 
@@ -19,20 +19,20 @@ impl Default for MemSlab2 {
 impl MemSlab2 {
     pub fn new() -> Self {
         Self {
-            alloc_ok: true,
-            free_ok: true,
+            allocate_ok: true,
+            deallocate_ok: true,
+            grow_ok: true,
             stats_ok: true,
-            compact_ok: true,
             log_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.alloc_ok && self.free_ok && self.stats_ok
+        self.allocate_ok && self.deallocate_ok && self.grow_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.compact_ok && self.log_ok
+        self.stats_ok && self.log_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl MemSlab2 {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.alloc_ok || !self.free_ok
+        !self.allocate_ok || !self.deallocate_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.alloc_ok {
+        if !self.allocate_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = MemSlab2::new();
-        c.alloc_ok = false;
+        c.allocate_ok = false;
         assert!(c.needs_attention());
     }
 
