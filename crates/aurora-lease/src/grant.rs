@@ -85,9 +85,13 @@ impl LeaseGrant {
     }
 
     /// Check if the lease is expired at the given time.
+    /// A ttl_ms of 0 means "no expiry" — the lease never expires.
     pub fn is_expired(&self, now_ms: u64) -> bool {
         if self.status == LeaseStatus::Revoked {
             return true;
+        }
+        if self.ttl_ms == 0 {
+            return false;
         }
         now_ms.saturating_sub(self.granted_at_ms) >= self.ttl_ms
     }
@@ -212,5 +216,19 @@ mod tests {
         g.renew(4000, 5000); // renew at t=4000
         // held_duration should be from original grant (1000), not renewal time (4000)
         assert_eq!(g.held_duration_ms(6000), 5000); // 6000 - 1000 = 5000
+    }
+
+    #[test]
+    fn test_zero_ttl_never_expires() {
+        let g = LeaseGrant::new(1, "r", "h", 1000, 0);
+        // ttl_ms=0 means "no expiry"
+        assert!(!g.is_expired(1000)); // at grant time
+        assert!(!g.is_expired(999_999)); // far future
+        assert!(g.is_active(999_999));
+        // But revoke still works
+        let mut g2 = LeaseGrant::new(2, "r", "h", 1000, 0);
+        g2.revoke();
+        assert!(g2.is_expired(1000));
+        assert!(!g2.is_active(1000));
     }
 }
