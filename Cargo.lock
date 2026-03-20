@@ -584,6 +584,78 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-auth-abac"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-apikey"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-biometric"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-certificate"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-jwt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-kerberos"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-ldap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-mfa"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-oauth2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-oidc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-passkey"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-rbac"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-saml"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-scim"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-session"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-sso"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-totp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-auth-webauthn"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-auto-climate"
 version = "0.1.0"
 
@@ -1813,6 +1885,78 @@ name = "aurora-data-vault"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-db-cassandra"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-clickhouse"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-cockroach"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-duckdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-dynamo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-elastic"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-foundationdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-influx"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-mongo"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-mysql"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-neo4j"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-postgres"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-redis"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-rocksdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-scylla"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-sqlite"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-surrealdb"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-db-timescale"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dc-convert"
 version = "0.1.0"
 
@@ -2726,6 +2870,78 @@ name = "aurora-fm-radio"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-fmt-arrow"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-avro"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-bencode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-bincode"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-bson"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-capnproto"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-cbor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-csv"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-flatbuf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-ion"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-json"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-msgpack"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-parquet"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-protobuf"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-rlp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-toml"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-xml"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-fmt-yaml"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fog-compute"
 version = "0.1.0"
 
@@ -3450,6 +3666,78 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-intake-manifold"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-amqp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-azure-blob"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-ftp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-gcs"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-graphql"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-grpc"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-kafka"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-minio"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-mqtt"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-nats"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-rest"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-s3"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-sftp"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-soap"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-sse"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-webhook"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-websocket2"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-integ-zeromq"
 version = "0.1.0"
 
 [[package]]
