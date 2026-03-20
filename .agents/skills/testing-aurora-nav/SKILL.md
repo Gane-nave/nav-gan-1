@@ -1,6 +1,71 @@
 # Testing AURORA NAV
 
 ## Overview
+AURORA NAV is a Rust workspace with 10 crates implementing a multi-GNSS navigation pipeline.
+
+## Crate Structure
+| Crate | Tests | Purpose |
+|---|---|---|
+| aurora-core | 0 | Data model (no logic to test) |
+| aurora-events | 3 | Event bus pub/sub |
+| aurora-gnss | 5 | GNSS receiver, quality scoring |
+| aurora-corrections | 0 | Correction source stubs |
+| aurora-sensors | 2 | IMU processing |
+| aurora-fusion | 6 | EKF, coordinate transforms |
+| aurora-integrity | 8 | Anomaly detection, trust scoring |
+| aurora-continuity | 12 | Mode switching, health FSM |
+| aurora-telemetry | 3 | Ring-buffer recorder, audit |
+| aurora-api | 4 | REST API endpoints |
+| **Total** | **43** | |
+
+## Build & Test Commands
+```bash
+cargo build          # Build all crates (should be zero warnings)
+cargo clippy         # Lint (may have style warnings — not errors)
+cargo test           # Run all 43 unit tests
+```
+
+## Running the API Server
+The `aurora-api` crate is a library, not a binary. To run the server:
+1. Create a temporary `src/bin/test_server.rs` in `crates/aurora-api/`:
+```rust
+use std::net::SocketAddr;
+#[tokio::main]
+async fn main() {
+    let addr = SocketAddr::from(([127, 0, 0, 1], 9876));
+    aurora_api::run_server(addr).await.unwrap();
+}
+```
+2. Run with `cargo run --bin test_server`
+3. Clean up the bin directory after testing
+
+## API Endpoints (default state)
+| Endpoint | Status | Notes |
+|---|---|---|
+| GET /health | 200 | `status: "operational"`, `version: "0.1.0"` |
+| GET /position | 503 | No GNSS fix = SERVICE_UNAVAILABLE |
+| GET /integrity | 200 | `level: "NoSolution"`, `continuity_mode: "E: Emergency Bounded"` |
+| GET /status | 200 | All counters at 0 in fresh state |
+| GET /telemetry | 200 | Empty samples array |
+| GET /constellation | 200 | Empty JSON array |
+
+## Known Issues
+- `cargo clippy` produces ~3 style warnings (if_same_then_else, manual_clamp, comparison_chain) — these are not bugs
+- No CI workflow is configured yet (no `.github/workflows`)
+- No binary entry point for `aurora-api` — must create temporary bin to run server
+- The repo may be hosted under a different name on GitHub (e.g. `Trade` instead of `aurora-nav`) due to GitHub App permission limitations for repo creation
+
+## Coordinate Transform Verification
+To verify the EKF math, test the `geodetic_to_enu` and `enu_to_geodetic` functions in `aurora-fusion/src/engine.rs`:
+- Use a known origin (e.g. Tel Aviv: 32.0853°N, 34.7818°E)
+- Move ~1km north (32.0943°N) — expect ENU north ~1000m, east ~0m
+- Round-trip error should be < 0.0001°
+
+## Devin Secrets Needed
+- GITHUB_PAT: GitHub Personal Access Token with `repo` scope — needed if creating new repos (the GitHub App integration cannot create repos)
+# Testing AURORA NAV
+
+## Overview
 AURORA NAV is a Rust workspace with 83+ crates. Testing is done via `cargo test`, `cargo clippy`, and adversarial integration tests.
 
 ## Build Pipeline
@@ -79,3 +144,81 @@ When verifying bug fixes, always:
 
 ## Devin Secrets Needed
 No secrets required for testing — all tests run locally via cargo.
+# Testing AURORA NAV
+
+## Quick Start
+```bash
+cd /home/ubuntu/repos/aurora-nav
+cargo build --all-targets
+cargo clippy --all-targets
+cargo test
+cargo fmt --check
+```
+
+## Test Counts (as of Phase 12)
+- Total: 871+ tests, 0 failures, 0 clippy warnings
+- aurora-config: 26 tests
+- aurora-app: 16 tests
+- aurora-integration-tests: 29 tests (4 test files)
+- Full suite runs in ~10 seconds
+
+## API Server Testing
+The API server can be tested two ways:
+1. **Unit tests via tower::oneshot** (preferred): `cargo test -p aurora-integration-tests --test e2e_api`
+2. **Live server**: `cargo run --bin aurora-nav -- --port 9876` then curl endpoints
+
+Endpoints:
+- `/health` → 200, `{"status": "operational"}`
+- `/position` → 503 (no GNSS fix available)
+- `/integrity` → 200, `{"level": "NoSolution"}`
+- `/status` → 200, valid JSON counters
+- `/telemetry` → 200, empty samples
+- `/constellation` → 200, `[]`
+
+## CLI Binary Testing
+```bash
+# Dump default config
+cargo run --bin aurora-nav -- --dump-config
+
+# Print version
+cargo run --bin aurora-nav -- --version
+
+# Print subsystem status as JSON
+cargo run --bin aurora-nav -- --status
+
+# Test validation rejection
+cargo run --bin aurora-nav -- --port 0
+# Expected: Error: Validation("api.port must be > 0"), exit code 1
+```
+
+## Adversarial Testing Patterns
+
+### GNSS Health State Tracking
+The `NavigationPipeline` tracks whether GNSS data has ever been received via `has_received_gnss` AtomicBool. To test:
+1. Fresh pipeline → `has_received_gnss_data() == false` → health Healthy (sat_count=0 is OK)
+2. Call `mark_gnss_received()` → `has_received_gnss_data() == true`
+3. Health with sat_count=0 after receiving data → Degraded (not Healthy)
+
+### Config Validation
+- All config section structs use `#[serde(default)]` — partial TOML fills missing values from defaults
+- `ConfigBuilder::build()` validates; `build_unchecked()` skips validation (testing only)
+- CLI overrides are re-validated after application
+- Environment variable overrides use `AURORA_*` prefix
+
+### Cross-Crate Integration Tests
+Run specific test files:
+```bash
+cargo test -p aurora-integration-tests --test e2e_config
+cargo test -p aurora-integration-tests --test e2e_api
+cargo test -p aurora-integration-tests --test e2e_cross_crate
+cargo test -p aurora-integration-tests --test e2e_pipeline
+```
+
+## Common Issues
+- If `cargo test` fails with serde errors on partial TOML, check that `#[serde(default)]` is on the struct
+- If health check reports Degraded on a fresh pipeline, check `has_received_gnss` flag logic
+- The binary might not start a persistent server in early phases — `--status` and `--dump-config` are the safe testing paths
+- Some adversarial tests compile against `target/debug/deps` — make sure `cargo build` runs first
+
+## Devin Secrets Needed
+No secrets required — this is a pure Rust workspace tested locally.
