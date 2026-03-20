@@ -64,6 +64,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-5g-modem"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-a11y"
 version = "0.1.0"
 dependencies = [
@@ -205,6 +209,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-alexa-skill"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-alignment-spec"
 version = "0.1.0"
 
@@ -231,6 +239,10 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-android-auto"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-anomaly"
@@ -835,6 +847,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-carplay-ext"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-catalytic"
 version = "0.1.0"
 
@@ -962,6 +978,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-clock"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-cloud-sync"
 version = "0.1.0"
 
 [[package]]
@@ -1555,6 +1575,10 @@ name = "aurora-drl-system"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-dsrc-radio"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-dtc-reader"
 version = "0.1.0"
 
@@ -1609,6 +1633,10 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
+
+[[package]]
+name = "aurora-edge-compute"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-efficiency-coach"
@@ -2181,6 +2209,10 @@ name = "aurora-gnss-receiver"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-google-link"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-grade-assist"
 version = "0.1.0"
 
@@ -2306,6 +2338,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-histogram"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-homekit-link"
 version = "0.1.0"
 
 [[package]]
@@ -2786,6 +2822,10 @@ name = "aurora-long-accel"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-lora-wan"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-lru"
 version = "0.1.0"
 
@@ -2866,11 +2906,19 @@ name = "aurora-master-cyl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-matter-bridge"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-media-stream"
 version = "0.1.0"
 
 [[package]]
 name = "aurora-mesh"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mesh-net"
 version = "0.1.0"
 
 [[package]]
@@ -2919,6 +2967,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-mirror-motor"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-mirrorlink"
 version = "0.1.0"
 
 [[package]]
@@ -3802,6 +3854,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-sat-link"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-satellite"
 version = "0.1.0"
 dependencies = [
@@ -3971,6 +4027,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-skiplist"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-smartwatch"
 version = "0.1.0"
 
 [[package]]
@@ -4637,6 +4697,10 @@ name = "aurora-uturn-assist"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-uwb-anchor"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ux"
 version = "0.1.0"
 dependencies = [
@@ -4846,6 +4910,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-weblink"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-websocket"
 version = "0.1.0"
 
@@ -4990,6 +5058,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-zero-friction"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-zigbee-hub"
 version = "0.1.0"
 
 [[package]]
