@@ -1,24 +1,13 @@
-/// OTA update: over-the-air software update, download, install, rollback
-/// Phase 283
-
-#[derive(Debug, Clone, Copy, PartialEq)]
-pub enum OtaState {
-    Idle,
-    Checking,
-    Downloading,
-    Installing,
-    Complete,
-    RollingBack,
-}
+/// OTA update: download, verify, install, rollback, schedule
+/// Phase 885
 
 #[derive(Debug, Clone)]
 pub struct OtaUpdate {
-    pub state: OtaState,
-    pub progress_pct: f64,
-    pub update_available: bool,
-    pub download_size_mb: f64,
-    pub current_version: u32,
-    pub target_version: u32,
+    pub download_ok: bool,
+    pub verify_ok: bool,
+    pub install_ok: bool,
+    pub rollback_ok: bool,
+    pub schedule_ok: bool,
 }
 
 impl Default for OtaUpdate {
@@ -30,31 +19,32 @@ impl Default for OtaUpdate {
 impl OtaUpdate {
     pub fn new() -> Self {
         Self {
-            state: OtaState::Idle,
-            progress_pct: 0.0,
-            update_available: false,
-            download_size_mb: 0.0,
-            current_version: 100,
-            target_version: 100,
+            download_ok: true,
+            verify_ok: true,
+            install_ok: true,
+            rollback_ok: true,
+            schedule_ok: true,
         }
     }
 
-    pub fn is_updating(&self) -> bool {
-        matches!(self.state, OtaState::Downloading | OtaState::Installing)
+    pub fn delivery_ok(&self) -> bool {
+        self.download_ok && self.verify_ok
     }
 
-    pub fn needs_update(&self) -> bool {
-        self.update_available && self.target_version > self.current_version
+    pub fn deployment_ok(&self) -> bool {
+        self.install_ok && self.rollback_ok && self.schedule_ok
     }
 
-    pub fn safe_to_drive(&self) -> bool {
-        !matches!(self.state, OtaState::Installing | OtaState::RollingBack)
+    pub fn all_ok(&self) -> bool {
+        self.delivery_ok() && self.deployment_ok()
+    }
+
+    pub fn needs_retry(&self) -> bool {
+        !self.download_ok || !self.verify_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if self.state == OtaState::RollingBack {
-            return 30.0;
-        }
+        if !self.verify_ok { return 5.0; }
         100.0
     }
 }
@@ -64,41 +54,39 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_not_updating() {
-        let o = OtaUpdate::new();
-        assert!(!o.is_updating());
+    fn test_delivery() {
+        let c = OtaUpdate::new();
+        assert!(c.delivery_ok());
     }
 
     #[test]
-    fn test_no_update() {
-        let o = OtaUpdate::new();
-        assert!(!o.needs_update());
+    fn test_deployment() {
+        let c = OtaUpdate::new();
+        assert!(c.deployment_ok());
     }
 
     #[test]
-    fn test_safe() {
-        let o = OtaUpdate::new();
-        assert!(o.safe_to_drive());
+    fn test_all_ok() {
+        let c = OtaUpdate::new();
+        assert!(c.all_ok());
     }
 
     #[test]
-    fn test_update_avail() {
-        let mut o = OtaUpdate::new();
-        o.update_available = true;
-        o.target_version = 101;
-        assert!(o.needs_update());
+    fn test_no_retry() {
+        let c = OtaUpdate::new();
+        assert!(!c.needs_retry());
     }
 
     #[test]
-    fn test_installing() {
-        let mut o = OtaUpdate::new();
-        o.state = OtaState::Installing;
-        assert!(!o.safe_to_drive());
+    fn test_verify() {
+        let mut c = OtaUpdate::new();
+        c.verify_ok = false;
+        assert!(c.needs_retry());
     }
 
     #[test]
     fn test_health() {
-        let o = OtaUpdate::new();
-        assert!((o.health_score() - 100.0).abs() < 0.1);
+        let c = OtaUpdate::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 }

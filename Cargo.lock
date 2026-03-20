@@ -507,6 +507,10 @@ name = "aurora-battery-mgmt"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-battery-precon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-battery-test"
 version = "0.1.0"
 
@@ -720,6 +724,10 @@ name = "aurora-cabin-filter"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-cabin-precon"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-cabin-press"
 version = "0.1.0"
 
@@ -823,7 +831,19 @@ name = "aurora-charge-ctrl"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-charge-limit"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-planner"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-charge-port"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-charge-timer"
 version = "0.1.0"
 
 [[package]]
@@ -1317,6 +1337,10 @@ name = "aurora-diffuser"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-digital-key"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-digital-mirror"
 version = "0.1.0"
 
@@ -1507,6 +1531,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-efficiency-coach"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-effortless"
 version = "0.1.0"
 
@@ -1576,7 +1604,15 @@ name = "aurora-emission-test"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-energy-display"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-energy-harvest"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-energy-regen"
 version = "0.1.0"
 
 [[package]]
@@ -1834,6 +1870,10 @@ name = "aurora-front-camera"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-frunk"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-fsm"
 version = "0.1.0"
 
@@ -1983,6 +2023,10 @@ dependencies = [
 
 [[package]]
 name = "aurora-gesture-ctrl"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-glass-roof"
 version = "0.1.0"
 
 [[package]]
@@ -2977,6 +3021,10 @@ name = "aurora-onboard-charger"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-one-pedal"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-orchestrator"
 version = "0.1.0"
 dependencies = [
@@ -3070,6 +3118,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-pedal-box"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-pedal-map"
 version = "0.1.0"
 
 [[package]]
@@ -3316,6 +3368,10 @@ name = "aurora-range-calc"
 version = "0.1.0"
 
 [[package]]
+name = "aurora-range-estimator"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-ratelimit"
 version = "0.1.0"
 
@@ -3349,6 +3405,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-regen-brake"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-remote-access"
 version = "0.1.0"
 
 [[package]]
@@ -3734,6 +3794,10 @@ version = "0.1.0"
 
 [[package]]
 name = "aurora-sound-deadener"
+version = "0.1.0"
+
+[[package]]
+name = "aurora-sound-gen"
 version = "0.1.0"
 
 [[package]]
