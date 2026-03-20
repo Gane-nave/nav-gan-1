@@ -186,6 +186,10 @@ dependencies = [
 ]
 
 [[package]]
+name = "aurora-arena"
+version = "0.1.0"
+
+[[package]]
 name = "aurora-audit"
 version = "0.1.0"
 
@@ -243,6 +247,10 @@ dependencies = [
  "serde_json",
  "uuid",
 ]
+
+[[package]]
+name = "aurora-bitset"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-cache"
@@ -1001,6 +1009,10 @@ version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
+
+[[package]]
+name = "aurora-skiplist"
+version = "0.1.0"
 
 [[package]]
 name = "aurora-social"
