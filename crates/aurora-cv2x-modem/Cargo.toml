@@ -1,0 +1,4 @@
+[package]
+name = "aurora-cv2x-modem"
+version = "0.1.0"
+edition = "2021"

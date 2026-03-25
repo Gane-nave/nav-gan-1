@@ -1,0 +1,4 @@
+[package]
+name = "aurora-regen-brake2"
+version = "0.1.0"
+edition = "2021"

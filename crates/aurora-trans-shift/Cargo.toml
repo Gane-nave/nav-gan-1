@@ -1,0 +1,6 @@
+[package]
+name = "aurora-trans-shift"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

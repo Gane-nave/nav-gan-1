@@ -1,0 +1,4 @@
+[package]
+name = "aurora-hud-render"
+version = "0.1.0"
+edition = "2021"

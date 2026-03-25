@@ -1,0 +1,4 @@
+[package]
+name = "aurora-obs-log3"
+version = "0.1.0"
+edition = "2021"

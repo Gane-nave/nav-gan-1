@@ -44,7 +44,7 @@ impl Interval {
 
     /// Check if a point is contained in this interval.
     pub fn contains_point(&self, point: i64) -> bool {
-        point >= self.low && point <= self.high
+        (self.low..=self.high).contains(&point)
     }
 
     /// Check if this interval overlaps with another.

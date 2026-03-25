@@ -1,0 +1,6 @@
+[package]
+name = "aurora-sealant-mon"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

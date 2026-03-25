@@ -1,0 +1,6 @@
+[package]
+name = "aurora-panel-gap"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

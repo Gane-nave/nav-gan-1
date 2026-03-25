@@ -1,0 +1,6 @@
+[package]
+name = "aurora-thermostat-val"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

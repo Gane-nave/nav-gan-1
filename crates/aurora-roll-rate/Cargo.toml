@@ -1,0 +1,6 @@
+[package]
+name = "aurora-roll-rate"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

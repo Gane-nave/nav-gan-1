@@ -257,7 +257,7 @@ mod tests {
         assert!(eta.p5_s < eta.expected_s);
         assert!(eta.p95_s > eta.expected_s);
         assert!(eta.confidence > 0.5);
-        assert!(eta.volatility >= 0.0 && eta.volatility <= 1.0);
+        assert!((0.0..=1.0).contains(&eta.volatility));
     }
 
     #[test]

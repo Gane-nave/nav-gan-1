@@ -1,0 +1,6 @@
+[package]
+name = "aurora-throttle-map"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

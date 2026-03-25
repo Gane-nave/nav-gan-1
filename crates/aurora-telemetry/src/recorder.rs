@@ -129,7 +129,7 @@ impl TelemetryRecorder {
         self.buffer
             .lock()
             .iter()
-            .filter(|s| s.timestamp >= from && s.timestamp <= to)
+            .filter(|s| (from..=to).contains(&s.timestamp))
             .cloned()
             .collect()
     }

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-vibr-damp"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

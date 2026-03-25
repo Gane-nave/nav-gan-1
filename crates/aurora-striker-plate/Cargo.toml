@@ -1,0 +1,6 @@
+[package]
+name = "aurora-striker-plate"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

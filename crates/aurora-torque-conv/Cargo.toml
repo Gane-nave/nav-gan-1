@@ -1,0 +1,4 @@
+[package]
+name = "aurora-torque-conv"
+version = "0.1.0"
+edition = "2021"

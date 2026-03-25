@@ -11,7 +11,7 @@ const MAX_LEVEL: usize = 16;
 pub struct SkipList<V: Clone> {
     /// Sorted storage of nodes.
     entries: Vec<SkipNode<V>>,
-    /// Highest level that has ever been used in this list (monotonically non-decreasing).
+    /// Maximum level currently in use.
     max_level: usize,
     /// Total number of insertions.
     total_inserts: u64,

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-clamp-force"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-belt-tension"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

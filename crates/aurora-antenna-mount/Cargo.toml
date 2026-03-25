@@ -1,0 +1,6 @@
+[package]
+name = "aurora-antenna-mount"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

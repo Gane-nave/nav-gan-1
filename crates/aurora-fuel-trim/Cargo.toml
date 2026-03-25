@@ -1,0 +1,4 @@
+[package]
+name = "aurora-fuel-trim"
+version = "0.1.0"
+edition = "2021"

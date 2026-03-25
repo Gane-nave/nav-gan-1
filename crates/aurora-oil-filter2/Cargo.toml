@@ -1,0 +1,4 @@
+[package]
+name = "aurora-oil-filter2"
+version = "0.1.0"
+edition = "2021"

@@ -232,7 +232,7 @@ fn direction(a: &Point2D, b: &Point2D, c: &Point2D) -> f64 {
 }
 
 fn on_segment(a: &Point2D, b: &Point2D, c: &Point2D) -> bool {
-    c.x >= a.x.min(b.x) && c.x <= a.x.max(b.x) && c.y >= a.y.min(b.y) && c.y <= a.y.max(b.y)
+    (a.x.min(b.x)..=a.x.max(b.x)).contains(&c.x) && (a.y.min(b.y)..=a.y.max(b.y)).contains(&c.y)
 }
 
 #[cfg(test)]

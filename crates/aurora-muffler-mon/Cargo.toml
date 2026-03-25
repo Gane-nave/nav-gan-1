@@ -1,0 +1,6 @@
+[package]
+name = "aurora-muffler-mon"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

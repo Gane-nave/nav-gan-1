@@ -1,0 +1,6 @@
+[package]
+name = "aurora-adaptive-beam"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

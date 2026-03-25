@@ -1,0 +1,4 @@
+[package]
+name = "aurora-reduction-gear"
+version = "0.1.0"
+edition = "2021"

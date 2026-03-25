@@ -1,0 +1,6 @@
+[package]
+name = "aurora-elec-diff"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-solar-charge"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

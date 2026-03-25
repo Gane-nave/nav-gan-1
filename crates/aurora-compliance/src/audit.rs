@@ -139,7 +139,7 @@ impl AuditLog {
         self.entries
             .read()
             .iter()
-            .filter(|e| e.timestamp >= from && e.timestamp <= to)
+            .filter(|e| (from..=to).contains(&e.timestamp))
             .cloned()
             .collect()
     }

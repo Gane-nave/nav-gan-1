@@ -1,0 +1,6 @@
+[package]
+name = "aurora-stability-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

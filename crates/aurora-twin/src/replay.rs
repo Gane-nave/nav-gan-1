@@ -74,7 +74,7 @@ pub struct TimeRange {
 
 impl TimeRange {
     pub fn contains(&self, t: DateTime<Utc>) -> bool {
-        t >= self.start && t <= self.end
+        (self.start..=self.end).contains(&t)
     }
 
     pub fn duration(&self) -> Duration {

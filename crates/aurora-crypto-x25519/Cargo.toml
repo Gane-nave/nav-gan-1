@@ -1,0 +1,4 @@
+[package]
+name = "aurora-crypto-x25519"
+version = "0.1.0"
+edition = "2021"

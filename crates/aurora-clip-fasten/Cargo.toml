@@ -1,0 +1,6 @@
+[package]
+name = "aurora-clip-fasten"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

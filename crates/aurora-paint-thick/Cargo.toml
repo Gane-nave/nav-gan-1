@@ -1,0 +1,6 @@
+[package]
+name = "aurora-paint-thick"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

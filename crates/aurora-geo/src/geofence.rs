@@ -92,7 +92,7 @@ impl Geofence {
                 min_lon,
                 max_lat,
                 max_lon,
-            } => lat >= *min_lat && lat <= *max_lat && lon >= *min_lon && lon <= *max_lon,
+            } => (*min_lat..=*max_lat).contains(&lat) && (*min_lon..=*max_lon).contains(&lon),
         }
     }
 }

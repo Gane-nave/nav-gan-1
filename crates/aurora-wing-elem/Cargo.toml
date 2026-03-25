@@ -1,0 +1,6 @@
+[package]
+name = "aurora-wing-elem"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
