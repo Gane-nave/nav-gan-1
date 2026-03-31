@@ -1,38 +1,38 @@
-/// aurora-test-mock: test mock
-/// Phase 2477
+/// aurora-mock-api: mock api
+/// Phase 2483
 
 #[derive(Debug, Clone)]
-pub struct TestMock {
+pub struct MockApi {
     pub define_ok: bool,
-    pub verify_ok: bool,
-    pub reset_ok: bool,
-    pub stub_ok: bool,
-    pub spy_ok: bool,
+    pub route_ok: bool,
+    pub respond_ok: bool,
+    pub delay_ok: bool,
+    pub error_ok: bool,
 }
 
-impl Default for TestMock {
+impl Default for MockApi {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TestMock {
+impl MockApi {
     pub fn new() -> Self {
         Self {
             define_ok: true,
-            verify_ok: true,
-            reset_ok: true,
-            stub_ok: true,
-            spy_ok: true,
+            route_ok: true,
+            respond_ok: true,
+            delay_ok: true,
+            error_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.verify_ok && self.reset_ok
+        self.define_ok && self.route_ok && self.respond_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.stub_ok && self.spy_ok
+        self.delay_ok && self.error_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl TestMock {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.verify_ok
+        !self.define_ok || !self.route_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -57,44 +57,44 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = TestMock::new();
+        let c = MockApi::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = TestMock::new();
+        let c = MockApi::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = TestMock::new();
+        let c = MockApi::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = TestMock::new();
+        let c = MockApi::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = TestMock::new();
+        let mut c = MockApi::new();
         c.define_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = TestMock::new();
+        let c = MockApi::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 
     #[test]
     fn test_default() {
-        let c = TestMock::default();
+        let c = MockApi::default();
         assert!(c.all_ok());
     }
 }

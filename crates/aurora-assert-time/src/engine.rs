@@ -1,38 +1,38 @@
-/// aurora-test-mock: test mock
-/// Phase 2477
+/// aurora-assert-time: assert time
+/// Phase 2503
 
 #[derive(Debug, Clone)]
-pub struct TestMock {
-    pub define_ok: bool,
-    pub verify_ok: bool,
-    pub reset_ok: bool,
-    pub stub_ok: bool,
-    pub spy_ok: bool,
+pub struct AssertTime {
+    pub before_ok: bool,
+    pub after_ok: bool,
+    pub within_ok: bool,
+    pub sequence_ok: bool,
+    pub interval_ok: bool,
 }
 
-impl Default for TestMock {
+impl Default for AssertTime {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TestMock {
+impl AssertTime {
     pub fn new() -> Self {
         Self {
-            define_ok: true,
-            verify_ok: true,
-            reset_ok: true,
-            stub_ok: true,
-            spy_ok: true,
+            before_ok: true,
+            after_ok: true,
+            within_ok: true,
+            sequence_ok: true,
+            interval_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.verify_ok && self.reset_ok
+        self.before_ok && self.after_ok && self.within_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.stub_ok && self.spy_ok
+        self.sequence_ok && self.interval_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl TestMock {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.verify_ok
+        !self.before_ok || !self.after_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.define_ok {
+        if !self.before_ok {
             return 5.0;
         }
         100.0
@@ -57,44 +57,44 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = TestMock::new();
+        let c = AssertTime::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = TestMock::new();
+        let c = AssertTime::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = TestMock::new();
+        let c = AssertTime::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = TestMock::new();
+        let c = AssertTime::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = TestMock::new();
-        c.define_ok = false;
+        let mut c = AssertTime::new();
+        c.before_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = TestMock::new();
+        let c = AssertTime::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 
     #[test]
     fn test_default() {
-        let c = TestMock::default();
+        let c = AssertTime::default();
         assert!(c.all_ok());
     }
 }

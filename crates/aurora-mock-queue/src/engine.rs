@@ -1,38 +1,38 @@
-/// aurora-test-mock: test mock
-/// Phase 2477
+/// aurora-mock-queue: mock queue
+/// Phase 2485
 
 #[derive(Debug, Clone)]
-pub struct TestMock {
-    pub define_ok: bool,
+pub struct MockQueue {
+    pub enqueue_ok: bool,
+    pub dequeue_ok: bool,
+    pub peek_ok: bool,
+    pub clear_ok: bool,
     pub verify_ok: bool,
-    pub reset_ok: bool,
-    pub stub_ok: bool,
-    pub spy_ok: bool,
 }
 
-impl Default for TestMock {
+impl Default for MockQueue {
     fn default() -> Self {
         Self::new()
     }
 }
 
-impl TestMock {
+impl MockQueue {
     pub fn new() -> Self {
         Self {
-            define_ok: true,
+            enqueue_ok: true,
+            dequeue_ok: true,
+            peek_ok: true,
+            clear_ok: true,
             verify_ok: true,
-            reset_ok: true,
-            stub_ok: true,
-            spy_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.verify_ok && self.reset_ok
+        self.enqueue_ok && self.dequeue_ok && self.peek_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.stub_ok && self.spy_ok
+        self.clear_ok && self.verify_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl TestMock {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.verify_ok
+        !self.enqueue_ok || !self.dequeue_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.define_ok {
+        if !self.enqueue_ok {
             return 5.0;
         }
         100.0
@@ -57,44 +57,44 @@ mod tests {
 
     #[test]
     fn test_primary() {
-        let c = TestMock::new();
+        let c = MockQueue::new();
         assert!(c.primary_ok());
     }
 
     #[test]
     fn test_secondary() {
-        let c = TestMock::new();
+        let c = MockQueue::new();
         assert!(c.secondary_ok());
     }
 
     #[test]
     fn test_all_ok() {
-        let c = TestMock::new();
+        let c = MockQueue::new();
         assert!(c.all_ok());
     }
 
     #[test]
     fn test_no_attention() {
-        let c = TestMock::new();
+        let c = MockQueue::new();
         assert!(!c.needs_attention());
     }
 
     #[test]
     fn test_field_toggle() {
-        let mut c = TestMock::new();
-        c.define_ok = false;
+        let mut c = MockQueue::new();
+        c.enqueue_ok = false;
         assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
-        let c = TestMock::new();
+        let c = MockQueue::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
     }
 
     #[test]
     fn test_default() {
-        let c = TestMock::default();
+        let c = MockQueue::default();
         assert!(c.all_ok());
     }
 }
