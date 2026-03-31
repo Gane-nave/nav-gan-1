@@ -1,13 +1,13 @@
-/// cloud dns: resolve, cache, update, propagate, log
-/// Phase 1458
+/// aurora-cloud-dns: cloud dns
+/// Phase 2551
 
 #[derive(Debug, Clone)]
 pub struct CloudDns {
     pub resolve_ok: bool,
-    pub cache_ok: bool,
-    pub update_ok: bool,
-    pub propagate_ok: bool,
-    pub log_ok: bool,
+    pub create_ok: bool,
+    pub delete_ok: bool,
+    pub failover_ok: bool,
+    pub monitor_ok: bool,
 }
 
 impl Default for CloudDns {
@@ -20,19 +20,19 @@ impl CloudDns {
     pub fn new() -> Self {
         Self {
             resolve_ok: true,
-            cache_ok: true,
-            update_ok: true,
-            propagate_ok: true,
-            log_ok: true,
+            create_ok: true,
+            delete_ok: true,
+            failover_ok: true,
+            monitor_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.resolve_ok && self.cache_ok && self.update_ok
+        self.resolve_ok && self.create_ok && self.delete_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.propagate_ok && self.log_ok
+        self.failover_ok && self.monitor_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl CloudDns {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.resolve_ok || !self.cache_ok
+        !self.resolve_ok || !self.create_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = CloudDns::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = CloudDns::default();
+        assert!(c.all_ok());
     }
 }

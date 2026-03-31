@@ -1,13 +1,13 @@
-/// cloud queue: enqueue, dequeue, retry, dead, log
-/// Phase 1461
+/// aurora-cloud-queue: cloud queue
+/// Phase 2548
 
 #[derive(Debug, Clone)]
 pub struct CloudQueue {
     pub enqueue_ok: bool,
     pub dequeue_ok: bool,
-    pub retry_ok: bool,
-    pub dead_ok: bool,
-    pub log_ok: bool,
+    pub dlq_ok: bool,
+    pub scale_ok: bool,
+    pub monitor_ok: bool,
 }
 
 impl Default for CloudQueue {
@@ -21,18 +21,18 @@ impl CloudQueue {
         Self {
             enqueue_ok: true,
             dequeue_ok: true,
-            retry_ok: true,
-            dead_ok: true,
-            log_ok: true,
+            dlq_ok: true,
+            scale_ok: true,
+            monitor_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.enqueue_ok && self.dequeue_ok && self.retry_ok
+        self.enqueue_ok && self.dequeue_ok && self.dlq_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.dead_ok && self.log_ok
+        self.scale_ok && self.monitor_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = CloudQueue::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = CloudQueue::default();
+        assert!(c.all_ok());
     }
 }

@@ -1,13 +1,13 @@
-/// cloud cdn: cache, purge, route, optimize, log
-/// Phase 1459
+/// aurora-cloud-cdn: cloud cdn
+/// Phase 2550
 
 #[derive(Debug, Clone)]
 pub struct CloudCdn {
-    pub cache_ok: bool,
+    pub distribute_ok: bool,
     pub purge_ok: bool,
-    pub route_ok: bool,
-    pub optimize_ok: bool,
-    pub log_ok: bool,
+    pub preload_ok: bool,
+    pub monitor_ok: bool,
+    pub cost_ok: bool,
 }
 
 impl Default for CloudCdn {
@@ -19,20 +19,20 @@ impl Default for CloudCdn {
 impl CloudCdn {
     pub fn new() -> Self {
         Self {
-            cache_ok: true,
+            distribute_ok: true,
             purge_ok: true,
-            route_ok: true,
-            optimize_ok: true,
-            log_ok: true,
+            preload_ok: true,
+            monitor_ok: true,
+            cost_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.cache_ok && self.purge_ok && self.route_ok
+        self.distribute_ok && self.purge_ok && self.preload_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.optimize_ok && self.log_ok
+        self.monitor_ok && self.cost_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl CloudCdn {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.cache_ok || !self.purge_ok
+        !self.distribute_ok || !self.purge_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.cache_ok {
+        if !self.distribute_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = CloudCdn::new();
-        c.cache_ok = false;
+        c.distribute_ok = false;
         assert!(c.needs_attention());
     }
 
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = CloudCdn::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = CloudCdn::default();
+        assert!(c.all_ok());
     }
 }

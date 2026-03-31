@@ -1,13 +1,13 @@
-/// gRPC server: service, method, stream, intercept, reflect
-/// Phase 1050
+/// aurora-grpc-server: grpc server
+/// Phase 2584
 
 #[derive(Debug, Clone)]
 pub struct GrpcServer {
-    pub service_ok: bool,
-    pub method_ok: bool,
-    pub stream_ok: bool,
-    pub intercept_ok: bool,
-    pub reflect_ok: bool,
+    pub listen_ok: bool,
+    pub route_ok: bool,
+    pub auth_ok: bool,
+    pub tls_ok: bool,
+    pub health_ok: bool,
 }
 
 impl Default for GrpcServer {
@@ -19,32 +19,32 @@ impl Default for GrpcServer {
 impl GrpcServer {
     pub fn new() -> Self {
         Self {
-            service_ok: true,
-            method_ok: true,
-            stream_ok: true,
-            intercept_ok: true,
-            reflect_ok: true,
+            listen_ok: true,
+            route_ok: true,
+            auth_ok: true,
+            tls_ok: true,
+            health_ok: true,
         }
     }
 
-    pub fn serving_ok(&self) -> bool {
-        self.service_ok && self.method_ok && self.stream_ok
+    pub fn primary_ok(&self) -> bool {
+        self.listen_ok && self.route_ok && self.auth_ok
     }
 
-    pub fn middleware_ok(&self) -> bool {
-        self.intercept_ok && self.reflect_ok
+    pub fn secondary_ok(&self) -> bool {
+        self.tls_ok && self.health_ok
     }
 
     pub fn all_ok(&self) -> bool {
-        self.serving_ok() && self.middleware_ok()
+        self.primary_ok() && self.secondary_ok()
     }
 
-    pub fn needs_restart(&self) -> bool {
-        !self.service_ok || !self.method_ok
+    pub fn needs_attention(&self) -> bool {
+        !self.listen_ok || !self.route_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.service_ok {
+        if !self.listen_ok {
             return 5.0;
         }
         100.0
@@ -56,15 +56,15 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_serving() {
+    fn test_primary() {
         let c = GrpcServer::new();
-        assert!(c.serving_ok());
+        assert!(c.primary_ok());
     }
 
     #[test]
-    fn test_middleware() {
+    fn test_secondary() {
         let c = GrpcServer::new();
-        assert!(c.middleware_ok());
+        assert!(c.secondary_ok());
     }
 
     #[test]
@@ -74,21 +74,27 @@ mod tests {
     }
 
     #[test]
-    fn test_no_restart() {
+    fn test_no_attention() {
         let c = GrpcServer::new();
-        assert!(!c.needs_restart());
+        assert!(!c.needs_attention());
     }
 
     #[test]
-    fn test_service() {
+    fn test_field_toggle() {
         let mut c = GrpcServer::new();
-        c.service_ok = false;
-        assert!(c.needs_restart());
+        c.listen_ok = false;
+        assert!(c.needs_attention());
     }
 
     #[test]
     fn test_health() {
         let c = GrpcServer::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = GrpcServer::default();
+        assert!(c.all_ok());
     }
 }
