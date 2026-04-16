@@ -1,0 +1,6 @@
+[package]
+name = "aurora-cruise-ctrl"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

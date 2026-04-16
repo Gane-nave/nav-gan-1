@@ -1,0 +1,6 @@
+[package]
+name = "aurora-axle-sensor"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

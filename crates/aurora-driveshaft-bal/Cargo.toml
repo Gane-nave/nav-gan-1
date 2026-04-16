@@ -1,0 +1,6 @@
+[package]
+name = "aurora-driveshaft-bal"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

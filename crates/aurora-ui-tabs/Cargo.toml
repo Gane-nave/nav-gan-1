@@ -1,0 +1,4 @@
+[package]
+name = "aurora-ui-tabs"
+version = "0.1.0"
+edition = "2021"

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-marker-lamp"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

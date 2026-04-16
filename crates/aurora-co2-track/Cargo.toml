@@ -1,0 +1,6 @@
+[package]
+name = "aurora-co2-track"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

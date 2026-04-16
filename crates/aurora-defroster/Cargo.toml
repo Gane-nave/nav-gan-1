@@ -1,0 +1,6 @@
+[package]
+name = "aurora-defroster"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

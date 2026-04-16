@@ -1,0 +1,100 @@
+/// aurora-qa-regress: qa regress
+/// Phase 2521
+
+#[derive(Debug, Clone)]
+pub struct QaRegress {
+    pub detect_ok: bool,
+    pub compare_ok: bool,
+    pub report_ok: bool,
+    pub bisect_ok: bool,
+    pub notify_ok: bool,
+}
+
+impl Default for QaRegress {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
+impl QaRegress {
+    pub fn new() -> Self {
+        Self {
+            detect_ok: true,
+            compare_ok: true,
+            report_ok: true,
+            bisect_ok: true,
+            notify_ok: true,
+        }
+    }
+
+    pub fn primary_ok(&self) -> bool {
+        self.detect_ok && self.compare_ok && self.report_ok
+    }
+
+    pub fn secondary_ok(&self) -> bool {
+        self.bisect_ok && self.notify_ok
+    }
+
+    pub fn all_ok(&self) -> bool {
+        self.primary_ok() && self.secondary_ok()
+    }
+
+    pub fn needs_attention(&self) -> bool {
+        !self.detect_ok || !self.compare_ok
+    }
+
+    pub fn health_score(&self) -> f64 {
+        if !self.detect_ok {
+            return 5.0;
+        }
+        100.0
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_primary() {
+        let c = QaRegress::new();
+        assert!(c.primary_ok());
+    }
+
+    #[test]
+    fn test_secondary() {
+        let c = QaRegress::new();
+        assert!(c.secondary_ok());
+    }
+
+    #[test]
+    fn test_all_ok() {
+        let c = QaRegress::new();
+        assert!(c.all_ok());
+    }
+
+    #[test]
+    fn test_no_attention() {
+        let c = QaRegress::new();
+        assert!(!c.needs_attention());
+    }
+
+    #[test]
+    fn test_field_toggle() {
+        let mut c = QaRegress::new();
+        c.detect_ok = false;
+        assert!(c.needs_attention());
+    }
+
+    #[test]
+    fn test_health() {
+        let c = QaRegress::new();
+        assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = QaRegress::default();
+        assert!(c.all_ok());
+    }
+}

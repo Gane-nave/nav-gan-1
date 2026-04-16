@@ -1,0 +1,4 @@
+[package]
+name = "aurora-road-mark"
+version = "0.1.0"
+edition = "2021"

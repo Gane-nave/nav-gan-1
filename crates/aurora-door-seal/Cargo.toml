@@ -1,0 +1,6 @@
+[package]
+name = "aurora-door-seal"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

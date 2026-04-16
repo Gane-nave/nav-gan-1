@@ -1,0 +1,4 @@
+[package]
+name = "aurora-deploy-release2"
+version = "0.1.0"
+edition = "2021"

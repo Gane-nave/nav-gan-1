@@ -393,6 +393,7 @@ impl<K: Ord + Clone + fmt::Debug, V: Clone> BTree<K, V> {
         result
     }
 
+    #[allow(clippy::manual_range_contains)]
     fn range_collect(&self, node_idx: usize, low: &K, high: &K, result: &mut Vec<(K, V)>) {
         let node = &self.nodes[node_idx];
         for i in 0..node.keys.len() {

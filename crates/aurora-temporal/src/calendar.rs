@@ -51,7 +51,7 @@ pub struct CalendarEvent {
 impl CalendarEvent {
     /// Check if this event is active on the given date.
     pub fn is_active_on(&self, date: NaiveDate) -> bool {
-        date >= self.start_date && date <= self.end_date
+        (self.start_date..=self.end_date).contains(&date)
     }
 
     /// Check if this event affects the given region.

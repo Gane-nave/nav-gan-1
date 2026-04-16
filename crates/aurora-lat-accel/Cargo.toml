@@ -1,0 +1,6 @@
+[package]
+name = "aurora-lat-accel"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

@@ -1,0 +1,6 @@
+[package]
+name = "aurora-hinge-mech"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

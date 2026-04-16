@@ -1,0 +1,6 @@
+[package]
+name = "aurora-latch-lock"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

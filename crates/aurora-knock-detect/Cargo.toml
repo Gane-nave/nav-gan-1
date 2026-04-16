@@ -1,0 +1,6 @@
+[package]
+name = "aurora-knock-detect"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

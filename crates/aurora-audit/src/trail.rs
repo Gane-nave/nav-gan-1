@@ -228,7 +228,7 @@ impl AuditTrail {
     pub fn entries_in_range(&self, start_ms: u64, end_ms: u64) -> Vec<&AuditEntry> {
         self.entries
             .iter()
-            .filter(|e| e.timestamp_ms >= start_ms && e.timestamp_ms <= end_ms)
+            .filter(|e| (start_ms..=end_ms).contains(&e.timestamp_ms))
             .collect()
     }
 

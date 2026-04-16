@@ -1,0 +1,6 @@
+[package]
+name = "aurora-park-assist"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

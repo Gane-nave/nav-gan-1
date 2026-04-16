@@ -1,0 +1,6 @@
+[package]
+name = "aurora-range-calc"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

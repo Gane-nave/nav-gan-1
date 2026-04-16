@@ -120,7 +120,7 @@ impl UsageTracker {
         let matching: Vec<&UsageRecord> = self
             .records
             .iter()
-            .filter(|r| r.key_id == *key_id && r.timestamp >= from && r.timestamp <= to)
+            .filter(|r| r.key_id == *key_id && (from..=to).contains(&r.timestamp))
             .collect();
 
         let total_requests = matching.len() as u64;
@@ -199,7 +199,7 @@ impl UsageTracker {
     ) -> Vec<(String, u64)> {
         let mut counts: HashMap<String, u64> = HashMap::new();
         for r in &self.records {
-            if r.timestamp >= from && r.timestamp <= to {
+            if (from..=to).contains(&r.timestamp) {
                 *counts.entry(r.endpoint.clone()).or_insert(0) += 1;
             }
         }
@@ -214,7 +214,7 @@ impl UsageTracker {
         let matching: Vec<&UsageRecord> = self
             .records
             .iter()
-            .filter(|r| r.key_id == *key_id && r.timestamp >= from && r.timestamp <= to)
+            .filter(|r| r.key_id == *key_id && (from..=to).contains(&r.timestamp))
             .collect();
 
         if matching.is_empty() {

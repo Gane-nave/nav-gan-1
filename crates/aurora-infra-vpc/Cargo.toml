@@ -1,0 +1,4 @@
+[package]
+name = "aurora-infra-vpc"
+version = "0.1.0"
+edition = "2021"

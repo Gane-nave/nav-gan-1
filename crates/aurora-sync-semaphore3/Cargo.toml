@@ -1,0 +1,4 @@
+[package]
+name = "aurora-sync-semaphore3"
+version = "0.1.0"
+edition = "2021"

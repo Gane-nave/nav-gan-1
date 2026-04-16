@@ -1,0 +1,6 @@
+[package]
+name = "aurora-wind-noise"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

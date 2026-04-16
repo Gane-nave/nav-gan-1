@@ -1,0 +1,6 @@
+[package]
+name = "aurora-grille-shut"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

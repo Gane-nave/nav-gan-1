@@ -1,0 +1,6 @@
+[package]
+name = "aurora-vortex-gen"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

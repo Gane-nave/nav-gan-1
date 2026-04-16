@@ -1,0 +1,4 @@
+[package]
+name = "aurora-map-terrain"
+version = "0.1.0"
+edition = "2021"

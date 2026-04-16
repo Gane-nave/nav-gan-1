@@ -1,0 +1,6 @@
+[package]
+name = "aurora-scratch-det"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

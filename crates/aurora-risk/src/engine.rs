@@ -396,7 +396,7 @@ mod tests {
         let histories = vec![SegmentHistory::default(), SegmentHistory::default()];
 
         let route_score = engine.score_route(&[&seg1, &seg2], &env, &histories);
-        assert!(route_score.score >= 0.0 && route_score.score <= 1.0);
+        assert!((0.0..=1.0).contains(&route_score.score));
     }
 
     #[test]

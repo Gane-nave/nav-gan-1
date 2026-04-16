@@ -1,0 +1,4 @@
+[package]
+name = "aurora-ux-theme"
+version = "0.1.0"
+edition = "2021"

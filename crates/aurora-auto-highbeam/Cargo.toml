@@ -1,0 +1,6 @@
+[package]
+name = "aurora-auto-highbeam"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]

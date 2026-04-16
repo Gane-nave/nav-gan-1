@@ -348,7 +348,7 @@ mod tests {
         let alerts = scheduler.active_alerts();
         assert_eq!(alerts.len(), 1);
         let diff = alerts[0].next_fire - now;
-        assert!(diff.num_days() >= 6 && diff.num_days() <= 7);
+        assert!((6..=7).contains(&diff.num_days()));
     }
 
     #[test]

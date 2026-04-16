@@ -250,8 +250,8 @@ mod tests {
         let mut gen = TrafficGenerator::with_defaults();
         gen.generate_segment((32.0, 34.0), (32.01, 34.01), TrafficDensity::Light, 1.0);
         for v in &gen.vehicles {
-            assert!(v.position.0 >= 32.0 && v.position.0 <= 32.01);
-            assert!(v.position.1 >= 34.0 && v.position.1 <= 34.01);
+            assert!((32.0..=32.01).contains(&v.position.0));
+            assert!((34.0..=34.01).contains(&v.position.1));
         }
     }
 

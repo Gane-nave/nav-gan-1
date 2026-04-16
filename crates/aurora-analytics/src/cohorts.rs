@@ -75,7 +75,7 @@ impl CohortEngine {
     pub fn matches(criterion: &CohortCriterion, user: &UserRecord) -> bool {
         match criterion {
             CohortCriterion::FirstSeenRange { from, to } => {
-                user.first_seen >= *from && user.first_seen <= *to
+                (*from..=*to).contains(&user.first_seen)
             }
             CohortCriterion::Region {
                 min_lat,
@@ -84,7 +84,7 @@ impl CohortEngine {
                 max_lon,
             } => {
                 if let (Some(lat), Some(lon)) = (user.lat, user.lon) {
-                    lat >= *min_lat && lat <= *max_lat && lon >= *min_lon && lon <= *max_lon
+                    (*min_lat..=*max_lat).contains(&lat) && (*min_lon..=*max_lon).contains(&lon)
                 } else {
                     false
                 }

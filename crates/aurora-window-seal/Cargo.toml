@@ -1,0 +1,6 @@
+[package]
+name = "aurora-window-seal"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]

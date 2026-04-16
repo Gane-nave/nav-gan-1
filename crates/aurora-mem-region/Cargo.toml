@@ -1,0 +1,4 @@
+[package]
+name = "aurora-mem-region"
+version = "0.1.0"
+edition = "2021"

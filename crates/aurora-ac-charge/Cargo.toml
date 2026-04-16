@@ -1,0 +1,6 @@
+[package]
+name = "aurora-ac-charge"
+version.workspace = true
+edition.workspace = true
+
+[dependencies]
