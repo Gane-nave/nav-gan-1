@@ -1,13 +1,13 @@
-/// event store2: append, read, subscribe, snapshot, log
-/// Phase 1861
+/// aurora-event-store2: event store2
+/// Phase 2582
 
 #[derive(Debug, Clone)]
 pub struct EventStore2 {
     pub append_ok: bool,
     pub read_ok: bool,
-    pub subscribe_ok: bool,
     pub snapshot_ok: bool,
-    pub log_ok: bool,
+    pub compact_ok: bool,
+    pub archive_ok: bool,
 }
 
 impl Default for EventStore2 {
@@ -21,18 +21,18 @@ impl EventStore2 {
         Self {
             append_ok: true,
             read_ok: true,
-            subscribe_ok: true,
             snapshot_ok: true,
-            log_ok: true,
+            compact_ok: true,
+            archive_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.append_ok && self.read_ok && self.subscribe_ok
+        self.append_ok && self.read_ok && self.snapshot_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.snapshot_ok && self.log_ok
+        self.compact_ok && self.archive_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = EventStore2::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = EventStore2::default();
+        assert!(c.all_ok());
     }
 }

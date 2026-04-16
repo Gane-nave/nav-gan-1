@@ -1,13 +1,13 @@
-/// event source: apply, replay, project, snapshot, log
-/// Phase 1862
+/// aurora-event-source: event source
+/// Phase 2576
 
 #[derive(Debug, Clone)]
 pub struct EventSource {
-    pub apply_ok: bool,
-    pub replay_ok: bool,
-    pub project_ok: bool,
-    pub snapshot_ok: bool,
-    pub log_ok: bool,
+    pub poll_ok: bool,
+    pub push_ok: bool,
+    pub transform_ok: bool,
+    pub filter_ok: bool,
+    pub monitor_ok: bool,
 }
 
 impl Default for EventSource {
@@ -19,20 +19,20 @@ impl Default for EventSource {
 impl EventSource {
     pub fn new() -> Self {
         Self {
-            apply_ok: true,
-            replay_ok: true,
-            project_ok: true,
-            snapshot_ok: true,
-            log_ok: true,
+            poll_ok: true,
+            push_ok: true,
+            transform_ok: true,
+            filter_ok: true,
+            monitor_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.apply_ok && self.replay_ok && self.project_ok
+        self.poll_ok && self.push_ok && self.transform_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.snapshot_ok && self.log_ok
+        self.filter_ok && self.monitor_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl EventSource {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.apply_ok || !self.replay_ok
+        !self.poll_ok || !self.push_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.apply_ok {
+        if !self.poll_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = EventSource::new();
-        c.apply_ok = false;
+        c.poll_ok = false;
         assert!(c.needs_attention());
     }
 
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = EventSource::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = EventSource::default();
+        assert!(c.all_ok());
     }
 }

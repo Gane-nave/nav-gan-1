@@ -1,13 +1,13 @@
-/// cloud secret: store, rotate, access, audit, log
-/// Phase 1456
+/// aurora-cloud-secret: cloud secret
+/// Phase 2553
 
 #[derive(Debug, Clone)]
 pub struct CloudSecret {
     pub store_ok: bool,
+    pub retrieve_ok: bool,
     pub rotate_ok: bool,
-    pub access_ok: bool,
     pub audit_ok: bool,
-    pub log_ok: bool,
+    pub expire_ok: bool,
 }
 
 impl Default for CloudSecret {
@@ -20,19 +20,19 @@ impl CloudSecret {
     pub fn new() -> Self {
         Self {
             store_ok: true,
+            retrieve_ok: true,
             rotate_ok: true,
-            access_ok: true,
             audit_ok: true,
-            log_ok: true,
+            expire_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.store_ok && self.rotate_ok && self.access_ok
+        self.store_ok && self.retrieve_ok && self.rotate_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.audit_ok && self.log_ok
+        self.audit_ok && self.expire_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl CloudSecret {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.store_ok || !self.rotate_ok
+        !self.store_ok || !self.retrieve_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = CloudSecret::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = CloudSecret::default();
+        assert!(c.all_ok());
     }
 }

@@ -1,13 +1,13 @@
-/// test stub: create, configure, verify, reset, log
-/// Phase 2109
+/// aurora-test-stub: test stub
+/// Phase 2478
 
 #[derive(Debug, Clone)]
 pub struct TestStub {
-    pub create_ok: bool,
-    pub configure_ok: bool,
-    pub verify_ok: bool,
+    pub define_ok: bool,
+    pub invoke_ok: bool,
     pub reset_ok: bool,
-    pub log_ok: bool,
+    pub record_ok: bool,
+    pub verify_ok: bool,
 }
 
 impl Default for TestStub {
@@ -19,20 +19,20 @@ impl Default for TestStub {
 impl TestStub {
     pub fn new() -> Self {
         Self {
-            create_ok: true,
-            configure_ok: true,
-            verify_ok: true,
+            define_ok: true,
+            invoke_ok: true,
             reset_ok: true,
-            log_ok: true,
+            record_ok: true,
+            verify_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.create_ok && self.configure_ok && self.verify_ok
+        self.define_ok && self.invoke_ok && self.reset_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.reset_ok && self.log_ok
+        self.record_ok && self.verify_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,11 +40,11 @@ impl TestStub {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.create_ok || !self.configure_ok
+        !self.define_ok || !self.invoke_ok
     }
 
     pub fn health_score(&self) -> f64 {
-        if !self.create_ok {
+        if !self.define_ok {
             return 5.0;
         }
         100.0
@@ -82,7 +82,7 @@ mod tests {
     #[test]
     fn test_field_toggle() {
         let mut c = TestStub::new();
-        c.create_ok = false;
+        c.define_ok = false;
         assert!(c.needs_attention());
     }
 
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = TestStub::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = TestStub::default();
+        assert!(c.all_ok());
     }
 }

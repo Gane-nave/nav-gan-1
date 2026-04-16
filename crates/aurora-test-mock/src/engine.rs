@@ -1,13 +1,13 @@
-/// test mock: define, inject, verify, reset, log
-/// Phase 1528
+/// aurora-test-mock: test mock
+/// Phase 2477
 
 #[derive(Debug, Clone)]
 pub struct TestMock {
     pub define_ok: bool,
-    pub inject_ok: bool,
     pub verify_ok: bool,
     pub reset_ok: bool,
-    pub log_ok: bool,
+    pub stub_ok: bool,
+    pub spy_ok: bool,
 }
 
 impl Default for TestMock {
@@ -20,19 +20,19 @@ impl TestMock {
     pub fn new() -> Self {
         Self {
             define_ok: true,
-            inject_ok: true,
             verify_ok: true,
             reset_ok: true,
-            log_ok: true,
+            stub_ok: true,
+            spy_ok: true,
         }
     }
 
     pub fn primary_ok(&self) -> bool {
-        self.define_ok && self.inject_ok && self.verify_ok
+        self.define_ok && self.verify_ok && self.reset_ok
     }
 
     pub fn secondary_ok(&self) -> bool {
-        self.reset_ok && self.log_ok
+        self.stub_ok && self.spy_ok
     }
 
     pub fn all_ok(&self) -> bool {
@@ -40,7 +40,7 @@ impl TestMock {
     }
 
     pub fn needs_attention(&self) -> bool {
-        !self.define_ok || !self.inject_ok
+        !self.define_ok || !self.verify_ok
     }
 
     pub fn health_score(&self) -> f64 {
@@ -90,5 +90,11 @@ mod tests {
     fn test_health() {
         let c = TestMock::new();
         assert!((c.health_score() - 100.0).abs() < 0.1);
+    }
+
+    #[test]
+    fn test_default() {
+        let c = TestMock::default();
+        assert!(c.all_ok());
     }
 }
