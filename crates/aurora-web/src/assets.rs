@@ -1074,4 +1074,69 @@ mod tests {
     fn html_contains_responsive_css() {
         assert!(MAIN_HTML.contains("@media"));
     }
+
+    #[test]
+    fn html_has_balanced_script_tags() {
+        let opens = MAIN_HTML.matches("<script").count();
+        let closes = MAIN_HTML.matches("</script>").count();
+        assert_eq!(
+            opens, closes,
+            "Mismatched <script> tags: {opens} open, {closes} close"
+        );
+    }
+
+    #[test]
+    fn html_has_balanced_style_tags() {
+        let opens = MAIN_HTML.matches("<style").count();
+        let closes = MAIN_HTML.matches("</style>").count();
+        assert_eq!(
+            opens, closes,
+            "Mismatched <style> tags: {opens} open, {closes} close"
+        );
+    }
+
+    #[test]
+    fn html_has_doctype_and_root_elements() {
+        assert!(
+            MAIN_HTML.starts_with("<!DOCTYPE html>"),
+            "Missing <!DOCTYPE html>"
+        );
+        assert!(MAIN_HTML.contains("<html"), "Missing <html> element");
+        assert!(MAIN_HTML.contains("</html>"), "Missing </html>");
+        assert!(MAIN_HTML.contains("<head>"), "Missing <head> element");
+        assert!(MAIN_HTML.contains("</head>"), "Missing </head>");
+        assert!(MAIN_HTML.contains("<body>"), "Missing <body> element");
+        assert!(MAIN_HTML.contains("</body>"), "Missing </body>");
+    }
+
+    #[test]
+    fn html_css_braces_are_balanced() {
+        // Extract CSS between <style> and </style> and count braces
+        let style_start = MAIN_HTML.find("<style>").expect("no <style> tag");
+        let style_end = MAIN_HTML.find("</style>").expect("no </style> tag");
+        let css = &MAIN_HTML[style_start..style_end];
+        let opens = css.matches('{').count();
+        let closes = css.matches('}').count();
+        assert_eq!(
+            opens, closes,
+            "Unbalanced CSS braces: {opens} '{{' vs {closes} '}}'"
+        );
+    }
+
+    #[test]
+    fn html_contains_expected_element_ids() {
+        for id in &[
+            "app",
+            "header",
+            "map",
+            "left-panel",
+            "right-panel",
+            "footer",
+        ] {
+            assert!(
+                MAIN_HTML.contains(&format!("id=\"{id}\"")),
+                "Missing element with id=\"{id}\""
+            );
+        }
+    }
 }
