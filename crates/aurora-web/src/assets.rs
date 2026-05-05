@@ -1111,7 +1111,12 @@ mod tests {
 
     #[test]
     fn html_css_braces_are_balanced() {
-        // Extract CSS between <style> and </style> and count braces
+        // MAIN_HTML contains exactly one <style> block; verify all CSS braces are balanced.
+        let style_count = MAIN_HTML.matches("<style>").count();
+        assert_eq!(
+            style_count, 1,
+            "Expected exactly one <style> block, found {style_count}"
+        );
         let style_start = MAIN_HTML.find("<style>").expect("no <style> tag");
         let style_end = MAIN_HTML.find("</style>").expect("no </style> tag");
         let css = &MAIN_HTML[style_start..style_end];
