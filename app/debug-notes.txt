@@ -1,0 +1,39 @@
+AURORA NAV — Complete Test Results (2026-03-27 11:09)
+=====================================================
+
+SIDEBAR NOW HAS 14 PANELS + Traffic + Settings = 16 sidebar items:
+1. Parking — Smart parking with availability, pricing, distance
+2. Charging — EV stations with kW/pricing, battery level
+3. Weather — Temperature, humidity, wind, hourly forecast
+4. V2X — Connected vehicles, SPaT/GLOSA signal timing
+5. Digital Twin — Live simulation, network load, congestion
+6. Driver Score — Score ring, safety/alertness/smoothness/eco
+7. Fleet Command — Active/idle/service vehicles
+8. Wallet & Payments — Balance, top-up, transactions
+9. Report Incident — 6 incident types, evidence upload
+10. Transport Modes — Drive/Transit/Bike/Walk/Train/Scooter
+11. Map Layers — Standard + Advanced layers
+12. Analytics — Overview/Traffic/Driver/Trust tabs with health rings, metrics, live feed
+13. Spec Vault — AURORA (36 sections) + GMIN (15 parts), expandable with Hebrew content
+14. System Architecture — 168 Rust crates across 15 layers from Devin project
+
+ALL PANELS TESTED AND WORKING.
+
+ROUTE PLANNING:
+- Clicking Home favorite shows "TO Home / Rothschild Blvd 1, Tel Aviv" at bottom
+- Bottom sheet with route results may need more visibility
+- Route line drawn on map
+
+ISSUE TO FIX:
+- Route planner bottom sheet is partially hidden — need to make it more visible
+- The bottom sheet shows destination but route alternatives may be cut off
+
+Zero TypeScript errors, zero runtime errors.
+
+UPDATE (2026-03-27 16:35):
+- SystemArchPanel rewritten with 5 view modes: Layers, Grid, Timeline, Deps, Stats
+- Build Phase Timeline with 11 phases, animated progress bars
+- Dependency graph with 15 inter-layer links and coupling analysis
+- Stats view with circular progress rings and layer distribution bars
+- Crate detail modal with test info
+- All compiling, server running, zero errors.

@@ -1,0 +1,52 @@
+---
+title: "G.A.N.E — Incident Report State Machine"
+---
+stateDiagram-v2
+    [*] --> pending: User submits report
+
+    pending --> confirmed: N≥3 confirmations<br/>within 500m radius
+    pending --> expired: TTL exceeded (30 min)<br/>No confirmations
+    pending --> rejected: Admin/AI rejects<br/>Spam or invalid
+
+    confirmed --> active: Auto-promote<br/>Notify affected users
+    confirmed --> rejected: Admin review<br/>False positive
+
+    active --> resolving: First "clear" report<br/>or auto-decay timer
+    active --> escalated: Severity upgrade<br/>Emergency detected
+
+    escalated --> active: De-escalation<br/>Severity downgrade
+    escalated --> resolving: Resolution started
+
+    resolving --> resolved: M≥2 "clear" confirmations<br/>or admin resolution
+    resolving --> active: Re-confirmation<br/>Still ongoing
+
+    resolved --> archived: Archive timer (24h)<br/>Move to cold storage
+    resolved --> active: Re-reported<br/>Same location
+
+    rejected --> [*]: Permanently removed
+    expired --> [*]: Cleaned up
+    archived --> [*]: Retention policy<br/>Auto-purge (90 days)
+
+    note right of pending
+        Entry: Validate location, type, description
+        Guard: Rate limit per user (20/day)
+        Action: Geo-cluster with nearby reports
+    end note
+
+    note right of confirmed
+        Entry: Merge cluster, assign severity
+        Guard: Plausibility check
+        Action: Create evidence chain entry
+    end note
+
+    note right of active
+        Entry: Notify users on affected routes
+        Action: Update traffic pipeline
+        Action: Trigger reroute suggestions
+    end note
+
+    note right of escalated
+        Entry: Notify emergency services
+        Action: Increase notification radius
+        Action: Alert fleet operators
+    end note

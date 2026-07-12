@@ -1,121 +1,78 @@
-# AURORA NAV / GMIN
+# G.A.N.E NAV — Global Autonomous Navigation Ecosystem
 
-**Global Mobility Intelligence Network** -- A production-grade navigation system built in Rust with 210+ modular crates covering GNSS positioning, sensor fusion, routing, traffic, V2X communication, indoor positioning, AR navigation, and more.
+**Mission-critical, trust-aware navigation platform.** GNSS is treated as one signal among many: the system validates continuously (RAIM, spoof/jam detection), fuses multiple sensors, degrades gracefully, and never fails silently. Hebrew-first RTL product UX for professional drivers, fleets, and emergency services.
 
-## Architecture Overview
+> Canonical engineering documents: [`SYSTEM-REVIEW.md`](./SYSTEM-REVIEW.md) · [`GANE-NAV-MASTER-BLUEPRINT.md`](./GANE-NAV-MASTER-BLUEPRINT.md) · [`docs/PHASE1-TECHNICAL-DESIGN.md`](./docs/PHASE1-TECHNICAL-DESIGN.md)
 
-AURORA NAV is organized as a Cargo workspace with modular crates in `crates/`:
+## Monorepo layout
 
 ```
-aurora-nav/
-  crates/
-    aurora-core/          # Core types, coordinates, errors
-    aurora-gnss/          # Multi-constellation GNSS receiver
-    aurora-fusion/        # Extended Kalman Filter sensor fusion
-    aurora-integrity/     # RAIM, protection levels, jamming/spoofing detection
-    aurora-routing/       # A* / Dijkstra route planning
-    aurora-map/           # Map data, tiles, matching
-    aurora-lane/          # Lane-level guidance
-    aurora-traffic/       # Real-time traffic flow
-    aurora-v2x/           # Vehicle-to-Everything (DSRC/C-V2X)
-    aurora-indoor/        # BLE beacon trilateration, magnetic fingerprinting
-    aurora-ar-nav/        # Augmented Reality overlay, lane projection
-    aurora-api/           # REST API server (Axum)
-    aurora-web/           # Interactive web dashboard (Leaflet.js)
-    aurora-app/           # Application orchestration
-    aurora-orchestrator/  # Pipeline orchestrator
-    ... (200+ more crates)
+crates/        Rust navigation engine workspace
+               ├─ core engine (~200 crates with real logic): aurora-core, -gnss (WLS PVT),
+               │  -fusion (EKF), -integrity (RAIM/spoof/jam), -routing (Dijkstra +
+               │  vehicle-envelope constraints), -map, -traffic, -v2x, -indoor, -ar-nav,
+               │  -api (Axum, 16 endpoints), -web (embedded dashboard), -app (binary)
+               ├─ gane-wasm: the same engine compiled to WebAssembly (browser/Capacitor)
+               └─ long tail of generated placeholder crates (scheduled for archival —
+                  see Blueprint §4; headline crate counts are NOT a capability metric)
+app/           TypeScript product application (React 19 PWA + Express/tRPC + MySQL/Drizzle)
+               58 panels, 49 client engines, 22 executable contract modules, 33-table schema,
+               40+ languages with full RTL, 11-type vehicle profile system
+mobile/        Android delivery channel (Capacitor + raw-GNSS plugin + TWA packaging,
+               app id com.gane.nav) with a zero-dependency verified missions backend
+docs/          Technical designs and engineering documentation
 ```
 
-## Key Features
+## Honest metrics (verified by execution, 2026-07)
 
-### Positioning and Navigation
-- **Multi-GNSS**: GPS, Galileo, GLONASS, BeiDou with quality scoring
-- **EKF Fusion**: Extended Kalman Filter combining GNSS, IMU, barometer, odometry
-- **Tunnel Mode**: Dead-reckoning with automatic GNSS handoff
-- **RTK/PPP**: Centimetre-level corrections with RAIM integrity
-- **Indoor Positioning**: BLE beacon trilateration, WiFi RTT, magnetic fingerprinting
-- **Dead Reckoning**: Inertial navigation for GNSS-denied environments
+- Engine: **~200 crates of real navigation logic**; the workspace also carries ~2,250
+  generated placeholder crates pending archival — treat "2,452 crates / 18k tests"
+  headlines as padding.
+- **~4,500 meaningful engine tests** (incl. 88 adversarial test files and cross-crate
+  e2e suites) — all green.
+- The engine **builds, runs, and serves**: `cargo run -p aurora-app` → REST API on :3000
+  (`/health`, `/position`, `/integrity`, `/metrics`, OpenAPI + Swagger) + live dashboard.
+- The navigation core **compiles to WASM** (`gane-wasm`, ~630 KB release artifact) — one
+  engine for server, browser, and Android.
+- Vehicle-envelope routing enforced as hard constraints: an illegal route for the given
+  vehicle (height/weight/hazmat/road class) is never returned.
+- `app/` runs standalone in degraded demo mode; full capability requires the external
+  integrations listed in the Blueprint §11 (DB, OAuth, Stripe, Redis, map keys, S3,
+  Sentry, OTLP).
+- `mobile/backend`: 15/15 integration tests, JSONL persistence with tombstone audit trail.
 
-### Routing and Traffic
-- **Multi-modal Routing**: Car, bicycle, pedestrian, public transit
-- **Real-time Traffic**: Congestion heatmaps, incident detection, predictive routing
-- **Lane Guidance**: Turn-by-turn with lane-level precision
-- **Risk Engine**: Probabilistic route scoring with confidence intervals
-- **ETA Prediction**: ML-enhanced arrival time estimation
+## Quick start
 
-### V2X Communication
-- **DSRC / C-V2X**: Dual-mode vehicle-to-everything communication
-- **BSM**: Basic Safety Message exchange with nearby vehicles
-- **SPaT**: Signal Phase and Timing from smart intersections
-- **GLOSA**: Green-Light Optimal Speed Advisory
-- **Collision Detection**: Time-to-collision (TTC) based warnings
-
-### AR Navigation
-- **3D Projection**: Pinhole camera model for AR waypoint overlay
-- **Lane Projection**: Straight and curved lane guidance visualization
-- **Distance Fading**: Opacity and scale based on depth
-- **Depth Sorting**: Back-to-front rendering order
-
-### Infrastructure
-- **210+ Crates**: Modular, independently testable components
-- **4,600+ Tests**: Comprehensive unit, integration, and adversarial tests
-- **REST API**: Axum-based server with health checks, CORS, tracing
-- **Web Dashboard**: Interactive Leaflet.js map with real-time telemetry
-- **Docker Ready**: Multi-stage build with health checks
-- **Observability**: Structured logging, distributed tracing, histograms
-
-## Quick Start
-
-### Prerequisites
-- Rust 1.70+ (tested on 1.94.0)
-- Cargo (included with Rust)
-
-### Build
 ```bash
-cargo build --workspace
+# Engine binary (REST API + dashboard on :3000)
+cargo run -p aurora-app
+
+# Engine status / health probe
+cargo run -p aurora-app -- --status
+
+# Core engine tests
+cargo test -p aurora-core -p aurora-gnss -p aurora-fusion -p aurora-integrity \
+           -p aurora-routing -p aurora-map -p gane-wasm
+
+# WASM engine artifact
+cargo build --target wasm32-unknown-unknown --release -p gane-wasm
+
+# Product app (degraded demo mode without env config)
+cd app && pnpm install && pnpm dev
+
+# Mobile backend verification
+cd mobile/backend && node test.js
+
+# Docker (engine)
+docker compose up --build
 ```
 
-### Run Tests
-```bash
-cargo test --workspace
-```
+## CI
 
-### Run API Server
-```bash
-cargo run -p aurora-api
-```
-The server starts on `http://localhost:3000` with:
-- `GET /` -- Web dashboard
-- `GET /api/dashboard` -- JSON telemetry data
-- `GET /health` -- Health check
-
-### Lint
-```bash
-cargo clippy --all-targets -- -D warnings
-cargo fmt --all -- --check
-```
-
-## Crate Categories
-
-| Category | Crates | Description |
-|----------|--------|-------------|
-| Core | aurora-core, aurora-events, aurora-config | Foundation types, events, configuration |
-| GNSS/PNT | aurora-gnss, aurora-multi-gnss, aurora-ekf, aurora-tunnel | Positioning, navigation, timing |
-| Sensors | aurora-sensors, aurora-fusion, aurora-dead-reckoning | IMU, barometer, odometry fusion |
-| Integrity | aurora-integrity, aurora-continuity, aurora-anti-manipulation | RAIM, jamming/spoofing detection |
-| Routing | aurora-routing, aurora-risk, aurora-probabilistic | Route planning, risk scoring |
-| Traffic | aurora-traffic, aurora-stability, aurora-crowd-speed | Real-time traffic management |
-| V2X | aurora-v2x | Vehicle-to-Everything communication |
-| Indoor | aurora-indoor | Indoor positioning systems |
-| AR | aurora-ar-nav, aurora-ar | Augmented Reality navigation |
-| Maps | aurora-map, aurora-lane, aurora-offline, aurora-tiles | Map data, lane guidance, offline maps |
-| API/Web | aurora-api, aurora-web | REST API server, web dashboard |
-| Fleet | aurora-fleet, aurora-emergency | Fleet management, emergency routing |
-| Smart City | aurora-city, aurora-twin | Smart city integration, digital twins |
-| Infrastructure | aurora-cache, aurora-pipeline, aurora-mesh | Data structures, concurrency, networking |
-| Observability | aurora-telemetry, aurora-metrics, aurora-tracing-dist | Logging, metrics, distributed tracing |
-| Security | aurora-auth, aurora-security, aurora-compliance | Authentication, encryption, compliance |
+Seven gates on every PR: Build & Check, Clippy (`-D warnings`), full test suite with
+count gate, Format, Benchmarks Compile, Documentation (`RUSTDOCFLAGS=-D warnings`),
+and **WASM Core Check** (the navigation core must always compile for
+`wasm32-unknown-unknown`). All actions are pinned to full commit SHAs per org policy.
 
 ## License
 

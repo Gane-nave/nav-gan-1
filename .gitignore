@@ -3,3 +3,7 @@
 *.swp
 *.swo
 .DS_Store
+node_modules/
+dist/
+mobile/backend/data/
+app/.env*

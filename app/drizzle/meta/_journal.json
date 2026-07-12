@@ -1,0 +1,69 @@
+{
+  "version": "7",
+  "dialect": "mysql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "5",
+      "when": 1775034733718,
+      "tag": "0000_flimsy_nico_minoru",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "5",
+      "when": 1775035995562,
+      "tag": "0001_friendly_silk_fever",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1775040848024,
+      "tag": "0002_flat_ricochet",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "5",
+      "when": 1775061489612,
+      "tag": "0003_furry_nick_fury",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "5",
+      "when": 1775077648201,
+      "tag": "0004_broad_carmella_unuscione",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "5",
+      "when": 1775078649075,
+      "tag": "0005_flaky_zaladane",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "5",
+      "when": 1775089792701,
+      "tag": "0006_steady_firebrand",
+      "breakpoints": true
+    },
+    {
+      "idx": 7,
+      "version": "5",
+      "when": 1775124843537,
+      "tag": "0007_closed_baron_strucker",
+      "breakpoints": true
+    },
+    {
+      "idx": 8,
+      "version": "5",
+      "when": 1775128634552,
+      "tag": "0008_sticky_jackpot",
+      "breakpoints": true
+    }
+  ]
+}

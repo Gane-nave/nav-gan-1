@@ -1,0 +1,235 @@
+# G.A.N.E — Prometheus Alerting Rules
+# ======================================
+# Defines alerts for error rates, latency, capacity, and infrastructure health.
+# Loaded by Prometheus via rule_files configuration.
+
+groups:
+  # ═══════════════════════════════════════════════════════════
+  # HTTP & API Health
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_http_alerts
+    interval: 15s
+    rules:
+      # Error rate exceeds 5% over 5 minutes
+      - alert: HighErrorRate
+        expr: |
+          (
+            sum(rate(gane_http_requests_total{status_code=~"5.."}[5m]))
+            /
+            sum(rate(gane_http_requests_total[5m]))
+          ) * 100 > 5
+        for: 2m
+        labels:
+          severity: critical
+          component: http
+        annotations:
+          summary: "High HTTP error rate ({{ $value | printf \"%.1f\" }}%)"
+          description: "More than 5% of HTTP requests are returning 5xx errors over the last 5 minutes. Current rate: {{ $value | printf \"%.1f\" }}%."
+          runbook: "Check application logs, database connectivity, and downstream service health."
+
+      # p99 latency exceeds 2 seconds
+      - alert: HighLatencyP99
+        expr: |
+          histogram_quantile(0.99, rate(gane_http_request_duration_seconds_bucket[5m])) > 2
+        for: 3m
+        labels:
+          severity: warning
+          component: http
+        annotations:
+          summary: "High p99 latency ({{ $value | printf \"%.2f\" }}s)"
+          description: "99th percentile HTTP latency exceeds 2 seconds. Current p99: {{ $value | printf \"%.2f\" }}s."
+          runbook: "Check for slow database queries, N+1 patterns, or resource contention."
+
+      # p95 latency exceeds 1 second
+      - alert: HighLatencyP95
+        expr: |
+          histogram_quantile(0.95, rate(gane_http_request_duration_seconds_bucket[5m])) > 1
+        for: 5m
+        labels:
+          severity: warning
+          component: http
+        annotations:
+          summary: "Elevated p95 latency ({{ $value | printf \"%.2f\" }}s)"
+          description: "95th percentile HTTP latency exceeds 1 second. Current p95: {{ $value | printf \"%.2f\" }}s."
+
+      # Too many active requests (potential overload)
+      - alert: HighActiveRequests
+        expr: gane_http_active_requests > 100
+        for: 1m
+        labels:
+          severity: warning
+          component: http
+        annotations:
+          summary: "High number of active HTTP requests ({{ $value }})"
+          description: "More than 100 concurrent HTTP requests. This may indicate a traffic spike or slow responses."
+
+  # ═══════════════════════════════════════════════════════════
+  # WebSocket & Real-Time
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_websocket_alerts
+    interval: 15s
+    rules:
+      # WebSocket connections exceed 80% of capacity (assuming 1000 max)
+      - alert: WebSocketCapacityHigh
+        expr: gane_ws_connections_active > 800
+        for: 2m
+        labels:
+          severity: warning
+          component: websocket
+        annotations:
+          summary: "WebSocket connections at {{ $value | printf \"%.0f\" }} (80%+ capacity)"
+          description: "Active WebSocket connections exceed 80% of the 1000 connection capacity limit."
+          runbook: "Consider horizontal scaling or increasing connection limits."
+
+      # WebSocket connections exceed 95% of capacity
+      - alert: WebSocketCapacityCritical
+        expr: gane_ws_connections_active > 950
+        for: 1m
+        labels:
+          severity: critical
+          component: websocket
+        annotations:
+          summary: "WebSocket connections critical: {{ $value | printf \"%.0f\" }} (95%+ capacity)"
+          description: "WebSocket connections are near maximum capacity. New connections may be rejected."
+
+      # High WebSocket disconnect rate
+      - alert: HighWebSocketDisconnectRate
+        expr: rate(gane_ws_disconnects_total[5m]) > 10
+        for: 3m
+        labels:
+          severity: warning
+          component: websocket
+        annotations:
+          summary: "High WebSocket disconnect rate ({{ $value | printf \"%.1f\" }}/s)"
+          description: "WebSocket disconnections exceeding 10/s may indicate network instability or server issues."
+
+  # ═══════════════════════════════════════════════════════════
+  # Rate Limiting
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_rate_limit_alerts
+    interval: 15s
+    rules:
+      # High rate of blocked requests
+      - alert: HighRateLimitBlocks
+        expr: |
+          sum(rate(gane_rate_limit_blocked_total[5m])) > 5
+        for: 3m
+        labels:
+          severity: warning
+          component: rate_limiter
+        annotations:
+          summary: "High rate limit blocks ({{ $value | printf \"%.1f\" }}/s)"
+          description: "Rate limiter is blocking more than 5 requests/second. This may indicate abuse or misconfigured limits."
+
+  # ═══════════════════════════════════════════════════════════
+  # Redis & Infrastructure
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_infrastructure_alerts
+    interval: 15s
+    rules:
+      # Redis Pub/Sub fallback to in-memory
+      - alert: RedisUnavailable
+        expr: gane_redis_pubsub_mode == 0
+        for: 1m
+        labels:
+          severity: critical
+          component: redis
+        annotations:
+          summary: "Redis Pub/Sub unavailable — using in-memory fallback"
+          description: "Redis is disconnected. The system is running in single-server mode with EventEmitter fallback. Multi-server event broadcasting is disabled."
+          runbook: "Check Redis connection string (REDIS_URL), Redis server health, and network connectivity."
+
+      # Redis ping latency too high
+      - alert: RedisHighLatency
+        expr: gane_redis_ping_latency_ms > 50
+        for: 2m
+        labels:
+          severity: warning
+          component: redis
+        annotations:
+          summary: "Redis ping latency high ({{ $value | printf \"%.0f\" }}ms)"
+          description: "Redis round-trip latency exceeds 50ms. This may impact real-time collaboration performance."
+
+  # ═══════════════════════════════════════════════════════════
+  # Node.js Runtime
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_runtime_alerts
+    interval: 30s
+    rules:
+      # Memory usage exceeds 512MB RSS
+      - alert: HighMemoryUsage
+        expr: gane_process_resident_memory_bytes{app="gane"} > 536870912
+        for: 5m
+        labels:
+          severity: warning
+          component: runtime
+        annotations:
+          summary: "High memory usage ({{ $value | humanize1024 }})"
+          description: "Node.js process RSS exceeds 512MB. Check for memory leaks or increase available memory."
+
+      # Memory usage exceeds 1GB RSS (critical)
+      - alert: CriticalMemoryUsage
+        expr: gane_process_resident_memory_bytes{app="gane"} > 1073741824
+        for: 2m
+        labels:
+          severity: critical
+          component: runtime
+        annotations:
+          summary: "Critical memory usage ({{ $value | humanize1024 }})"
+          description: "Node.js process RSS exceeds 1GB. Immediate investigation required."
+
+      # Event loop lag exceeds 500ms
+      - alert: HighEventLoopLag
+        expr: gane_nodejs_eventloop_lag_seconds{app="gane"} > 0.5
+        for: 2m
+        labels:
+          severity: critical
+          component: runtime
+        annotations:
+          summary: "High event loop lag ({{ $value | printf \"%.2f\" }}s)"
+          description: "Node.js event loop lag exceeds 500ms. The application is likely blocked by synchronous operations."
+          runbook: "Profile CPU usage, check for synchronous I/O, and review recent code changes."
+
+      # Event loop lag exceeds 100ms (warning)
+      - alert: ElevatedEventLoopLag
+        expr: gane_nodejs_eventloop_lag_seconds{app="gane"} > 0.1
+        for: 5m
+        labels:
+          severity: warning
+          component: runtime
+        annotations:
+          summary: "Elevated event loop lag ({{ $value | printf \"%.2f\" }}s)"
+          description: "Node.js event loop lag exceeds 100ms. Performance may be degraded."
+
+  # ═══════════════════════════════════════════════════════════
+  # Recording Rules (pre-computed for dashboard efficiency)
+  # ═══════════════════════════════════════════════════════════
+  - name: gane_recording_rules
+    interval: 15s
+    rules:
+      # Pre-compute error rate percentage
+      - record: gane:http_error_rate_percent
+        expr: |
+          (
+            sum(rate(gane_http_requests_total{status_code=~"5.."}[5m]))
+            /
+            sum(rate(gane_http_requests_total[5m]))
+          ) * 100
+
+      # Pre-compute request rate
+      - record: gane:http_request_rate
+        expr: sum(rate(gane_http_requests_total[5m]))
+
+      # Pre-compute p50/p95/p99 latencies
+      - record: gane:http_latency_p50
+        expr: histogram_quantile(0.50, rate(gane_http_request_duration_seconds_bucket[5m]))
+
+      - record: gane:http_latency_p95
+        expr: histogram_quantile(0.95, rate(gane_http_request_duration_seconds_bucket[5m]))
+
+      - record: gane:http_latency_p99
+        expr: histogram_quantile(0.99, rate(gane_http_request_duration_seconds_bucket[5m]))
+
+      # Pre-compute WS capacity percentage
+      - record: gane:ws_capacity_percent
+        expr: (gane_ws_connections_active / 1000) * 100

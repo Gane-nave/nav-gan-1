@@ -1,0 +1,45 @@
+---
+title: "G.A.N.E — C4 Context Diagram"
+---
+graph TB
+    subgraph External Actors
+        driver["🚗 Driver / Rider<br/>(Mobile App User)"]
+        fleetOp["🏢 Fleet Operator<br/>(Dashboard User)"]
+        admin["🔧 Platform Admin<br/>(Management Console)"]
+        owner["👑 Platform Owner<br/>(System Control)"]
+    end
+
+    subgraph External Systems
+        gnss["🛰️ GNSS Constellations<br/>(GPS, Galileo, GLONASS, BeiDou)"]
+        mapProvider["🗺️ Map Tile Provider<br/>(Google Maps API)"]
+        weatherAPI["🌦️ Weather Service<br/>(External API)"]
+        v2xNetwork["📡 V2X Network<br/>(DSRC / C-V2X)"]
+        oauthProvider["🔐 Manus OAuth<br/>(Identity Provider)"]
+        s3Storage["☁️ S3 Storage<br/>(File Storage)"]
+    end
+
+    gane["🌐 G.A.N.E Platform<br/>Global Autonomous Navigation Engine<br/><br/>Real-time navigation, traffic intelligence,<br/>fleet management, crowd-sourced data,<br/>incident reporting, and AI-powered routing"]
+
+    driver -->|"Uses mobile app<br/>Reports incidents<br/>Shares location"| gane
+    fleetOp -->|"Manages fleet<br/>Views analytics<br/>Sets geofences"| gane
+    admin -->|"Manages users<br/>Moderates content<br/>Configures system"| gane
+    owner -->|"Full system control<br/>AI command bot<br/>Feature flags"| gane
+
+    gane -->|"Receives satellite signals<br/>Multi-constellation fusion"| gnss
+    gane -->|"Fetches map tiles<br/>Geocoding, routing"| mapProvider
+    gane -->|"Fetches weather data<br/>Alerts, forecasts"| weatherAPI
+    gane <-->|"V2X messages<br/>BSM, SPaT, MAP"| v2xNetwork
+    gane -->|"OAuth 2.0 authentication<br/>User identity"| oauthProvider
+    gane -->|"File uploads<br/>Evidence storage"| s3Storage
+
+    style gane fill:#0ea5e9,stroke:#0284c7,color:#fff,stroke-width:3px
+    style driver fill:#22c55e,stroke:#16a34a,color:#fff
+    style fleetOp fill:#a855f7,stroke:#9333ea,color:#fff
+    style admin fill:#f59e0b,stroke:#d97706,color:#fff
+    style owner fill:#ef4444,stroke:#dc2626,color:#fff
+    style gnss fill:#64748b,stroke:#475569,color:#fff
+    style mapProvider fill:#64748b,stroke:#475569,color:#fff
+    style weatherAPI fill:#64748b,stroke:#475569,color:#fff
+    style v2xNetwork fill:#64748b,stroke:#475569,color:#fff
+    style oauthProvider fill:#64748b,stroke:#475569,color:#fff
+    style s3Storage fill:#64748b,stroke:#475569,color:#fff

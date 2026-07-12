@@ -1,0 +1,69 @@
+---
+title: "G.A.N.E — Security Trust Boundaries"
+---
+graph TB
+    subgraph "UNTRUSTED ZONE"
+        direction TB
+        client["📱 Client App<br/>Browser / Mobile"]
+        v2xPeer["📡 V2X Peer<br/>Other Vehicles"]
+    end
+
+    subgraph "EDGE ZONE"
+        direction TB
+        edgeProc["⚡ Edge Processor<br/>V2X Message Validation<br/>PKI Certificate Check"]
+    end
+
+    subgraph "DMZ ZONE"
+        direction TB
+        apiGw["🔀 API Gateway<br/>TLS 1.3 Termination<br/>Rate Limiting<br/>Payload Validation"]
+    end
+
+    subgraph "INTERNAL ZONE"
+        direction TB
+        authSvc["🔐 Auth Service<br/>JWT Verification<br/>Session Management"]
+        bizLogic["⚙️ Business Logic<br/>tRPC Procedures<br/>Role-Based Access"]
+        mlSvc["🤖 ML Service<br/>Model Inference<br/>Feature Validation"]
+    end
+
+    subgraph "PRIVILEGED ZONE"
+        direction TB
+        adminAPI["👑 Admin API<br/>MFA Required<br/>Audit Logging<br/>IP Allowlist"]
+    end
+
+    subgraph "CRITICAL ZONE"
+        direction TB
+        db[("💾 Database<br/>Encrypted at Rest<br/>Row-Level Security<br/>Connection Pool")]
+        kms["🔑 Key Management<br/>HSM-backed<br/>Key Rotation<br/>2-of-3 Custodians"]
+        s3[("☁️ S3 Storage<br/>Encrypted at Rest<br/>Tenant-Prefixed<br/>IAM Policies")]
+    end
+
+    client -->|"HTTPS/TLS 1.3<br/>Payload < 1MB<br/>100 req/min"| apiGw
+    v2xPeer -->|"IEEE 1609.2<br/>PKI Cert Chain<br/>Freshness < 500ms"| edgeProc
+
+    edgeProc -->|"Internal HTTPS<br/>Validated BSMs"| bizLogic
+
+    apiGw -->|"JWT Verification<br/>Token Expiry Check"| authSvc
+    apiGw -->|"Authenticated Request<br/>Role Context"| bizLogic
+
+    authSvc -->|"Session Cookie<br/>HttpOnly, Secure"| apiGw
+
+    bizLogic -->|"Parameterized Queries<br/>Pool Limit: 50<br/>Timeout: 30s"| db
+    bizLogic -->|"gRPC/TLS<br/>Input Validation<br/>Timeout: 500ms"| mlSvc
+    bizLogic -->|"Tenant-Prefixed Keys<br/>Content-Type Validation"| s3
+
+    adminAPI -->|"Admin Role Check<br/>Audit Log Entry"| bizLogic
+    adminAPI -->|"Key Operations<br/>Rotation Commands"| kms
+
+    kms -->|"DEK Encryption<br/>Key Wrapping"| db
+
+    style client fill:#ef4444,stroke:#dc2626,color:#fff
+    style v2xPeer fill:#ef4444,stroke:#dc2626,color:#fff
+    style edgeProc fill:#f97316,stroke:#ea580c,color:#fff
+    style apiGw fill:#f59e0b,stroke:#d97706,color:#fff
+    style authSvc fill:#22c55e,stroke:#16a34a,color:#fff
+    style bizLogic fill:#22c55e,stroke:#16a34a,color:#fff
+    style mlSvc fill:#22c55e,stroke:#16a34a,color:#fff
+    style adminAPI fill:#a855f7,stroke:#9333ea,color:#fff
+    style db fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style kms fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style s3 fill:#0ea5e9,stroke:#0284c7,color:#fff

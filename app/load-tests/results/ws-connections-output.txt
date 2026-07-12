@@ -1,0 +1,351 @@
+
+          /\      |‾‾| /‾‾/   /‾‾/   
+     /\  /  \     |  |/  /   /  /    
+    /  \/    \    |     (   /   ‾‾\  
+   /          \   |  |\  \ |  (‾)  | 
+  / __________ \  |__| \__\ \_____/ .io
+
+     execution: local
+        script: load-tests/ws-connections.js
+        output: -
+
+     scenarios: (100.00%) 1 scenario, 1000 max VUs, 4m30s max duration (incl. graceful stop):
+              * websocket_load: Up to 1000 looping VUs for 4m0s over 5 stages (gracefulRampDown: 30s, gracefulStop: 30s)
+
+
+running (0m00.9s), 0002/1000 VUs, 0 complete and 0 interrupted iterations
+websocket_load   [   0% ] 0002/1000 VUs  0m00.9s/4m00.0s
+
+running (0m01.9s), 0006/1000 VUs, 2 complete and 0 interrupted iterations
+websocket_load   [   1% ] 0006/1000 VUs  0m01.9s/4m00.0s
+
+running (0m02.9s), 0009/1000 VUs, 8 complete and 0 interrupted iterations
+websocket_load   [   1% ] 0009/1000 VUs  0m02.9s/4m00.0s
+
+running (0m03.9s), 0012/1000 VUs, 17 complete and 0 interrupted iterations
+websocket_load   [   2% ] 0012/1000 VUs  0m03.9s/4m00.0s
+
+running (0m04.9s), 0016/1000 VUs, 29 complete and 0 interrupted iterations
+websocket_load   [   2% ] 0016/1000 VUs  0m04.9s/4m00.0s
+
+running (0m05.9s), 0019/1000 VUs, 45 complete and 0 interrupted iterations
+websocket_load   [   2% ] 0019/1000 VUs  0m05.9s/4m00.0s
+
+running (0m06.9s), 0022/1000 VUs, 64 complete and 0 interrupted iterations
+websocket_load   [   3% ] 0022/1000 VUs  0m06.9s/4m00.0s
+
+running (0m07.9s), 0026/1000 VUs, 86 complete and 0 interrupted iterations
+websocket_load   [   3% ] 0026/1000 VUs  0m07.9s/4m00.0s
+
+running (0m08.9s), 0029/1000 VUs, 112 complete and 0 interrupted iterations
+websocket_load   [   4% ] 0029/1000 VUs  0m08.9s/4m00.0s
+
+running (0m09.9s), 0032/1000 VUs, 141 complete and 0 interrupted iterations
+websocket_load   [   4% ] 0032/1000 VUs  0m09.9s/4m00.0s
+
+running (0m10.9s), 0036/1000 VUs, 173 complete and 0 interrupted iterations
+websocket_load   [   5% ] 0036/1000 VUs  0m10.9s/4m00.0s
+
+running (0m11.9s), 0039/1000 VUs, 209 complete and 0 interrupted iterations
+websocket_load   [   5% ] 0039/1000 VUs  0m11.9s/4m00.0s
+
+running (0m12.9s), 0042/1000 VUs, 248 complete and 0 interrupted iterations
+websocket_load   [   5% ] 0042/1000 VUs  0m12.9s/4m00.0s
+
+running (0m13.9s), 0046/1000 VUs, 290 complete and 0 interrupted iterations
+websocket_load   [   6% ] 0046/1000 VUs  0m13.9s/4m00.0s
+
+running (0m14.9s), 0049/1000 VUs, 336 complete and 0 interrupted iterations
+websocket_load   [   6% ] 0049/1000 VUs  0m14.9s/4m00.0s
+
+running (0m15.9s), 0052/1000 VUs, 385 complete and 0 interrupted iterations
+websocket_load   [   7% ] 0052/1000 VUs  0m15.9s/4m00.0s
+
+running (0m16.9s), 0056/1000 VUs, 437 complete and 0 interrupted iterations
+websocket_load   [   7% ] 0056/1000 VUs  0m16.9s/4m00.0s
+
+running (0m17.9s), 0059/1000 VUs, 493 complete and 0 interrupted iterations
+websocket_load   [   7% ] 0059/1000 VUs  0m17.9s/4m00.0s
+
+running (0m18.9s), 0062/1000 VUs, 552 complete and 0 interrupted iterations
+websocket_load   [   8% ] 0062/1000 VUs  0m18.9s/4m00.0s
+
+running (0m19.9s), 0066/1000 VUs, 614 complete and 0 interrupted iterations
+websocket_load   [   8% ] 0066/1000 VUs  0m19.9s/4m00.0s
+
+running (0m20.9s), 0069/1000 VUs, 680 complete and 0 interrupted iterations
+websocket_load   [   9% ] 0069/1000 VUs  0m20.9s/4m00.0s
+
+running (0m21.9s), 0072/1000 VUs, 749 complete and 0 interrupted iterations
+websocket_load   [   9% ] 0072/1000 VUs  0m21.9s/4m00.0s
+
+running (0m22.9s), 0076/1000 VUs, 821 complete and 0 interrupted iterations
+websocket_load   [  10% ] 0076/1000 VUs  0m22.9s/4m00.0s
+
+running (0m23.9s), 0079/1000 VUs, 897 complete and 0 interrupted iterations
+websocket_load   [  10% ] 0079/1000 VUs  0m23.9s/4m00.0s
+
+running (0m24.9s), 0082/1000 VUs, 976 complete and 0 interrupted iterations
+websocket_load   [  10% ] 0082/1000 VUs  0m24.9s/4m00.0s
+
+running (0m25.9s), 0086/1000 VUs, 1058 complete and 0 interrupted iterations
+websocket_load   [  11% ] 0086/1000 VUs  0m25.9s/4m00.0s
+
+running (0m26.9s), 0089/1000 VUs, 1144 complete and 0 interrupted iterations
+websocket_load   [  11% ] 0089/1000 VUs  0m26.9s/4m00.0s
+
+running (0m27.9s), 0092/1000 VUs, 1233 complete and 0 interrupted iterations
+websocket_load   [  12% ] 0092/1000 VUs  0m27.9s/4m00.0s
+
+running (0m28.9s), 0096/1000 VUs, 1325 complete and 0 interrupted iterations
+websocket_load   [  12% ] 0096/1000 VUs  0m28.9s/4m00.0s
+
+running (0m29.9s), 0099/1000 VUs, 1421 complete and 0 interrupted iterations
+websocket_load   [  12% ] 0099/1000 VUs  0m29.9s/4m00.0s
+
+running (0m30.9s), 0111/1000 VUs, 1520 complete and 0 interrupted iterations
+websocket_load   [  13% ] 0111/1000 VUs  0m30.9s/4m00.0s
+
+running (0m31.9s), 0125/1000 VUs, 1631 complete and 0 interrupted iterations
+websocket_load   [  13% ] 0125/1000 VUs  0m31.9s/4m00.0s
+
+running (0m32.9s), 0138/1000 VUs, 1756 complete and 0 interrupted iterations
+websocket_load   [  14% ] 0138/1000 VUs  0m32.9s/4m00.0s
+
+running (0m33.9s), 0151/1000 VUs, 1894 complete and 0 interrupted iterations
+websocket_load   [  14% ] 0151/1000 VUs  0m33.9s/4m00.0s
+
+running (0m34.9s), 0165/1000 VUs, 2045 complete and 0 interrupted iterations
+websocket_load   [  15% ] 0165/1000 VUs  0m34.9s/4m00.0s
+
+running (0m35.9s), 0178/1000 VUs, 2210 complete and 0 interrupted iterations
+websocket_load   [  15% ] 0178/1000 VUs  0m35.9s/4m00.0s
+
+running (0m36.9s), 0191/1000 VUs, 2388 complete and 0 interrupted iterations
+websocket_load   [  15% ] 0191/1000 VUs  0m36.9s/4m00.0s
+
+running (0m37.9s), 0205/1000 VUs, 2579 complete and 0 interrupted iterations
+websocket_load   [  16% ] 0205/1000 VUs  0m37.9s/4m00.0s
+
+running (0m38.9s), 0218/1000 VUs, 2784 complete and 0 interrupted iterations
+websocket_load   [  16% ] 0218/1000 VUs  0m38.9s/4m00.0s
+
+running (0m39.9s), 0231/1000 VUs, 3002 complete and 0 interrupted iterations
+websocket_load   [  17% ] 0231/1000 VUs  0m39.9s/4m00.0s
+
+running (0m40.9s), 0245/1000 VUs, 3233 complete and 0 interrupted iterations
+websocket_load   [  17% ] 0245/1000 VUs  0m40.9s/4m00.0s
+
+running (0m41.9s), 0258/1000 VUs, 3478 complete and 0 interrupted iterations
+websocket_load   [  17% ] 0258/1000 VUs  0m41.9s/4m00.0s
+
+running (0m42.9s), 0271/1000 VUs, 3736 complete and 0 interrupted iterations
+websocket_load   [  18% ] 0271/1000 VUs  0m42.9s/4m00.0s
+
+running (0m43.9s), 0285/1000 VUs, 4006 complete and 0 interrupted iterations
+websocket_load   [  18% ] 0285/1000 VUs  0m43.9s/4m00.0s
+
+running (0m44.9s), 0298/1000 VUs, 4291 complete and 0 interrupted iterations
+websocket_load   [  19% ] 0298/1000 VUs  0m44.9s/4m00.0s
+
+running (0m45.9s), 0311/1000 VUs, 4589 complete and 0 interrupted iterations
+websocket_load   [  19% ] 0311/1000 VUs  0m45.9s/4m00.0s
+
+running (0m46.9s), 0325/1000 VUs, 4900 complete and 0 interrupted iterations
+websocket_load   [  20% ] 0325/1000 VUs  0m46.9s/4m00.0s
+
+running (0m47.9s), 0338/1000 VUs, 5225 complete and 0 interrupted iterations
+websocket_load   [  20% ] 0338/1000 VUs  0m47.9s/4m00.0s
+
+running (0m48.9s), 0351/1000 VUs, 5563 complete and 0 interrupted iterations
+websocket_load   [  20% ] 0351/1000 VUs  0m48.9s/4m00.0s
+
+running (0m49.9s), 0365/1000 VUs, 5914 complete and 0 interrupted iterations
+websocket_load   [  21% ] 0365/1000 VUs  0m49.9s/4m00.0s
+
+running (0m50.9s), 0378/1000 VUs, 6278 complete and 0 interrupted iterations
+websocket_load   [  21% ] 0378/1000 VUs  0m50.9s/4m00.0s
+
+running (0m51.9s), 0391/1000 VUs, 6656 complete and 0 interrupted iterations
+websocket_load   [  22% ] 0391/1000 VUs  0m51.9s/4m00.0s
+
+running (0m52.9s), 0405/1000 VUs, 7047 complete and 0 interrupted iterations
+websocket_load   [  22% ] 0405/1000 VUs  0m52.9s/4m00.0s
+
+running (0m53.9s), 0418/1000 VUs, 7452 complete and 0 interrupted iterations
+websocket_load   [  22% ] 0418/1000 VUs  0m53.9s/4m00.0s
+
+running (0m54.9s), 0431/1000 VUs, 7868 complete and 0 interrupted iterations
+websocket_load   [  23% ] 0431/1000 VUs  0m54.9s/4m00.0s
+
+running (0m55.9s), 0445/1000 VUs, 8300 complete and 0 interrupted iterations
+websocket_load   [  23% ] 0445/1000 VUs  0m55.9s/4m00.0s
+
+running (0m56.9s), 0458/1000 VUs, 8744 complete and 0 interrupted iterations
+websocket_load   [  24% ] 0458/1000 VUs  0m56.9s/4m00.0s
+
+running (0m57.9s), 0471/1000 VUs, 9202 complete and 0 interrupted iterations
+websocket_load   [  24% ] 0471/1000 VUs  0m57.9s/4m00.0s
+
+running (0m58.9s), 0485/1000 VUs, 9673 complete and 0 interrupted iterations
+websocket_load   [  25% ] 0485/1000 VUs  0m58.9s/4m00.0s
+
+running (0m59.9s), 0498/1000 VUs, 10158 complete and 0 interrupted iterations
+websocket_load   [  25% ] 0498/1000 VUs  0m59.9s/4m00.0s
+
+running (1m00.9s), 0514/1000 VUs, 10656 complete and 0 interrupted iterations
+websocket_load   [  25% ] 0514/1000 VUs  1m00.9s/4m00.0s
+
+running (1m01.9s), 0531/1000 VUs, 11169 complete and 0 interrupted iterations
+websocket_load   [  26% ] 0531/1000 VUs  1m01.9s/4m00.0s
+
+running (1m02.9s), 0548/1000 VUs, 11698 complete and 0 interrupted iterations
+websocket_load   [  26% ] 0548/1000 VUs  1m02.9s/4m00.0s
+
+running (1m03.9s), 0564/1000 VUs, 12244 complete and 0 interrupted iterations
+websocket_load   [  27% ] 0564/1000 VUs  1m03.9s/4m00.0s
+
+running (1m04.9s), 0581/1000 VUs, 12808 complete and 0 interrupted iterations
+websocket_load   [  27% ] 0581/1000 VUs  1m04.9s/4m00.0s
+
+running (1m05.9s), 0598/1000 VUs, 13389 complete and 0 interrupted iterations
+websocket_load   [  27% ] 0598/1000 VUs  1m05.9s/4m00.0s
+
+running (1m06.9s), 0614/1000 VUs, 13987 complete and 0 interrupted iterations
+websocket_load   [  28% ] 0614/1000 VUs  1m06.9s/4m00.0s
+
+running (1m07.9s), 0631/1000 VUs, 14601 complete and 0 interrupted iterations
+websocket_load   [  28% ] 0631/1000 VUs  1m07.9s/4m00.0s
+
+running (1m08.9s), 0648/1000 VUs, 15232 complete and 0 interrupted iterations
+websocket_load   [  29% ] 0648/1000 VUs  1m08.9s/4m00.0s
+
+running (1m09.9s), 0664/1000 VUs, 15880 complete and 0 interrupted iterations
+websocket_load   [  29% ] 0664/1000 VUs  1m09.9s/4m00.0s
+
+running (1m10.9s), 0681/1000 VUs, 16544 complete and 0 interrupted iterations
+websocket_load   [  30% ] 0681/1000 VUs  1m10.9s/4m00.0s
+
+running (1m11.9s), 0698/1000 VUs, 17225 complete and 0 interrupted iterations
+websocket_load   [  30% ] 0698/1000 VUs  1m11.9s/4m00.0s
+
+running (1m12.9s), 0714/1000 VUs, 17923 complete and 0 interrupted iterations
+websocket_load   [  30% ] 0714/1000 VUs  1m12.9s/4m00.0s
+
+running (1m13.9s), 0731/1000 VUs, 18637 complete and 0 interrupted iterations
+websocket_load   [  31% ] 0731/1000 VUs  1m13.9s/4m00.0s
+
+running (1m14.9s), 0748/1000 VUs, 19368 complete and 0 interrupted iterations
+websocket_load   [  31% ] 0748/1000 VUs  1m14.9s/4m00.0s
+
+running (1m15.9s), 0764/1000 VUs, 20115 complete and 0 interrupted iterations
+websocket_load   [  32% ] 0764/1000 VUs  1m15.9s/4m00.0s
+
+running (1m16.9s), 0781/1000 VUs, 20877 complete and 0 interrupted iterations
+websocket_load   [  32% ] 0781/1000 VUs  1m16.9s/4m00.0s
+
+running (1m17.9s), 0798/1000 VUs, 21651 complete and 0 interrupted iterations
+websocket_load   [  32% ] 0798/1000 VUs  1m17.9s/4m00.0s
+
+running (1m18.9s), 0814/1000 VUs, 22454 complete and 0 interrupted iterations
+websocket_load   [  33% ] 0814/1000 VUs  1m18.9s/4m00.0s
+
+running (1m19.9s), 0831/1000 VUs, 23251 complete and 0 interrupted iterations
+websocket_load   [  33% ] 0831/1000 VUs  1m19.9s/4m00.0s
+
+running (1m20.9s), 0848/1000 VUs, 24082 complete and 0 interrupted iterations
+websocket_load   [  34% ] 0848/1000 VUs  1m20.9s/4m00.0s
+
+running (1m21.9s), 0864/1000 VUs, 24930 complete and 0 interrupted iterations
+websocket_load   [  34% ] 0864/1000 VUs  1m21.9s/4m00.0s
+
+running (1m22.9s), 0881/1000 VUs, 25794 complete and 0 interrupted iterations
+websocket_load   [  35% ] 0881/1000 VUs  1m22.9s/4m00.0s
+
+running (1m23.9s), 0898/1000 VUs, 26675 complete and 0 interrupted iterations
+websocket_load   [  35% ] 0898/1000 VUs  1m23.9s/4m00.0s
+
+running (1m24.9s), 0914/1000 VUs, 27573 complete and 0 interrupted iterations
+websocket_load   [  35% ] 0914/1000 VUs  1m24.9s/4m00.0s
+
+running (1m25.9s), 0931/1000 VUs, 28487 complete and 0 interrupted iterations
+websocket_load   [  36% ] 0931/1000 VUs  1m25.9s/4m00.0s
+
+running (1m26.9s), 0948/1000 VUs, 29418 complete and 0 interrupted iterations
+websocket_load   [  36% ] 0948/1000 VUs  1m26.9s/4m00.0s
+
+running (1m27.9s), 0964/1000 VUs, 30366 complete and 0 interrupted iterations
+websocket_load   [  37% ] 0964/1000 VUs  1m27.9s/4m00.0s
+
+running (1m28.9s), 0981/1000 VUs, 31330 complete and 0 interrupted iterations
+websocket_load   [  37% ] 0981/1000 VUs  1m28.9s/4m00.0s
+
+running (1m29.9s), 0998/1000 VUs, 32311 complete and 0 interrupted iterations
+websocket_load   [  37% ] 0998/1000 VUs  1m29.9s/4m00.0s
+time="2026-04-01T18:15:15-04:00" level=warning msg="The test has generated metrics with 100031 unique time series, which is higher than the suggested limit of 100000 and could cause high memory usage. Consider not using high-cardinality values like unique IDs as metric tags or, if you need them in the URL, use the name metric tag or URL grouping. See https://grafana.com/docs/k6/latest/using-k6/tags-and-groups/ for details." component=metrics-engine-ingester
+
+running (1m30.9s), 1000/1000 VUs, 33299 complete and 0 interrupted iterations
+websocket_load   [  38% ] 1000/1000 VUs  1m30.9s/4m00.0s
+
+running (1m31.9s), 1000/1000 VUs, 34299 complete and 0 interrupted iterations
+websocket_load   [  38% ] 1000/1000 VUs  1m31.9s/4m00.0s
+
+running (1m32.9s), 1000/1000 VUs, 35299 complete and 0 interrupted iterations
+websocket_load   [  39% ] 1000/1000 VUs  1m32.9s/4m00.0s
+
+running (1m33.9s), 1000/1000 VUs, 36299 complete and 0 interrupted iterations
+websocket_load   [  39% ] 1000/1000 VUs  1m33.9s/4m00.0s
+
+running (1m34.9s), 1000/1000 VUs, 37299 complete and 0 interrupted iterations
+websocket_load   [  40% ] 1000/1000 VUs  1m34.9s/4m00.0s
+
+running (1m35.9s), 1000/1000 VUs, 38297 complete and 0 interrupted iterations
+websocket_load   [  40% ] 1000/1000 VUs  1m35.9s/4m00.0s
+
+running (1m36.9s), 1000/1000 VUs, 39297 complete and 0 interrupted iterations
+websocket_load   [  40% ] 1000/1000 VUs  1m36.9s/4m00.0s
+
+running (1m37.9s), 1000/1000 VUs, 40297 complete and 0 interrupted iterations
+websocket_load   [  41% ] 1000/1000 VUs  1m37.9s/4m00.0s
+
+running (1m38.9s), 1000/1000 VUs, 41296 complete and 0 interrupted iterations
+websocket_load   [  41% ] 1000/1000 VUs  1m38.9s/4m00.0s
+
+running (1m39.9s), 1000/1000 VUs, 42296 complete and 0 interrupted iterations
+websocket_load   [  42% ] 1000/1000 VUs  1m39.9s/4m00.0s
+
+running (1m40.9s), 1000/1000 VUs, 43296 complete and 0 interrupted iterations
+websocket_load   [  42% ] 1000/1000 VUs  1m40.9s/4m00.0s
+
+running (1m41.9s), 1000/1000 VUs, 44296 complete and 0 interrupted iterations
+websocket_load   [  42% ] 1000/1000 VUs  1m41.9s/4m00.0s
+
+running (1m42.9s), 1000/1000 VUs, 45296 complete and 0 interrupted iterations
+websocket_load   [  43% ] 1000/1000 VUs  1m42.9s/4m00.0s
+
+running (1m43.9s), 1000/1000 VUs, 46295 complete and 0 interrupted iterations
+websocket_load   [  43% ] 1000/1000 VUs  1m43.9s/4m00.0s
+
+running (1m44.9s), 1000/1000 VUs, 47295 complete and 0 interrupted iterations
+websocket_load   [  44% ] 1000/1000 VUs  1m44.9s/4m00.0s
+
+running (1m45.9s), 1000/1000 VUs, 48294 complete and 0 interrupted iterations
+websocket_load   [  44% ] 1000/1000 VUs  1m45.9s/4m00.0s
+
+running (1m46.9s), 1000/1000 VUs, 49292 complete and 0 interrupted iterations
+websocket_load   [  45% ] 1000/1000 VUs  1m46.9s/4m00.0s
+
+running (1m47.9s), 1000/1000 VUs, 50287 complete and 0 interrupted iterations
+websocket_load   [  45% ] 1000/1000 VUs  1m47.9s/4m00.0s
+
+running (1m48.9s), 1000/1000 VUs, 51279 complete and 0 interrupted iterations
+websocket_load   [  45% ] 1000/1000 VUs  1m48.9s/4m00.0s
+
+running (1m49.9s), 1000/1000 VUs, 52270 complete and 0 interrupted iterations
+websocket_load   [  46% ] 1000/1000 VUs  1m49.9s/4m00.0s
+
+running (1m50.9s), 1000/1000 VUs, 53270 complete and 0 interrupted iterations
+websocket_load   [  46% ] 1000/1000 VUs  1m50.9s/4m00.0s
+
+running (1m51.9s), 1000/1000 VUs, 54270 complete and 0 interrupted iterations
+websocket_load   [  47% ] 1000/1000 VUs  1m51.9s/4m00.0s

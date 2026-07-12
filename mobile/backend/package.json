@@ -1,0 +1,14 @@
+{
+  "name": "gane-backend",
+  "version": "1.0.0",
+  "description": "G.A.N.E backend — zero-dependency Node + JSONL persistence",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node server.js",
+    "test": "node test.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

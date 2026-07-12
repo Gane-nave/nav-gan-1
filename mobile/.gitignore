@@ -1,0 +1,31 @@
+node_modules/
+build/
+dist/
+*.log
+.DS_Store
+.env
+.env.local
+*.tsbuildinfo
+
+# Android
+android/app/build/
+android/.gradle/
+android/.idea/
+android/local.properties
+android/*.iml
+android/app/release/
+android/app/*.apk
+android/app/*.aab
+
+# Capacitor
+android/app/src/main/assets/public/
+capacitor.config.json.bak
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+Thumbs.db

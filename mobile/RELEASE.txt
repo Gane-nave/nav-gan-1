@@ -1,0 +1,95 @@
+═══════════════════════════════════════════════════════════
+ G.A.N.E NAV — RELEASE MANIFEST v1.0.0
+═══════════════════════════════════════════════════════════
+
+version:    1.0.0
+verified:   true
+date:       2026-04-13T16:39:21Z
+
+───────────────────────────────────────────────────────────
+ ONE-COMMAND VERIFICATION (Node 18+)
+───────────────────────────────────────────────────────────
+
+  unzip gane-project-v1.0.0.zip
+  cd gane-project/backend
+  bash VERIFY.sh
+
+Expected last line: ═══ VERIFIED — 28/28 tests, live server OK, disk OK ═══
+
+───────────────────────────────────────────────────────────
+ TEST COVERAGE
+───────────────────────────────────────────────────────────
+
+  Backend unit tests (backend/test.js):         15/15 ✓
+  E2E mission lifecycle (tests-e2e/*.js):       13/13 ✓
+  Live HTTP server + disk persistence:             ✓
+  TOTAL:                                        28/28 ✓
+
+───────────────────────────────────────────────────────────
+ FRONTEND WIRING — 6 PREVIOUSLY NOT_CONNECTED MODULES NOW LIVE
+───────────────────────────────────────────────────────────
+
+  safetyInvariants     — 2s interval, 8 safety rules enforced
+  mapMatcher           — HMM snap-to-road at mission end
+  limitAwareness       — yellow banner when system limits active
+  truthHierarchy       — position source arbitration (GNSS/INS/MAP)
+  providerReliability  — tile provider success/fail tracking
+  routeTracker         — starts with mission, resolves to CalibrationEngine
+
+───────────────────────────────────────────────────────────
+ GNSS + EMERGENCY PIPELINE — REAL RUNTIME
+───────────────────────────────────────────────────────────
+
+  Native multi-GNSS path (APK):
+    Capacitor GnssPlugin → handleRealMeasurements() → engine.tick()
+    Per-satellite CN0 displayed in GNSS grid
+
+  Browser fallback:
+    navigator.geolocation.watchPosition → synthSats → engine.tick()
+    Jump detection (>500 m/s impossible speed)
+
+  Loss-of-signal cascade:
+    GPS error → DeadReckoning.propagate() → userLoc update
+    If lost >30s during active mission → EMERGENCY triggered
+
+  Emergency system:
+    Crash: IMU magnitude > threshold → EmergencyResponseSystem.detectCrash()
+    Manual: SOS button → consciousness.proposeAction('emergency','CRITICAL')
+    Loss-of-signal: auto-trigger after 30s
+    Beacon: 5s interval POST to backend /missions/:id/events
+    Red banner shows elapsed time + beacon count
+    Tap banner to clear
+
+───────────────────────────────────────────────────────────
+ MISSION LIFECYCLE
+───────────────────────────────────────────────────────────
+
+  START: POST /missions with origin + metadata → server mission ID
+  STREAMING: every 5th engine.tick → POST TRACE_ENTRY event
+  TRANSITIONS: MODE changes auto-sync to backend
+  EMERGENCY: beacon events streamed in parallel
+  STOP: POST MISSION_END with outcome + mapMatched + duration
+  PERSISTENCE: all events in data/events.jsonl (audit trail)
+
+───────────────────────────────────────────────────────────
+ DOCKER
+───────────────────────────────────────────────────────────
+
+  cd backend
+  docker build -t gane-backend .
+  docker run -p 3001:3001 gane-backend
+
+───────────────────────────────────────────────────────────
+ FILE MANIFEST
+───────────────────────────────────────────────────────────
+
+  backend/package.json                        301
+  backend/db.js                              3468
+  backend/server.js                          3046
+  backend/routes/missions.js                 3092
+  backend/test.js                            7821
+  backend/VERIFY.sh                          1382
+  backend/Dockerfile                          649
+  tests-e2e/e2e-mission-lifecycle.js         9201
+  www/index.html                            72240
+═══════════════════════════════════════════════════════════

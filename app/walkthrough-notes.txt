@@ -1,0 +1,28 @@
+G.A.N.E NAV UI Walkthrough Notes
+==================================
+
+Initial State (Desktop):
+- Sidebar visible on left with NAV, INTEL, OPS, AI, SYS groups
+- Search bar at top with "Where to?" placeholder
+- Bottom dock with Drive mode active, navigation button, Traffic, Settings
+- Map showing Tel Aviv with quantum grid overlay
+- Live status bar at top-right (61fps, GPS, 5G, time)
+- Admin button at bottom of sidebar
+- Home/Work favorites showing in bottom dock area
+
+Findings:
+- Zero JavaScript errors in browser console (only old WebSocket error from before fix)
+- Only warnings are Google Maps deprecation notices (expected)
+- One transient network error: rainviewer.com weather API fetch failed (intermittent, has error handling)
+- Service Worker registered successfully
+- All engines initialized: PredictiveIntent, AdminTerminal, ChaosEngine
+- All 41 panels have correct onClose prop signatures
+- All panel component files exist and can be imported
+- Zero TypeScript errors
+
+Panels to test (from sidebarGroups in homeConstants.ts):
+NAV: Layers, Parking, Charging, Transport, Indoor, AR Nav, History, Draw
+INTEL: Weather, Satellite, Imagery, GNSS, V2X, Twin, Risk, Coverage
+OPS: CMD, EOC, Fleet, Cameras, Report, Incident, Alerts, C4ISR, Radio
+AI: Optimizer, Score, Analytics, Social, Live Share, Collab, Live Team
+SYS: Arch, Pipeline, Spec, Wallet, Offline, Offline Maps, A11y, Engine, Battery
