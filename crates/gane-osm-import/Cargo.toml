@@ -1,0 +1,15 @@
+[package]
+name = "gane-osm-import"
+version.workspace = true
+edition.workspace = true
+description = "OSM road-network importer: Overpass JSON -> G.A.N.E RoadGraph with vehicle restrictions"
+
+[dependencies]
+aurora-core = { path = "../aurora-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+
+[dev-dependencies]
+aurora-map = { path = "../aurora-map" }
+aurora-routing = { path = "../aurora-routing" }

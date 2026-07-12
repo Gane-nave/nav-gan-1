@@ -11317,6 +11317,18 @@ dependencies = [
 ]
 
 [[package]]
+name = "gane-osm-import"
+version = "0.1.0"
+dependencies = [
+ "aurora-core",
+ "aurora-map",
+ "aurora-routing",
+ "chrono",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "gane-wasm"
 version = "0.1.0"
 dependencies = [
