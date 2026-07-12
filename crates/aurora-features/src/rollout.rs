@@ -113,7 +113,7 @@ impl RolloutManager {
     /// Add a rollout rule.
     pub fn add_rule(&mut self, rule: RolloutRule) {
         self.rules.push(rule);
-        self.rules.sort_by(|a, b| b.priority.cmp(&a.priority));
+        self.rules.sort_by_key(|r| std::cmp::Reverse(r.priority));
     }
 
     /// Evaluate whether a user should see the feature.
