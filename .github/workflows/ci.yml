@@ -2,22 +2,27 @@ name: CI
 
 on:
   push:
-    branches: [main, master, "devin/**"]
+    branches: [main, master, "devin/**", "claude/**"]
   pull_request:
-    branches: [main, master, "devin/**"]
+    branches: [main, master, "devin/**", "claude/**"]
 
 env:
   CARGO_TERM_COLOR: always
   RUSTFLAGS: "-D warnings"
+
+# Org policy requires all actions pinned to a full-length commit SHA.
+# The Rust toolchain is provisioned via rustup (preinstalled on runners)
+# instead of a third-party action.
 
 jobs:
   check:
     name: Build & Check
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable)
+        run: rustup update stable && rustup default stable
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
       - run: cargo build --all-targets
       - run: cargo check --workspace
 
@@ -25,20 +30,20 @@ jobs:
     name: Clippy
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: clippy
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable + clippy)
+        run: rustup update stable && rustup default stable && rustup component add clippy
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
       - run: cargo clippy --all-targets -- -D warnings
 
   test:
     name: Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable)
+        run: rustup update stable && rustup default stable
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
       - name: Run tests
         run: cargo test --workspace
       - name: Verify test count
@@ -54,28 +59,39 @@ jobs:
     name: Format
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-        with:
-          components: rustfmt
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable + rustfmt)
+        run: rustup update stable && rustup default stable && rustup component add rustfmt
       - run: cargo fmt --all -- --check
 
   bench-compile:
     name: Benchmarks Compile
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable)
+        run: rustup update stable && rustup default stable
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
       - run: cargo bench --no-run
 
   doc:
     name: Documentation
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: dtolnay/rust-toolchain@stable
-      - uses: Swatinem/rust-cache@v2
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable)
+        run: rustup update stable && rustup default stable
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
       - run: cargo doc --no-deps --workspace
         env:
           RUSTDOCFLAGS: "-D warnings"
+
+  wasm:
+    name: WASM Core Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install Rust (stable + wasm32 target)
+        run: rustup update stable && rustup default stable && rustup target add wasm32-unknown-unknown
+      - uses: Swatinem/rust-cache@23bce251a8cd2ffc3c1075eaa2367cf899916d84 # v2.7.3
+      - run: cargo check --target wasm32-unknown-unknown -p gane-wasm -p aurora-core -p aurora-routing -p aurora-map -p aurora-gnss -p aurora-fusion -p aurora-integrity
