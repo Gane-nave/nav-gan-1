@@ -10,6 +10,7 @@ pub mod builder;
 pub mod classify;
 pub mod model;
 pub mod overpass;
+pub mod route;
 
 pub use builder::build_graph;
 pub use overpass::parse_overpass_json;
