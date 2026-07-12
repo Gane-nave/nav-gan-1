@@ -98,7 +98,7 @@ impl SnapshotManager {
     /// List all snapshots (most recent first).
     pub fn list(&self) -> Vec<Snapshot> {
         let mut snaps: Vec<Snapshot> = self.snapshots.read().clone();
-        snaps.sort_by(|a, b| b.created_at.cmp(&a.created_at));
+        snaps.sort_by_key(|s| std::cmp::Reverse(s.created_at));
         snaps
     }
 

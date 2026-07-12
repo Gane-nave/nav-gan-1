@@ -114,7 +114,7 @@ impl PluginRegistry {
             .values()
             .filter(|p| p.status == PluginStatus::Active)
             .collect();
-        active.sort_by(|a, b| b.priority.cmp(&a.priority));
+        active.sort_by_key(|r| std::cmp::Reverse(r.priority));
         active
     }
 

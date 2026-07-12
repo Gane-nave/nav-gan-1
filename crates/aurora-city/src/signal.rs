@@ -237,7 +237,7 @@ impl SignalController {
                 );
                 self.preemption_queue.push(request);
                 self.preemption_queue
-                    .sort_by(|a, b| b.priority.cmp(&a.priority));
+                    .sort_by_key(|r| std::cmp::Reverse(r.priority));
                 return PreemptionOutcome::Queued;
             }
             // Incoming has higher priority — override.

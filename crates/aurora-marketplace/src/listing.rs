@@ -369,15 +369,13 @@ impl MarketplaceStore {
             .collect();
 
         match criteria.sort_by {
-            SortOrder::Popularity => {
-                results.sort_by(|a, b| b.download_count.cmp(&a.download_count))
-            }
+            SortOrder::Popularity => results.sort_by_key(|l| std::cmp::Reverse(l.download_count)),
             SortOrder::Rating => results.sort_by(|a, b| {
                 b.average_rating()
                     .partial_cmp(&a.average_rating())
                     .unwrap_or(std::cmp::Ordering::Equal)
             }),
-            SortOrder::Newest => results.sort_by(|a, b| b.created_at.cmp(&a.created_at)),
+            SortOrder::Newest => results.sort_by_key(|l| std::cmp::Reverse(l.created_at)),
             SortOrder::Name => results.sort_by(|a, b| a.name.cmp(&b.name)),
         }
 

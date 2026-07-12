@@ -56,11 +56,9 @@ impl RateLimiter {
                 reset_at: bucket.last_refill + Duration::seconds(1),
             })
         } else {
-            let retry_after_ms = if bucket.refill_per_second > 0 {
-                1000 / bucket.refill_per_second
-            } else {
-                1000
-            };
+            let retry_after_ms = 1000u64
+                .checked_div(bucket.refill_per_second)
+                .unwrap_or(1000);
             warn!(key = %key_id, "rate limited");
             Err(RateLimitResult {
                 allowed: false,

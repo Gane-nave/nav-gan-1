@@ -159,7 +159,7 @@ impl EventCollector {
         }
 
         let mut aggs: Vec<EventAggregate> = map.into_values().collect();
-        aggs.sort_by(|a, b| b.count.cmp(&a.count));
+        aggs.sort_by_key(|a| std::cmp::Reverse(a.count));
         aggs
     }
 

@@ -298,7 +298,7 @@ impl TaskManager {
     /// Get tasks by priority (sorted highest first).
     pub fn tasks_by_priority(&self) -> Vec<&FleetTask> {
         let mut tasks: Vec<&FleetTask> = self.tasks.iter().collect();
-        tasks.sort_by(|a, b| b.priority.cmp(&a.priority));
+        tasks.sort_by_key(|r| std::cmp::Reverse(r.priority));
         tasks
     }
 

@@ -158,7 +158,7 @@ impl ArOverlayManager {
             .iter()
             .filter(|e| e.visible && !e.is_expired())
             .collect();
-        active.sort_by(|a, b| b.priority.cmp(&a.priority));
+        active.sort_by_key(|r| std::cmp::Reverse(r.priority));
         active
     }
 

@@ -116,13 +116,13 @@ impl ContinuityManager {
                     self.transition_to(ContinuityMode::ModeE, "integrity alert — emergency mode");
                 }
             }
-            IntegrityLevel::Warning => {
-                if mode_rank(self.current_mode) > mode_rank(ContinuityMode::ModeC) {
-                    self.transition_to(
-                        ContinuityMode::ModeC,
-                        "integrity warning — degrading to Mode C",
-                    );
-                }
+            IntegrityLevel::Warning
+                if mode_rank(self.current_mode) > mode_rank(ContinuityMode::ModeC) =>
+            {
+                self.transition_to(
+                    ContinuityMode::ModeC,
+                    "integrity warning — degrading to Mode C",
+                );
             }
             _ => {}
         }

@@ -201,15 +201,13 @@ impl SimulationEngine {
     /// Run the simulation to completion (all remaining ticks).
     pub fn run_to_completion(&mut self) -> Option<u64> {
         loop {
-            match self.step() {
-                Some(tick) => {
-                    if let Some(run) = &self.active_run {
-                        if run.status == SimulationStatus::Completed {
-                            return Some(tick);
-                        }
+            {
+                let tick = self.step()?;
+                if let Some(run) = &self.active_run {
+                    if run.status == SimulationStatus::Completed {
+                        return Some(tick);
                     }
                 }
-                None => return None,
             }
         }
     }

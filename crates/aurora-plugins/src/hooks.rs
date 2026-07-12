@@ -94,7 +94,7 @@ impl HookManager {
 
         handlers.push(handler);
         // Sort by priority (Highest first)
-        handlers.sort_by(|a, b| a.priority.cmp(&b.priority));
+        handlers.sort_by_key(|a| a.priority);
         Ok(())
     }
 

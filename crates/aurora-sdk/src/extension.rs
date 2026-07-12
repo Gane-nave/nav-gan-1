@@ -90,7 +90,7 @@ impl ExtensionRegistry {
         self.extensions.push((ext, Utc::now()));
         // Sort by priority (descending — higher priority runs first).
         self.extensions
-            .sort_by(|(a, _), (b, _)| b.priority().cmp(&a.priority()));
+            .sort_by_key(|(e, _)| std::cmp::Reverse(e.priority()));
     }
 
     /// Apply all extensions to a request (in priority order).

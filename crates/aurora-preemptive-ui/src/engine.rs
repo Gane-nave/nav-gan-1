@@ -38,7 +38,7 @@ impl PreemptiveEngine {
     }
     pub fn active_actions(&self) -> Vec<&PreemptiveRule> {
         let mut triggered: Vec<_> = self.rules.iter().filter(|r| r.should_trigger()).collect();
-        triggered.sort_by(|a, b| a.priority.cmp(&b.priority));
+        triggered.sort_by_key(|a| a.priority);
         triggered
     }
     pub fn top_action(&self) -> Option<&PreemptiveRule> {

@@ -204,7 +204,7 @@ impl UsageTracker {
             }
         }
         let mut sorted: Vec<(String, u64)> = counts.into_iter().collect();
-        sorted.sort_by(|a, b| b.1.cmp(&a.1));
+        sorted.sort_by_key(|e| std::cmp::Reverse(e.1));
         sorted.truncate(limit);
         sorted
     }

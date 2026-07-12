@@ -51,9 +51,9 @@ impl PrefixTrie {
         self.total_lookups += 1;
         let mut node = &self.root;
         for c in key.chars() {
-            match node.child(c) {
-                Some(child) => node = child,
-                None => return None,
+            {
+                let child = node.child(c)?;
+                node = child
             }
         }
         if node.is_terminal() {
@@ -91,10 +91,9 @@ impl PrefixTrie {
         }
         let c = chars[idx];
         let result = {
-            if let Some(child) = node.child_mut(c) {
+            {
+                let child = node.child_mut(c)?;
                 Self::remove_recursive(child, key, idx + 1)
-            } else {
-                return None;
             }
         };
         if result.is_some() {
