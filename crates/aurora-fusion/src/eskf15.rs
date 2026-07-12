@@ -198,15 +198,114 @@ impl Eskf15 {
         self.update3(3, innovation, sigma_mps)
     }
 
+    /// Generic scalar update with measurement Jacobian `h` (15-vec).
+    /// Returns the NIS gate value.
+    fn update_scalar(&mut self, h: SVector<f64, ERR_DIM>, innovation: f64, sigma: f64) -> f64 {
+        let ph = self.p * h;
+        let s = (h.transpose() * ph)[(0, 0)] + sigma * sigma;
+        if s <= 0.0 {
+            return f64::INFINITY;
+        }
+        let nis = innovation * innovation / s;
+        let k = ph / s;
+        let dx: SVector<f64, ERR_DIM> = k * innovation;
+        self.p -= k * (h.transpose() * self.p);
+        self.inject(&dx);
+        self.symmetrize();
+        nis
+    }
+
+    /// Heading (yaw) update in radians, small roll/pitch approximation
+    /// (δyaw ≈ δθ_z). Innovation is wrapped to (−π, π]. Returns NIS.
+    pub fn update_heading(&mut self, yaw_meas_rad: f64, sigma_rad: f64) -> f64 {
+        let mut innovation = yaw_meas_rad - self.heading_rad();
+        while innovation > std::f64::consts::PI {
+            innovation -= 2.0 * std::f64::consts::PI;
+        }
+        while innovation <= -std::f64::consts::PI {
+            innovation += 2.0 * std::f64::consts::PI;
+        }
+        let mut h = SVector::<f64, ERR_DIM>::zeros();
+        h[8] = 1.0; // δθ_z
+        self.update_scalar(h, innovation, sigma_rad)
+    }
+
+    /// Scalar ground-speed update (‖v‖). Near standstill the direction is
+    /// unobservable: a near-zero measured speed becomes a ZUPT, otherwise
+    /// the sample is skipped. Returns NIS.
+    pub fn update_speed(&mut self, speed_mps: f64, sigma_mps: f64) -> f64 {
+        let v_norm = self.velocity.norm();
+        if v_norm < 0.1 {
+            return if speed_mps.abs() < 0.5 {
+                self.update_zupt(sigma_mps.max(0.05))
+            } else {
+                f64::INFINITY // direction unknown — cannot apply
+            };
+        }
+        let dir = self.velocity / v_norm;
+        let mut h = SVector::<f64, ERR_DIM>::zeros();
+        h[3] = dir.x;
+        h[4] = dir.y;
+        h[5] = dir.z;
+        self.update_scalar(h, speed_mps - v_norm, sigma_mps)
+    }
+
+    /// Coast propagation when no IMU sample is available: assumes a
+    /// non-accelerating, non-rotating vehicle (constant velocity) while the
+    /// covariance still grows. Long gaps are integrated in ≤1 s chunks.
+    pub fn predict_coast(&mut self, dt: f64) {
+        if dt <= 0.0 {
+            return;
+        }
+        // Synthetic specific force that exactly cancels gravity in ENU.
+        let mut remaining = dt.min(10.0);
+        while remaining > 0.0 {
+            let step = remaining.min(1.0);
+            let a_body = self.attitude.inverse() * Vector3::new(0.0, 0.0, 9.81) + self.accel_bias;
+            let w_body = self.gyro_bias;
+            self.predict(a_body, w_body, step);
+            remaining -= step;
+        }
+    }
+
+    /// Re-initialize state and covariance, keeping the noise configuration.
+    pub fn reset(&mut self) {
+        let config = self.config.clone();
+        *self = Self {
+            config,
+            ..Self::new()
+        };
+    }
+
     /// Yaw (heading) in radians, ENU convention.
     pub fn heading_rad(&self) -> f64 {
         let (_, _, yaw) = self.attitude.euler_angles();
         yaw
     }
 
+    /// Position in the local ENU frame (m).
+    pub fn position_enu(&self) -> Vector3<f64> {
+        self.position
+    }
+
+    /// Velocity in the local ENU frame (m/s).
+    pub fn velocity_enu(&self) -> Vector3<f64> {
+        self.velocity
+    }
+
     /// 1-σ horizontal position uncertainty (m).
     pub fn horizontal_uncertainty_m(&self) -> f64 {
         (self.p[(0, 0)] + self.p[(1, 1)]).sqrt()
+    }
+
+    /// Alias kept for `FusionEngine` compatibility.
+    pub fn position_uncertainty_m(&self) -> f64 {
+        self.horizontal_uncertainty_m()
+    }
+
+    /// 1-σ vertical position uncertainty (m).
+    pub fn vertical_uncertainty_m(&self) -> f64 {
+        self.p[(2, 2)].max(0.0).sqrt()
     }
 }
 

@@ -7,9 +7,10 @@ use aurora_core::types::{
 use chrono::{DateTime, Utc};
 use tracing::info;
 
-use crate::ekf::NavigationEkf;
+use crate::eskf15::Eskf15;
 use crate::measurement::{FusionMeasurement, MeasurementType};
 use crate::state::FusionState;
+use nalgebra::Vector3;
 
 /// Origin point for the ENU frame.
 #[derive(Debug, Clone, Copy)]
@@ -22,7 +23,7 @@ struct EnuOrigin {
 /// High-level fusion engine that wraps the EKF and manages
 /// coordinate transforms, measurement routing, and state export.
 pub struct FusionEngine {
-    ekf: NavigationEkf,
+    ekf: Eskf15,
     state: FusionState,
     origin: Option<EnuOrigin>,
     last_gnss_time: Option<DateTime<Utc>>,
@@ -32,7 +33,7 @@ pub struct FusionEngine {
 impl FusionEngine {
     pub fn new() -> Self {
         Self {
-            ekf: NavigationEkf::new(),
+            ekf: Eskf15::new(),
             state: FusionState::new(),
             origin: None,
             last_gnss_time: None,
@@ -50,7 +51,7 @@ impl FusionEngine {
         {
             let dt = (meas.timestamp - self.state.timestamp).num_milliseconds() as f64 / 1000.0;
             if dt > 0.0 && dt < 10.0 {
-                self.ekf.predict(dt);
+                self.ekf.predict_coast(dt);
             }
         }
 
@@ -76,7 +77,7 @@ impl FusionEngine {
             } => {
                 let sigma = accuracy_mps / meas.trust_weight.max(0.01);
                 self.ekf
-                    .update_velocity(*east_mps, *north_mps, *up_mps, sigma);
+                    .update_velocity(Vector3::new(*east_mps, *north_mps, *up_mps), sigma);
             }
             MeasurementType::GnssHeading {
                 heading_deg,
@@ -99,7 +100,7 @@ impl FusionEngine {
                 let new_n = current_pos.y + delta_north_m;
                 let new_u = current_pos.z + delta_up_m;
                 self.ekf
-                    .update_position(new_e, new_n, new_u, *uncertainty_m);
+                    .update_position(Vector3::new(new_e, new_n, new_u), *uncertainty_m);
 
                 if delta_heading_rad.abs() > 1e-6 {
                     let new_heading = self.ekf.heading_rad() + delta_heading_rad;
@@ -119,7 +120,7 @@ impl FusionEngine {
                 // Update only the vertical component.
                 let pos = self.ekf.position_enu();
                 self.ekf
-                    .update_position(pos.x, pos.y, *altitude_m, *accuracy_m);
+                    .update_position(Vector3::new(pos.x, pos.y, *altitude_m), *accuracy_m);
             }
             MeasurementType::MapMatchPosition {
                 position,
@@ -209,7 +210,7 @@ impl FusionEngine {
 
         // Scale measurement noise by inverse trust weight.
         let sigma = accuracy_m / trust_weight.max(0.01);
-        self.ekf.update_position(e, n, u, sigma);
+        self.ekf.update_position(Vector3::new(e, n, u), sigma);
         self.last_gnss_time = Some(timestamp);
 
         if !self.state.initialised {
@@ -250,7 +251,7 @@ impl FusionEngine {
         self.state.heading = Heading {
             true_heading_deg: heading_deg,
             magnetic_heading_deg: None,
-            uncertainty_deg: self.ekf.p[(6, 6)].sqrt().to_degrees(),
+            uncertainty_deg: self.ekf.p[(8, 8)].sqrt().to_degrees(),
         };
 
         self.state.confidence = compute_confidence(
