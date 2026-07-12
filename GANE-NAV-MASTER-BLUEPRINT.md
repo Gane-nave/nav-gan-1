@@ -309,3 +309,110 @@ One target per cycle → build minimal real version → attach metrics immediate
 ## FINAL DEFINITION
 
 G.A.N.E NAV = one repository, one namespace, one contracts layer, one fusion engine shared client/server, real map data, real signals, enforced SLOs — a navigation platform whose every capability is **functionally real, verifiably executing, and progressively expanding**; never visually complete without being operationally true.
+
+---
+
+## APPENDIX A — COMPLETE ASSET INVENTORY (EVERYTHING FOUND, EVERYWHERE)
+
+| Asset | Location | Disposition |
+|---|---|---|
+| Rust workspace (identical ×4) | Gane / nav-gan-1 / Amjad-gane / Gane--by-DEVIN | nav-gan-1 = canonical; others archive |
+| ~198 real crates (EKF, PVT, RAIM, Dijkstra, traffic, V2X, indoor, AR, API, web, app) | `crates/` | keep → rename `gane-*` |
+| 2,254 template crates (5-bool structs, Phase 1–2615) | `crates/` | quarantine to archive branch |
+| gmin-spec app (418 files: client 216, server 74, contracts 22 modules, drizzle 33 tables, e2e, k6, monitoring, C4 docs) | `gmin-spec-complete*.zip` (×5 copies) | becomes `app/` + `contracts/` + `infra/` |
+| gane-project v1.0.0 (Node backend 28/28-verified, www PWA bundle, Capacitor android, GnssPlugin.java, VERIFY.sh, TWA configs) | `gane-project-v1.0.0*.zip` | becomes `mobile/` + `scripts/verify` |
+| Trade frontend (React quantum UI, Firebase, VehicleProfilePanel, NavigationFSM.ts, TrustHUD) | `gh-repo-clone-amjad2161-Trade-main.zip` | harvest components; Firebase path deprecated in favor of app/ stack |
+| Phase0 workspace snapshots (12,745 files, incl. nested zips) | `*aurora-nav-phase0.zip` ×2 | delete from git → Release artifact |
+| AEGIS/Brainiac scaffold (Python "open_sovereign", GodAgent, SatLink…) | mislabeled `anthropics-skills` zip | out of scope — separate prototype; archive |
+| G.A.pdf (APK/TWA guide, `com.gane.nav`, #0A0F1C) | Gane--by-DEVIN | move to `docs/` |
+| G.A.N (2).pdf + USER_REQUIREMENTS_COMPREHENSIVE.md (vision + P0/P1/P2) | Gane--by-DEVIN + spec | move to `docs/`; traceability in Appendix F |
+| VERIFICATION-LOG.txt (28/28) | Gane--by-DEVIN | move to `docs/evidence/` |
+| VERIFICATION-LOG-2.txt | Gane--by-DEVIN | corrupted (all NUL) — delete |
+| navigation2 (upstream Nav2 v1.4.0, zero modifications) | separate repo | keep only if robotics track funded [DECISION] |
+| Gane---the-last-project (empty README repo) | separate repo | candidate home for consolidated monorepo [DECISION] |
+| .agents skills (testing-aurora-nav), CI workflows, SECURITY.md (Amjad-gane only) | various | merge into canonical repo |
+
+## APPENDIX B — UX PERFECTION CATALOG (20 PRINCIPLES → MECHANISM)
+
+1. Zero Friction → one-action navigation start; auto-start via habit model (trips history) 
+2. Invisible Interaction → PASSIVE state renders map+marker only; UI appears on context triggers 
+3. Context Totality → inputs: position, time, habits, driving state, traffic, weather → UI profile selection 
+4. Perceptual Stability → camera-behavior controller; no jitter (fused-position smoothing, fixed scale policy) 
+5. Temporal Precision → instruction timing = f(speed, complexity, human reaction window); GuidanceFSM 
+6. Optimal Information Hierarchy → max 3 concurrent visual signals; priority renderer 
+7. Deep Personalization → driver profile (style, confidence, route prefs, decision history) 
+8. Absolute Consistency → same state ⇒ same response; FSM-driven UI forbids ad-hoc branches 
+9. Zero-Latency Perception → ≤100 ms UI budget; optimistic rendering 
+10. Effortless Control → voice (VoiceCommandSystem exists), gestures, minimal touch 
+11. Preemptive UI → predictive prefetch of next maneuver/panel 
+12. Error Prevention → invalid actions unselectable; confusion detection → simplify mode 
+13. Extreme-Condition Adaptation → night/sun/rain/cognitive-load → contrast + density switch 
+14. Instant Trust → single source of truth (backend state), no UI without backend truth 
+15. Continuity → phone↔car↔return; state sync via WS + offline queue 
+16. Functional Minimalism → every element must justify criticality 
+17. Complexity Hiding → engine complexity never surfaces; explanations on demand only 
+18. Physiological Adaptation → brightness/audio adapt to ambient light/noise; fatigue-aware palette 
+19. Full Environment Integration → Android Auto/CarPlay/HUD [TARGET P3] 
+20. User Independence → system operates for the user; zero learning curve as acceptance test
+
+## APPENDIX C — VISUAL LANGUAGE CATALOG (20 PRINCIPLES → RENDER MECHANISM)
+
+1. Rigid perceptual hierarchy — one dominant element (next maneuver) 
+2. State-based visual system — each FSM state owns a style profile 
+3. Shape-over-text encoding — arrows/line-weight/direction; text last resort 
+4. Motion as data — animation only to convey direction/intent 
+5. Zero visual noise — no flicker/jumps/sudden scale changes 
+6. Adaptive contrast — computed real-time (sun/night/rain) — MANDATORY engine 
+7. Functional colors only — blue=navigation, red=danger/emergency only, green=confirmed flow, yellow=warning 
+8. Perceptual depth — layering for bridges/underpasses; 3D only where it prevents confusion 
+9. Attention steering — dim irrelevant regions; temporary highlight 
+10. Critical micro-interactions — immediate feedback, no logical jumps 
+11. Speed-aware scale — high speed ⇒ fewer details 
+12. Adaptive density — information load per driving state 
+13. Geometric consistency — one representation per road/arrow class 
+14. Edge clarity — high sharpness, no smears 
+15. Temporal layering — sequenced appearance, never all at once 
+16. Cognitive-load prevention — screen understood without "reading" 
+17. Peripheral-vision optimization — critical info visible off-axis (color/motion) 
+18. Anti-overlap system — collision-free label/element placement 
+19. Smart visual redundancy — critical info in color+shape+motion 
+20. One visual language — single design-token system across all panels (fixes P0 color inconsistency)
+
+## APPENDIX D — STRATEGIC MOAT & POWER LAYERS (CONDENSED, MAPPED)
+
+Proven core advantage: integrity-first navigation + evidence chain + Hebrew-first emergency UX (Sections 8, 14, 16). Objective benchmarks: ETA error (median/p95), off-route rate, TTFF, reacquisition, jitter — add to CI bench suite [P2]. Distribution: PWA→TWA now; Android Auto/CarPlay/OEM/SDK [P3]. Revenue: B2C premium (offline/lane/AR), B2B API, fleet, marketplace — pricing model already sketched in systemEngineering.ts. Trust/privacy: on-device processing default, anonymization, retention controls (Section 14). Habit lock, default capture, city/authority partnerships, contract lock-in, narrative control — business-track items outside engineering scope, tracked as program risks. IP: fusion/anti-spoof/ETA methods are patentable candidates once the canonical ESKF + integrity upgrades land [P2+].
+
+## APPENDIX E — INTEGRATION EXECUTION PREREQUISITES (OWNER-ACTION CHECKLIST)
+
+All are [GAP: owner must provision] — no credential exists anywhere in the corpus:
+1. **Main server** — host/domain, TLS, deploy target (closes APK blocker) 
+2. **WhatsApp** — approved Business number, BSP provider, API token, webhook URL, send/receive permissions 
+3. **Mail** — provider, SMTP/IMAP hosts+ports, app password, TLS 
+4. **Alert logic** — event→alert rules (message, mail, payment failure, charge request, document, status) 
+5. **Payments** — Stripe live keys + webhook secret; currency ILS (catalog exists) 
+6. **Automation rules** — who is alerted, channel, SLA, retry count, failure path 
+7. **Security** — secret manager, IP allowlist, webhook signature keys, role permissions 
+8. **Database** — managed MySQL URL; backup policy 
+9. **Monitoring** — Sentry DSN, OTLP endpoint, Grafana host, heartbeat checks 
+10. **Sandboxes** — Stripe test, WhatsApp sandbox, test mailbox, edge-case test user 
+11. **Process map** — input→processing→alert→payment link→confirmation→update→audit (schema exists: trip_events + payment_events + integration_channels) 
+12. **Access document** — who holds passwords, DNS, mail domain, WhatsApp business account
+
+## APPENDIX F — REQUIREMENTS TRACEABILITY (VISION DOC → BACKLOG)
+
+| Requirement (USER_REQUIREMENTS / PDFs) | Blueprint item |
+|---|---|
+| P0 empty buttons/labels | Backlog #5 |
+| P0 vehicle type selection | exists in code; wiring = Backlog #8 |
+| P0 color consistency | Appendix C #20 + Backlog #5 |
+| P0 notification spam/mute | Backlog #5 (notification_preferences) |
+| P1 vehicle-specific routing | Backlog #8 |
+| P1 category selectors | Backlog #5 audit scope |
+| P1 responsive + offline-region + PWA-install testing | Backlog #5/#10 e2e |
+| P2 APK generation | Backlog #10 (blocked by Appendix E #1) |
+| P2 live traffic layer | trafficPipeline exists → provider keys (Appendix E) |
+| P2 panel simplification + descriptions | Appendix B #6/#16/#17 |
+| Multi-GNSS "never blocked, never interrupted" | Section 8 + Backlog #7/#9/#11 |
+| WhatsApp/Gmail/Drive/payment alerts | Section 11 + Backlog #15 + Appendix E |
+| Hebrew-first RTL everywhere | i18n exists [VERIFIED]; translation of docs → P2 |
+| NeRF/AR/digital twin/ghost tailing | Backlog #17/#18 (augmentation only, post-core) |
