@@ -1,6 +1,6 @@
 //! OSM tag classification — highway classes, speeds, and vehicle restrictions.
 
-use aurora_core::map::RoadClass;
+use gane_core::map::RoadClass;
 use std::collections::HashMap;
 
 /// Map an OSM `highway=*` value to a G.A.N.E road class.

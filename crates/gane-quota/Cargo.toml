@@ -1,0 +1,7 @@
+[package]
+name = "gane-quota"
+version = "0.1.0"
+edition = "2021"
+description = "Resource quota management and enforcement for G.A.N.E NAV"
+
+[dependencies]

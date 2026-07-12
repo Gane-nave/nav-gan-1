@@ -1,0 +1,11 @@
+[package]
+name = "gane-crowd-speed"
+version.workspace = true
+edition.workspace = true
+description = "Crowd-sourced speed data collection"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

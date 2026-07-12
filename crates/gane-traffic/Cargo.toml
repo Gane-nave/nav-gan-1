@@ -1,0 +1,18 @@
+[package]
+name = "gane-traffic"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Traffic flow control — demand forecasting, congestion prediction, flow balancing, herd suppression"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }

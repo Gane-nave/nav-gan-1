@@ -1,0 +1,8 @@
+[package]
+name = "gane-diagnostics"
+version = "0.1.0"
+edition = "2021"
+description = "System diagnostics and self-healing — health checks, auto-repair, degradation detection, introspection"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

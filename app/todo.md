@@ -835,12 +835,12 @@
 - [x] Full system audit — fix all issues found
 
 ## Global Rename: GMIN/AURORA → G.A.N.E NAV ✅ COMPLETE
-- [x] Scan all files for GMIN, AURORA, Aurora Nav, aurora-nav, aurora_nav occurrences (767 found)
+- [x] Scan all files for GMIN, AURORA, Aurora Nav, gane-nav, gane_nav occurrences (767 found)
 - [x] Replace all occurrences in source code (.ts, .tsx, .css) — 0 remaining
 - [x] Replace all occurrences in config files (package.json, etc.)
 - [x] Replace all occurrences in documentation and comments
 - [x] Replace all occurrences in todo.md
-- [x] Replace CSS class names (aurora-* → gane-*) — 300+ classes renamed
+- [x] Replace CSS class names (gane-* → gane-*) — 300+ classes renamed
 - [x] Rename files: AuroraPage.tsx → GanePage.tsx, auroraData.ts → ganeData.ts
 - [x] Fix broken identifiers from mass rename
 - [x] Verify zero TypeScript errors after rename (0 errors)

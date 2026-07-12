@@ -1,0 +1,7 @@
+[package]
+name = "gane-bitset"
+version = "0.1.0"
+edition = "2021"
+description = "Compact bit set with set operations for efficient flag and membership tracking"
+
+[dependencies]

@@ -1,0 +1,8 @@
+[package]
+name = "gane-worksteal"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Work-stealing deque for parallel task scheduling for G.A.N.E NAV"
+
+[dependencies]

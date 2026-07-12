@@ -1,0 +1,11 @@
+[package]
+name = "gane-moderation"
+version.workspace = true
+edition.workspace = true
+description = "Automatic content moderation for reports"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

@@ -1,0 +1,8 @@
+[package]
+name = "gane-jumphash"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Jump consistent hashing for load balancing for G.A.N.E NAV"
+
+[dependencies]

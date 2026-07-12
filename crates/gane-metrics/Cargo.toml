@@ -1,0 +1,12 @@
+[package]
+name = "gane-metrics"
+version.workspace = true
+edition.workspace = true
+description = "Prometheus metrics collection and reporting for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+parking_lot = { workspace = true }

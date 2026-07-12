@@ -1,0 +1,11 @@
+[package]
+name = "gane-nightmode"
+version.workspace = true
+edition.workspace = true
+description = "Automatic day/night display mode switching"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

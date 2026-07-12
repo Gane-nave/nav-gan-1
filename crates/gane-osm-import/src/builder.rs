@@ -1,11 +1,11 @@
-//! Road-graph builder: raw OSM nodes/ways → `aurora_core::map::RoadGraph`.
+//! Road-graph builder: raw OSM nodes/ways → `gane_core::map::RoadGraph`.
 //!
 //! Ways are split at intersection nodes (nodes shared by two or more ways,
 //! plus way endpoints) so every produced `RoadSegment` is a routable edge.
 
-use aurora_core::map::{RoadGraph, RoadNode, RoadNodeType, RoadSegment, SurfaceType};
-use aurora_core::types::{EntityId, GeoPosition};
 use chrono::Utc;
+use gane_core::map::{RoadGraph, RoadNode, RoadNodeType, RoadSegment, SurfaceType};
+use gane_core::types::{EntityId, GeoPosition};
 use std::collections::HashMap;
 
 use crate::classify::{

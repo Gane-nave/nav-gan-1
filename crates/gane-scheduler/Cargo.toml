@@ -1,0 +1,7 @@
+[package]
+name = "gane-scheduler"
+version = "0.1.0"
+edition = "2021"
+description = "Task scheduling and job queue — cron-like scheduling, job priorities, execution tracking, retry policies"
+
+[dependencies]

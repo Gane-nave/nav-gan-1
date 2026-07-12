@@ -1,7 +1,0 @@
-[package]
-name = "aurora-hashring"
-version = "0.1.0"
-edition = "2021"
-description = "Consistent hashing ring for distributed load balancing"
-
-[dependencies]

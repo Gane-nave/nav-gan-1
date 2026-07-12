@@ -5,7 +5,7 @@ edition.workspace = true
 description = "Golden-trace replay harness: sensor logs -> canonical ESKF -> reproducible state (native/WASM equivalence proof)"
 
 [dependencies]
-aurora-fusion = { path = "../aurora-fusion" }
+gane-fusion = { path = "../gane-fusion" }
 nalgebra = { workspace = true }
 serde = { workspace = true }
 serde_json = { workspace = true }

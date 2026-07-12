@@ -1,0 +1,13 @@
+[package]
+name = "gane-instruments"
+version.workspace = true
+edition.workspace = true
+description = "Instrumentation & environmental data — compass, speedometer, altimeter, weather integration, and ambient sensing"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

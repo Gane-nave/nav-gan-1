@@ -1,9 +1,0 @@
-[package]
-name = "aurora-deploy"
-version.workspace = true
-edition.workspace = true
-description = "Deployment manifests, Dockerfile, and docker-compose for AURORA NAV / GMIN"
-# This crate contains only deployment files (Dockerfile, docker-compose, k8s manifests).
-# It has no Rust source code — just a placeholder lib.rs for workspace membership.
-
-[dependencies]

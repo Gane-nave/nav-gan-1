@@ -1,8 +1,0 @@
-[package]
-name = "aurora-voice"
-version = "0.1.0"
-edition = "2021"
-description = "Voice navigation, TTS integration, audio guidance"
-
-[dependencies]
-aurora-core = { path = "../aurora-core" }

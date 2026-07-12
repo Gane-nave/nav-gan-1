@@ -1,0 +1,13 @@
+[package]
+name = "gane-risk"
+version.workspace = true
+edition.workspace = true
+description = "Risk engine — segment, route, and systemic risk scoring"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-map = { path = "../gane-map" }
+serde = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

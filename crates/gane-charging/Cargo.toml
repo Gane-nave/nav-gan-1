@@ -1,0 +1,18 @@
+[package]
+name = "gane-charging"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "EV charging and energy — vehicle energy model, consumption prediction, charging station integration, eco routing"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }

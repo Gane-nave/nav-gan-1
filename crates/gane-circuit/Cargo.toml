@@ -1,0 +1,7 @@
+[package]
+name = "gane-circuit"
+version = "0.1.0"
+edition = "2021"
+description = "Circuit breaker and resilience patterns for G.A.N.E NAV"
+
+[dependencies]

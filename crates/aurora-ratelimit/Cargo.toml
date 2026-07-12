@@ -1,7 +1,0 @@
-[package]
-name = "aurora-ratelimit"
-version = "0.1.0"
-edition = "2021"
-description = "Rate limiting & throttling — token bucket, sliding window, adaptive throttling"
-
-[dependencies]

@@ -1,0 +1,7 @@
+[package]
+name = "gane-semaphore"
+version = "0.1.0"
+edition = "2021"
+description = "Counting semaphore for resource access control in G.A.N.E NAV"
+
+[dependencies]

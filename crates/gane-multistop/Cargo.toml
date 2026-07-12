@@ -1,0 +1,11 @@
+[package]
+name = "gane-multistop"
+version.workspace = true
+edition.workspace = true
+description = "Multi-destination route planning"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

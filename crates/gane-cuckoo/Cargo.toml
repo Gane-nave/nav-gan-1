@@ -1,0 +1,8 @@
+[package]
+name = "gane-cuckoo"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Cuckoo filter for approximate set membership for G.A.N.E NAV"
+
+[dependencies]

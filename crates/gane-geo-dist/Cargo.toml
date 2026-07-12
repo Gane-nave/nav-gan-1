@@ -1,0 +1,8 @@
+[package]
+name = "gane-geo-dist"
+version = "0.1.0"
+edition = "2021"
+description = "Geo-distributed consistency across regions."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

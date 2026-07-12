@@ -1,0 +1,18 @@
+[package]
+name = "gane-ux"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "UX control plane — driving modes, cognitive-safe interface, layer management, theme engine"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+chrono = { workspace = true }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tracing = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+approx = { workspace = true }

@@ -1,0 +1,8 @@
+[package]
+name = "gane-quality-ctrl"
+version = "0.1.0"
+edition = "2021"
+description = "Global quality controller for system-wide health decisions."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

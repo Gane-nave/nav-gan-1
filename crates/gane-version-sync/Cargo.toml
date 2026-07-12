@@ -1,0 +1,8 @@
+[package]
+name = "gane-version-sync"
+version = "0.1.0"
+edition = "2021"
+description = "Version synchronization between maps, traffic, and clients."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

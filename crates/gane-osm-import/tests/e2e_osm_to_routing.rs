@@ -4,11 +4,11 @@
 //! unrestricted detour — imported from real Overpass-shaped JSON — must send
 //! a heavy truck around the bridge while a car drives straight through.
 
-use aurora_core::vehicle::VehicleEnvelope;
-use aurora_map::graph::RoadGraphIndex;
-use aurora_routing::dijkstra::shortest_path;
-use aurora_routing::vehicle_aware::by_time_for_vehicle;
+use gane_core::vehicle::VehicleEnvelope;
+use gane_map::graph::RoadGraphIndex;
 use gane_osm_import::graph_from_overpass_json;
+use gane_routing::dijkstra::shortest_path;
+use gane_routing::vehicle_aware::by_time_for_vehicle;
 
 /// Direct road 1→2 (fast, maxheight 4.0 m) vs detour 1→3→2 (slower, free).
 const OVERPASS_FIXTURE: &str = r#"{
@@ -27,8 +27,8 @@ const OVERPASS_FIXTURE: &str = r#"{
 }"#;
 
 fn endpoints(
-    graph: &aurora_core::map::RoadGraph,
-) -> (aurora_core::types::EntityId, aurora_core::types::EntityId) {
+    graph: &gane_core::map::RoadGraph,
+) -> (gane_core::types::EntityId, gane_core::types::EntityId) {
     // Nodes 1 and 2 are the only ones at lon 34.78.
     let a = graph
         .nodes

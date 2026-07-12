@@ -5,7 +5,7 @@
 //! zero drift"). Doubles as the forensic-replay entry point required by the
 //! evidence-chain contract.
 
-use aurora_fusion::eskf15::Eskf15;
+use gane_fusion::eskf15::Eskf15;
 use nalgebra::Vector3;
 use serde::{Deserialize, Serialize};
 

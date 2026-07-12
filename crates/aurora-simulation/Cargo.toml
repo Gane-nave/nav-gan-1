@@ -1,8 +1,0 @@
-[package]
-name = "aurora-simulation"
-version = "0.1.0"
-edition = "2021"
-description = "Simulation and replay engine — route simulation, scenario replay, traffic generation, what-if analysis"
-
-[dependencies]
-aurora-core = { path = "../aurora-core" }

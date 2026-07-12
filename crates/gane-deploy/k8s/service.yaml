@@ -1,0 +1,35 @@
+# =============================================================================
+# G.A.N.E NAV — Kubernetes Service
+# =============================================================================
+apiVersion: v1
+kind: Service
+metadata:
+  name: gane-nav
+  labels:
+    app: gane-nav
+    component: navigation
+spec:
+  type: ClusterIP
+  ports:
+    - port: 80
+      targetPort: http
+      protocol: TCP
+      name: http
+  selector:
+    app: gane-nav
+---
+# Service Monitor for Prometheus Operator
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: gane-nav
+  labels:
+    app: gane-nav
+spec:
+  selector:
+    matchLabels:
+      app: gane-nav
+  endpoints:
+    - port: http
+      path: /metrics
+      interval: 15s

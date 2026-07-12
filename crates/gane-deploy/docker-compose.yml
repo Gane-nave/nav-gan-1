@@ -1,0 +1,70 @@
+# =============================================================================
+# G.A.N.E NAV — Docker Compose (Development / Local Testing)
+# =============================================================================
+
+services:
+  gane-nav:
+    build:
+      context: ../..
+      dockerfile: crates/gane-deploy/Dockerfile
+    container_name: gane-nav
+    ports:
+      - "3000:3000"
+    environment:
+      - AURORA_LOG_LEVEL=debug
+      - AURORA_LOG_FORMAT=json
+      - AURORA_API_HOST=0.0.0.0
+      - AURORA_API_PORT=3000
+      - RUST_BACKTRACE=1
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:3000/health"]
+      interval: 15s
+      timeout: 5s
+      start_period: 10s
+      retries: 3
+    restart: unless-stopped
+    deploy:
+      resources:
+        limits:
+          memory: 512M
+          cpus: "2.0"
+        reservations:
+          memory: 128M
+          cpus: "0.5"
+    networks:
+      - gane-net
+
+  # Optional: Prometheus for metrics scraping
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: gane-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+    depends_on:
+      gane-nav:
+        condition: service_healthy
+    networks:
+      - gane-net
+    profiles:
+      - monitoring
+
+  # Optional: Grafana for dashboards
+  grafana:
+    image: grafana/grafana:latest
+    container_name: gane-grafana
+    ports:
+      - "3001:3000"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=aurora
+    depends_on:
+      - prometheus
+    networks:
+      - gane-net
+    profiles:
+      - monitoring
+
+networks:
+  gane-net:
+    driver: bridge

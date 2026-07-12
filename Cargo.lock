@@ -64,2123 +64,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-a11y"
-version = "0.1.0"
-dependencies = [
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-adaptive"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-adaptive-contrast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-agnss"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-air-quality"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-alerts"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-analytics"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "uuid",
-]
-
-[[package]]
-name = "aurora-anomaly"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-anonymize"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-anti-jam"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-anti-manipulation"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-anti-overlap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api"
-version = "0.1.0"
-dependencies = [
- "aurora-auth",
- "aurora-continuity",
- "aurora-core",
- "aurora-corrections",
- "aurora-events",
- "aurora-fusion",
- "aurora-gnss",
- "aurora-integrity",
- "aurora-metrics",
- "aurora-observability",
- "aurora-security",
- "aurora-sensors",
- "aurora-telemetry",
- "aurora-web",
- "axum",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "tokio",
- "tower 0.4.13",
- "tower-http",
- "tracing",
- "tracing-subscriber",
- "uuid",
-]
-
-[[package]]
-name = "aurora-app"
-version = "0.1.0"
-dependencies = [
- "aurora-agnss",
- "aurora-anti-jam",
- "aurora-anti-manipulation",
- "aurora-api",
- "aurora-auth",
- "aurora-calibration",
- "aurora-charging",
- "aurora-city",
- "aurora-confidence",
- "aurora-config",
- "aurora-conflict-res",
- "aurora-constraints",
- "aurora-context-aware",
- "aurora-continuity",
- "aurora-core",
- "aurora-corrections",
- "aurora-data-integrity",
- "aurora-deploy",
- "aurora-determinism",
- "aurora-developer",
- "aurora-device-caps",
- "aurora-dual-freq",
- "aurora-edge",
- "aurora-edge-cases",
- "aurora-ekf",
- "aurora-emergency",
- "aurora-error-accum",
- "aurora-events",
- "aurora-evidence",
- "aurora-explain",
- "aurora-fallback",
- "aurora-fleet",
- "aurora-fusion",
- "aurora-geo-dist",
- "aurora-geo-shard",
- "aurora-geofence",
- "aurora-gnss",
- "aurora-gnss-quality",
- "aurora-incr-correct",
- "aurora-integrity",
- "aurora-lane",
- "aurora-latency-comp",
- "aurora-load-shed",
- "aurora-map",
- "aurora-map-update",
- "aurora-marketplace",
- "aurora-metrics",
- "aurora-micro-nav",
- "aurora-multi-gnss",
- "aurora-nav-state",
- "aurora-numerical",
- "aurora-observability",
- "aurora-offline",
- "aurora-orchestrator",
- "aurora-parking",
- "aurora-payments",
- "aurora-pnt-telemetry",
- "aurora-probabilistic",
- "aurora-quality-ctrl",
- "aurora-resilience",
- "aurora-risk",
- "aurora-route-quality",
- "aurora-routing",
- "aurora-sampling-ctrl",
- "aurora-satellite",
- "aurora-sdk",
- "aurora-security",
- "aurora-sensors",
- "aurora-smooth-nav",
- "aurora-source-select",
- "aurora-stability",
- "aurora-subsystem-sync",
- "aurora-telemetry",
- "aurora-topology",
- "aurora-traffic",
- "aurora-trust",
- "aurora-tunnel",
- "aurora-twin",
- "aurora-uncertainty",
- "aurora-ux",
- "aurora-vehicle",
- "aurora-version-sync",
- "aurora-web",
- "axum",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "aurora-ar"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-ar-nav"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-arena"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-attention-steer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-audit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth"
-version = "0.1.0"
-dependencies = [
- "base64",
- "chrono",
- "hmac",
- "parking_lot",
- "serde",
- "serde_json",
- "sha2",
- "thiserror",
- "uuid",
-]
-
-[[package]]
-name = "aurora-autonomous"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-backpressure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bench"
-version = "0.1.0"
-dependencies = [
- "aurora-app",
- "aurora-city",
- "aurora-confidence",
- "aurora-config",
- "aurora-continuity",
- "aurora-core",
- "aurora-corrections",
- "aurora-edge",
- "aurora-events",
- "aurora-fusion",
- "aurora-gnss",
- "aurora-integrity",
- "aurora-map",
- "aurora-resilience",
- "aurora-risk",
- "aurora-routing",
- "aurora-sensors",
- "aurora-stability",
- "aurora-telemetry",
- "aurora-traffic",
- "aurora-twin",
- "chrono",
- "criterion",
- "nalgebra",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "aurora-bitset"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bloom"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bounded-queue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bridge-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-btree"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-calibration"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-cargo-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-carplay"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-cdn"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-chaos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charging"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-circuit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-city"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-clock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compliance"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "aurora-compression"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-confidence"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-config"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
- "thiserror",
- "toml",
-]
-
-[[package]]
-name = "aurora-conflict-res"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-consensus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-constraints"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-context-aware"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-context-total"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-continuity"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "aurora-fusion",
- "aurora-gnss",
- "aurora-integrity",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-convoy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-convoy-plan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-core"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "getrandom",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "uuid",
-]
-
-[[package]]
-name = "aurora-corrections"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-crdt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crowd-reports"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-crowd-speed"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-cuckoo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-integrity"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-data-network"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dead-reckoning"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-debounce"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-decision-rt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deep-personal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-determinism"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-developer"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-device-caps"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-diagnostics"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-distribution"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-docs"
-version = "0.1.0"
-dependencies = [
- "aurora-anti-manipulation",
- "aurora-app",
- "aurora-charging",
- "aurora-city",
- "aurora-confidence",
- "aurora-config",
- "aurora-continuity",
- "aurora-core",
- "aurora-corrections",
- "aurora-developer",
- "aurora-edge",
- "aurora-emergency",
- "aurora-events",
- "aurora-evidence",
- "aurora-fleet",
- "aurora-fusion",
- "aurora-gnss",
- "aurora-integrity",
- "aurora-lane",
- "aurora-map",
- "aurora-marketplace",
- "aurora-micro-nav",
- "aurora-offline",
- "aurora-parking",
- "aurora-payments",
- "aurora-probabilistic",
- "aurora-resilience",
- "aurora-risk",
- "aurora-routing",
- "aurora-satellite",
- "aurora-sdk",
- "aurora-sensors",
- "aurora-stability",
- "aurora-telemetry",
- "aurora-traffic",
- "aurora-trust",
- "aurora-twin",
- "aurora-ux",
- "aurora-vehicle",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "aurora-drive-patterns"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-dual-freq"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-e2e-tests"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-economics"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-edge"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-edge-cases"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-effortless"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ekf"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-emergency"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-emergency-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-emergency-sat"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "hmac",
- "parking_lot",
- "serde",
- "serde_json",
- "sha2",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-error-accum"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-error-prevent"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-errors"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
-]
-
-[[package]]
-name = "aurora-eta"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-events"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "crossbeam-channel",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-evidence"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-explain"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-ext-benchmark"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fallback"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-features"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-fsm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-opt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fusion"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "aurora-corrections",
- "aurora-events",
- "aurora-gnss",
- "aurora-sensors",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-gamification"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-gateway"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "uuid",
-]
-
-[[package]]
-name = "aurora-geo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-geo-dist"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-geo-shard"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-geofence"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-gnss"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-gnss-quality"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-graphdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-haptic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hashring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hazmat-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-health"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-heap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-histogram"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hud"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-hyperloglog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-i18n"
-version = "0.1.0"
-dependencies = [
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-immersive"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-incidents"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-incr-correct"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-indoor"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-info-hierarchy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-instruments"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
-]
-
-[[package]]
-name = "aurora-integration-tests"
-version = "0.1.0"
-dependencies = [
- "aurora-anti-manipulation",
- "aurora-api",
- "aurora-app",
- "aurora-charging",
- "aurora-city",
- "aurora-confidence",
- "aurora-config",
- "aurora-continuity",
- "aurora-core",
- "aurora-corrections",
- "aurora-developer",
- "aurora-edge",
- "aurora-emergency",
- "aurora-events",
- "aurora-evidence",
- "aurora-fleet",
- "aurora-fusion",
- "aurora-gnss",
- "aurora-integrity",
- "aurora-lane",
- "aurora-map",
- "aurora-marketplace",
- "aurora-micro-nav",
- "aurora-offline",
- "aurora-parking",
- "aurora-payments",
- "aurora-probabilistic",
- "aurora-resilience",
- "aurora-risk",
- "aurora-routing",
- "aurora-satellite",
- "aurora-sdk",
- "aurora-sensors",
- "aurora-stability",
- "aurora-telemetry",
- "aurora-traffic",
- "aurora-trust",
- "aurora-twin",
- "aurora-ux",
- "aurora-vehicle",
- "axum",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "tokio",
- "toml",
- "tower 0.4.13",
-]
-
-[[package]]
-name = "aurora-integrity"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "aurora-fusion",
- "aurora-gnss",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-intent"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-interval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-investor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-invisible-ui"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ip-protect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-jumphash"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lane"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-map",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
-]
-
-[[package]]
-name = "aurora-latency-comp"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-lease"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-legal"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-light-adapt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-load-shed"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-location-ads"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-lru"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
-]
-
-[[package]]
-name = "aurora-map-match"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-map-update"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-market-strategy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-marketplace"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-mesh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-metrics"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-micro-nav"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-migration"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "nalgebra",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "uuid",
-]
-
-[[package]]
-name = "aurora-moat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-moderation"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-monitoring"
-version = "0.1.0"
-dependencies = [
- "aurora-metrics",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
-]
-
-[[package]]
-name = "aurora-motion-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-multi-gnss"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-multimodal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-multistop"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-nav-state"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-nightmode"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-noise-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-notifications"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "aurora-numerical"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-observability"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-metrics",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "tracing",
- "tracing-subscriber",
-]
-
-[[package]]
-name = "aurora-offline"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "aurora-map",
- "aurora-routing",
- "chrono",
- "serde",
- "serde_json",
- "tokio",
- "tracing",
-]
-
-[[package]]
-name = "aurora-orchestrator"
-version = "0.1.0"
-dependencies = [
- "aurora-backpressure",
- "aurora-bloom",
- "aurora-bounded-queue",
- "aurora-btree",
- "aurora-cache",
- "aurora-circuit",
- "aurora-clock",
- "aurora-errors",
- "aurora-features",
- "aurora-histogram",
- "aurora-lru",
- "aurora-perf",
- "aurora-ratelimit",
- "aurora-retry",
- "aurora-snapshot",
- "aurora-structured-log",
-]
-
-[[package]]
-name = "aurora-parking"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-parking-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-payments"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-pedestrian"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-perceptual"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-perf"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-peripheral-viz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pipeline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-plugins"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pnt-telemetry"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-poi-services"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-power"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-prediction-mh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-predictive"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-preemptive-ui"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-prefetch"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-probabilistic"
-version = "0.1.0"
-dependencies = [
- "aurora-confidence",
- "aurora-core",
- "aurora-map",
- "aurora-risk",
- "aurora-routing",
- "chrono",
- "serde",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-profile"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-pubsub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-quality-ctrl"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-quota"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ratelimit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rcu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reroute"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-resilience"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-retry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-revenue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ringbuf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-risk"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-map",
- "chrono",
- "serde",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-rollout"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-route-learn"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-route-quality"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-route-share"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-routing"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "aurora-map",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
-]
-
-[[package]]
-name = "aurora-sampling-ctrl"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-satellite"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-scheduler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sdk"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-security"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
-]
-
-[[package]]
-name = "aurora-semaphore"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sensors"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "nalgebra",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-serialization"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-simulation"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-skiplist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-smooth-nav"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-snapshot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-social"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-source-select"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-speed-advisor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speed-alerts"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-speed-scale"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sre"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stability"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-storage"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "uuid",
-]
-
-[[package]]
-name = "aurora-streaming"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-structured-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-subsystem-sync"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-suspension-adapt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-telemetry"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-events",
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-temporal"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-temporal-prec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-terrain"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-framework"
-version = "0.1.0"
-dependencies = [
- "chrono",
- "parking_lot",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-tiles"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-tire-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-topology"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-tracing-dist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-traffic"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-traffic-predict"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-trie"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trust"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "chrono",
- "serde",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-tunnel"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-tunnel-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-twin"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-uncertainty"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-ux"
-version = "0.1.0"
-dependencies = [
- "approx",
- "aurora-core",
- "chrono",
- "serde",
- "serde_json",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-v2x"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-vehicle"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
- "aurora-sensors",
- "chrono",
- "serde",
- "serde_json",
- "thiserror",
- "tracing",
- "uuid",
-]
-
-[[package]]
-name = "aurora-version-sync"
-version = "0.1.0"
-dependencies = [
- "serde",
-]
-
-[[package]]
-name = "aurora-vertical-int"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-visual-density"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-visual-dynamic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-visual-hierarchy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-visual-lang"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-voice"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-weather"
-version = "0.1.0"
-dependencies = [
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-weather-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-web"
-version = "0.1.0"
-dependencies = [
- "aurora-orchestrator",
- "serde",
- "serde_json",
-]
-
-[[package]]
-name = "aurora-websocket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wellness"
-version = "0.1.0"
-dependencies = [
- "aurora-core",
-]
-
-[[package]]
-name = "aurora-worksteal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-zero-friction"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_merkle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_pool"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_prioritymap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_rope"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_segment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_slab"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_timewheel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_unionfind"
-version = "0.1.0"
-
-[[package]]
-name = "aurora_wal"
-version = "0.1.0"
-
-[[package]]
 name = "autocfg"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -2553,42 +436,2159 @@ dependencies = [
 ]
 
 [[package]]
-name = "gane-osm-import"
+name = "gane-a11y"
 version = "0.1.0"
 dependencies = [
- "aurora-core",
- "aurora-map",
- "aurora-routing",
- "chrono",
+ "parking_lot",
  "serde",
  "serde_json",
 ]
 
 [[package]]
-name = "gane-replay-verify"
+name = "gane-adaptive"
 version = "0.1.0"
 dependencies = [
- "aurora-fusion",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-adaptive-contrast"
+version = "0.1.0"
+
+[[package]]
+name = "gane-agnss"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-air-quality"
+version = "0.1.0"
+
+[[package]]
+name = "gane-alerts"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-analytics"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "gane-anomaly"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-anonymize"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-anti-jam"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-anti-manipulation"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-anti-overlap"
+version = "0.1.0"
+
+[[package]]
+name = "gane-api"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "chrono",
+ "gane-auth",
+ "gane-continuity",
+ "gane-core",
+ "gane-corrections",
+ "gane-events",
+ "gane-fusion",
+ "gane-gnss",
+ "gane-integrity",
+ "gane-metrics",
+ "gane-observability",
+ "gane-security",
+ "gane-sensors",
+ "gane-telemetry",
+ "gane-web",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tokio",
+ "tower 0.4.13",
+ "tower-http",
+ "tracing",
+ "tracing-subscriber",
+ "uuid",
+]
+
+[[package]]
+name = "gane-app"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "chrono",
+ "gane-agnss",
+ "gane-anti-jam",
+ "gane-anti-manipulation",
+ "gane-api",
+ "gane-auth",
+ "gane-calibration",
+ "gane-charging",
+ "gane-city",
+ "gane-confidence",
+ "gane-config",
+ "gane-conflict-res",
+ "gane-constraints",
+ "gane-context-aware",
+ "gane-continuity",
+ "gane-core",
+ "gane-corrections",
+ "gane-data-integrity",
+ "gane-deploy",
+ "gane-determinism",
+ "gane-developer",
+ "gane-device-caps",
+ "gane-dual-freq",
+ "gane-edge",
+ "gane-edge-cases",
+ "gane-ekf",
+ "gane-emergency",
+ "gane-error-accum",
+ "gane-events",
+ "gane-evidence",
+ "gane-explain",
+ "gane-fallback",
+ "gane-fleet",
+ "gane-fusion",
+ "gane-geo-dist",
+ "gane-geo-shard",
+ "gane-geofence",
+ "gane-gnss",
+ "gane-gnss-quality",
+ "gane-incr-correct",
+ "gane-integrity",
+ "gane-lane",
+ "gane-latency-comp",
+ "gane-load-shed",
+ "gane-map",
+ "gane-map-update",
+ "gane-marketplace",
+ "gane-metrics",
+ "gane-micro-nav",
+ "gane-multi-gnss",
+ "gane-nav-state",
+ "gane-numerical",
+ "gane-observability",
+ "gane-offline",
+ "gane-orchestrator",
+ "gane-parking",
+ "gane-payments",
+ "gane-pnt-telemetry",
+ "gane-probabilistic",
+ "gane-quality-ctrl",
+ "gane-resilience",
+ "gane-risk",
+ "gane-route-quality",
+ "gane-routing",
+ "gane-sampling-ctrl",
+ "gane-satellite",
+ "gane-sdk",
+ "gane-security",
+ "gane-sensors",
+ "gane-smooth-nav",
+ "gane-source-select",
+ "gane-stability",
+ "gane-subsystem-sync",
+ "gane-telemetry",
+ "gane-topology",
+ "gane-traffic",
+ "gane-trust",
+ "gane-tunnel",
+ "gane-twin",
+ "gane-uncertainty",
+ "gane-ux",
+ "gane-vehicle",
+ "gane-version-sync",
+ "gane-web",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "gane-ar"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-ar-nav"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-arena"
+version = "0.1.0"
+
+[[package]]
+name = "gane-attention-steer"
+version = "0.1.0"
+
+[[package]]
+name = "gane-audit"
+version = "0.1.0"
+
+[[package]]
+name = "gane-auth"
+version = "0.1.0"
+dependencies = [
+ "base64",
+ "chrono",
+ "hmac",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "gane-autonomous"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-backpressure"
+version = "0.1.0"
+
+[[package]]
+name = "gane-bench"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "criterion",
+ "gane-app",
+ "gane-city",
+ "gane-confidence",
+ "gane-config",
+ "gane-continuity",
+ "gane-core",
+ "gane-corrections",
+ "gane-edge",
+ "gane-events",
+ "gane-fusion",
+ "gane-gnss",
+ "gane-integrity",
+ "gane-map",
+ "gane-resilience",
+ "gane-risk",
+ "gane-routing",
+ "gane-sensors",
+ "gane-stability",
+ "gane-telemetry",
+ "gane-traffic",
+ "gane-twin",
  "nalgebra",
  "serde",
  "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "gane-bitset"
+version = "0.1.0"
+
+[[package]]
+name = "gane-bloom"
+version = "0.1.0"
+
+[[package]]
+name = "gane-bounded-queue"
+version = "0.1.0"
+
+[[package]]
+name = "gane-bridge-nav"
+version = "0.1.0"
+
+[[package]]
+name = "gane-btree"
+version = "0.1.0"
+
+[[package]]
+name = "gane-cache"
+version = "0.1.0"
+
+[[package]]
+name = "gane-calibration"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-cargo-route"
+version = "0.1.0"
+
+[[package]]
+name = "gane-carplay"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-cdn"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-chaos"
+version = "0.1.0"
+
+[[package]]
+name = "gane-charging"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-circuit"
+version = "0.1.0"
+
+[[package]]
+name = "gane-city"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-clock"
+version = "0.1.0"
+
+[[package]]
+name = "gane-compliance"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "gane-compression"
+version = "0.1.0"
+
+[[package]]
+name = "gane-confidence"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-config"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+ "thiserror",
+ "toml",
+]
+
+[[package]]
+name = "gane-conflict-res"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-consensus"
+version = "0.1.0"
+
+[[package]]
+name = "gane-constraints"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-context-aware"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-context-total"
+version = "0.1.0"
+
+[[package]]
+name = "gane-continuity"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "gane-fusion",
+ "gane-gnss",
+ "gane-integrity",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-convoy"
+version = "0.1.0"
+
+[[package]]
+name = "gane-convoy-plan"
+version = "0.1.0"
+
+[[package]]
+name = "gane-core"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "getrandom",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "gane-corrections"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-crdt"
+version = "0.1.0"
+
+[[package]]
+name = "gane-crowd-reports"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-crowd-speed"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-cuckoo"
+version = "0.1.0"
+
+[[package]]
+name = "gane-dag"
+version = "0.1.0"
+
+[[package]]
+name = "gane-data-integrity"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-data-network"
+version = "0.1.0"
+
+[[package]]
+name = "gane-dead-reckoning"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-debounce"
+version = "0.1.0"
+
+[[package]]
+name = "gane-decision-rt"
+version = "0.1.0"
+
+[[package]]
+name = "gane-deep-personal"
+version = "0.1.0"
+
+[[package]]
+name = "gane-deploy"
+version = "0.1.0"
+
+[[package]]
+name = "gane-determinism"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-developer"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-device-caps"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-diagnostics"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-distribution"
+version = "0.1.0"
+
+[[package]]
+name = "gane-docs"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-anti-manipulation",
+ "gane-app",
+ "gane-charging",
+ "gane-city",
+ "gane-confidence",
+ "gane-config",
+ "gane-continuity",
+ "gane-core",
+ "gane-corrections",
+ "gane-developer",
+ "gane-edge",
+ "gane-emergency",
+ "gane-events",
+ "gane-evidence",
+ "gane-fleet",
+ "gane-fusion",
+ "gane-gnss",
+ "gane-integrity",
+ "gane-lane",
+ "gane-map",
+ "gane-marketplace",
+ "gane-micro-nav",
+ "gane-offline",
+ "gane-parking",
+ "gane-payments",
+ "gane-probabilistic",
+ "gane-resilience",
+ "gane-risk",
+ "gane-routing",
+ "gane-satellite",
+ "gane-sdk",
+ "gane-sensors",
+ "gane-stability",
+ "gane-telemetry",
+ "gane-traffic",
+ "gane-trust",
+ "gane-twin",
+ "gane-ux",
+ "gane-vehicle",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "gane-drive-patterns"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-dual-freq"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-e2e-tests"
+version = "0.1.0"
+
+[[package]]
+name = "gane-economics"
+version = "0.1.0"
+
+[[package]]
+name = "gane-edge"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-edge-cases"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-effortless"
+version = "0.1.0"
+
+[[package]]
+name = "gane-ekf"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-emergency"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-emergency-route"
+version = "0.1.0"
+
+[[package]]
+name = "gane-emergency-sat"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "hmac",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "sha2",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-error-accum"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-error-prevent"
+version = "0.1.0"
+
+[[package]]
+name = "gane-errors"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "gane-eta"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-events"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "crossbeam-channel",
+ "gane-core",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-evidence"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-explain"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-ext-benchmark"
+version = "0.1.0"
+
+[[package]]
+name = "gane-fallback"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-features"
+version = "0.1.0"
+
+[[package]]
+name = "gane-fleet"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-fsm"
+version = "0.1.0"
+
+[[package]]
+name = "gane-fuel-opt"
+version = "0.1.0"
+
+[[package]]
+name = "gane-fusion"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "gane-corrections",
+ "gane-events",
+ "gane-gnss",
+ "gane-sensors",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-gamification"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-gateway"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "gane-geo"
+version = "0.1.0"
+
+[[package]]
+name = "gane-geo-dist"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-geo-shard"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-geofence"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-gnss"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-gnss-quality"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-graphdb"
+version = "0.1.0"
+
+[[package]]
+name = "gane-haptic"
+version = "0.1.0"
+
+[[package]]
+name = "gane-hashring"
+version = "0.1.0"
+
+[[package]]
+name = "gane-hazmat-route"
+version = "0.1.0"
+
+[[package]]
+name = "gane-health"
+version = "0.1.0"
+
+[[package]]
+name = "gane-heap"
+version = "0.1.0"
+
+[[package]]
+name = "gane-histogram"
+version = "0.1.0"
+
+[[package]]
+name = "gane-hud"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-hyperloglog"
+version = "0.1.0"
+
+[[package]]
+name = "gane-i18n"
+version = "0.1.0"
+dependencies = [
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-immersive"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-incidents"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-incr-correct"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-indoor"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-info-hierarchy"
+version = "0.1.0"
+
+[[package]]
+name = "gane-instruments"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+]
+
+[[package]]
+name = "gane-integration-tests"
+version = "0.1.0"
+dependencies = [
+ "axum",
+ "chrono",
+ "gane-anti-manipulation",
+ "gane-api",
+ "gane-app",
+ "gane-charging",
+ "gane-city",
+ "gane-confidence",
+ "gane-config",
+ "gane-continuity",
+ "gane-core",
+ "gane-corrections",
+ "gane-developer",
+ "gane-edge",
+ "gane-emergency",
+ "gane-events",
+ "gane-evidence",
+ "gane-fleet",
+ "gane-fusion",
+ "gane-gnss",
+ "gane-integrity",
+ "gane-lane",
+ "gane-map",
+ "gane-marketplace",
+ "gane-micro-nav",
+ "gane-offline",
+ "gane-parking",
+ "gane-payments",
+ "gane-probabilistic",
+ "gane-resilience",
+ "gane-risk",
+ "gane-routing",
+ "gane-satellite",
+ "gane-sdk",
+ "gane-sensors",
+ "gane-stability",
+ "gane-telemetry",
+ "gane-traffic",
+ "gane-trust",
+ "gane-twin",
+ "gane-ux",
+ "gane-vehicle",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "tokio",
+ "toml",
+ "tower 0.4.13",
+]
+
+[[package]]
+name = "gane-integrity"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "gane-fusion",
+ "gane-gnss",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-intent"
+version = "0.1.0"
+
+[[package]]
+name = "gane-interval"
+version = "0.1.0"
+
+[[package]]
+name = "gane-investor"
+version = "0.1.0"
+
+[[package]]
+name = "gane-invisible-ui"
+version = "0.1.0"
+
+[[package]]
+name = "gane-ip-protect"
+version = "0.1.0"
+
+[[package]]
+name = "gane-jumphash"
+version = "0.1.0"
+
+[[package]]
+name = "gane-lane"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-map",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "gane-latency-comp"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-lease"
+version = "0.1.0"
+
+[[package]]
+name = "gane-legal"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-light-adapt"
+version = "0.1.0"
+
+[[package]]
+name = "gane-load-shed"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-location-ads"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-lru"
+version = "0.1.0"
+
+[[package]]
+name = "gane-map"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "gane-map-match"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-map-update"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-market-strategy"
+version = "0.1.0"
+
+[[package]]
+name = "gane-marketplace"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-mesh"
+version = "0.1.0"
+
+[[package]]
+name = "gane-metrics"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-micro-nav"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-migration"
+version = "0.1.0"
+
+[[package]]
+name = "gane-ml"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "nalgebra",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "uuid",
+]
+
+[[package]]
+name = "gane-moat"
+version = "0.1.0"
+
+[[package]]
+name = "gane-moderation"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-monitoring"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-metrics",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "gane-motion-data"
+version = "0.1.0"
+
+[[package]]
+name = "gane-multi-gnss"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-multimodal"
+version = "0.1.0"
+
+[[package]]
+name = "gane-multistop"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-nav-state"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-nightmode"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-noise-map"
+version = "0.1.0"
+
+[[package]]
+name = "gane-notifications"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "gane-numerical"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-observability"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-metrics",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "tracing",
+ "tracing-subscriber",
+]
+
+[[package]]
+name = "gane-offline"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "gane-map",
+ "gane-routing",
+ "serde",
+ "serde_json",
+ "tokio",
+ "tracing",
+]
+
+[[package]]
+name = "gane-orchestrator"
+version = "0.1.0"
+dependencies = [
+ "gane-backpressure",
+ "gane-bloom",
+ "gane-bounded-queue",
+ "gane-btree",
+ "gane-cache",
+ "gane-circuit",
+ "gane-clock",
+ "gane-errors",
+ "gane-features",
+ "gane-histogram",
+ "gane-lru",
+ "gane-perf",
+ "gane-ratelimit",
+ "gane-retry",
+ "gane-snapshot",
+ "gane-structured-log",
+]
+
+[[package]]
+name = "gane-osm-import"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-map",
+ "gane-routing",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-parking"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-parking-nav"
+version = "0.1.0"
+
+[[package]]
+name = "gane-payments"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-pedestrian"
+version = "0.1.0"
+
+[[package]]
+name = "gane-perceptual"
+version = "0.1.0"
+
+[[package]]
+name = "gane-perf"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-peripheral-viz"
+version = "0.1.0"
+
+[[package]]
+name = "gane-pipeline"
+version = "0.1.0"
+
+[[package]]
+name = "gane-plugins"
+version = "0.1.0"
+
+[[package]]
+name = "gane-pnt-telemetry"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-poi-services"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-power"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-prediction-mh"
+version = "0.1.0"
+
+[[package]]
+name = "gane-predictive"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-preemptive-ui"
+version = "0.1.0"
+
+[[package]]
+name = "gane-prefetch"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-probabilistic"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-confidence",
+ "gane-core",
+ "gane-map",
+ "gane-risk",
+ "gane-routing",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-profile"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-pubsub"
+version = "0.1.0"
+
+[[package]]
+name = "gane-quality-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-quota"
+version = "0.1.0"
+
+[[package]]
+name = "gane-ratelimit"
+version = "0.1.0"
+
+[[package]]
+name = "gane-rcu"
+version = "0.1.0"
+
+[[package]]
+name = "gane-replay-verify"
+version = "0.1.0"
+dependencies = [
+ "gane-fusion",
+ "nalgebra",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-reroute"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-resilience"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-retry"
+version = "0.1.0"
+
+[[package]]
+name = "gane-revenue"
+version = "0.1.0"
+
+[[package]]
+name = "gane-ringbuf"
+version = "0.1.0"
+
+[[package]]
+name = "gane-risk"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-map",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-rollout"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-route-learn"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-route-quality"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-route-share"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-routing"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "gane-map",
+ "serde",
+ "serde_json",
+ "tracing",
+]
+
+[[package]]
+name = "gane-sampling-ctrl"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-satellite"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-scheduler"
+version = "0.1.0"
+
+[[package]]
+name = "gane-sdk"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-security"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+]
+
+[[package]]
+name = "gane-semaphore"
+version = "0.1.0"
+
+[[package]]
+name = "gane-sensors"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "nalgebra",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-serialization"
+version = "0.1.0"
+
+[[package]]
+name = "gane-simulation"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-skiplist"
+version = "0.1.0"
+
+[[package]]
+name = "gane-smooth-nav"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-snapshot"
+version = "0.1.0"
+
+[[package]]
+name = "gane-social"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-source-select"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-speed-advisor"
+version = "0.1.0"
+
+[[package]]
+name = "gane-speed-alerts"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-speed-scale"
+version = "0.1.0"
+
+[[package]]
+name = "gane-sre"
+version = "0.1.0"
+
+[[package]]
+name = "gane-stability"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-storage"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "uuid",
+]
+
+[[package]]
+name = "gane-streaming"
+version = "0.1.0"
+
+[[package]]
+name = "gane-structured-log"
+version = "0.1.0"
+
+[[package]]
+name = "gane-subsystem-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-suspension-adapt"
+version = "0.1.0"
+
+[[package]]
+name = "gane-telemetry"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-events",
+ "parking_lot",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-temporal"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-temporal-prec"
+version = "0.1.0"
+
+[[package]]
+name = "gane-terrain"
+version = "0.1.0"
+
+[[package]]
+name = "gane-test-framework"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "parking_lot",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-tiles"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-tire-monitor"
+version = "0.1.0"
+
+[[package]]
+name = "gane-topology"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-tracing-dist"
+version = "0.1.0"
+
+[[package]]
+name = "gane-traffic"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-traffic-predict"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-trie"
+version = "0.1.0"
+
+[[package]]
+name = "gane-trust"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "serde",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-tunnel"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-tunnel-detect"
+version = "0.1.0"
+
+[[package]]
+name = "gane-twin"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-uncertainty"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-ux"
+version = "0.1.0"
+dependencies = [
+ "approx",
+ "chrono",
+ "gane-core",
+ "serde",
+ "serde_json",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-v2x"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-vehicle"
+version = "0.1.0"
+dependencies = [
+ "chrono",
+ "gane-core",
+ "gane-sensors",
+ "serde",
+ "serde_json",
+ "thiserror",
+ "tracing",
+ "uuid",
+]
+
+[[package]]
+name = "gane-version-sync"
+version = "0.1.0"
+dependencies = [
+ "serde",
+]
+
+[[package]]
+name = "gane-vertical-int"
+version = "0.1.0"
+
+[[package]]
+name = "gane-visual-density"
+version = "0.1.0"
+
+[[package]]
+name = "gane-visual-dynamic"
+version = "0.1.0"
+
+[[package]]
+name = "gane-visual-hierarchy"
+version = "0.1.0"
+
+[[package]]
+name = "gane-visual-lang"
+version = "0.1.0"
+
+[[package]]
+name = "gane-voice"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
 ]
 
 [[package]]
 name = "gane-wasm"
 version = "0.1.0"
 dependencies = [
- "aurora-core",
- "aurora-fusion",
- "aurora-integrity",
- "aurora-map",
- "aurora-routing",
+ "gane-core",
+ "gane-fusion",
+ "gane-integrity",
+ "gane-map",
  "gane-osm-import",
+ "gane-routing",
  "nalgebra",
  "serde",
  "serde_json",
  "wasm-bindgen",
 ]
+
+[[package]]
+name = "gane-weather"
+version = "0.1.0"
+dependencies = [
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-weather-nav"
+version = "0.1.0"
+
+[[package]]
+name = "gane-web"
+version = "0.1.0"
+dependencies = [
+ "gane-orchestrator",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
+name = "gane-websocket"
+version = "0.1.0"
+
+[[package]]
+name = "gane-wellness"
+version = "0.1.0"
+dependencies = [
+ "gane-core",
+]
+
+[[package]]
+name = "gane-worksteal"
+version = "0.1.0"
+
+[[package]]
+name = "gane-zero-friction"
+version = "0.1.0"
+
+[[package]]
+name = "gane_merkle"
+version = "0.1.0"
+
+[[package]]
+name = "gane_pool"
+version = "0.1.0"
+
+[[package]]
+name = "gane_prioritymap"
+version = "0.1.0"
+
+[[package]]
+name = "gane_rope"
+version = "0.1.0"
+
+[[package]]
+name = "gane_segment"
+version = "0.1.0"
+
+[[package]]
+name = "gane_slab"
+version = "0.1.0"
+
+[[package]]
+name = "gane_timewheel"
+version = "0.1.0"
+
+[[package]]
+name = "gane_unionfind"
+version = "0.1.0"
+
+[[package]]
+name = "gane_wal"
+version = "0.1.0"
 
 [[package]]
 name = "generic-array"

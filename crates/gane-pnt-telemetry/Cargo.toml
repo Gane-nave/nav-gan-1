@@ -1,0 +1,11 @@
+[package]
+name = "gane-pnt-telemetry"
+version.workspace = true
+edition.workspace = true
+description = "PNT telemetry — fix loss logging, signal diagnostics"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

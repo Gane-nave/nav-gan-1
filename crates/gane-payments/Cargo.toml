@@ -1,0 +1,14 @@
+[package]
+name = "gane-payments"
+version.workspace = true
+edition.workspace = true
+description = "Payment systems for G.A.N.E NAV — billing, subscriptions, invoices, payment processing"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }

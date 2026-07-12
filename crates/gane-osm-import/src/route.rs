@@ -2,12 +2,12 @@
 //! shortest path. This is the same call path the product uses — CLI and WASM
 //! are thin shells over it.
 
-use aurora_core::map::RoadGraph;
-use aurora_core::types::EntityId;
-use aurora_core::vehicle::VehicleEnvelope;
-use aurora_map::graph::RoadGraphIndex;
-use aurora_routing::dijkstra::{cost, shortest_path, CostFn};
-use aurora_routing::vehicle_aware::by_time_for_vehicle;
+use gane_core::map::RoadGraph;
+use gane_core::types::EntityId;
+use gane_core::vehicle::VehicleEnvelope;
+use gane_map::graph::RoadGraphIndex;
+use gane_routing::dijkstra::{cost, shortest_path, CostFn};
+use gane_routing::vehicle_aware::by_time_for_vehicle;
 use serde::Serialize;
 
 use crate::builder::haversine_m;
@@ -28,7 +28,7 @@ pub struct GeoRoute {
 
 /// Snap a coordinate to the nearest graph node.
 pub fn nearest_node(graph: &RoadGraph, lat: f64, lon: f64) -> Option<EntityId> {
-    let probe = aurora_core::types::GeoPosition {
+    let probe = gane_core::types::GeoPosition {
         latitude_deg: lat,
         longitude_deg: lon,
         altitude_m: None,
@@ -89,7 +89,7 @@ pub fn route_geo(
 
 /// Named vehicle presets for the CLI (`--vehicle` values).
 pub fn envelope_by_name(name: &str) -> Option<VehicleEnvelope> {
-    use aurora_core::vehicle::VehicleClass;
+    use gane_core::vehicle::VehicleClass;
     let mut env = match name {
         "car" => VehicleEnvelope::car(),
         "truck" | "heavy_truck" => VehicleEnvelope::heavy_truck(),

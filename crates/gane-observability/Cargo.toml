@@ -1,0 +1,15 @@
+[package]
+name = "gane-observability"
+version.workspace = true
+edition.workspace = true
+description = "Structured logging, OpenAPI spec generation, and observability for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-metrics = { path = "../gane-metrics" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+parking_lot = { workspace = true }

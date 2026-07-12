@@ -1,8 +1,0 @@
-[package]
-name = "aurora-worksteal"
-version.workspace = true
-edition.workspace = true
-license.workspace = true
-description = "Work-stealing deque for parallel task scheduling for AURORA NAV"
-
-[dependencies]

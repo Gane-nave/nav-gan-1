@@ -5,13 +5,13 @@
 //! the server. All FFI payloads are JSON strings validated against the
 //! shared contracts; no logic lives in this crate.
 
-use aurora_core::map::RoadGraph;
-use aurora_core::vehicle::VehicleEnvelope;
-use aurora_fusion::ekf::NavigationEkf;
-use aurora_fusion::eskf15::Eskf15;
-use aurora_map::graph::RoadGraphIndex;
-use aurora_routing::dijkstra::{cost, shortest_path, CostFn};
-use aurora_routing::vehicle_aware::by_time_for_vehicle;
+use gane_core::map::RoadGraph;
+use gane_core::vehicle::VehicleEnvelope;
+use gane_fusion::ekf::NavigationEkf;
+use gane_fusion::eskf15::Eskf15;
+use gane_map::graph::RoadGraphIndex;
+use gane_routing::dijkstra::{cost, shortest_path, CostFn};
+use gane_routing::vehicle_aware::by_time_for_vehicle;
 use serde::{Deserialize, Serialize};
 use wasm_bindgen::prelude::*;
 

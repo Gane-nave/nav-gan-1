@@ -1,19 +1,19 @@
 version: "3.9"
 
 services:
-  aurora-nav:
+  gane-nav:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: aurora-nav
+    container_name: gane-nav
     ports:
       - "3000:3000"
     environment:
       - RUST_LOG=info
-      - AURORA_PORT=3000
+      - GANE_PORT=3000
     restart: unless-stopped
     healthcheck:
-      test: ["/usr/local/bin/aurora-nav", "--status"]
+      test: ["/usr/local/bin/gane-nav", "--status"]
       interval: 15s
       timeout: 5s
       retries: 3

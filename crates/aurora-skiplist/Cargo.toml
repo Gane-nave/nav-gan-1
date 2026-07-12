@@ -1,7 +1,0 @@
-[package]
-name = "aurora-skiplist"
-version = "0.1.0"
-edition = "2021"
-description = "Skip list for ordered key-value storage with probabilistic balancing"
-
-[dependencies]

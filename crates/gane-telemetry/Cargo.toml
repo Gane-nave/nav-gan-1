@@ -1,0 +1,16 @@
+[package]
+name = "gane-telemetry"
+version.workspace = true
+edition.workspace = true
+description = "Telemetry, audit logging, and replay diagnostics for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+parking_lot = { workspace = true }

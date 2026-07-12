@@ -1,4 +1,4 @@
-AURORA NAV — Complete Test Results (2026-03-27 11:09)
+G.A.N.E NAV — Complete Test Results (2026-03-27 11:09)
 =====================================================
 
 SIDEBAR NOW HAS 14 PANELS + Traffic + Settings = 16 sidebar items:

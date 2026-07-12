@@ -1,0 +1,8 @@
+[package]
+name = "gane-map-update"
+version = "0.1.0"
+edition = "2021"
+description = "Map update pipeline with versioning and rollback."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

@@ -1,0 +1,16 @@
+[package]
+name = "gane-events"
+version.workspace = true
+edition.workspace = true
+description = "Global event bus for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+crossbeam-channel = { workspace = true }
+parking_lot = { workspace = true }
+tracing = { workspace = true }

@@ -1,0 +1,13 @@
+[package]
+name = "gane-anti-manipulation"
+version.workspace = true
+edition.workspace = true
+description = "Anti-manipulation infrastructure — anomaly detection, adversarial defense, transparency logs"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

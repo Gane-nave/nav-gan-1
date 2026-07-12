@@ -1,0 +1,18 @@
+[package]
+name = "gane-integrity"
+version.workspace = true
+edition.workspace = true
+description = "Integrity monitoring and trust scoring for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+gane-gnss = { path = "../gane-gnss" }
+gane-fusion = { path = "../gane-fusion" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+nalgebra = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

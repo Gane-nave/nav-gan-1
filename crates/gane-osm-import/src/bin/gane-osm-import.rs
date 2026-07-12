@@ -13,7 +13,7 @@ use std::env;
 use std::fs;
 use std::process::ExitCode;
 
-use aurora_map::graph::RoadGraphIndex;
+use gane_map::graph::RoadGraphIndex;
 use gane_osm_import::route::{envelope_by_name, route_geo};
 
 fn parse_latlon(s: &str) -> Option<(f64, f64)> {
@@ -67,7 +67,7 @@ fn cmd_route(args: &[String]) -> ExitCode {
         );
         return ExitCode::from(2);
     }
-    let graph: aurora_core::map::RoadGraph = match fs::read_to_string(&args[0])
+    let graph: gane_core::map::RoadGraph = match fs::read_to_string(&args[0])
         .map_err(|e| e.to_string())
         .and_then(|s| serde_json::from_str(&s).map_err(|e| e.to_string()))
     {

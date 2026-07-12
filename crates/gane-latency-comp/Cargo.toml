@@ -1,0 +1,8 @@
+[package]
+name = "gane-latency-comp"
+version = "0.1.0"
+edition = "2021"
+description = "Latency compensation between measurement and display."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

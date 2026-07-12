@@ -1,0 +1,102 @@
+[package]
+name = "gane-app"
+version.workspace = true
+edition.workspace = true
+description = "Main application binary for G.A.N.E NAV — wires all subsystems together"
+
+[[bin]]
+name = "gane-nav"
+path = "src/main.rs"
+
+[dependencies]
+gane-config = { path = "../gane-config" }
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+gane-gnss = { path = "../gane-gnss" }
+gane-corrections = { path = "../gane-corrections" }
+gane-sensors = { path = "../gane-sensors" }
+gane-fusion = { path = "../gane-fusion" }
+gane-integrity = { path = "../gane-integrity" }
+gane-continuity = { path = "../gane-continuity" }
+gane-telemetry = { path = "../gane-telemetry" }
+gane-api = { path = "../gane-api" }
+gane-map = { path = "../gane-map" }
+gane-routing = { path = "../gane-routing" }
+gane-lane = { path = "../gane-lane" }
+gane-offline = { path = "../gane-offline" }
+gane-risk = { path = "../gane-risk" }
+gane-confidence = { path = "../gane-confidence" }
+gane-probabilistic = { path = "../gane-probabilistic" }
+gane-evidence = { path = "../gane-evidence" }
+gane-trust = { path = "../gane-trust" }
+gane-anti-manipulation = { path = "../gane-anti-manipulation" }
+gane-traffic = { path = "../gane-traffic" }
+gane-stability = { path = "../gane-stability" }
+gane-ux = { path = "../gane-ux" }
+gane-micro-nav = { path = "../gane-micro-nav" }
+gane-parking = { path = "../gane-parking" }
+gane-charging = { path = "../gane-charging" }
+gane-fleet = { path = "../gane-fleet" }
+gane-emergency = { path = "../gane-emergency" }
+gane-resilience = { path = "../gane-resilience" }
+gane-edge = { path = "../gane-edge" }
+gane-satellite = { path = "../gane-satellite" }
+gane-city = { path = "../gane-city" }
+gane-twin = { path = "../gane-twin" }
+gane-sdk = { path = "../gane-sdk" }
+gane-developer = { path = "../gane-developer" }
+gane-marketplace = { path = "../gane-marketplace" }
+gane-payments = { path = "../gane-payments" }
+gane-vehicle = { path = "../gane-vehicle" }
+gane-metrics = { path = "../gane-metrics" }
+gane-observability = { path = "../gane-observability" }
+gane-deploy = { path = "../gane-deploy" }
+gane-auth = { path = "../gane-auth" }
+gane-security = { path = "../gane-security" }
+gane-orchestrator = { path = "../gane-orchestrator" }
+gane-web = { path = "../gane-web" }
+gane-multi-gnss = { path = "../gane-multi-gnss" }
+gane-ekf = { path = "../gane-ekf" }
+gane-tunnel = { path = "../gane-tunnel" }
+gane-gnss-quality = { path = "../gane-gnss-quality" }
+gane-fallback = { path = "../gane-fallback" }
+gane-device-caps = { path = "../gane-device-caps" }
+gane-agnss = { path = "../gane-agnss" }
+gane-dual-freq = { path = "../gane-dual-freq" }
+gane-source-select = { path = "../gane-source-select" }
+gane-anti-jam = { path = "../gane-anti-jam" }
+gane-smooth-nav = { path = "../gane-smooth-nav" }
+gane-pnt-telemetry = { path = "../gane-pnt-telemetry" }
+gane-numerical = { path = "../gane-numerical" }
+gane-uncertainty = { path = "../gane-uncertainty" }
+gane-subsystem-sync = { path = "../gane-subsystem-sync" }
+gane-latency-comp = { path = "../gane-latency-comp" }
+gane-topology = { path = "../gane-topology" }
+gane-context-aware = { path = "../gane-context-aware" }
+gane-conflict-res = { path = "../gane-conflict-res" }
+gane-incr-correct = { path = "../gane-incr-correct" }
+gane-edge-cases = { path = "../gane-edge-cases" }
+gane-data-integrity = { path = "../gane-data-integrity" }
+gane-version-sync = { path = "../gane-version-sync" }
+gane-geofence = { path = "../gane-geofence" }
+gane-explain = { path = "../gane-explain" }
+gane-determinism = { path = "../gane-determinism" }
+gane-load-shed = { path = "../gane-load-shed" }
+gane-geo-dist = { path = "../gane-geo-dist" }
+gane-calibration = { path = "../gane-calibration" }
+gane-constraints = { path = "../gane-constraints" }
+gane-sampling-ctrl = { path = "../gane-sampling-ctrl" }
+gane-nav-state = { path = "../gane-nav-state" }
+gane-error-accum = { path = "../gane-error-accum" }
+gane-route-quality = { path = "../gane-route-quality" }
+gane-geo-shard = { path = "../gane-geo-shard" }
+gane-map-update = { path = "../gane-map-update" }
+gane-quality-ctrl = { path = "../gane-quality-ctrl" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+tokio = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+chrono = { workspace = true }
+parking_lot = { workspace = true }
+axum = { workspace = true }

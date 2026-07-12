@@ -8,7 +8,7 @@
 
 ```
 crates/        Rust navigation engine workspace — 264 crates, all real or connected
-               ├─ core engine: aurora-core, -gnss (WLS PVT), -fusion (canonical 15-state
+               ├─ core engine: gane-core, -gnss (WLS PVT), -fusion (canonical 15-state
                │  ESKF), -integrity (RAIM/spoof/jam), -routing (Dijkstra + vehicle-envelope
                │  constraints), -map, -traffic, -v2x, -indoor, -ar-nav,
                │  -api (Axum, 16 endpoints), -web (embedded dashboard), -app (binary)
@@ -29,7 +29,7 @@ docs/          Technical designs and engineering documentation
   generated placeholder crates were removed (they live in git history only).
 - **5,066 engine tests — all green** (incl. 88 adversarial test files and
   cross-crate e2e suites); full workspace compile in ~20 s.
-- The engine **builds, runs, and serves**: `cargo run -p aurora-app` → REST API on :3000
+- The engine **builds, runs, and serves**: `cargo run -p gane-app` → REST API on :3000
   (`/health`, `/position`, `/integrity`, `/metrics`, OpenAPI + Swagger) + live dashboard.
 - The navigation core **compiles to WASM** (`gane-wasm`, ~630 KB release artifact) — one
   engine for server, browser, and Android.
@@ -44,14 +44,14 @@ docs/          Technical designs and engineering documentation
 
 ```bash
 # Engine binary (REST API + dashboard on :3000)
-cargo run -p aurora-app
+cargo run -p gane-app
 
 # Engine status / health probe
-cargo run -p aurora-app -- --status
+cargo run -p gane-app -- --status
 
 # Core engine tests
-cargo test -p aurora-core -p aurora-gnss -p aurora-fusion -p aurora-integrity \
-           -p aurora-routing -p aurora-map -p gane-wasm
+cargo test -p gane-core -p gane-gnss -p gane-fusion -p gane-integrity \
+           -p gane-routing -p gane-map -p gane-wasm
 
 # WASM engine artifact
 cargo build --target wasm32-unknown-unknown --release -p gane-wasm

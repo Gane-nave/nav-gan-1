@@ -1,0 +1,12 @@
+[package]
+name = "gane-confidence"
+version.workspace = true
+edition.workspace = true
+description = "Confidence metrics — ETA distribution, confidence and volatility indices"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

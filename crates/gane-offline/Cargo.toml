@@ -1,0 +1,18 @@
+[package]
+name = "gane-offline"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+repository.workspace = true
+description = "Offline maps — tile caching, differential updates, local routing, deterministic sync"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-map = { path = "../gane-map" }
+gane-routing = { path = "../gane-routing" }
+gane-events = { path = "../gane-events" }
+serde.workspace = true
+serde_json.workspace = true
+chrono.workspace = true
+tracing.workspace = true
+tokio.workspace = true

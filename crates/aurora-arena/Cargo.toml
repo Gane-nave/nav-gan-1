@@ -1,7 +1,0 @@
-[package]
-name = "aurora-arena"
-version = "0.1.0"
-edition = "2021"
-description = "Arena/pool allocator for efficient object reuse and allocation tracking"
-
-[dependencies]

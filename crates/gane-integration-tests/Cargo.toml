@@ -1,0 +1,55 @@
+[package]
+name = "gane-integration-tests"
+version.workspace = true
+edition.workspace = true
+description = "Cross-crate end-to-end integration tests for G.A.N.E NAV"
+
+[dependencies]
+gane-config = { path = "../gane-config" }
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+gane-gnss = { path = "../gane-gnss" }
+gane-corrections = { path = "../gane-corrections" }
+gane-sensors = { path = "../gane-sensors" }
+gane-fusion = { path = "../gane-fusion" }
+gane-integrity = { path = "../gane-integrity" }
+gane-continuity = { path = "../gane-continuity" }
+gane-telemetry = { path = "../gane-telemetry" }
+gane-api = { path = "../gane-api" }
+gane-app = { path = "../gane-app" }
+gane-map = { path = "../gane-map" }
+gane-routing = { path = "../gane-routing" }
+gane-lane = { path = "../gane-lane" }
+gane-offline = { path = "../gane-offline" }
+gane-risk = { path = "../gane-risk" }
+gane-confidence = { path = "../gane-confidence" }
+gane-probabilistic = { path = "../gane-probabilistic" }
+gane-evidence = { path = "../gane-evidence" }
+gane-trust = { path = "../gane-trust" }
+gane-anti-manipulation = { path = "../gane-anti-manipulation" }
+gane-traffic = { path = "../gane-traffic" }
+gane-stability = { path = "../gane-stability" }
+gane-ux = { path = "../gane-ux" }
+gane-micro-nav = { path = "../gane-micro-nav" }
+gane-parking = { path = "../gane-parking" }
+gane-charging = { path = "../gane-charging" }
+gane-fleet = { path = "../gane-fleet" }
+gane-emergency = { path = "../gane-emergency" }
+gane-resilience = { path = "../gane-resilience" }
+gane-edge = { path = "../gane-edge" }
+gane-satellite = { path = "../gane-satellite" }
+gane-city = { path = "../gane-city" }
+gane-twin = { path = "../gane-twin" }
+gane-sdk = { path = "../gane-sdk" }
+gane-developer = { path = "../gane-developer" }
+gane-marketplace = { path = "../gane-marketplace" }
+gane-payments = { path = "../gane-payments" }
+gane-vehicle = { path = "../gane-vehicle" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+parking_lot = { workspace = true }
+toml = "0.8"

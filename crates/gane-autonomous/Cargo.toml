@@ -1,0 +1,8 @@
+[package]
+name = "gane-autonomous"
+version = "0.1.0"
+edition = "2021"
+description = "Autonomous and semi-autonomous driving support — ADAS, lane keeping, handoff protocols"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

@@ -1,0 +1,33 @@
+[package]
+name = "gane-api"
+version.workspace = true
+edition.workspace = true
+description = "REST API server for G.A.N.E NAV"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+gane-gnss = { path = "../gane-gnss" }
+gane-corrections = { path = "../gane-corrections" }
+gane-sensors = { path = "../gane-sensors" }
+gane-fusion = { path = "../gane-fusion" }
+gane-integrity = { path = "../gane-integrity" }
+gane-continuity = { path = "../gane-continuity" }
+gane-telemetry = { path = "../gane-telemetry" }
+gane-metrics = { path = "../gane-metrics" }
+gane-observability = { path = "../gane-observability" }
+gane-auth = { path = "../gane-auth" }
+gane-security = { path = "../gane-security" }
+gane-web = { path = "../gane-web" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }
+tracing-subscriber = { workspace = true }
+tokio = { workspace = true }
+axum = { workspace = true }
+tower = { workspace = true }
+tower-http = { workspace = true }
+parking_lot = { workspace = true }

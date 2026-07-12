@@ -1,0 +1,7 @@
+[package]
+name = "gane-retry"
+version = "0.1.0"
+edition = "2021"
+description = "Advanced retry strategies with backoff, jitter, and budget control for G.A.N.E NAV"
+
+[dependencies]

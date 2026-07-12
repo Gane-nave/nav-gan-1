@@ -1,0 +1,7 @@
+[package]
+name = "gane-bloom"
+version = "0.1.0"
+edition = "2021"
+description = "Bloom filter for probabilistic set membership with false positive rate tracking"
+
+[dependencies]

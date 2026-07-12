@@ -1,0 +1,15 @@
+[package]
+name = "gane-developer"
+version.workspace = true
+edition.workspace = true
+description = "Developer portal for G.A.N.E NAV — API key management, rate limiting, usage tracking, webhooks"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }

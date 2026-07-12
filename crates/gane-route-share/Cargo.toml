@@ -1,0 +1,11 @@
+[package]
+name = "gane-route-share"
+version.workspace = true
+edition.workspace = true
+description = "Real-time route sharing between users"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

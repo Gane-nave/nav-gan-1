@@ -1,0 +1,13 @@
+[package]
+name = "gane-monitoring"
+version.workspace = true
+edition.workspace = true
+description = "Alerting rules, SLO tracking, and dashboard configurations for G.A.N.E NAV"
+
+[dependencies]
+gane-metrics = { path = "../gane-metrics" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+thiserror = { workspace = true }
+parking_lot = { workspace = true }

@@ -1,8 +1,0 @@
-[package]
-name = "aurora-topology"
-version = "0.1.0"
-edition = "2021"
-description = "Deep topology awareness for complex road structures."
-
-[dependencies]
-serde = { version = "1", features = ["derive"] }

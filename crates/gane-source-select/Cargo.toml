@@ -1,0 +1,11 @@
+[package]
+name = "gane-source-select"
+version.workspace = true
+edition.workspace = true
+description = "Dynamic source selection — quality-based weighted blending"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

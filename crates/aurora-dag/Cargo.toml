@@ -1,8 +1,0 @@
-[package]
-name = "aurora-dag"
-version.workspace = true
-edition.workspace = true
-license.workspace = true
-description = "Directed Acyclic Graph for dependency resolution and topological sorting"
-
-[dependencies]

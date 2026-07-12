@@ -1,7 +1,0 @@
-[package]
-name = "aurora-e2e-tests"
-version = "0.1.0"
-edition = "2021"
-description = "End-to-end integration tests — cross-crate pipeline verification, system-level test scenarios"
-
-[dependencies]

@@ -1,0 +1,8 @@
+[package]
+name = "gane-explain"
+version = "0.1.0"
+edition = "2021"
+description = "Navigation explainability — why routes and reroutes were chosen."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

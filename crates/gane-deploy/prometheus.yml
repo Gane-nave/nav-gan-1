@@ -1,0 +1,11 @@
+# Prometheus configuration for G.A.N.E NAV local development
+global:
+  scrape_interval: 15s
+  evaluation_interval: 15s
+
+scrape_configs:
+  - job_name: "gane-nav"
+    static_configs:
+      - targets: ["gane-nav:3000"]
+    metrics_path: /metrics
+    scrape_interval: 10s

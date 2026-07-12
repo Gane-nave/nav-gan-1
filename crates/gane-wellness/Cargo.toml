@@ -1,0 +1,8 @@
+[package]
+name = "gane-wellness"
+version = "0.1.0"
+edition = "2021"
+description = "Driver wellness monitoring — fatigue detection, health tracking, break recommendations"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

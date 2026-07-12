@@ -1,0 +1,10 @@
+[package]
+name = "gane-v2x"
+version = "0.1.0"
+edition = "2021"
+description = "Vehicle-to-Everything (V2X) communication for cooperative navigation"
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }
+
+[dev-dependencies]

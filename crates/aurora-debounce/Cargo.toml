@@ -1,7 +1,0 @@
-[package]
-name = "aurora-debounce"
-version = "0.1.0"
-edition = "2021"
-description = "Debouncing and throttling for event processing in AURORA NAV"
-
-[dependencies]
