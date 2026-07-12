@@ -90,11 +90,20 @@ function marker(lat,lon,color){ const [x,y]=px(lat,lon);
 
 const fmt = { m:v=>`${Math.round(v).toLocaleString()} מ'`, s:v=>`${Math.round(v)} שנ'` };
 
+// RPC helper over the engine Web Worker (off-main-thread, 60 FPS budget).
+function workerClient() {
+  const w = new Worker('/engine/gane.worker.js', { type: 'module' });
+  let n = 1; const pend = new Map();
+  w.onmessage = ev => { const {id, ok, result, error} = ev.data;
+    const p = pend.get(id); pend.delete(id);
+    ok ? p.resolve(result) : p.reject(new Error(error)); };
+  return { call: (cmd, ...args) => new Promise((resolve, reject) => {
+    const id = n++; pend.set(id, {resolve, reject}); w.postMessage({id, cmd, args}); }) };
+}
+
 try {
-  const init = (await import('/engine/gane_wasm.js')).default;
-  const { GaneEngine } = await import('/engine/gane_wasm.js');
-  await init({ module_or_path: '/engine/gane_wasm_bg.wasm' });
-  const engine = new GaneEngine();
+  const engine = workerClient();
+  const version = await engine.call('init');
 
   // Build the graph in-browser? No — the importer is native. For the demo we
   // ship the importer's output; here we inline a pre-imported equivalent by
@@ -106,8 +115,8 @@ try {
     graphJson = await (await fetch('/engine/demo-graph.json')).text();
     JSON.parse(graphJson);
   } catch { throw new Error('demo-graph.json missing — run scripts/gen-demo-graph.sh'); }
-  engine.load_graph(graphJson);
-  status(`מנוע v${engine.version()} · ${engine.graph_nodes()} צמתים בגרף · WASM פעיל ✓`);
+  const nodeCount = await engine.call('loadGraph', graphJson);
+  status(`מנוע v${version} · ${nodeCount} צמתים בגרף · WASM רץ ב-Web Worker ✓`);
 
   const graph = JSON.parse(graphJson);
   // Draw base roads (restricted bridge highlighted).
@@ -118,10 +127,10 @@ try {
   }
 
   const A=[32.0800,34.7800], B=[32.0900,34.7800];
-  const car = JSON.parse(engine.route_geo(A[0],A[1],B[0],B[1], undefined));
-  const truck = JSON.parse(engine.route_geo(A[0],A[1],B[0],B[1], JSON.stringify(
+  const car = await engine.call('routeGeo', A[0],A[1],B[0],B[1]);
+  const truck = await engine.call('routeGeo', A[0],A[1],B[0],B[1], JSON.stringify(
     { class:'heavy_truck', height_m:4.2, width_m:2.55, length_m:16.5,
-      weight_kg:26000, axle_count:5, hazmat:false })));
+      weight_kg:26000, axle_count:5, hazmat:false }));
 
   drawPolyline(car.polyline, '#4da3ff', 3);
   drawPolyline(truck.polyline, '#ffb454', 3, [2,6]);

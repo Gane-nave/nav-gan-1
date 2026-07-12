@@ -96,3 +96,29 @@ jobs:
       - name: Install Rust (stable + wasm32 target)
         run: rustup update stable && rustup default stable && rustup target add wasm32-unknown-unknown
       - run: cargo check --target wasm32-unknown-unknown -p gane-wasm -p aurora-core -p aurora-routing -p aurora-map -p aurora-gnss -p aurora-fusion -p aurora-integrity
+
+  app:
+    name: App (tsc + vitest)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Install pnpm
+        run: npm install -g pnpm@10
+      - name: Install dependencies
+        working-directory: app
+        run: pnpm install --frozen-lockfile
+      - name: Typecheck
+        working-directory: app
+        run: pnpm check
+      - name: Unit tests
+        working-directory: app
+        run: pnpm test
+
+  mobile:
+    name: Mobile backend tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+      - name: Integration tests (15 tests, real HTTP + disk)
+        working-directory: mobile/backend
+        run: node test.js
