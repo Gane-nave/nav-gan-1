@@ -11329,6 +11329,16 @@ dependencies = [
 ]
 
 [[package]]
+name = "gane-replay-verify"
+version = "0.1.0"
+dependencies = [
+ "aurora-fusion",
+ "nalgebra",
+ "serde",
+ "serde_json",
+]
+
+[[package]]
 name = "gane-wasm"
 version = "0.1.0"
 dependencies = [
@@ -11338,6 +11348,7 @@ dependencies = [
  "aurora-map",
  "aurora-routing",
  "gane-osm-import",
+ "nalgebra",
  "serde",
  "serde_json",
  "wasm-bindgen",

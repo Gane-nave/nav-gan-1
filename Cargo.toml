@@ -4,6 +4,7 @@ members = [
     "crates/aurora-core",
     "crates/gane-wasm",
     "crates/gane-osm-import",
+    "crates/gane-replay-verify",
     "crates/aurora-events",
     "crates/aurora-gnss",
     "crates/aurora-corrections",

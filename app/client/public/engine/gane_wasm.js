@@ -15,6 +15,60 @@ export class GaneEngine {
         wasm.__wbg_ganeengine_free(ptr, 0);
     }
     /**
+     * Strapdown IMU propagation on the canonical ESKF (body frame, seconds).
+     * @param {number} ax
+     * @param {number} ay
+     * @param {number} az
+     * @param {number} gx
+     * @param {number} gy
+     * @param {number} gz
+     * @param {number} dt_s
+     */
+    eskf_imu(ax, ay, az, gx, gy, gz, dt_s) {
+        wasm.ganeengine_eskf_imu(this.__wbg_ptr, ax, ay, az, gx, gy, gz, dt_s);
+    }
+    /**
+     * Canonical ESKF state as JSON (position, velocity, heading, biases, σ).
+     * @returns {string}
+     */
+    eskf_state() {
+        let deferred1_0;
+        let deferred1_1;
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            wasm.ganeengine_eskf_state(retptr, this.__wbg_ptr);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            deferred1_0 = r0;
+            deferred1_1 = r1;
+            return getStringFromWasm0(r0, r1);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_export(deferred1_0, deferred1_1, 1);
+        }
+    }
+    /**
+     * ESKF GNSS position update (ENU metres). Returns the NIS gate value.
+     * @param {number} e
+     * @param {number} n
+     * @param {number} u
+     * @param {number} sigma_m
+     * @returns {number}
+     */
+    eskf_update_position(e, n, u, sigma_m) {
+        const ret = wasm.ganeengine_eskf_update_position(this.__wbg_ptr, e, n, u, sigma_m);
+        return ret;
+    }
+    /**
+     * ESKF zero-velocity update. Returns the NIS gate value.
+     * @param {number} sigma_mps
+     * @returns {number}
+     */
+    eskf_zupt(sigma_mps) {
+        const ret = wasm.ganeengine_eskf_zupt(this.__wbg_ptr, sigma_mps);
+        return ret;
+    }
+    /**
      * Number of nodes in the loaded graph (0 if none).
      * @returns {number}
      */
@@ -29,7 +83,7 @@ export class GaneEngine {
     load_graph(graph_json) {
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passStringToWasm0(graph_json, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr0 = passStringToWasm0(graph_json, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len0 = WASM_VECTOR_LEN;
             wasm.ganeengine_load_graph(retptr, this.__wbg_ptr, ptr0, len0);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -64,7 +118,7 @@ export class GaneEngine {
             return getStringFromWasm0(r0, r1);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred1_0, deferred1_1, 1);
+            wasm.__wbindgen_export(deferred1_0, deferred1_1, 1);
         }
     }
     /**
@@ -93,7 +147,7 @@ export class GaneEngine {
         let deferred3_1;
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            const ptr0 = passStringToWasm0(request_json, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            const ptr0 = passStringToWasm0(request_json, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             const len0 = WASM_VECTOR_LEN;
             wasm.ganeengine_route(retptr, this.__wbg_ptr, ptr0, len0);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -111,7 +165,7 @@ export class GaneEngine {
             return getStringFromWasm0(ptr2, len2);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred3_0, deferred3_1, 1);
+            wasm.__wbindgen_export(deferred3_0, deferred3_1, 1);
         }
     }
     /**
@@ -132,7 +186,7 @@ export class GaneEngine {
         let deferred3_1;
         try {
             const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
-            var ptr0 = isLikeNone(envelope_json) ? 0 : passStringToWasm0(envelope_json, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            var ptr0 = isLikeNone(envelope_json) ? 0 : passStringToWasm0(envelope_json, wasm.__wbindgen_export2, wasm.__wbindgen_export3);
             var len0 = WASM_VECTOR_LEN;
             wasm.ganeengine_route_geo(retptr, this.__wbg_ptr, from_lat, from_lon, to_lat, to_lon, ptr0, len0);
             var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
@@ -150,7 +204,7 @@ export class GaneEngine {
             return getStringFromWasm0(ptr2, len2);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred3_0, deferred3_1, 1);
+            wasm.__wbindgen_export(deferred3_0, deferred3_1, 1);
         }
     }
     /**
@@ -198,7 +252,7 @@ export class GaneEngine {
             return getStringFromWasm0(r0, r1);
         } finally {
             wasm.__wbindgen_add_to_stack_pointer(16);
-            wasm.__wbindgen_export3(deferred1_0, deferred1_1, 1);
+            wasm.__wbindgen_export(deferred1_0, deferred1_1, 1);
         }
     }
 }

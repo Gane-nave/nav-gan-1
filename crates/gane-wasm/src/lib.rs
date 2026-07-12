@@ -8,6 +8,7 @@
 use aurora_core::map::RoadGraph;
 use aurora_core::vehicle::VehicleEnvelope;
 use aurora_fusion::ekf::NavigationEkf;
+use aurora_fusion::eskf15::Eskf15;
 use aurora_map::graph::RoadGraphIndex;
 use aurora_routing::dijkstra::{cost, shortest_path, CostFn};
 use aurora_routing::vehicle_aware::by_time_for_vehicle;
@@ -36,6 +37,7 @@ struct RouteResponse {
 #[wasm_bindgen]
 pub struct GaneEngine {
     ekf: NavigationEkf,
+    eskf: Eskf15,
     graph: Option<RoadGraphIndex>,
     graph_data: Option<RoadGraph>,
 }
@@ -52,6 +54,7 @@ impl GaneEngine {
     pub fn new() -> GaneEngine {
         GaneEngine {
             ekf: NavigationEkf::new(),
+            eskf: Eskf15::new(),
             graph: None,
             graph_data: None,
         }
@@ -101,6 +104,43 @@ impl GaneEngine {
     /// Reset the filter (e.g. after teleport/replay restart).
     pub fn reset(&mut self) {
         self.ekf.reset();
+    }
+
+    // -- Canonical 15-state ESKF (TD-3) -------------------------------------
+
+    /// Strapdown IMU propagation on the canonical ESKF (body frame, seconds).
+    #[allow(clippy::too_many_arguments)]
+    pub fn eskf_imu(&mut self, ax: f64, ay: f64, az: f64, gx: f64, gy: f64, gz: f64, dt_s: f64) {
+        self.eskf.predict(
+            nalgebra::Vector3::new(ax, ay, az),
+            nalgebra::Vector3::new(gx, gy, gz),
+            dt_s,
+        );
+    }
+
+    /// ESKF GNSS position update (ENU metres). Returns the NIS gate value.
+    pub fn eskf_update_position(&mut self, e: f64, n: f64, u: f64, sigma_m: f64) -> f64 {
+        self.eskf
+            .update_position(nalgebra::Vector3::new(e, n, u), sigma_m)
+    }
+
+    /// ESKF zero-velocity update. Returns the NIS gate value.
+    pub fn eskf_zupt(&mut self, sigma_mps: f64) -> f64 {
+        self.eskf.update_zupt(sigma_mps)
+    }
+
+    /// Canonical ESKF state as JSON (position, velocity, heading, biases, σ).
+    pub fn eskf_state(&self) -> String {
+        let f = &self.eskf;
+        serde_json::json!({
+            "p": [f.position.x, f.position.y, f.position.z],
+            "v": [f.velocity.x, f.velocity.y, f.velocity.z],
+            "heading_rad": f.heading_rad(),
+            "accel_bias": [f.accel_bias.x, f.accel_bias.y, f.accel_bias.z],
+            "gyro_bias": [f.gyro_bias.x, f.gyro_bias.y, f.gyro_bias.z],
+            "horizontal_uncertainty_m": f.horizontal_uncertainty_m(),
+        })
+        .to_string()
     }
 
     // -- Map & routing -----------------------------------------------------

@@ -8,6 +8,22 @@ export class GaneEngine {
     free(): void;
     [Symbol.dispose](): void;
     /**
+     * Strapdown IMU propagation on the canonical ESKF (body frame, seconds).
+     */
+    eskf_imu(ax: number, ay: number, az: number, gx: number, gy: number, gz: number, dt_s: number): void;
+    /**
+     * Canonical ESKF state as JSON (position, velocity, heading, biases, σ).
+     */
+    eskf_state(): string;
+    /**
+     * ESKF GNSS position update (ENU metres). Returns the NIS gate value.
+     */
+    eskf_update_position(e: number, n: number, u: number, sigma_m: number): number;
+    /**
+     * ESKF zero-velocity update. Returns the NIS gate value.
+     */
+    eskf_zupt(sigma_mps: number): number;
+    /**
      * Number of nodes in the loaded graph (0 if none).
      */
     graph_nodes(): number;
@@ -66,6 +82,10 @@ export type InitInput = RequestInfo | URL | Response | BufferSource | WebAssembl
 export interface InitOutput {
     readonly memory: WebAssembly.Memory;
     readonly __wbg_ganeengine_free: (a: number, b: number) => void;
+    readonly ganeengine_eskf_imu: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
+    readonly ganeengine_eskf_state: (a: number, b: number) => void;
+    readonly ganeengine_eskf_update_position: (a: number, b: number, c: number, d: number, e: number) => number;
+    readonly ganeengine_eskf_zupt: (a: number, b: number) => number;
     readonly ganeengine_graph_nodes: (a: number) => number;
     readonly ganeengine_load_graph: (a: number, b: number, c: number, d: number) => void;
     readonly ganeengine_new: () => number;
@@ -79,9 +99,9 @@ export interface InitOutput {
     readonly ganeengine_update_velocity: (a: number, b: number, c: number, d: number, e: number) => void;
     readonly ganeengine_version: (a: number, b: number) => void;
     readonly __wbindgen_add_to_stack_pointer: (a: number) => number;
-    readonly __wbindgen_export: (a: number, b: number) => number;
-    readonly __wbindgen_export2: (a: number, b: number, c: number, d: number) => number;
-    readonly __wbindgen_export3: (a: number, b: number, c: number) => void;
+    readonly __wbindgen_export: (a: number, b: number, c: number) => void;
+    readonly __wbindgen_export2: (a: number, b: number) => number;
+    readonly __wbindgen_export3: (a: number, b: number, c: number, d: number) => number;
 }
 
 export type SyncInitInput = BufferSource | WebAssembly.Module;
