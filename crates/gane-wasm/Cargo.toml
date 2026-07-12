@@ -1,0 +1,18 @@
+[package]
+name = "gane-wasm"
+version.workspace = true
+edition.workspace = true
+description = "G.A.N.E NAV engine facade for WebAssembly (browser / Capacitor)"
+
+[lib]
+crate-type = ["cdylib", "rlib"]
+
+[dependencies]
+wasm-bindgen = "0.2"
+serde = { workspace = true }
+serde_json = { workspace = true }
+aurora-core = { path = "../aurora-core" }
+aurora-map = { path = "../aurora-map" }
+aurora-routing = { path = "../aurora-routing" }
+aurora-fusion = { path = "../aurora-fusion" }
+aurora-integrity = { path = "../aurora-integrity" }

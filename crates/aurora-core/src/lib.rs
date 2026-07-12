@@ -18,6 +18,7 @@ pub mod scoring;
 pub mod sensor;
 pub mod sync;
 pub mod types;
+pub mod vehicle;
 
 pub use error::AuroraError;
 pub use types::*;

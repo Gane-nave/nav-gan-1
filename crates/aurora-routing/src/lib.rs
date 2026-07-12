@@ -6,6 +6,7 @@
 pub mod dijkstra;
 pub mod navigator;
 pub mod planner;
+pub mod vehicle_aware;
 
 pub use navigator::Navigator;
 pub use planner::RoutePlanner;
