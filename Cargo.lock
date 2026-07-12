@@ -11337,6 +11337,7 @@ dependencies = [
  "aurora-integrity",
  "aurora-map",
  "aurora-routing",
+ "gane-osm-import",
  "serde",
  "serde_json",
  "wasm-bindgen",

@@ -115,6 +115,45 @@ export class GaneEngine {
         }
     }
     /**
+     * Route between two geographic coordinates (nearest-node snap).
+     *
+     * `envelope_json` optionally carries a VehicleEnvelope; hard constraints
+     * are enforced — an illegal route is never returned. The response is a
+     * GeoRoute JSON with polyline, length, and drive time.
+     * @param {number} from_lat
+     * @param {number} from_lon
+     * @param {number} to_lat
+     * @param {number} to_lon
+     * @param {string | null} [envelope_json]
+     * @returns {string}
+     */
+    route_geo(from_lat, from_lon, to_lat, to_lon, envelope_json) {
+        let deferred3_0;
+        let deferred3_1;
+        try {
+            const retptr = wasm.__wbindgen_add_to_stack_pointer(-16);
+            var ptr0 = isLikeNone(envelope_json) ? 0 : passStringToWasm0(envelope_json, wasm.__wbindgen_export, wasm.__wbindgen_export2);
+            var len0 = WASM_VECTOR_LEN;
+            wasm.ganeengine_route_geo(retptr, this.__wbg_ptr, from_lat, from_lon, to_lat, to_lon, ptr0, len0);
+            var r0 = getDataViewMemory0().getInt32(retptr + 4 * 0, true);
+            var r1 = getDataViewMemory0().getInt32(retptr + 4 * 1, true);
+            var r2 = getDataViewMemory0().getInt32(retptr + 4 * 2, true);
+            var r3 = getDataViewMemory0().getInt32(retptr + 4 * 3, true);
+            var ptr2 = r0;
+            var len2 = r1;
+            if (r3) {
+                ptr2 = 0; len2 = 0;
+                throw takeObject(r2);
+            }
+            deferred3_0 = ptr2;
+            deferred3_1 = len2;
+            return getStringFromWasm0(ptr2, len2);
+        } finally {
+            wasm.__wbindgen_add_to_stack_pointer(16);
+            wasm.__wbindgen_export3(deferred3_0, deferred3_1, 1);
+        }
+    }
+    /**
      * Feed a heading measurement (radians).
      * @param {number} heading_rad
      * @param {number} sigma_rad
@@ -228,6 +267,10 @@ let heap = new Array(1024).fill(undefined);
 heap.push(undefined, null, true, false);
 
 let heap_next = heap.length;
+
+function isLikeNone(x) {
+    return x === undefined || x === null;
+}
 
 function passStringToWasm0(arg, malloc, realloc) {
     if (realloc === undefined) {

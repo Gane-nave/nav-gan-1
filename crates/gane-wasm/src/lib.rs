@@ -119,6 +119,40 @@ impl GaneEngine {
         self.graph_data.as_ref().map_or(0, |g| g.nodes.len())
     }
 
+    /// Route between two geographic coordinates (nearest-node snap).
+    ///
+    /// `envelope_json` optionally carries a VehicleEnvelope; hard constraints
+    /// are enforced — an illegal route is never returned. The response is a
+    /// GeoRoute JSON with polyline, length, and drive time.
+    pub fn route_geo(
+        &self,
+        from_lat: f64,
+        from_lon: f64,
+        to_lat: f64,
+        to_lon: f64,
+        envelope_json: Option<String>,
+    ) -> Result<String, JsError> {
+        let (index, graph) = match (&self.graph, &self.graph_data) {
+            (Some(i), Some(g)) => (i, g),
+            _ => return Err(JsError::new("no graph loaded")),
+        };
+        let envelope: Option<VehicleEnvelope> = match envelope_json {
+            Some(s) if !s.is_empty() => {
+                Some(serde_json::from_str(&s).map_err(|e| JsError::new(&e.to_string()))?)
+            }
+            _ => None,
+        };
+        let route = gane_osm_import::route::route_geo(
+            graph,
+            index,
+            (from_lat, from_lon),
+            (to_lat, to_lon),
+            envelope,
+        )
+        .ok_or_else(|| JsError::new("no legal route"))?;
+        serde_json::to_string(&route).map_err(|e| JsError::new(&e.to_string()))
+    }
+
     /// Compute a route. Request/response are JSON strings.
     ///
     /// With an `envelope` in the request, hard vehicle constraints are

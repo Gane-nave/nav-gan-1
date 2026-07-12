@@ -9,6 +9,7 @@ export const ganeengine_position: (a: number, b: number) => void;
 export const ganeengine_predict: (a: number, b: number) => void;
 export const ganeengine_reset: (a: number) => void;
 export const ganeengine_route: (a: number, b: number, c: number, d: number) => void;
+export const ganeengine_route_geo: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
 export const ganeengine_update_heading: (a: number, b: number, c: number) => void;
 export const ganeengine_update_position: (a: number, b: number, c: number, d: number, e: number) => void;
 export const ganeengine_update_velocity: (a: number, b: number, c: number, d: number, e: number) => void;

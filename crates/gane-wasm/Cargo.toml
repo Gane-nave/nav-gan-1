@@ -16,3 +16,4 @@ aurora-map = { path = "../aurora-map" }
 aurora-routing = { path = "../aurora-routing" }
 aurora-fusion = { path = "../aurora-fusion" }
 aurora-integrity = { path = "../aurora-integrity" }
+gane-osm-import = { path = "../gane-osm-import" }

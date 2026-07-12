@@ -36,6 +36,14 @@ export class GaneEngine {
      */
     route(request_json: string): string;
     /**
+     * Route between two geographic coordinates (nearest-node snap).
+     *
+     * `envelope_json` optionally carries a VehicleEnvelope; hard constraints
+     * are enforced — an illegal route is never returned. The response is a
+     * GeoRoute JSON with polyline, length, and drive time.
+     */
+    route_geo(from_lat: number, from_lon: number, to_lat: number, to_lon: number, envelope_json?: string | null): string;
+    /**
      * Feed a heading measurement (radians).
      */
     update_heading(heading_rad: number, sigma_rad: number): void;
@@ -65,6 +73,7 @@ export interface InitOutput {
     readonly ganeengine_predict: (a: number, b: number) => void;
     readonly ganeengine_reset: (a: number) => void;
     readonly ganeengine_route: (a: number, b: number, c: number, d: number) => void;
+    readonly ganeengine_route_geo: (a: number, b: number, c: number, d: number, e: number, f: number, g: number, h: number) => void;
     readonly ganeengine_update_heading: (a: number, b: number, c: number) => void;
     readonly ganeengine_update_position: (a: number, b: number, c: number, d: number, e: number) => void;
     readonly ganeengine_update_velocity: (a: number, b: number, c: number, d: number, e: number) => void;
