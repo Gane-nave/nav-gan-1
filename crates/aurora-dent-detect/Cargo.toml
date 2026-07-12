@@ -1,6 +1,0 @@
-[package]
-name = "aurora-dent-detect"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

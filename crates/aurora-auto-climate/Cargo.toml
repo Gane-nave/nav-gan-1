@@ -1,6 +1,0 @@
-[package]
-name = "aurora-auto-climate"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

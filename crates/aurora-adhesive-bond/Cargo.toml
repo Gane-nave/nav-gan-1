@@ -1,6 +1,0 @@
-[package]
-name = "aurora-adhesive-bond"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

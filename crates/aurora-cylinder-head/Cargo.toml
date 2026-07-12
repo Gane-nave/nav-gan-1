@@ -1,6 +1,0 @@
-[package]
-name = "aurora-cylinder-head"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

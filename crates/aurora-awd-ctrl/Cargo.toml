@@ -1,6 +1,0 @@
-[package]
-name = "aurora-awd-ctrl"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

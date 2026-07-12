@@ -1,6 +1,0 @@
-[package]
-name = "aurora-radar-proc"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

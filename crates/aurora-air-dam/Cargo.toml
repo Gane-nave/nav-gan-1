@@ -1,6 +1,0 @@
-[package]
-name = "aurora-air-dam"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

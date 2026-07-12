@@ -1,6 +1,0 @@
-[package]
-name = "aurora-owner-manual"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

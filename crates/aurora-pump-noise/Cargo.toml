@@ -1,6 +1,0 @@
-[package]
-name = "aurora-pump-noise"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

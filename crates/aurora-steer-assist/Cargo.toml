@@ -1,6 +1,0 @@
-[package]
-name = "aurora-steer-assist"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

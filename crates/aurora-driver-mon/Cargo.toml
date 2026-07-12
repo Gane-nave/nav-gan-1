@@ -1,6 +1,0 @@
-[package]
-name = "aurora-driver-mon"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

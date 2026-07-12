@@ -1,6 +1,0 @@
-[package]
-name = "aurora-pedal-sensor"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

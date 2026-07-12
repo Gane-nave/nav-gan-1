@@ -64,10 +64,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-5g-modem"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-a11y"
 version = "0.1.0"
 dependencies = [
@@ -75,70 +71,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-ab-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-abs-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-abs-diag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-abs-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-abs-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-absorber-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-charge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-compressor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-convert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-line"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-performance"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ac-refrig"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-acc-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-accel-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-accident-alert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-active-aero"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-adaptive"
@@ -149,39 +81,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-adaptive-beam"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-adaptive-contrast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-adaptive-cruise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-adaptive-damper"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-adaptive-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-adhesive-bond"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-aeb-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-aero-coeff"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-aero-sim"
 version = "0.1.0"
 
 [[package]]
@@ -193,43 +93,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-air-dam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-air-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-air-intake"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-air-purifier"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-air-quality"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-air-spring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-airbag-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-airbag-diag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-airbag-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-alarm-sys"
 version = "0.1.0"
 
 [[package]]
@@ -239,34 +103,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-alexa-skill"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-alignment-spec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-alternator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ambient-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ambient-light2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-amplifier-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-amqp-client"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-analytics"
@@ -281,118 +117,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-analytics-ab"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-alert2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-attribution"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-batch2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-click"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-cohort"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-dashboard3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-error"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-event"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-event3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-export2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-funnel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-heatmap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-import2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-ltv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-page"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-perf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-predict"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-realtime"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-retention"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-scroll"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-segment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-session"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-analytics-user2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-android-auto"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-anim-fade"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-anim-slide"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-animal-detect"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-anomaly"
 version = "0.1.0"
 dependencies = [
@@ -401,36 +125,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-anomaly-det"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-anonymize"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-ansible-run"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-antenna-mod"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-antenna-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-antenna-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-antenna-tune"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-anti-jam"
@@ -454,14 +154,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-anti-overlap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-anti-roll"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-apa-sys"
 version = "0.1.0"
 
 [[package]]
@@ -495,78 +187,6 @@ dependencies = [
  "tracing-subscriber",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-api-auth2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-cache2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-compress2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-cors"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-csrf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-doc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-gateway2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-graphql2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-grpc3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-openapi"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-pagination"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-ratelimit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-rest2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-sort"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-swagger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-throttle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-api-versioning"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-app"
@@ -674,10 +294,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ar-hud"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-ar-nav"
 version = "0.1.0"
 dependencies = [
@@ -685,103 +301,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-archive-ar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-cpio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-dmg"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-iso"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-pax"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-rar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-sevenz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-shar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-tar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-tar2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-zip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-archive-zip2"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-arena"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assembly-check"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assembly-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-api"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-db"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-event"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-geo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-gnss"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-time"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-assert-vehicle"
 version = "0.1.0"
 
 [[package]]
@@ -808,166 +328,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-auth-abac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-apikey"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-apikey2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-basic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-biometric"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-certificate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-consent"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-delegate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-federation"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-impersonate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-jwt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-kerberos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-ldap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-ldap2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-mfa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-mfa2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-oauth2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-oidc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-passkey"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-policy2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-radius"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-rbac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-saml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-scim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-scope"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-session"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-session2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-sso"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-sso2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-token2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-totp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-webauthn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auth-x509"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-climate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-highbeam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-park"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-park2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-pilot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-auto-trans"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-automl"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-autonomous"
 version = "0.1.0"
 dependencies = [
@@ -975,123 +335,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-autopark-ultra"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-awd-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-axle-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-axle-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-axle-seal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-axle-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-axle-shaft"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-backpressure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-backup-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-balance-weight"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ball-joint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-baro-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-barrier-coat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-base-coat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-batt-health"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-batt-manage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-batt-pack"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-batt-thermal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-mgmt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-precon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-thermal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-battery-tray"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bearing-noise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-belt-drive"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-belt-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-belt-tension"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-belt-tensioner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-belt-tensn"
 version = "0.1.0"
 
 [[package]]
@@ -1128,27 +372,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-bike-rack"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-bitset"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blend-door"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blind-spot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blind-spot2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blockchain-log"
 version = "0.1.0"
 
 [[package]]
@@ -1156,127 +380,7 @@ name = "aurora-bloom"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-blow-off"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blower-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-blue-green"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bluetooth-mod"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bms-cell"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bms-core"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-body-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-body-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-body-fit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-body-height"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-body-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bolt-torque"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-boost-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-boost-sensor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-bounded-queue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bracket-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-booster"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-caliper"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-cool"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-drum"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-hose"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-line"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-pad"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-rotor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-shoe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-brake-wear"
 version = "0.1.0"
 
 [[package]]
@@ -1284,95 +388,11 @@ name = "aurora-bridge-nav"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-bsm-proc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bsw-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bt-audio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bt-modem"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-btree"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-bump-stop"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bumper"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-bumper-cover"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cabin-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cabin-precon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cabin-press"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cabin-temp"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-cache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-arc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-dist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-lfu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-local"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-lru2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-read"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-tier"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-ttl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cache-write"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-calendar-nav"
 version = "0.1.0"
 
 [[package]]
@@ -1383,75 +403,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-cam-phase"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cam-phaser"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cam-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-camera-fusion"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-camera-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-camshaft-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-can-bus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-can-bus2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-can-gateway"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-canary-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-capacity-plan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-car-share"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cargo-box"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cargo-cover"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cargo-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cargo-optim"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-cargo-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-carpet-mat"
 version = "0.1.0"
 
 [[package]]
@@ -1463,26 +415,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-carplay-ext"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-catalyst-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-catalytic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-catalytic-conv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cdc-engine"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-cdn"
 version = "0.1.0"
 dependencies = [
@@ -1491,75 +423,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-cell-balance"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cell-modem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-center-console"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ceramic-coat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cfd-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chain-drive"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-chaos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chaos-eng"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-cable"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-limit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-plan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-planner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-port"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charge-timer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charger-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charger-dc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-charger-onboard"
 version = "0.1.0"
 
 [[package]]
@@ -1576,79 +440,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-chart-boxplot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-bullet"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-bump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-candlestick"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-gantt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-histogram"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-marimekko"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-radar2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-slope"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-sparkline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-violin"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chart-waterfall"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chassis-flex"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-check-strap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-child-seat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-chrome-trim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ci-pipeline"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-circuit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-circuit-board"
 version = "0.1.0"
 
 [[package]]
@@ -1665,283 +457,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-clamp-force"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-clear-coat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-climate-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-climate-ctrl2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-climate-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-climate-zone"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-clip-fasten"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-clock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-backup"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-cache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-cdn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-cert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-compute"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-config"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-database"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-dns"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-function"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-lb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-metric"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-network"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-queue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-restore"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-scale"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-secret"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-storage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-stream"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-sync"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cloud-trace"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cluster-disp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cluster-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cluster-ml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-clutch-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-clutch-wear"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cnn-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-co2-track"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-arrow2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-avro2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-bencode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-bson2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-cap2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-cbor2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-csv2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-flatbuf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-json2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-msgpack2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-parquet2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-protobuf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-rlp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-ssz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-thrift2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-toml2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-xml2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-codec-yaml2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coil-spring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-collision-warn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-column-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-columnar-db"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-brotli2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-bzip2v2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-deflate2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-gzip2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-lz4v2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-lzma2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-snappy2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-xz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-zlib2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comp-zstd2"
 version = "0.1.0"
 
 [[package]]
@@ -1956,123 +472,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-compliance-chk"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-ccpa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-fedramp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-fmvss"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-gdpr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-hipaa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-iso"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-ncap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-pci"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-rde"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-soc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-unece"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-comply-wltp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-brotli"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-bz2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-deflate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-gzip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-lz4"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-lzma"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-snappy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-xz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-zlib"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compress-zstd"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-compression"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compression-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compressor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compressor-ac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-compressor-vib"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-condenser"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-condenser-fan"
 version = "0.1.0"
 
 [[package]]
@@ -2097,63 +497,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-config-aws-ssm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-azure-kv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-consul2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-env"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-etcd"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-file2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-gcp-secret"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-remote"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-srv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-vault2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-config-zookeeper"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-conflict-res"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-conn-rod"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-connector"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-consensus"
@@ -2165,34 +513,6 @@ version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-construction"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-consul-health"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-consul-kv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-consul-svc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-consul-watch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-contact-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-container-rt"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-context-aware"
@@ -2223,47 +543,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-control-arm"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-convoy"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-convoy-ctrl"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-convoy-plan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-level"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-mgmt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-tank"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-coolant-test"
 version = "0.1.0"
 
 [[package]]
@@ -2278,10 +562,6 @@ dependencies = [
  "thiserror",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-corner-weight"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-corrections"
@@ -2299,67 +579,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-corrosion-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cost-optim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cov-branch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cov-function"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cov-line"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cov-mc-dc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cov-path"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crank-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crankcase"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crankshaft-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crash-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crash-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crash-struct"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-crdt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cross-member"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cross-traffic"
 version = "0.1.0"
 
 [[package]]
@@ -2379,255 +599,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-cruise-adapt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cruise-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-aes"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-argon2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-bcrypt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-blake3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-chacha"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-ecdsa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-ed25519"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-hmac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-noise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-pbkdf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-poly1305"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-rsa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-scrypt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-secp256k1"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-sha256"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-sha512"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-tls13"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-crypto-x25519"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-cuckoo"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-cup-holder"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-curb-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-current-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cv-boot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cv-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cv-joint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cv2x-modem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cv2x-radio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cvt-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cyclist-det"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cyclist-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-cylinder-head"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dab-radio"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-dag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-damping-mat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-alert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-cam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-compare"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-config"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-display"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-drill"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-export"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-grid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-kpi"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-layout"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-pad"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-refresh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-report"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-search"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-theme"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dash-widget"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-archive2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-catalog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-catalog2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-clean2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-enrich2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-extract2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-govern2"
 version = "0.1.0"
 
 [[package]]
@@ -2638,167 +614,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-data-lake"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-lake2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-lineage2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-load2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-mart"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-mask2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-mesh"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-data-network"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-partition2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-quality"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-quality2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-record"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-replicate2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-shard2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-transform2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-validate2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-vault"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-data-warehouse2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-cassandra"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-clickhouse"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-cockroach"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-duckdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-dynamo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-elastic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-foundationdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-influx"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-mongo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-mysql"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-neo4j"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-postgres"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-redis"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-rocksdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-scylla"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-sqlite"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-surrealdb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-db-timescale"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dc-convert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dc-converter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dc-dc-conv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dc-fast-charge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dct-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -2808,10 +624,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-dealer-net"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-debounce"
@@ -2826,143 +638,7 @@ name = "aurora-deep-personal"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-defog-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-defrost-duct"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-defroster"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dent-detect"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-ab2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-ansible"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-argocd"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-artifact"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-blue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-bluegreen"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-canary"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-canary2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-consul"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-docker2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-envoy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-feature"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-feature2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-flux"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-helm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-helm2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-hotfix"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-istio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-k8s"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-k8s2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-promote"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-pulumi"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-registry2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-release2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-rollback"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-rollback2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-rolling"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-shadow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-terraform"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-deploy-vault"
 version = "0.1.0"
 
 [[package]]
@@ -2995,78 +671,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-devops-backup2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-build2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-changelog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-chaos3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-config3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-docs2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-env2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-format2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-lint2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-merge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-migrate2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-pipeline2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-review"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-scale2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-scan3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-secret2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-tag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-devops-test2"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-diagnostics"
 version = "0.1.0"
 dependencies = [
@@ -3074,51 +678,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-diff-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-diff-lock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-diff-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-diffuser"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-digital-key"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-digital-mirror"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dim-reduce"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-distribution"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dlp-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dms-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dns-resolver"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-doc-store"
 version = "0.1.0"
 
 [[package]]
@@ -3172,104 +732,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-door-latch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-door-lock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-door-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-door-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-door-seal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-door-shell"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-downforce"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-downpipe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dpf-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dpf-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dpf-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dr-planner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-drag-reduce"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-drift-ctrl"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-drive-patterns"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-drive-shaft"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-driver-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-driver-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-driver-score"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-driveshaft-bal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-drl-led"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-drl-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dsrc-radio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-dtc-reader"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-dual-freq"
@@ -3280,35 +748,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-durability-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-e-axle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-e-motor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-e2e-tests"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-eba-sys"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-economics"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ect-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ecu-flash"
 version = "0.1.0"
 
 [[package]]
@@ -3332,31 +776,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-edge-compute"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-edge-infer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-efficiency-coach"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-effortless"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-egr-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-egr-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-egr-valve"
 version = "0.1.0"
 
 [[package]]
@@ -3366,26 +786,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-elastic-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-elec-diff"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-elevation"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-emc-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-emer-brake"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-emergency"
@@ -3421,194 +821,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-emission-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-ascii2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-avro2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-base64v2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-bson2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-capnp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-cbor2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-csv2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-flatbuf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-hex2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-html"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-json4"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-msgpack2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-protobuf3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-thrift2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-url2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-utf16"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-utf8"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-enc-xml2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-ascii"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-base32"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-base58"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-base64"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-base85"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-bech32"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-der"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-hex"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-html"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-jwt2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-pem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-percent"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-punycode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-qp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-unicode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-url"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-utf8"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-encode-z85"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-endurance-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-energy-display"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-energy-harvest"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-energy-regen"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-engine-cover"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-engine-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-engine-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-engine-oil"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-engine-sound"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-eps-motor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-error-accum"
 version = "0.1.0"
 dependencies = [
@@ -3631,192 +843,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-esc-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-esc-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-esc-system"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-eta"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-etcd-elect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-etcd-kv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-etcd-lock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-etcd-watch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ethernet-auto"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ethernet-gw"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-etl-pipeline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ev-charger-port"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ev-range"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ev-station"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-evap-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-evap-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-evaporator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-evaporator2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-evasive-steer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-batch2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-bridge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-bus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-bus2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-compress"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-cqrs"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-dlq"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-encrypt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-filter2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-hook"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-inbox"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-log2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-outbox"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-partition"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-replay"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-replay2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-saga2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-schedule"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-schema"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-schema2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-sink"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-source"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-store2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-traffic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-event-transform"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-events"
@@ -3846,42 +878,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-exhaust-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-gasket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-hanger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-manif"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-note"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-exhaust-tip"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-explain"
 version = "0.1.0"
 dependencies = [
@@ -3901,87 +897,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-fan-balance"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fan-clutch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fan-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fatigue-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-favorite-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fea-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-audit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-experiment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-override"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-rollout"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-sdk"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-segment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-toggle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-feature-webhook2"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-features"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-federated-ml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fender"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fido2-auth"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-final-drive"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fire-suppres"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-firewall"
 version = "0.1.0"
 
 [[package]]
@@ -3998,323 +914,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-fleet-alert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-auction"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-cargo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-comply"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-cost"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-driver"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-fuel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-geofence"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-insure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-lease"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-maint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-park2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-report"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-sched"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-track"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fleet-wash"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flex-pipe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flexray"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flexray-bus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flexray-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-floor-pan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fluid-analysis"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flush-align"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flywheel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-flywheel-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fm-radio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-arrow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-avro"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-bencode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-bincode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-bson"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-capnproto"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-cbor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-csv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-flatbuf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-ion"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-json"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-msgpack"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-parquet"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-protobuf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-rlp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-toml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-xml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fmt-yaml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fog-compute"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fog-lamp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fog-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-forecast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-forensic-kit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fragrance"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-frame-rail"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-free-space"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-freeze-frame"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-front-camera"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-front-cross"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-frunk"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-fsm"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-ftp-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-cap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-cell"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-door"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-economy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-inject"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-level"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-line"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-fuel-opt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-optim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-pressure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-price"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-pump-elec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-pump2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-rail"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-tank2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuel-trim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuse-box"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuse-monitor"
 version = "0.1.0"
 
 [[package]]
@@ -4337,64 +941,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-fuzz-bin"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-grpc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-http"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-json"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-num"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-proto"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-sql"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-struct"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-text"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-fuzz-xml"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-gamification"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-gan-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gas-strut"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gasket-integ"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-gateway"
@@ -4409,30 +961,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-gateway-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gauge-cluster"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gear-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gear-select"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gear-shifter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gear-whine"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-geo"
 version = "0.1.0"
 
@@ -4444,10 +972,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-geo-fence"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-geo-shard"
 version = "0.1.0"
 dependencies = [
@@ -4455,39 +979,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-geocoder"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-geofence"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-gesture-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gesture-ui"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gitops-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-glass-roof"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-glove-box"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-glow-plug"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-gnss"
@@ -4513,179 +1009,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-gnss-receiver"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-google-link"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gps-track"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grade-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-algo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-cluster"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-constraint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-edge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-embed"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-export"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-import"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-index2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-label"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-node"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-partition2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-path"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-property"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-query2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-schema"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-temporal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-traverse"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-graph-visual"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-graphdb"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-graphql-srv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grille-shut"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ground-fault"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ground-net"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ground-point"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ground-strap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-auth"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-codec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-health"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-lb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-proxy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-reflect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-grpc-server"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-gyro-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-handbrake-elec"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-haptic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-haptic-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-haptic-seat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-haptic-steer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-haptic-wheel"
 version = "0.1.0"
 
 [[package]]
@@ -4697,50 +1025,6 @@ name = "aurora-hazmat-route"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-hda-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-head-gasket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-head-up"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-head-up-disp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlamp-aim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlamp-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlight"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlight-aim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlight-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headlight-led"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-headliner"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-health"
 version = "0.1.0"
 
@@ -4749,99 +1033,7 @@ name = "aurora-heap"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-heat-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-heat-shield"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-heater-core"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-heater-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-helm-chart"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-highway-merge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hill-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hill-hold"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hinge-mech"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-histogram"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-homekit-link"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-honeypot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hood-latch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hood-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-horn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-horn-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-horn-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-horn-pattern"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-horn-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hose-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hsm-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hub-bearing"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hub-cap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hub-motor"
 version = "0.1.0"
 
 [[package]]
@@ -4851,46 +1043,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-hud-display"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hud-render"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-humid-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-humidity-sens"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hv-battery"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hv-contactor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hv-interlock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hvac-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hvac-duct"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-hvac-noise"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-hyperloglog"
@@ -4906,34 +1058,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-iat-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-idle-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-idle-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ignition-coil"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ignition-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ignition-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ignition-sys"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-immersive"
 version = "0.1.0"
 dependencies = [
@@ -4945,26 +1069,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-immobilizer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-imu-fusion"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-imu-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-imu-unit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-incident-mgr"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-incidents"
@@ -4982,30 +1086,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-index-bitmap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-index-bloom2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-index-btree"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-index-hash"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-index-inverted"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-index-spatial"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-indoor"
 version = "0.1.0"
 dependencies = [
@@ -5014,106 +1094,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-info-hierarchy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infotain-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infotain-disp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infotain-scr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infotainment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-bastion"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-cdn2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-cert3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-compute"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-container"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-dns3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-firewall2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-gateway2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-lb2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-mesh2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-nat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-queue3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-registry2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-serverless"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-storage2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-subnet"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-vpc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-infra-vpn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-injector"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-instrument"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-instrument-clus"
 version = "0.1.0"
 
 [[package]]
@@ -5127,146 +1107,6 @@ dependencies = [
  "thiserror",
  "tracing",
 ]
-
-[[package]]
-name = "aurora-intake-gasket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-intake-mani"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-intake-manif"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-intake-manifold"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-amqp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-azure-blob"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-azure2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-ftp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-gcs"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-graphql"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-graphql3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-grpc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-grpc3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-imap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-kafka"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-kafka2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-minio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-mongo2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-mqtt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-mysql2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-nats"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-nats2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-postgres2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-rabbit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-redis3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-rest"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-rest3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-s3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-sftp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-smtp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-soap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-sse"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-webhook"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-websocket2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-integ-zeromq"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-integration-tests"
@@ -5344,31 +1184,7 @@ name = "aurora-intent"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-intercooler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-interior-cam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-interior-led"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-interior-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-intersection"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-interval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-inverter"
 version = "0.1.0"
 
 [[package]]
@@ -5380,175 +1196,11 @@ name = "aurora-invisible-ui"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-io-async2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-batch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-buf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-compress2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-encrypt2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-file2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-mux"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-net2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-pipe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-pool2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-rate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-retry2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-ring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-scatter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-stream2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-sync"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-timeout2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-io-zero"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-ip-protect"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-iso-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-isochrone"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-jumphash"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-cm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-hpa"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-ingress"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-ns"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-operator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-pod"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-pvc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-rbac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-secret"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-k8s-svc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-kafka-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-key-fob"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-key-prog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-keyless-entry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-knock-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-knock-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-knuckle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-kv-store"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lambda-probe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lambda-sensor"
 version = "0.1.0"
 
 [[package]]
@@ -5564,63 +1216,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-lane-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lane-change"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lane-depart"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lane-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lane-keep"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lap-timer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lat-accel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-latch-lock"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-latency-comp"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-launch-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ldap-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ldw-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-leaf-spring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-leak-test"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-lease"
@@ -5635,47 +1235,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-lidar-proc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lidar-unit"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-light-adapt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-light-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-light-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-limited-slip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lin-bus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lineage-track"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lka-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-load-level"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-load-manage"
 version = "0.1.0"
 
 [[package]]
@@ -5694,59 +1254,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-log-datadog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-log-elastic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-log-loki"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-long-accel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lora-radio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lora-wan"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-lru"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lug-nut"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lumbar-adj"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-lv-battery"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-maf-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mag-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-maint-pred"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-manual-trans"
 version = "0.1.0"
 
 [[package]]
@@ -5762,30 +1270,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-map-3d"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-charging"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-geocode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-icon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-indoor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-label"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-map-match"
 version = "0.1.0"
 dependencies = [
@@ -5794,71 +1278,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-map-msg"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-parking"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-poi2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-reverse"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-route2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-satellite"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-search2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-street"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-style"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-terrain"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-tile"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-traffic2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-map-transit"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-map-update"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-marker-lamp"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-market-strategy"
@@ -5878,139 +1302,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-mass-airflow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-master-cyl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-master-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-matter-bridge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mbd-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-media-player"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-media-stream"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-align"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-arena2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-bump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-bump2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-cache3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-compress"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-cow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-gc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-guard"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-limit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-mapped2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-pin"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-pool2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-pool3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-ref"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-ref2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-region"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-shared"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-slab2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-stack2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-track"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mem-zero"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-mesh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mesh-net"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-metric-otel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-metric-prom"
 version = "0.1.0"
 
 [[package]]
@@ -6042,38 +1334,6 @@ name = "aurora-migration"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-mirror-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirror-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirror-defog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirror-disp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirror-fold"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirror-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mirrorlink"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-misfire-mon"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-ml"
 version = "0.1.0"
 dependencies = [
@@ -6087,135 +1347,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ml-attention"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-augment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-checkpoint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-deploy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-embed2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-experiment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-feature"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-infer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-label"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-loss"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-model"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-monitor2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-optim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-pipeline2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-quantize"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-registry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-serving"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-tokenize"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ml-train"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-moat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-api"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-cache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-db"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-fs"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-net"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-queue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-rand"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-server"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-svc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mock-time"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-modal-damp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mode6-test"
 version = "0.1.0"
 
 [[package]]
@@ -6225,78 +1357,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-monitor-anomaly"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-budget"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-cache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-conn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-cpu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-disk"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-gc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-health2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-jit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-mem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-net2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-pool"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-proc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-queue2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-request"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-response"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-sla"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-monitor-thread"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-monitoring"
@@ -6311,75 +1371,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-moonroof"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-most-bus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-motion-ctrl"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-motion-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-motor-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-motor-drive"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-motor-resolver"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-mqtt-broker"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-amqp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-kafka"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-nats"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-pubsub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-pulsar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-rabbit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-sns"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-msg-sqs"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-muffler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-muffler-mon"
 version = "0.1.0"
 
 [[package]]
@@ -6403,247 +1395,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-nats-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nav-antenna"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nav-record"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-nav-state"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-net-amqp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-anycast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-avro2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-bcast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-broadcast2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-coap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-dns2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-dns4"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-dtls"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ftp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-grpc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-grpc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-http"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-http3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ice"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-imap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ipsec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ldap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-mcast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-memcache"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-mesh3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-mqtt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-multicast2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-nfv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ntp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-p2p2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-pipe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-proxy2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-quic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-quic2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-raw"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-redis"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-rsocket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-sctp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-sdn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-smtp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-snmp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-ssh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-stomp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-stun"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-tcp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-tcp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-thrift"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-tls3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-tun"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-tunnel2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-turn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-udp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-udp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-unix"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-websocket2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-websocket3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-net-wireguard"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-neural-net"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nfc-reader"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-night-vision"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-nightmode"
@@ -6654,27 +1410,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-nitrous-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nlp-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-noa-sys"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-noise-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-noise-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-noise-test"
 version = "0.1.0"
 
 [[package]]
@@ -6689,123 +1425,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-nox-sensor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-numerical"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-nut-prev"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nv-harshness"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-nvh-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oauth-provider"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obd-diag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obd-interface"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obd-port"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obd-scanner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obj-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-anomaly2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-capacity"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-cost"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-dashboard2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-error2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-event2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-health2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-incident2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-latency"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-log3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-metric2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-oncall"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-profile2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-report2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-sla"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-slo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-trace2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-obs-uptime"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-observability"
@@ -6822,10 +1446,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ocr-engine"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-offline"
 version = "0.1.0"
 dependencies = [
@@ -6839,70 +1459,6 @@ dependencies = [
  "tokio",
  "tracing",
 ]
-
-[[package]]
-name = "aurora-oil-cooler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-filter2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-level"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-pan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-press"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-pressure-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-pump2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oil-temp-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-olap-cube"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oms-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-onboard-charger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-one-pedal"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-orchestrator"
@@ -6927,126 +1483,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ota-update"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-baggage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-collector"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-context"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-datadog"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-exporter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-grafana"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-jaeger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-meter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-metric"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-newrelic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-prometheus"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-propagator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-resource"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-sampler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-span"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-trace"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-otel-zipkin"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-owner-manual"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-oxygen-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-paint-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-paint-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-paint-thick"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-panel-gap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-park-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-park-brake"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-park-cam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-park-pawl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-park-sensor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-parking"
 version = "0.1.0"
 dependencies = [
@@ -7060,27 +1496,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-parking-guide"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-parking-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-parking-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-parking-slot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-parts-cat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-path-plan"
 version = "0.1.0"
 
 [[package]]
@@ -7097,43 +1513,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-pcv-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ped-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedal-box"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedal-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedal-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedal-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedes-detect"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-pedestrian"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pedestrian-det"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pentest-scan"
 version = "0.1.0"
 
 [[package]]
@@ -7155,107 +1535,7 @@ name = "aurora-peripheral-viz"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-pid-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pillar-trim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pin-retain"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-pipeline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-piston-ring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pitch-rate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pki-manager"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-android"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-cloudrun"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-docker3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-embedded"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-fargate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-fly"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-heroku"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-ios"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-k8s2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-lambda"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-linux"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-macos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-railway"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-render"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-rtos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-vercel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-wasm2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platform-windows"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-platooning"
 version = "0.1.0"
 
 [[package]]
@@ -7271,10 +1551,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-poi-engine"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-poi-services"
 version = "0.1.0"
 dependencies = [
@@ -7283,56 +1559,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-pollen-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-post-crash"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pothole-detect"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-power"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-power-dist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-power-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-power-outlet"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-power-steer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-power-steer-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-power-window"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ppf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-precondit"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-prediction-mh"
@@ -7359,14 +1591,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-primer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-primer-coat"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-probabilistic"
 version = "0.1.0"
 dependencies = [
@@ -7389,171 +1613,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-prop-shaft"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-prop-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-propshaft"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-amqp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-dns2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-graphql2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-grpc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-http3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-ipc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-mqtt2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-ntp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-quic2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-redis2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-rest2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-rpc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-ssh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-tcp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-tls2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-udp2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-unix"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proto-ws2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-prox-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-proxy-lb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ptc-heater"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pto-unit"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-pubsub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-puddle-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pulley-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pump-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-pump-noise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-purge-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-push-start"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-coverage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-dynamic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-load"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-mutate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-perf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-regress"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-smoke"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-soak"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-static"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-qa-stress"
 version = "0.1.0"
 
 [[package]]
@@ -7564,95 +1624,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-quality-gate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-quarter-glass"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-bounded"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-delay2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-fifo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-lifo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-mpmc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-mpsc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-priority2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-spsc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-queue-unbounded"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-quota"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rack-pinion"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radar-proc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radar-proc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radar-unit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radiator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radiator-fan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radiator-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-radio-tuner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rain-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-range-calc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-range-estimator"
 version = "0.1.0"
 
 [[package]]
@@ -7660,163 +1632,7 @@ name = "aurora-ratelimit"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-rcta-sys"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-rcu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-readiness-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rear-camera"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rear-cross"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rear-disp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rear-window"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recall-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-receiver-drier"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recent-dest"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recirc-door"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recirc-flap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recommend"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-recycl-plan"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-redis-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reducer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reduction-gear"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-regen-brake"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-regen-brake2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reinforce"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-relay-board"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-relay-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-remote-access"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-remote-diag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-remote-start"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-event"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-gnss"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-session"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-replay-traffic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-chart"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-csv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-dashboard"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-excel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-html"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-json"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-pdf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-report-xml"
 version = "0.1.0"
 
 [[package]]
@@ -7826,10 +1642,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-resale-val"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-resilience"
@@ -7845,51 +1657,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-resonator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rest-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rest-stop"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-retry"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-rev-limiter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rev-match"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-revenue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reverse-gear"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-reverse-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rfid-reader"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ride-height"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rim-check"
 version = "0.1.0"
 
 [[package]]
@@ -7909,46 +1681,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-rivet-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rnn-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-road-closure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-road-edge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-road-mark"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-road-noise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-road-surface"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rocker-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roll-cage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roll-rate"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-rollout"
 version = "0.1.0"
 dependencies = [
@@ -7957,34 +1689,6 @@ dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-rollover-det"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rollover-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roof-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roof-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roof-rack"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roof-rail"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-roundabout"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-route-learn"
@@ -8023,223 +1727,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-routing-graph"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rpa-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-async2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-coroutine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-embed"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-fiber"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-green"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-hook"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-interp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-io2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-isolate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-jit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-plugin2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-sandbox2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-signal2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-sync2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-thread2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-timer2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-wasm2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rt-work2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rubber-trim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runbook-exec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-actor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-barrier"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-channel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-condvar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-fiber"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-isolate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-lua"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-mutex"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-once"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-pool2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-python"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-queue"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-rwlock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-sandbox"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-semaphore2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-thread"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-v8"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-runtime-wasm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-rust-protect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-s3-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-alert2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-audit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-gate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-safety-train2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-saml-bridge"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-sampling-ctrl"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-sandbox-exec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sas-calib"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sat-link"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sat-radio"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-satellite"
@@ -8255,151 +1747,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-scenic-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-adaptive"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-affinity"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-backoff"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-batch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-batch3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-choreo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-coop"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-cron"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-cron2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-dag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-deadline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-deadline2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-delay"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-delay2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-fair2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-fifo2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-gang"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-interval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-lifo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-pipeline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-predict2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-preempt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-priority"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-priority3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-quota2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-rate2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-ratelimit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-round2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-saga"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sched-weighted2"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-scheduler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-schema-reg"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-school-zone"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-scr-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-scr-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-scratch-det"
 version = "0.1.0"
 
 [[package]]
@@ -8415,182 +1763,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-sealant-mon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-facet"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-full"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-fuzzy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-geo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-highlight"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-rank"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-spell"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-stem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-suggest"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-synonym"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-token"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-search-vector"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-adjust"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-belt-pre"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-comfort"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-cool"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-cooler"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-ctrl2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-heat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-heater"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seat-vent"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-seatbelt-tens"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-abac"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-acl2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-audit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-cert2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-hash2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-hmac2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-hsm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-ids"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-jwt2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-kms"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-oauth3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-oidc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-pki"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-rbac2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-saml"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-scan2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-vault2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sec-waf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-secure-enclave"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-security"
@@ -8627,90 +1799,6 @@ name = "aurora-serialization"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-service-interval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-shield-emi"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-shift-fork"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-shock-absorb"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-shock-absorber"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-side-camera"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-side-skirt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-side-window"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-siem-feed"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sign-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sign-read"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-env"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-gnss"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-network"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-route2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-time2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-traffic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-vehicle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sim-weather"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-simulation"
 version = "0.1.0"
 dependencies = [
@@ -8718,31 +1806,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-sirius-radio"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-skiplist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sla-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-slam-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sleep-mode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-smart-park"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-smartwatch"
 version = "0.1.0"
 
 [[package]]
@@ -8754,19 +1818,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-smtp-client"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-snapshot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-snow-plow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-soc-estimator"
 version = "0.1.0"
 
 [[package]]
@@ -8777,68 +1829,12 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-soh-estimator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-solar-charge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-solar-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-solar-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sound-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sound-dead"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sound-deadener"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sound-gen"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-source-select"
 version = "0.1.0"
 dependencies = [
  "serde",
  "serde_json",
 ]
-
-[[package]]
-name = "aurora-spare-tire"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-spark-plug"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-spat-decode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speaker-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speech-rec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speech-synth"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-speed-advisor"
@@ -8853,47 +1849,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-speed-bump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speed-cam"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-speed-limit"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-speed-scale"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-speed-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-splash-guard"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-splitter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sport-exhaust"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-spring-damper"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-sre"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ssh-tunnel"
 version = "0.1.0"
 
 [[package]]
@@ -8910,54 +1870,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-stability-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-starter-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steer-angle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steer-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steer-column"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-col"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-column"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-heat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-rack"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-steering-wheel"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-storage"
 version = "0.1.0"
 dependencies = [
@@ -8969,139 +1881,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-store-bitmap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-blob2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-cache2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-col"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-config2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-counter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-doc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-embed"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-graph2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-kv2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-lock2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-log2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-meta"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-obj"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-queue2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-secret"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-session"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-store-time2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-buffer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-dedup"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-join"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-merge2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-proc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-reduce"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-split"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-throttle"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-stream-window"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-streaming"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-striker-plate"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-structured-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-strut-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-subframe"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-subscription"
 version = "0.1.0"
 
 [[package]]
@@ -9112,215 +1896,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-subwoofer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-summon"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-summon-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sunroof"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sunroof-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sunroof-mech"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sunroof-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-super-cap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-supply-chain"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-surge-protect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-surround-view"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-suspension-adapt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-suspension-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-auth"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-circuit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-config"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-disc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-discovery"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-mesh"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-rate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-registry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-retry"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-timeout"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-svc-trace"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-swarm-coord"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sway-bar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-atomic2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-barrier2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-broadcast3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-condvar2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-exchanger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-latch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-mpmc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-mpsc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-mutex2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-once2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-oneshot2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-phaser"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-rwlock2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-semaphore3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-seqlock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-spinlock2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-spsc2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-sync-watch2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-synchro-ring"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tail-lamp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tail-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tailgate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-taillight"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tcs-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-teen-driver"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-telem-up"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-telematics"
 version = "0.1.0"
 
 [[package]]
@@ -9337,22 +1913,6 @@ dependencies = [
  "tracing",
  "uuid",
 ]
-
-[[package]]
-name = "aurora-telemetry-log"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-temp-sensor-cab"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-temp-sensor-ext"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-temp-sensor2"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-temporal"
@@ -9372,67 +1932,7 @@ name = "aurora-temporal-prec"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-terraform-mod"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-terrain"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-terrain-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-bench"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-bench2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-case"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-chaos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-chaos2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-contract"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-coverage"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-coverage2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-data"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-e2e2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-factory"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-fixture"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-fixture2"
 version = "0.1.0"
 
 [[package]]
@@ -9446,170 +1946,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-test-fuzz"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-fuzz2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-golden"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-harness"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-integ"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-integ2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-load"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-load2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-mock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-mock2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-mutation"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-perf"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-perf2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-prop2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-property"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-report"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-runner"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-snapshot"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-spy"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-stress"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-stub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-suite"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-unit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-test-unit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-theft-alarm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-theme-dark"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-theme-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermal-mgmt"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermal-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermal-sim"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermal-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermo-valve"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermostat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thermostat-val"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-thread-lock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-threat-intel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-throttle-body"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-throttle-map"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-throttle-pos"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tie-rod"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tile-server"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-tiles"
 version = "0.1.0"
 dependencies = [
@@ -9618,59 +1954,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-tim-alert"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-time-series"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-timing-chain"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-cavity"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-chain"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-tire-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-press"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-pressure"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-repair"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tire-tread"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tja-sys"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-toe-link"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-toll-calc"
 version = "0.1.0"
 
 [[package]]
@@ -9681,59 +1965,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-torque-conv"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-torque-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-torque-split"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-torque-vector"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-touch-sensor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tow-hitch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tow-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-tpms-diag"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trace-jaeger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trace-otlp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trace-zipkin"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-tracing-dist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-track-mode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-traction-ctrl"
 version = "0.1.0"
 
 [[package]]
@@ -9750,18 +1982,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-traffic-light"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-traffic-light2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-traffic-pred"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-traffic-predict"
 version = "0.1.0"
 dependencies = [
@@ -9770,151 +1990,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-traffic-sign"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trailer-brake"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trailer-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trailing-arm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-backoff2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-bulkhead2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-cancel2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-circuit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-compress2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-congestion2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-deadline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-ecu"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-encrypt2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-flow2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-fragment2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-heartbeat2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-keepalive"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-mount"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-multiplex2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-ordered"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-priority2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-reliable"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-session3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-shift"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-temp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trans-timeout2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-transfer-case"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-transformer"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-trie"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trip-computer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trunk-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trunk-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trunk-latch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-trunk-lid"
 version = "0.1.0"
 
 [[package]]
@@ -9929,10 +2005,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-tts-engine"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-tunnel"
 version = "0.1.0"
 dependencies = [
@@ -9942,26 +2014,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-tunnel-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-turbo-actuator"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-turbo-boost"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-turbo-charger"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-turbo-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-turn-signal"
 version = "0.1.0"
 
 [[package]]
@@ -9978,127 +2030,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ui-badge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-button"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-card"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-chip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-drawer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-flex"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-footer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-form"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-grid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-header"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-list"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-modal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-nav"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-panel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-sidebar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-stack"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-table"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-tabs"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-tooltip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ui-tree"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ultrasonic"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-uncertainty"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-underbody"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-undercoat"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-usage-insurance"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-usb-hub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-usb-media"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-uturn-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-uwb-anchor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-uwb-radio"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-ux"
@@ -10114,235 +2050,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-ux-animation"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-carousel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-dropdown"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-feedback"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-filter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-gesture2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-layout"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-modal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-onboard"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-paginate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-search"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-sort"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-theme"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-toast"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-tooltip"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-transition"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-tutorial"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-ux-widget"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2g"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2i-comm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2i-link"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2n-comm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2p-comm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2p-safety"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2v-comm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2v-mesh"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-v2x"
 version = "0.1.0"
 dependencies = [
  "serde",
 ]
-
-[[package]]
-name = "aurora-v2x-basic"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2x-comm"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-v2x-module"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vacuum-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valet-mode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valet-park"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-address"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-binary"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-charset"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-csv3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-currency"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-date"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-email2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-geo"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-ip2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-json3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-locale"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-mime"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-number"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-phone"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-string"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-url2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-xml3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valid-yaml3"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valve-cover"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valve-stem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-valve-train"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vapor-canist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vault-client"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vector-db"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-vehicle"
@@ -10359,10 +2071,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-vent-actuator"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-version-sync"
 version = "0.1.0"
 dependencies = [
@@ -10371,50 +2079,6 @@ dependencies = [
 
 [[package]]
 name = "aurora-vertical-int"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vibr-damp"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vibration-test"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vin-decode"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vinyl-wrap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viscous-coup"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-calib"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-depth"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-detect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-flow"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-segment"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vision-slam"
 version = "0.1.0"
 
 [[package]]
@@ -10434,159 +2098,11 @@ name = "aurora-visual-lang"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-viz-area"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-bar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-bubble"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-calendar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-chord"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-contour"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-force"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-funnel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-gauge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-heatmap"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-line"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-matrix"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-pie"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-polar"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-sankey"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-scatter"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-stream"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-sunburst"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-timeline"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-viz-treemap"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-voice"
 version = "0.1.0"
 dependencies = [
  "aurora-core",
 ]
-
-[[package]]
-name = "aurora-voice-assist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-voice-cmd"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-voice-ctrl2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-voltage-monitor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vortex-gen"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vvt-solenoid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-vvt-system"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-waf-engine"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-warranty-mgr"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-washer-fluid"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-washer-level"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-washer-load"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wastegate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-water-pump"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-water-pump-elec"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-water-pump2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wear-indicator"
-version = "0.1.0"
 
 [[package]]
 name = "aurora-weather"
@@ -10601,18 +2117,6 @@ name = "aurora-weather-nav"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-weather-route"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weather-seal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weather-strip"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-web"
 version = "0.1.0"
 dependencies = [
@@ -10622,31 +2126,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-weblink"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-websocket"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weight-dist"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weight-reduc"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weld-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weld-integ"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-weld-sim"
 version = "0.1.0"
 
 [[package]]
@@ -10657,255 +2137,11 @@ dependencies = [
 ]
 
 [[package]]
-name = "aurora-wf-approval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-audit2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-condition"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-debug"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-engine2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-loop"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-metric"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-notify2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-parallel"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-queue2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-schedule2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-signal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-state2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-step"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-template"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-timer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-trigger2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wf-version2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-align"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-bearing-kit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-cyl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-hub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-lock"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-odom"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-spacer"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-speed"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wheel-well"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wide-column"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wifi-modem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-winch"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wind-deflector"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wind-noise"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-window-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-window-ctrl2"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-window-reg"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-window-seal"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-window-tint"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-windshield"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wing-elem"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiper-control"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiper-ctrl"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiper-inspect"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiper-mech"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiper-motor"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wire-harness"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wireless-charge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wireless-pad"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiring-harness"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-wiring-loom"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-approval"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-audit"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-bpmn"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-notify"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-state"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-workflow-version"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-worksteal"
 version = "0.1.0"
 
 [[package]]
-name = "aurora-yaw-rate"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-yaw-sensor"
-version = "0.1.0"
-
-[[package]]
 name = "aurora-zero-friction"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-zero-knowledge"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-zigbee-hub"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-zigbee-radio"
-version = "0.1.0"
-
-[[package]]
-name = "aurora-zinc-layer"
 version = "0.1.0"
 
 [[package]]

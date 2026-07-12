@@ -1,6 +1,0 @@
-[package]
-name = "aurora-side-camera"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-corner-weight"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-bearing-noise"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

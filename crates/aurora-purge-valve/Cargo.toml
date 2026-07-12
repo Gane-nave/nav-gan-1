@@ -1,6 +1,0 @@
-[package]
-name = "aurora-purge-valve"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

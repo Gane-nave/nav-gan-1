@@ -1,6 +1,0 @@
-[package]
-name = "aurora-conn-rod"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

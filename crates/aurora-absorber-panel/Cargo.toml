@@ -1,6 +1,0 @@
-[package]
-name = "aurora-absorber-panel"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

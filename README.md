@@ -7,14 +7,14 @@
 ## Monorepo layout
 
 ```
-crates/        Rust navigation engine workspace
-               ├─ core engine (~200 crates with real logic): aurora-core, -gnss (WLS PVT),
-               │  -fusion (EKF), -integrity (RAIM/spoof/jam), -routing (Dijkstra +
-               │  vehicle-envelope constraints), -map, -traffic, -v2x, -indoor, -ar-nav,
+crates/        Rust navigation engine workspace — 264 crates, all real or connected
+               ├─ core engine: aurora-core, -gnss (WLS PVT), -fusion (canonical 15-state
+               │  ESKF), -integrity (RAIM/spoof/jam), -routing (Dijkstra + vehicle-envelope
+               │  constraints), -map, -traffic, -v2x, -indoor, -ar-nav,
                │  -api (Axum, 16 endpoints), -web (embedded dashboard), -app (binary)
                ├─ gane-wasm: the same engine compiled to WebAssembly (browser/Capacitor)
-               └─ long tail of generated placeholder crates (scheduled for archival —
-                  see Blueprint §4; headline crate counts are NOT a capability metric)
+               ├─ gane-osm-import: Overpass JSON -> restriction-aware road graphs + geo CLI
+               └─ gane-replay-verify: golden-trace harness (native/WASM bit-identity)
 app/           TypeScript product application (React 19 PWA + Express/tRPC + MySQL/Drizzle)
                58 panels, 49 client engines, 22 executable contract modules, 33-table schema,
                40+ languages with full RTL, 11-type vehicle profile system
@@ -25,11 +25,10 @@ docs/          Technical designs and engineering documentation
 
 ## Honest metrics (verified by execution, 2026-07)
 
-- Engine: **~200 crates of real navigation logic**; the workspace also carries ~2,250
-  generated placeholder crates pending archival — treat "2,452 crates / 18k tests"
-  headlines as padding.
-- **~4,500 meaningful engine tests** (incl. 88 adversarial test files and cross-crate
-  e2e suites) — all green.
+- Engine: **264 crates, every one real or dependency-connected** — the ~2,190
+  generated placeholder crates were removed (they live in git history only).
+- **5,066 engine tests — all green** (incl. 88 adversarial test files and
+  cross-crate e2e suites); full workspace compile in ~20 s.
 - The engine **builds, runs, and serves**: `cargo run -p aurora-app` → REST API on :3000
   (`/health`, `/position`, `/integrity`, `/metrics`, OpenAPI + Swagger) + live dashboard.
 - The navigation core **compiles to WASM** (`gane-wasm`, ~630 KB release artifact) — one

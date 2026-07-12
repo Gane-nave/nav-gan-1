@@ -1,4 +1,0 @@
-[package]
-name = "aurora-grpc-health"
-version = "0.1.0"
-edition = "2021"

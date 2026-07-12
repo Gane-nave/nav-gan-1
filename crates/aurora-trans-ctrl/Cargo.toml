@@ -1,6 +1,0 @@
-[package]
-name = "aurora-trans-ctrl"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

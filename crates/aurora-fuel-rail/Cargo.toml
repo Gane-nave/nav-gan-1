@@ -1,6 +1,0 @@
-[package]
-name = "aurora-fuel-rail"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

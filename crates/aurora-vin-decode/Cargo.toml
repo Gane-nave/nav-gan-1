@@ -1,6 +1,0 @@
-[package]
-name = "aurora-vin-decode"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]
