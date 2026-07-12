@@ -5,6 +5,7 @@
 
 pub mod ekf;
 pub mod engine;
+pub mod eskf15;
 pub mod measurement;
 pub mod state;
 
