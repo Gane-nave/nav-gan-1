@@ -10,6 +10,13 @@ export const getLoginUrl = (returnPath?: string) => {
     : redirectUri;
   const state = btoa(statePayload);
 
+  // Graceful degradation: without a configured OAuth portal the app must
+  // still boot in demo mode — never crash the tree from a login link.
+  if (!oauthPortalUrl) {
+    console.warn("[auth] VITE_OAUTH_PORTAL_URL not configured — login disabled (demo mode)");
+    return "#login-unconfigured";
+  }
+
   const url = new URL(`${oauthPortalUrl}/app-auth`);
   url.searchParams.set("appId", appId);
   url.searchParams.set("redirectUri", redirectUri);

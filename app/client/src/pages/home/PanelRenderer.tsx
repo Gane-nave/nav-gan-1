@@ -91,6 +91,7 @@ const AccessibilityPanel = React.lazy(() =>
 
 // Default export components — direct lazy import
 const SpecVaultPanel = React.lazy(() => import("@/components/SpecVaultPanel"));
+const RustEnginePanel = React.lazy(() => import("@/components/RustEnginePanel"));
 const AnalyticsPanel = React.lazy(() => import("@/components/AnalyticsPanel"));
 const MapLayersPanel = React.lazy(() => import("@/components/MapLayersPanel"));
 const SystemArchPanel = React.lazy(() => import("@/components/SystemArchPanel"));
@@ -140,6 +141,7 @@ const PANEL_MAP: Record<string, React.LazyExoticComponent<React.ComponentType<{ 
   'evidence': EvidencePanel,
   'multimodal': MultiModalPanel,
   'spec-vault': SpecVaultPanel,
+  'rust-engine': RustEnginePanel,
   'analytics': AnalyticsPanel,
   'map-layers': MapLayersPanel,
   'system-arch': SystemArchPanel,

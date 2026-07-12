@@ -131,6 +131,7 @@ export const sidebarGroups: SidebarGroupType[] = [
       { id: 'system-arch', icon: Cpu, label: 'Arch', labelHe: 'ארכיטקטורה', i18nKey: 'sidebar.arch', accent: COLORS.green },
       { id: 'data-pipeline' as SmartPanel, icon: Activity, label: 'Pipeline', labelHe: 'צנרת', i18nKey: 'sidebar.pipeline', accent: COLORS.blue },
       { id: 'spec-vault', icon: CircuitBoard, label: 'Spec', labelHe: 'מפרט', i18nKey: 'sidebar.spec', accent: COLORS.purple },
+      { id: 'rust-engine', icon: Cpu, label: 'Engine', labelHe: 'מנוע', i18nKey: 'sidebar.engine', accent: COLORS.orange },
       { id: 'payments', icon: Gem, label: 'Wallet', labelHe: 'ארנק', i18nKey: 'sidebar.wallet', accent: COLORS.gold },
       { id: 'offline-mode' as SmartPanel, icon: Fingerprint, label: 'Offline', labelHe: 'אופליין', i18nKey: 'sidebar.offline', accent: COLORS.green },
       { id: 'accessibility' as SmartPanel, icon: Eye, label: 'A11y', labelHe: 'נגישות', i18nKey: 'sidebar.a11y', accent: COLORS.green },
