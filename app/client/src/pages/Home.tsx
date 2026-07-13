@@ -1,9 +1,9 @@
 /**
  * G.A.N.E — Global Mobility Intelligence Network
- * 
+ *
  * Main Home page — orchestrates all sub-components.
  * Refactored from 1,276 lines into modular sub-components.
- * 
+ *
  * Sub-components:
  *   QuantumBoot   — Cinematic boot sequence animation
  *   AppSidebar    — Left sidebar with collapsible groups
@@ -20,15 +20,22 @@ import { useRealDataContext } from "@/contexts/RealDataContext";
 import type { SmartPanel } from "@/lib/navStore";
 
 // Map & overlay components
-import NavigationMap from "@/components/NavigationMap";
+import OpenNavigationMap from "@/components/OpenNavigationMap";
 import ComponentErrorBoundary from "@/components/ComponentErrorBoundary";
 import MapOverlayRenderer from "@/components/MapOverlayRenderer";
 import MapControls from "@/components/MapControls";
 import WeatherRadarOverlay from "@/components/WeatherRadarOverlay";
-const SatelliteTerrainOverlay = React.lazy(() => import("@/components/SatelliteImageryOverlay"));
+const SatelliteTerrainOverlay = React.lazy(
+  () => import("@/components/SatelliteImageryOverlay")
+);
 import { AmbientWeatherOverlay } from "@/components/GestureHints";
 import { NightModeController } from "@/components/NightMode";
-import { ParticleField, EnergyGrid, HolographicCorners, AmbientGlow } from "@/components/HolographicEffects";
+import {
+  ParticleField,
+  EnergyGrid,
+  HolographicCorners,
+  AmbientGlow,
+} from "@/components/HolographicEffects";
 import VoiceCommandSystem from "@/components/VoiceCommandSystem";
 import GestureController from "@/components/GestureController";
 import { AIOrb, AIChatPanel } from "@/components/AICopilot";
@@ -48,21 +55,41 @@ import TrafficDashboard from "@/components/TrafficDashboard";
 import OnboardingScreen from "@/components/OnboardingScreen";
 
 // Refactored sub-components
-import { QuantumBoot, AppSidebar, SearchBar, BottomDock, LiveStatusBar, PanelRenderer, navModes } from "./home";
+import {
+  QuantumBoot,
+  AppSidebar,
+  SearchBar,
+  BottomDock,
+  LiveStatusBar,
+  PanelRenderer,
+  navModes,
+} from "./home";
 
 export default function Home() {
   const { state, dispatch, mapRef } = useNavigation();
   const { user } = useAuth();
   const [booted, setBooted] = useState(false);
-  const [activeCollabSession, setActiveCollabSession] = useState<string | null>(null);
-  const { remoteCursors, updateCursor, participants, addAnnotation, deleteAnnotation, annotations } = useCollaboration(activeCollabSession);
+  const [activeCollabSession] = useState<string | null>(null);
+  const {
+    remoteCursors,
+    updateCursor,
+    participants,
+    addAnnotation,
+    deleteAnnotation,
+    annotations,
+  } = useCollaboration(activeCollabSession);
   const [showDrawingTools, setShowDrawingTools] = useState(false);
 
   // Enrich cursors with participant names
   const enrichedCursors = useMemo(() => {
-    const enriched = new Map<number, { lat: number; lon: number; color: string; name?: string }>();
+    const enriched = new Map<
+      number,
+      { lat: number; lon: number; color: string; name?: string }
+    >();
     remoteCursors.forEach((cursor, userId) => {
-      const participant = (participants ?? []).find((p: any) => p.userId === userId);
+      const participant = (participants ?? []).find(
+        (p: any) => p.userId === userId
+      );
       enriched.set(userId, {
         ...cursor,
         name: participant?.displayName || `User ${userId}`,
@@ -73,15 +100,15 @@ export default function Home() {
   const [showContent, setShowContent] = useState(false);
   const { weather } = useRealDataContext();
 
-  const activeMode = useMemo(() =>
-    navModes.find(m => m.id === state.navMode) || navModes[0],
+  const activeMode = useMemo(
+    () => navModes.find(m => m.id === state.navMode) || navModes[0],
     [state.navMode]
   );
 
   // Performance-aware animation control
   const { shouldAnimate, shouldAnimateLight } = useAnimationPerformance();
 
-  const showSidebar = state.view === 'map' && !state.isNavigating;
+  const showSidebar = state.view === "map" && !state.isNavigating;
 
   const handleBootComplete = useCallback(() => {
     setBooted(true);
@@ -89,20 +116,29 @@ export default function Home() {
   }, []);
 
   const closePanel = useCallback(() => {
-    dispatch({ type: 'SET_ACTIVE_PANEL', panel: null });
+    dispatch({ type: "SET_ACTIVE_PANEL", panel: null });
   }, [dispatch]);
 
-  const togglePanel = useCallback((panel: SmartPanel) => {
-    // Special handling for drawing tools — toggle toolbar instead of panel
-    if (panel === ('drawing-tools' as SmartPanel)) {
-      setShowDrawingTools(prev => !prev);
-      return;
-    }
-    dispatch({ type: 'SET_ACTIVE_PANEL', panel: state.activePanel === panel ? null : panel });
-  }, [dispatch, state.activePanel]);
+  const togglePanel = useCallback(
+    (panel: SmartPanel) => {
+      // Special handling for drawing tools — toggle toolbar instead of panel
+      if (panel === ("drawing-tools" as SmartPanel)) {
+        setShowDrawingTools(prev => !prev);
+        return;
+      }
+      dispatch({
+        type: "SET_ACTIVE_PANEL",
+        panel: state.activePanel === panel ? null : panel,
+      });
+    },
+    [dispatch, state.activePanel]
+  );
 
   return (
-    <div className="h-screen w-screen overflow-hidden relative" style={{ background: '#F9FAFB' }}>
+    <div
+      className="h-screen w-screen overflow-hidden relative"
+      style={{ background: "#F9FAFB" }}
+    >
       {/* ═══ OFFLINE INDICATOR ═══ */}
       <OfflineIndicator />
 
@@ -124,9 +160,17 @@ export default function Home() {
       <HolographicCorners />
 
       {/* Full-screen map */}
-      <ComponentErrorBoundary componentName="NavigationMap" variant="map" className="h-full w-full">
-        <NavigationMap
-          onMapClick={activeCollabSession ? (lat: number, lon: number) => updateCursor(lat, lon) : undefined}
+      <ComponentErrorBoundary
+        componentName="OpenNavigationMap"
+        variant="map"
+        className="h-full w-full"
+      >
+        <OpenNavigationMap
+          onMapClick={
+            activeCollabSession
+              ? (lat: number, lon: number) => updateCursor(lat, lon)
+              : undefined
+          }
         />
       </ComponentErrorBoundary>
       {/* Collaborator cursors overlay */}
@@ -138,26 +182,38 @@ export default function Home() {
       )}
       <MapOverlayRenderer />
       <WeatherRadarOverlay />
-      <Suspense fallback={null}><SatelliteTerrainOverlay /></Suspense>
-      {shouldAnimateLight && <AmbientWeatherOverlay condition={weather?.weatherDescription} />}
+      <Suspense fallback={null}>
+        <SatelliteTerrainOverlay />
+      </Suspense>
+      {shouldAnimateLight && (
+        <AmbientWeatherOverlay condition={weather?.weatherDescription} />
+      )}
       <NightModeController>{() => null}</NightModeController>
 
       {/* Live status bar */}
-      {showContent && state.view === 'map' && !state.isNavigating && (
+      {showContent && state.view === "map" && !state.isNavigating && (
         <LiveStatusBar color={activeMode.color} />
       )}
 
       {/* AI Copilot Orb */}
-      {showContent && state.view === 'map' && !state.isNavigating && (
+      {showContent && state.view === "map" && !state.isNavigating && (
         <>
-          <div className="fixed z-40" style={{ right: '16px', bottom: '90px' }}>
+          <div className="fixed z-40" style={{ right: "16px", bottom: "90px" }}>
             <AIOrb
-              onClick={() => dispatch({ type: 'SET_ACTIVE_PANEL', panel: state.activePanel === 'smart-alerts' ? null : 'smart-alerts' as any })}
+              onClick={() =>
+                dispatch({
+                  type: "SET_ACTIVE_PANEL",
+                  panel:
+                    state.activePanel === "smart-alerts"
+                      ? null
+                      : ("smart-alerts" as any),
+                })
+              }
               hasAlerts={true}
             />
           </div>
           <AnimatePresence>
-            {state.activePanel === 'smart-alerts' && (
+            {state.activePanel === "smart-alerts" && (
               <AIChatPanel isOpen={true} onClose={closePanel} />
             )}
           </AnimatePresence>
@@ -179,36 +235,46 @@ export default function Home() {
       <AnimatePresence>
         {state.activePanel && showSidebar && showContent && (
           <div key={state.activePanel}>
-            <PanelRenderer activePanel={state.activePanel} onClose={closePanel} />
+            <PanelRenderer
+              activePanel={state.activePanel}
+              onClose={closePanel}
+            />
           </div>
         )}
       </AnimatePresence>
 
       {/* Drawing Toolbar */}
-      {showContent && showDrawingTools && state.view === 'map' && !state.isNavigating && (
-        <ComponentErrorBoundary componentName="DrawingToolbar" variant="panel">
-          <DrawingToolbar
-            map={mapRef.current}
-            isCollaborating={!!activeCollabSession}
-            onAddAnnotation={addAnnotation}
-            onDeleteAnnotation={deleteAnnotation}
-            remoteAnnotations={annotations as any}
-          />
-        </ComponentErrorBoundary>
-      )}
+      {showContent &&
+        showDrawingTools &&
+        state.view === "map" &&
+        !state.isNavigating && (
+          <ComponentErrorBoundary
+            componentName="DrawingToolbar"
+            variant="panel"
+          >
+            <DrawingToolbar
+              map={mapRef.current}
+              isCollaborating={!!activeCollabSession}
+              onAddAnnotation={addAnnotation}
+              onDeleteAnnotation={deleteAnnotation}
+              remoteAnnotations={annotations as any}
+            />
+          </ComponentErrorBoundary>
+        )}
 
       {/* Map controls */}
-      {showContent && state.view !== 'search' && state.view !== 'settings' && state.view !== 'traffic' && (
-        <MapControls />
-      )}
+      {showContent &&
+        state.view !== "search" &&
+        state.view !== "settings" &&
+        state.view !== "traffic" && <MapControls />}
 
       {/* ═══ SEARCH BAR ═══ */}
-      {showContent && state.view === 'map' && !state.isNavigating && (
+      {showContent && state.view === "map" && !state.isNavigating && (
         <SearchBar activeMode={activeMode} showSidebar={showSidebar} />
       )}
 
       {/* ═══ BOTTOM DOCK ═══ */}
-      {showContent && state.view === 'map' && !state.isNavigating && (
+      {showContent && state.view === "map" && !state.isNavigating && (
         <BottomDock activeMode={activeMode} showSidebar={showSidebar} />
       )}
 
@@ -223,11 +289,11 @@ export default function Home() {
 
       {/* ═══ OVERLAYS ═══ */}
       <AnimatePresence>
-        {state.view === 'search' && <SearchPanel key="search" />}
-        {state.view === 'route-plan' && <RoutePlanner key="route" />}
+        {state.view === "search" && <SearchPanel key="search" />}
+        {state.view === "route-plan" && <RoutePlanner key="route" />}
         {state.isNavigating && <NavigationHUD key="hud" />}
-        {state.view === 'settings' && <SettingsPanel key="settings" />}
-        {state.view === 'traffic' && <TrafficDashboard key="traffic" />}
+        {state.view === "settings" && <SettingsPanel key="settings" />}
+        {state.view === "traffic" && <TrafficDashboard key="traffic" />}
         {state.showOnboarding && <OnboardingScreen key="onboarding" />}
       </AnimatePresence>
     </div>
