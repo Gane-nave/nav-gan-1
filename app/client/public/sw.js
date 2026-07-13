@@ -36,7 +36,7 @@ self.addEventListener('install', (event) => {
   event.waitUntil(
     caches.open(APP_CACHE).then((cache) => {
       return cache.addAll([
-        '/',
+        './',
       ]);
     }).then(() => self.skipWaiting())
   );
@@ -200,19 +200,19 @@ async function networkFirst(request) {
 // ─── App Shell Cache-First ───
 async function appShellCacheFirst(request) {
   const cache = await caches.open(APP_CACHE);
-  const cached = await cache.match('/');
+  const cached = await cache.match('./');
 
   if (cached) {
     // Update in background
     fetch(request).then((response) => {
-      if (response.ok) cache.put('/', response.clone());
+      if (response.ok) cache.put('./', response.clone());
     }).catch(() => {});
     return cached;
   }
 
   try {
     const response = await fetch(request);
-    if (response.ok) cache.put('/', response.clone());
+    if (response.ok) cache.put('./', response.clone());
     return response;
   } catch (err) {
     return new Response('<html><body><h1>G.A.N.E — Offline</h1><p>Please reconnect to continue.</p></body></html>', {

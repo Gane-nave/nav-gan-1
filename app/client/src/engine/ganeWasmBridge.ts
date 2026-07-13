@@ -44,6 +44,76 @@ export interface GaneRouteResponse {
   constrained: boolean;
 }
 
+/** Geographic route as returned by the engine's route_geo. */
+export interface GaneGeoRoute {
+  from_node: string;
+  to_node: string;
+  node_count: number;
+  segment_ids: string[];
+  total_time_s: number;
+  total_length_m: number;
+  constrained: boolean;
+  /** (lat, lon) pairs — note: NOT MapLibre order. */
+  polyline: [number, number][];
+}
+
+/**
+ * Canonical vehicle presets for UI surfaces — single TS source, mirroring
+ * gane-osm-import::route::envelope_by_name. Add presets here, not per-panel.
+ */
+export const VEHICLE_PRESETS: Record<string, GaneVehicleEnvelope> = {
+  car: {
+    class: "car",
+    height_m: 1.6,
+    width_m: 1.8,
+    length_m: 4.5,
+    weight_kg: 1_800,
+    axle_count: 2,
+    hazmat: false,
+  },
+  van: {
+    class: "van",
+    height_m: 2.5,
+    width_m: 1.9,
+    length_m: 5.5,
+    weight_kg: 3_200,
+    axle_count: 2,
+    hazmat: false,
+  },
+  truck: {
+    class: "heavy_truck",
+    height_m: 4.2,
+    width_m: 2.55,
+    length_m: 16.5,
+    weight_kg: 26_000,
+    axle_count: 5,
+    hazmat: false,
+  },
+  bus: {
+    class: "bus",
+    height_m: 3.4,
+    width_m: 2.55,
+    length_m: 12,
+    weight_kg: 18_000,
+    axle_count: 3,
+    hazmat: false,
+  },
+  emergency: {
+    class: "emergency",
+    height_m: 2.8,
+    width_m: 2.0,
+    length_m: 6.0,
+    weight_kg: 4_500,
+    axle_count: 2,
+    hazmat: false,
+  },
+};
+
+/** Resolve an engine asset under the deploy base — the one sanctioned way. */
+export function engineAssetUrl(name: string): string {
+  return `${import.meta.env.BASE_URL}engine/${name}`;
+}
+
 export interface GaneFusedState {
   east_m: number;
   north_m: number;
@@ -68,6 +138,13 @@ interface WasmEngine {
   load_graph(graphJson: string): void;
   graph_nodes(): number;
   route(requestJson: string): string;
+  route_geo(
+    fromLat: number,
+    fromLon: number,
+    toLat: number,
+    toLon: number,
+    envelopeJson?: string | null
+  ): string;
 }
 
 export class GaneEngineBridge {
@@ -124,6 +201,29 @@ export class GaneEngineBridge {
       this.engine.route(JSON.stringify(request))
     ) as GaneRouteResponse;
   }
+
+  /**
+   * Geographic routing: snap coordinates (vehicle-aware, multi-candidate
+   * fallback) and route — the exact pipeline the CLI and worker use.
+   * Throws "no legal route" when constraints exclude all paths.
+   */
+  routeGeo(
+    fromLat: number,
+    fromLon: number,
+    toLat: number,
+    toLon: number,
+    envelope?: GaneVehicleEnvelope
+  ): GaneGeoRoute {
+    return JSON.parse(
+      this.engine.route_geo(
+        fromLat,
+        fromLon,
+        toLat,
+        toLon,
+        envelope ? JSON.stringify(envelope) : null
+      )
+    ) as GaneGeoRoute;
+  }
 }
 
 let loader: Promise<GaneEngineBridge | null> | null = null;
@@ -136,10 +236,10 @@ export function loadGaneEngine(): Promise<GaneEngineBridge | null> {
   if (!loader) {
     loader = (async () => {
       try {
-        const glueUrl = `${import.meta.env.BASE_URL}engine/gane_wasm.js`;
+        const glueUrl = engineAssetUrl("gane_wasm.js");
         const mod = await import(/* @vite-ignore */ glueUrl);
         await mod.default({
-          module_or_path: `${import.meta.env.BASE_URL}engine/gane_wasm_bg.wasm`,
+          module_or_path: engineAssetUrl("gane_wasm_bg.wasm"),
         });
         const engine: WasmEngine = new mod.GaneEngine();
         console.info(`[gane-wasm] engine v${engine.version()} ready`);

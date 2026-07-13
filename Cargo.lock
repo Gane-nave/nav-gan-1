@@ -1862,6 +1862,7 @@ dependencies = [
  "gane-core",
  "gane-map",
  "gane-routing",
+ "gane_unionfind",
  "serde",
  "serde_json",
 ]

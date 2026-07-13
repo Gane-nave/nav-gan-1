@@ -178,6 +178,7 @@ export default defineConfig({
       output: {
         manualChunks: {
           "vendor-react": ["react", "react-dom"],
+          "vendor-maplibre": ["maplibre-gl"],
           "vendor-motion": ["framer-motion"],
           "vendor-trpc": [
             "@trpc/client",

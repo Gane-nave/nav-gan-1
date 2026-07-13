@@ -8,6 +8,7 @@ description = "OSM road-network importer: Overpass JSON -> G.A.N.E RoadGraph wit
 gane-core = { path = "../gane-core" }
 gane-map = { path = "../gane-map" }
 gane-routing = { path = "../gane-routing" }
+gane_unionfind = { path = "../gane-unionfind" }
 serde = { workspace = true }
 serde_json = { workspace = true }
 chrono = { workspace = true }
