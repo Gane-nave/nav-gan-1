@@ -4,7 +4,7 @@
  * Detects network connectivity changes and provides
  * online/offline state for UI indicators.
  */
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 
 export function useOnlineStatus() {
   const [isOnline, setIsOnline] = useState(() =>
