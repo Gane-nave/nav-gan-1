@@ -6,10 +6,7 @@
  * null when Workers/WASM are unavailable so callers keep fallback paths.
  */
 
-import type {
-  GaneFusedState,
-  GaneVehicleEnvelope,
-} from "./ganeWasmBridge";
+import type { GaneFusedState, GaneVehicleEnvelope } from "./ganeWasmBridge";
 
 export interface GaneGeoRoute {
   from_node: string;
@@ -45,7 +42,10 @@ export class GaneEngineWorkerClient {
   private call<T>(cmd: string, ...args: unknown[]): Promise<T> {
     const id = this.next++;
     return new Promise<T>((resolve, reject) => {
-      this.pending.set(id, { resolve: resolve as (v: unknown) => void, reject });
+      this.pending.set(id, {
+        resolve: resolve as (v: unknown) => void,
+        reject,
+      });
       this.worker.postMessage({ id, cmd, args });
     });
   }
@@ -65,7 +65,7 @@ export class GaneEngineWorkerClient {
     fromLon: number,
     toLat: number,
     toLon: number,
-    envelope?: GaneVehicleEnvelope,
+    envelope?: GaneVehicleEnvelope
   ): Promise<GaneGeoRoute> {
     return this.call(
       "routeGeo",
@@ -73,7 +73,7 @@ export class GaneEngineWorkerClient {
       fromLon,
       toLat,
       toLon,
-      envelope ? JSON.stringify(envelope) : undefined,
+      envelope ? JSON.stringify(envelope) : undefined
     );
   }
 
@@ -81,7 +81,12 @@ export class GaneEngineWorkerClient {
     return this.call("predict", dtS);
   }
 
-  updatePosition(eastM: number, northM: number, upM: number, sigmaM: number): Promise<void> {
+  updatePosition(
+    eastM: number,
+    northM: number,
+    upM: number,
+    sigmaM: number
+  ): Promise<void> {
     return this.call("updatePosition", eastM, northM, upM, sigmaM);
   }
 
@@ -104,13 +109,21 @@ export class GaneEngineWorkerClient {
   static async spawn(): Promise<GaneEngineWorkerClient | null> {
     try {
       if (typeof Worker === "undefined") return null;
-      const worker = new Worker("/engine/gane.worker.js", { type: "module" });
+      const worker = new Worker(
+        `${import.meta.env.BASE_URL}engine/gane.worker.js`,
+        { type: "module" }
+      );
       const client = new GaneEngineWorkerClient(worker);
       const version = await client.call<string>("init");
-      console.info(`[gane-engine-worker] engine v${version} ready off-main-thread`);
+      console.info(
+        `[gane-engine-worker] engine v${version} ready off-main-thread`
+      );
       return client;
     } catch (err) {
-      console.warn("[gane-engine-worker] unavailable, using fallback paths", err);
+      console.warn(
+        "[gane-engine-worker] unavailable, using fallback paths",
+        err
+      );
       return null;
     }
   }

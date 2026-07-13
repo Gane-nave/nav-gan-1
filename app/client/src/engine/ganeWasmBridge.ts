@@ -85,7 +85,12 @@ export class GaneEngineBridge {
     this.engine.predict(dtS);
   }
 
-  updatePosition(eastM: number, northM: number, upM: number, sigmaM: number): void {
+  updatePosition(
+    eastM: number,
+    northM: number,
+    upM: number,
+    sigmaM: number
+  ): void {
     this.engine.update_position(eastM, northM, upM, sigmaM);
   }
 
@@ -115,7 +120,9 @@ export class GaneEngineBridge {
 
   /** Vehicle-aware routing: throws "no legal route" when constraints exclude all paths. */
   route(request: GaneRouteRequest): GaneRouteResponse {
-    return JSON.parse(this.engine.route(JSON.stringify(request))) as GaneRouteResponse;
+    return JSON.parse(
+      this.engine.route(JSON.stringify(request))
+    ) as GaneRouteResponse;
   }
 }
 
@@ -129,14 +136,19 @@ export function loadGaneEngine(): Promise<GaneEngineBridge | null> {
   if (!loader) {
     loader = (async () => {
       try {
-        const glueUrl = "/engine/gane_wasm.js";
+        const glueUrl = `${import.meta.env.BASE_URL}engine/gane_wasm.js`;
         const mod = await import(/* @vite-ignore */ glueUrl);
-        await mod.default({ module_or_path: "/engine/gane_wasm_bg.wasm" });
+        await mod.default({
+          module_or_path: `${import.meta.env.BASE_URL}engine/gane_wasm_bg.wasm`,
+        });
         const engine: WasmEngine = new mod.GaneEngine();
         console.info(`[gane-wasm] engine v${engine.version()} ready`);
         return GaneEngineBridge.wrap(engine);
       } catch (err) {
-        console.warn("[gane-wasm] engine unavailable, using fallback paths", err);
+        console.warn(
+          "[gane-wasm] engine unavailable, using fallback paths",
+          err
+        );
         return null;
       }
     })();

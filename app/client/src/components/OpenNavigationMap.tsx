@@ -24,7 +24,7 @@ import {
 } from "@/engine/ganeWasmBridge";
 
 const TILE_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
-const GRAPH_URL = "/engine/kouvola-graph.json";
+const GRAPH_URL = `${import.meta.env.BASE_URL}engine/kouvola-graph.json`;
 
 /** Snap candidates per endpoint — mirrors gane-osm-import::route. */
 const SNAP_CANDIDATES = 64;
