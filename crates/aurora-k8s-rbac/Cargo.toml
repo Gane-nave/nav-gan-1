@@ -1,4 +1,0 @@
-[package]
-name = "aurora-k8s-rbac"
-version = "0.1.0"
-edition = "2021"

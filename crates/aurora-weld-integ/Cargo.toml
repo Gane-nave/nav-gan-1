@@ -1,6 +1,0 @@
-[package]
-name = "aurora-weld-integ"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

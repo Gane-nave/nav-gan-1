@@ -1,0 +1,131 @@
+# G.A.N.E — Deployment Pipeline
+# ================================
+# Deploys to staging on develop branch, production on main branch.
+# Requires successful CI pipeline completion.
+
+name: Deploy
+
+on:
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types: [completed]
+    branches: [main, develop]
+
+concurrency:
+  group: deploy-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  # ═══════════════════════════════════════════════════════════
+  # Deploy to Staging (develop branch)
+  # ═══════════════════════════════════════════════════════════
+  deploy-staging:
+    name: Deploy to Staging
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'develop'
+    environment:
+      name: staging
+      url: ${{ vars.STAGING_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for staging
+        env:
+          NODE_ENV: production
+          VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
+          VITE_APP_TITLE: "G.A.N.E NAV [STAGING]"
+          VITE_OAUTH_PORTAL_URL: ${{ secrets.VITE_OAUTH_PORTAL_URL }}
+          VITE_FRONTEND_FORGE_API_KEY: ${{ secrets.VITE_FRONTEND_FORGE_API_KEY }}
+          VITE_FRONTEND_FORGE_API_URL: ${{ secrets.VITE_FRONTEND_FORGE_API_URL }}
+        run: pnpm build
+
+      - name: Deploy to staging
+        run: |
+          echo "╔════════════════════════════════════════════╗"
+          echo "║  Staging deployment placeholder            ║"
+          echo "║                                            ║"
+          echo "║  Replace this step with your deployment    ║"
+          echo "║  command. Options:                         ║"
+          echo "║  • Docker push to registry                 ║"
+          echo "║  • SSH deploy to server                    ║"
+          echo "║  • Cloud provider CLI (AWS, GCP, Azure)    ║"
+          echo "║  • Manus Publish (use UI button)           ║"
+          echo "╚════════════════════════════════════════════╝"
+
+      - name: Notify deployment
+        if: success()
+        run: |
+          echo "✅ Staging deployment successful"
+          echo "Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Commit: ${{ github.event.workflow_run.head_sha }}"
+
+  # ═══════════════════════════════════════════════════════════
+  # Deploy to Production (main branch)
+  # ═══════════════════════════════════════════════════════════
+  deploy-production:
+    name: Deploy to Production
+    runs-on: ubuntu-latest
+    if: >
+      github.event.workflow_run.conclusion == 'success' &&
+      github.event.workflow_run.head_branch == 'main'
+    environment:
+      name: production
+      url: ${{ vars.PRODUCTION_URL }}
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build for production
+        env:
+          NODE_ENV: production
+          VITE_APP_ID: ${{ secrets.VITE_APP_ID }}
+          VITE_APP_TITLE: "G.A.N.E NAV"
+          VITE_OAUTH_PORTAL_URL: ${{ secrets.VITE_OAUTH_PORTAL_URL }}
+          VITE_FRONTEND_FORGE_API_KEY: ${{ secrets.VITE_FRONTEND_FORGE_API_KEY }}
+          VITE_FRONTEND_FORGE_API_URL: ${{ secrets.VITE_FRONTEND_FORGE_API_URL }}
+        run: pnpm build
+
+      - name: Deploy to production
+        run: |
+          echo "╔════════════════════════════════════════════╗"
+          echo "║  Production deployment placeholder         ║"
+          echo "║                                            ║"
+          echo "║  Replace this step with your deployment    ║"
+          echo "║  command. Options:                         ║"
+          echo "║  • Docker push to registry                 ║"
+          echo "║  • SSH deploy to server                    ║"
+          echo "║  • Cloud provider CLI (AWS, GCP, Azure)    ║"
+          echo "║  • Manus Publish (use UI button)           ║"
+          echo "╚════════════════════════════════════════════╝"
+
+      - name: Notify deployment
+        if: success()
+        run: |
+          echo "✅ Production deployment successful"
+          echo "Branch: ${{ github.event.workflow_run.head_branch }}"
+          echo "Commit: ${{ github.event.workflow_run.head_sha }}"

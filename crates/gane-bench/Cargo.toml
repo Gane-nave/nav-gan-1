@@ -1,0 +1,62 @@
+[package]
+name = "gane-bench"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Performance benchmarks for G.A.N.E NAV critical paths"
+publish = false
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-gnss = { path = "../gane-gnss" }
+gane-fusion = { path = "../gane-fusion" }
+gane-integrity = { path = "../gane-integrity" }
+gane-continuity = { path = "../gane-continuity" }
+gane-routing = { path = "../gane-routing" }
+gane-map = { path = "../gane-map" }
+gane-events = { path = "../gane-events" }
+gane-config = { path = "../gane-config" }
+gane-app = { path = "../gane-app" }
+gane-telemetry = { path = "../gane-telemetry" }
+gane-corrections = { path = "../gane-corrections" }
+gane-sensors = { path = "../gane-sensors" }
+gane-risk = { path = "../gane-risk" }
+gane-confidence = { path = "../gane-confidence" }
+gane-traffic = { path = "../gane-traffic" }
+gane-stability = { path = "../gane-stability" }
+gane-edge = { path = "../gane-edge" }
+gane-resilience = { path = "../gane-resilience" }
+gane-city = { path = "../gane-city" }
+gane-twin = { path = "../gane-twin" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+nalgebra = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+
+[dev-dependencies]
+criterion = { version = "0.4", features = ["html_reports"] }
+
+[[bench]]
+name = "gnss_bench"
+harness = false
+
+[[bench]]
+name = "fusion_bench"
+harness = false
+
+[[bench]]
+name = "routing_bench"
+harness = false
+
+[[bench]]
+name = "pipeline_bench"
+harness = false
+
+[[bench]]
+name = "config_bench"
+harness = false
+
+[[bench]]
+name = "event_bus_bench"
+harness = false

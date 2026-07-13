@@ -1,8 +1,0 @@
-[package]
-name = "aurora-cuckoo"
-version.workspace = true
-edition.workspace = true
-license.workspace = true
-description = "Cuckoo filter for approximate set membership for AURORA NAV"
-
-[dependencies]

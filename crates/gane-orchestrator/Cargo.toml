@@ -1,0 +1,23 @@
+[package]
+name = "gane-orchestrator"
+version.workspace = true
+edition.workspace = true
+description = "Navigation pipeline orchestrator — wires infrastructure crates into unified services"
+
+[dependencies]
+gane-cache = { path = "../gane-cache" }
+gane-circuit = { path = "../gane-circuit" }
+gane-retry = { path = "../gane-retry" }
+gane-bloom = { path = "../gane-bloom" }
+gane-lru = { path = "../gane-lru" }
+gane-ratelimit = { path = "../gane-ratelimit" }
+gane-features = { path = "../gane-features" }
+gane-snapshot = { path = "../gane-snapshot" }
+gane-backpressure = { path = "../gane-backpressure" }
+gane-bounded-queue = { path = "../gane-bounded-queue" }
+gane-histogram = { path = "../gane-histogram" }
+gane-structured-log = { path = "../gane-structured-log" }
+gane-errors = { path = "../gane-errors" }
+gane-perf = { path = "../gane-perf" }
+gane-btree = { path = "../gane-btree" }
+gane-clock = { path = "../gane-clock" }

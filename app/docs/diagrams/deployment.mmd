@@ -1,0 +1,92 @@
+---
+title: "G.A.N.E — Deployment Diagram"
+---
+graph TB
+    subgraph "Client Devices"
+        mobile["📱 Mobile Device<br/>React SPA + Service Worker<br/>Client Engines (ESKF, PDR, RouteGraph)<br/>IndexedDB (Offline Queue)<br/>WebGL Map Renderer"]
+        desktop["💻 Desktop Browser<br/>Admin Panel / Fleet Dashboard<br/>Full Feature Set"]
+        iot["📡 IoT Device<br/>Fleet Sensor / Vehicle<br/>mTLS Certificate<br/>Telemetry Agent"]
+    end
+
+    subgraph "CDN / Edge Layer"
+        cdn["🌐 CDN<br/>Static Assets<br/>Map Tile Cache<br/>SRI Integrity"]
+        waf["🛡️ WAF<br/>DDoS Protection<br/>Rate Limiting<br/>Geo-Filtering"]
+    end
+
+    subgraph "Application Cluster"
+        subgraph "Node 1 (Primary)"
+            app1["🖥️ App Server<br/>Express 4 + tRPC 11<br/>Node.js 22<br/>Port: dynamic"]
+            ws1["🔌 WebSocket Server<br/>Real-time Events<br/>Live Sharing"]
+        end
+        subgraph "Node 2 (Replica)"
+            app2["🖥️ App Server<br/>Express 4 + tRPC 11<br/>Node.js 22<br/>Port: dynamic"]
+            ws2["🔌 WebSocket Server<br/>Real-time Events<br/>Live Sharing"]
+        end
+    end
+
+    subgraph "Data Layer"
+        tidb[("💾 TiDB Cluster<br/>MySQL-compatible<br/>Distributed SQL<br/>Row-Level Security")]
+        s3[("☁️ S3 Storage<br/>Evidence Files<br/>Telemetry Archives<br/>Model Artifacts")]
+        redis[("⚡ Redis Cache<br/>Session State<br/>Traffic Data<br/>Rate Limit Counters")]
+    end
+
+    subgraph "ML Serving"
+        mlServe["🤖 ML Model Server<br/>ETA Predictor (XGBoost)<br/>Congestion Classifier (LightGBM)<br/>Anomaly Detector (IF)"]
+    end
+
+    subgraph "External Services"
+        gnss["🛰️ GNSS<br/>GPS, Galileo,<br/>GLONASS, BeiDou"]
+        maps["🗺️ Google Maps<br/>Tiles, Geocoding,<br/>Directions"]
+        weather["🌦️ Weather API<br/>Forecasts, Alerts"]
+        oauth["🔐 Manus OAuth<br/>Identity Provider"]
+        v2x["📡 V2X Network<br/>DSRC / C-V2X"]
+    end
+
+    subgraph "Observability"
+        logs["📋 Log Aggregator<br/>Structured Logs<br/>Trace Correlation"]
+        metrics["📊 Metrics Store<br/>SLI/SLO Tracking<br/>Burn Rate Alerts"]
+        alerts["🔔 Alert Manager<br/>PagerDuty / Slack<br/>Escalation Policies"]
+    end
+
+    mobile --> cdn
+    desktop --> cdn
+    iot --> waf
+
+    cdn --> waf
+    waf --> app1
+    waf --> app2
+
+    app1 --> tidb
+    app1 --> s3
+    app1 --> redis
+    app1 --> mlServe
+    app2 --> tidb
+    app2 --> s3
+    app2 --> redis
+    app2 --> mlServe
+
+    ws1 --> redis
+    ws2 --> redis
+
+    app1 --> oauth
+    app1 --> maps
+    app1 --> weather
+
+    mobile --> gnss
+    iot --> v2x
+
+    app1 --> logs
+    app1 --> metrics
+    metrics --> alerts
+
+    style mobile fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style desktop fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style iot fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style app1 fill:#f59e0b,stroke:#d97706,color:#fff
+    style app2 fill:#f59e0b,stroke:#d97706,color:#fff
+    style tidb fill:#22c55e,stroke:#16a34a,color:#fff
+    style s3 fill:#22c55e,stroke:#16a34a,color:#fff
+    style redis fill:#22c55e,stroke:#16a34a,color:#fff
+    style mlServe fill:#a855f7,stroke:#9333ea,color:#fff
+    style cdn fill:#64748b,stroke:#475569,color:#fff
+    style waf fill:#ef4444,stroke:#dc2626,color:#fff

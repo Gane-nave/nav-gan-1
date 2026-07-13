@@ -1,0 +1,7 @@
+[package]
+name = "gane-migration"
+version = "0.1.0"
+edition = "2021"
+description = "Data migration framework for schema evolution and transformation in G.A.N.E NAV"
+
+[dependencies]

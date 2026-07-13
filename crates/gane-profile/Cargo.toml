@@ -1,0 +1,8 @@
+[package]
+name = "gane-profile"
+version = "0.1.0"
+edition = "2021"
+description = "User profiles, preferences, and personalization engine"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

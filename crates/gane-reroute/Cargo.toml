@@ -1,0 +1,11 @@
+[package]
+name = "gane-reroute"
+version.workspace = true
+edition.workspace = true
+description = "Deviation detection and automatic rerouting"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

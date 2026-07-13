@@ -1,6 +1,0 @@
-[package]
-name = "aurora-brake-cool"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-schema-reg"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

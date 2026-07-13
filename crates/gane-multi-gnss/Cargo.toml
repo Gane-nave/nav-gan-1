@@ -1,0 +1,11 @@
+[package]
+name = "gane-multi-gnss"
+version.workspace = true
+edition.workspace = true
+description = "Multi-constellation GNSS — GPS+GLONASS+BeiDou+Galileo+QZSS+SBAS"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

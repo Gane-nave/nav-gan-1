@@ -1,0 +1,8 @@
+[package]
+name = "gane-simulation"
+version = "0.1.0"
+edition = "2021"
+description = "Simulation and replay engine — route simulation, scenario replay, traffic generation, what-if analysis"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

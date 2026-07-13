@@ -1,0 +1,1 @@
+ALTER TABLE `integration_channels` MODIFY COLUMN `channelType` enum('in_app','gmail','google_drive','sms','push','webhook') NOT NULL;

@@ -1,8 +1,0 @@
-[package]
-name = "aurora-nav-state"
-version = "0.1.0"
-edition = "2021"
-description = "Navigation state machine (driving/stopped/tunnel/lost)."
-
-[dependencies]
-serde = { version = "1", features = ["derive"] }

@@ -1,0 +1,8 @@
+[package]
+name = "gane-load-shed"
+version = "0.1.0"
+edition = "2021"
+description = "Load shedding for graceful degradation under load."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

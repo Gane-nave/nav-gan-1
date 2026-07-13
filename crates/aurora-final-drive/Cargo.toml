@@ -1,6 +1,0 @@
-[package]
-name = "aurora-final-drive"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,0 +1,97 @@
+---
+title: "G.A.N.E — C4 Container Diagram"
+---
+graph TB
+    subgraph "Client Layer"
+        spa["⚛️ React SPA<br/>(React 19 + Tailwind 4)<br/>Navigation UI, Map Renderer,<br/>HUD, Settings, Admin Panel"]
+        sw["📦 Service Worker<br/>(Offline Sync, Cache)"]
+        engines["🧠 Client Engines<br/>(ESKF, PDR, RouteGraph,<br/>MapMatching, UrbanCanyon)"]
+    end
+
+    subgraph "API Layer"
+        apiGw["🔀 API Gateway<br/>(Express 4 + tRPC 11)<br/>Rate Limiting, Auth,<br/>Security Headers"]
+    end
+
+    subgraph "Business Logic Layer"
+        authSvc["🔐 Auth Service<br/>(Manus OAuth + JWT)"]
+        telSvc["📊 Telemetry Service<br/>(Ingest, Validate, Store)"]
+        incSvc["🚨 Incident Engine<br/>(Report, Validate, Notify)"]
+        crowdSvc["👥 Crowd Intelligence<br/>(Speed Samples, Grid)"]
+        fleetSvc["🚛 Fleet Management<br/>(Devices, Geofences)"]
+        liveSvc["📍 Live Sharing<br/>(Real-time Location)"]
+        analyticsSvc["📈 Analytics Pipeline<br/>(Events, Snapshots)"]
+        modSvc["🛡️ Content Moderation<br/>(AI Pipeline, Reputation)"]
+        trafficSvc["🚦 Traffic Pipeline<br/>(Segment Speed, Congestion)"]
+        adminSvc["⚙️ Master Admin<br/>(System Config, Users)"]
+    end
+
+    subgraph "AI / ML Layer"
+        etaPred["🤖 ETA Predictor<br/>(XGBoost v1.0)"]
+        congClass["🤖 Congestion Classifier<br/>(LightGBM v1.0)"]
+        anomDet["🤖 Anomaly Detector<br/>(Isolation Forest v1.0)"]
+        llmSvc["🧠 LLM Service<br/>(AI Command Bot)"]
+    end
+
+    subgraph "Data Layer"
+        db[("💾 TiDB<br/>(MySQL-compatible)<br/>Users, Trips, Incidents,<br/>Fleet, Analytics")]
+        s3[("☁️ S3 Storage<br/>Evidence, Media,<br/>Telemetry Archives")]
+        cache[("⚡ In-Memory Cache<br/>Traffic, Weather,<br/>Session State")]
+    end
+
+    subgraph "Infrastructure Layer"
+        ws["🔌 WebSocket Bridge<br/>(Real-time Events)"]
+        etl["🔄 ETL Pipeline<br/>(Batch Processing)"]
+        obs["📡 Observability<br/>(Tracing, Metrics, Logs)"]
+        bp["⚖️ Backpressure<br/>(Rate Control, Shedding)"]
+    end
+
+    spa --> apiGw
+    spa --> ws
+    spa --> engines
+    spa --> sw
+    sw --> cache
+
+    apiGw --> authSvc
+    apiGw --> telSvc
+    apiGw --> incSvc
+    apiGw --> crowdSvc
+    apiGw --> fleetSvc
+    apiGw --> liveSvc
+    apiGw --> analyticsSvc
+    apiGw --> modSvc
+    apiGw --> trafficSvc
+    apiGw --> adminSvc
+
+    telSvc --> db
+    telSvc --> s3
+    incSvc --> db
+    crowdSvc --> cache
+    fleetSvc --> db
+    liveSvc --> cache
+    analyticsSvc --> db
+    modSvc --> db
+    trafficSvc --> cache
+    adminSvc --> db
+
+    telSvc --> etaPred
+    trafficSvc --> congClass
+    telSvc --> anomDet
+    adminSvc --> llmSvc
+
+    etl --> db
+    etl --> s3
+    obs --> db
+
+    ws --> liveSvc
+    ws --> incSvc
+    bp --> apiGw
+
+    style spa fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style apiGw fill:#f59e0b,stroke:#d97706,color:#fff
+    style db fill:#22c55e,stroke:#16a34a,color:#fff
+    style s3 fill:#22c55e,stroke:#16a34a,color:#fff
+    style cache fill:#22c55e,stroke:#16a34a,color:#fff
+    style etaPred fill:#a855f7,stroke:#9333ea,color:#fff
+    style congClass fill:#a855f7,stroke:#9333ea,color:#fff
+    style anomDet fill:#a855f7,stroke:#9333ea,color:#fff
+    style llmSvc fill:#a855f7,stroke:#9333ea,color:#fff

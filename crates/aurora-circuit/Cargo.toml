@@ -1,7 +1,0 @@
-[package]
-name = "aurora-circuit"
-version = "0.1.0"
-edition = "2021"
-description = "Circuit breaker and resilience patterns for AURORA NAV"
-
-[dependencies]

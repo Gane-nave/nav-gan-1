@@ -1,6 +1,0 @@
-[package]
-name = "aurora-flexray-bus"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

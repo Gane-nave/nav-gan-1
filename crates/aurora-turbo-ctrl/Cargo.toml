@@ -1,6 +1,0 @@
-[package]
-name = "aurora-turbo-ctrl"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

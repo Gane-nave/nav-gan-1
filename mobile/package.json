@@ -1,0 +1,66 @@
+{
+  "name": "gane-navigator",
+  "version": "1.0.0",
+  "description": "Global Autonomous Navigation Engine — aviation-grade navigation that runs offline, corrects itself, and governs itself",
+  "keywords": [
+    "navigation",
+    "gnss",
+    "gps",
+    "pvt",
+    "ekf",
+    "kalman",
+    "raim",
+    "offline-first",
+    "pwa",
+    "self-correcting",
+    "aviation-grade",
+    "capacitor"
+  ],
+  "homepage": "https://github.com/USER/gane-navigator#readme",
+  "bugs": "https://github.com/USER/gane-navigator/issues",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/USER/gane-navigator.git"
+  },
+  "license": "MIT",
+  "author": "Amjad",
+  "main": "www/gane-core-bundle.js",
+  "types": "src/gane-api.d.ts",
+  "files": [
+    "www/",
+    "src/",
+    "docs/",
+    "android/",
+    "LICENSE",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc --target ES2020 --module esnext --allowJs --skipLibCheck --noEmitOnError false --outDir build src/nav-engine-deep-core.ts src/top1-competitive-layer.ts src/resilience-layer.ts src/completion-pack.ts src/reality-loop.ts src/consciousness-layer.ts && node scripts/bundle.js",
+    "test": "node scripts/test.js",
+    "test:browser": "echo 'Open www/test-report.html in browser'",
+    "serve": "python3 -m http.server 8000 --directory www",
+    "dev": "npm run build && npm run serve",
+    "android:sync": "npx cap sync android",
+    "android:open": "npx cap open android",
+    "android:build": "cd android && ./gradlew assembleDebug",
+    "android:install": "adb install android/app/build/outputs/apk/debug/app-debug.apk",
+    "deploy:netlify": "netlify deploy --dir=www --prod",
+    "deploy:cloudflare": "wrangler pages deploy www --project-name gane",
+    "validate:bundle": "node -e \"new Function(require('fs').readFileSync('www/gane-core-bundle.js','utf8'));console.log('Bundle OK')\"",
+    "validate:schemas": "node -e \"JSON.parse(require('fs').readFileSync('src/schemas.json','utf8'));console.log('Schemas OK')\""
+  },
+  "devDependencies": {
+    "typescript": "^5.3.0",
+    "@capacitor/cli": "^6.0.0",
+    "@capacitor/core": "^6.0.0",
+    "@capacitor/android": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "browserslist": [
+    "> 0.5%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

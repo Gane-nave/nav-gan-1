@@ -1,0 +1,80 @@
+---
+title: "G.A.N.E — System Dependency Graph"
+---
+graph BT
+    subgraph "Infrastructure (No Dependencies)"
+        gnss["🛰️ GNSS Receiver<br/>Criticality: CRITICAL"]
+        imu["📐 IMU Sensors<br/>Criticality: HIGH"]
+        network["🌐 Network<br/>Criticality: HIGH"]
+        database["💾 Database (TiDB)<br/>Criticality: CRITICAL"]
+    end
+
+    subgraph "Core Engines"
+        multiConst["🛰️ Multi-Constellation<br/>GPS+Galileo+GLONASS+BeiDou"]
+        pdr["🚶 PDR Engine<br/>Dead Reckoning"]
+        eskf["📍 ESKF Engine<br/>Criticality: CRITICAL<br/>15-state Kalman Filter"]
+        mapData["🗺️ Map Tile Service<br/>Criticality: HIGH"]
+    end
+
+    subgraph "Derived Services"
+        mapRenderer["🎨 Map Renderer<br/>Criticality: HIGH<br/>WebGL + Canvas 2D"]
+        routeGraph["🛣️ Route Graph<br/>Criticality: HIGH<br/>A* / Dijkstra"]
+        api["🔀 API Gateway<br/>Criticality: CRITICAL"]
+    end
+
+    subgraph "Application Services"
+        navigation["🧭 Navigation Manager<br/>Criticality: CRITICAL"]
+        reroute["🔄 Reroute Engine"]
+        incident["🚨 Incident Engine"]
+        crowd["👥 Crowd Intelligence"]
+        analytics["📈 Analytics"]
+        liveShare["📍 Live Sharing"]
+        telemetry["📊 Telemetry"]
+        admin["⚙️ Admin Panel"]
+    end
+
+    gnss --> multiConst
+    gnss --> eskf
+    imu --> eskf
+    imu --> pdr
+    network --> mapData
+    network --> api
+
+    multiConst --> eskf
+    mapData --> eskf
+    mapData --> mapRenderer
+    mapData --> routeGraph
+    database --> api
+
+    eskf --> navigation
+    eskf --> routeGraph
+    routeGraph --> navigation
+    routeGraph --> reroute
+    mapRenderer --> navigation
+
+    api --> incident
+    api --> crowd
+    api --> analytics
+    api --> liveShare
+    api --> telemetry
+    api --> admin
+
+    style gnss fill:#ef4444,stroke:#dc2626,color:#fff
+    style database fill:#ef4444,stroke:#dc2626,color:#fff
+    style eskf fill:#ef4444,stroke:#dc2626,color:#fff
+    style api fill:#ef4444,stroke:#dc2626,color:#fff
+    style navigation fill:#ef4444,stroke:#dc2626,color:#fff
+    style imu fill:#f59e0b,stroke:#d97706,color:#fff
+    style network fill:#f59e0b,stroke:#d97706,color:#fff
+    style mapData fill:#f59e0b,stroke:#d97706,color:#fff
+    style mapRenderer fill:#f59e0b,stroke:#d97706,color:#fff
+    style routeGraph fill:#f59e0b,stroke:#d97706,color:#fff
+    style multiConst fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style pdr fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style reroute fill:#22c55e,stroke:#16a34a,color:#fff
+    style incident fill:#22c55e,stroke:#16a34a,color:#fff
+    style crowd fill:#22c55e,stroke:#16a34a,color:#fff
+    style analytics fill:#22c55e,stroke:#16a34a,color:#fff
+    style liveShare fill:#22c55e,stroke:#16a34a,color:#fff
+    style telemetry fill:#22c55e,stroke:#16a34a,color:#fff
+    style admin fill:#22c55e,stroke:#16a34a,color:#fff

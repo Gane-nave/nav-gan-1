@@ -1,6 +1,0 @@
-[package]
-name = "aurora-thermo-valve"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

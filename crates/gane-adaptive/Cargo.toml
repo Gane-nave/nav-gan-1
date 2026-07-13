@@ -1,0 +1,11 @@
+[package]
+name = "gane-adaptive"
+version.workspace = true
+edition.workspace = true
+description = "Adaptive accuracy and precision control"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

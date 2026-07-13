@@ -1,6 +1,0 @@
-[package]
-name = "aurora-recirc-flap"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

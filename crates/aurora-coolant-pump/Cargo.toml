@@ -1,6 +1,0 @@
-[package]
-name = "aurora-coolant-pump"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-axle-shaft"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

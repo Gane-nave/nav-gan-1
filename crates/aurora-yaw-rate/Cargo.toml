@@ -1,6 +1,0 @@
-[package]
-name = "aurora-yaw-rate"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-rack-pinion"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

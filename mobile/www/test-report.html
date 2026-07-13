@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl"><head>
+<meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>G.A.N.E — Full Test Report</title>
+<script src="./gane-core-bundle.js"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;font-family:'JetBrains Mono',ui-monospace,monospace}
+body{background:#0B1220;color:#E4E9F2;padding:20px;min-height:100vh}
+h1{font-size:22px;margin-bottom:4px;background:linear-gradient(90deg,#0FCC8A,#2E7CF6,#8B5CF6);-webkit-background-clip:text;background-clip:text;color:transparent;font-weight:800;letter-spacing:1px}
+.sub{color:#8895A8;font-size:11px;margin-bottom:20px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:14px}
+.suite{background:#141B2E;border:1px solid #2A3347;border-radius:10px;padding:14px}
+.suite h2{font-size:13px;color:#5BA0FF;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center}
+.suite h2 .count{font-size:10px;color:#8895A8;font-weight:400}
+.test{padding:6px 8px;margin:3px 0;border-radius:5px;background:#0B1220;font-size:11px;display:flex;justify-content:space-between;align-items:center;gap:8px}
+.test.pass{border-left:3px solid #0FCC8A}
+.test.fail{border-left:3px solid #EF4444}
+.test .name{color:#E4E9F2;flex:1}
+.test .time{color:#8895A8;font-size:9px}
+.test .res{font-size:12px}
+.summary{background:#141B2E;border:1px solid #2A3347;border-radius:10px;padding:18px;margin-bottom:14px;display:flex;gap:20px;flex-wrap:wrap;align-items:center}
+.metric{display:flex;flex-direction:column;gap:2px}
+.metric .v{font-size:26px;font-weight:800;line-height:1}
+.metric .l{font-size:9px;color:#8895A8;text-transform:uppercase;letter-spacing:1.2px}
+.pass-color{color:#0FCC8A}
+.fail-color{color:#EF4444}
+.warn-color{color:#F0A500}
+.verdict{padding:10px 14px;border-radius:7px;font-weight:700;font-size:12px;margin-left:auto}
+.verdict.ok{background:rgba(15,204,138,.15);color:#0FCC8A;border:1px solid #0FCC8A}
+.verdict.ko{background:rgba(239,68,68,.15);color:#EF4444;border:1px solid #EF4444}
+button{background:#2E7CF6;color:#fff;border:none;padding:10px 20px;border-radius:7px;font-weight:700;cursor:pointer;font-size:12px}
+button:hover{background:#1B5CC2}
+button:disabled{background:#2A3347;cursor:not-allowed}
+#log{background:#060A13;padding:10px;border-radius:7px;font-size:10px;max-height:200px;overflow-y:auto;margin-top:14px;white-space:pre-wrap;color:#8895A8}
+.progress{height:3px;background:#2A3347;border-radius:2px;overflow:hidden;margin:8px 0}
+.progress-bar{height:100%;background:linear-gradient(90deg,#0FCC8A,#2E7CF6);transition:width 200ms;width:0%}
+</style></head>
+<body>
+<h1>G.A.N.E — FULL SYSTEM TEST REPORT</h1>
+<div class="sub">Comprehensive runtime validation of all 73 modules across 6 layers</div>
+
+<div class="summary">
+  <div class="metric"><div class="v" id="m-total">—</div><div class="l">Total tests</div></div>
+  <div class="metric"><div class="v pass-color" id="m-pass">—</div><div class="l">Passed</div></div>
+  <div class="metric"><div class="v fail-color" id="m-fail">—</div><div class="l">Failed</div></div>
+  <div class="metric"><div class="v" id="m-time">—</div><div class="l">Duration (ms)</div></div>
+  <div class="metric"><div class="v" id="m-modules">—</div><div class="l">Modules loaded</div></div>
+  <div class="verdict" id="verdict">Waiting...</div>
+</div>
+
+<div style="display:flex;gap:10px;margin-bottom:16px">
+  <button id="run">▶ Run All Tests</button>
+  <button id="export">📥 Export Report</button>
+</div>
+
+<div class="progress"><div class="progress-bar" id="pb"></div></div>
+
+<div class="grid" id="grid"></div>
+
+<div id="log"></div>
+
+<script>
+const SUITES = [
+  {key:'Core',         name:'Core — Navigation Engine',    fn:()=>GANE.Core.runAcceptanceTests?.()},
+  {key:'Top1',         name:'Top-1 — Competitive Edge',     fn:()=>GANE.Top1.runTop1Tests?.() || (typeof runTop1Tests!=='undefined'?runTop1Tests():[])},
+  {key:'Resilience',   name:'Resilience — Never-Fail',     fn:()=>GANE.Resilience.runResilienceTests?.()},
+  {key:'Completion',   name:'Completion — Corrections',    fn:async()=>{const r=await GANE.Completion.runCompletionTests?.(); return r?.results||[]}},
+  {key:'Reality',      name:'Reality — Self-Correcting',   fn:()=>GANE.Reality.runRealityTests?.()},
+  {key:'Consciousness',name:'Consciousness — Governance',  fn:()=>GANE.Consciousness.runConsciousnessTests?.()}
+];
+
+let reportData = null;
+
+function log(msg){
+  const el = document.getElementById('log');
+  el.textContent += `[${new Date().toISOString().substr(11,8)}] ${msg}\n`;
+  el.scrollTop = el.scrollHeight;
+}
+
+async function runAll(){
+  const btn = document.getElementById('run');
+  btn.disabled = true; btn.textContent = '⏳ Running...';
+  const grid = document.getElementById('grid'); grid.innerHTML = '';
+  document.getElementById('log').textContent = '';
+  log('Starting full test suite...');
+
+  if (typeof GANE === 'undefined') {
+    log('ERROR: GANE bundle not loaded. Ensure gane-core-bundle.js is in same directory.');
+    btn.disabled = false; btn.textContent = '▶ Run All Tests';
+    return;
+  }
+
+  const moduleCount = Object.values(GANE).reduce((a,o)=>a+Object.keys(o||{}).length,0);
+  document.getElementById('m-modules').textContent = moduleCount;
+  log(`Loaded ${moduleCount} modules`);
+
+  const globalStart = performance.now();
+  let totalTests = 0, totalPass = 0, totalFail = 0;
+  reportData = {timestamp: Date.now(), suites:[], summary:{}};
+
+  for (let i = 0; i < SUITES.length; i++) {
+    const suite = SUITES[i];
+    document.getElementById('pb').style.width = ((i/SUITES.length)*100)+'%';
+    log(`Running ${suite.name}...`);
+
+    const box = document.createElement('div');
+    box.className = 'suite';
+    box.innerHTML = `<h2>${suite.name} <span class="count">...</span></h2>`;
+    grid.appendChild(box);
+
+    const suiteStart = performance.now();
+    let results = [];
+    try {
+      const r = await suite.fn();
+      results = Array.isArray(r) ? r : [];
+    } catch (e) {
+      log(`  ✗ Suite error: ${e.message}`);
+      results = [`✗ Suite error: ${e.message}`];
+    }
+    const suiteTime = (performance.now() - suiteStart).toFixed(1);
+
+    const pass = results.filter(r=>r.includes('✓')).length;
+    const fail = results.filter(r=>r.includes('✗')).length;
+    totalTests += results.length; totalPass += pass; totalFail += fail;
+
+    box.querySelector('.count').textContent = `${pass}/${results.length} • ${suiteTime}ms`;
+    box.querySelector('.count').className = 'count ' + (fail===0 ? 'pass-color' : 'fail-color');
+
+    for (const r of results) {
+      const isPass = r.includes('✓');
+      const div = document.createElement('div');
+      div.className = 'test ' + (isPass ? 'pass' : 'fail');
+      const name = r.replace(/[✓✗]/g, '').trim();
+      div.innerHTML = `<span class="name">${name}</span><span class="res ${isPass?'pass-color':'fail-color'}">${isPass?'✓':'✗'}</span>`;
+      box.appendChild(div);
+    }
+
+    reportData.suites.push({name:suite.name, pass, fail, total:results.length, timeMs:+suiteTime, tests:results});
+
+    document.getElementById('m-total').textContent = totalTests;
+    document.getElementById('m-pass').textContent = totalPass;
+    document.getElementById('m-fail').textContent = totalFail;
+
+    log(`  ${pass}/${results.length} passed in ${suiteTime}ms`);
+  }
+
+  document.getElementById('pb').style.width = '100%';
+  const totalTime = (performance.now() - globalStart).toFixed(1);
+  document.getElementById('m-time').textContent = totalTime;
+
+  const verdict = document.getElementById('verdict');
+  const allPass = totalFail === 0;
+  verdict.className = 'verdict ' + (allPass ? 'ok' : 'ko');
+  verdict.textContent = allPass ? `✓ ALL PASS (${totalPass}/${totalTests})` : `✗ ${totalFail} FAILED`;
+
+  reportData.summary = {totalTests, totalPass, totalFail, totalTimeMs:+totalTime, moduleCount, allPass};
+  log(`\nCOMPLETE: ${totalPass}/${totalTests} tests passed in ${totalTime}ms`);
+  log(allPass ? 'System verified 100% operational.' : 'Some tests failed — review above.');
+
+  btn.disabled = false; btn.textContent = '▶ Re-run Tests';
+}
+
+document.getElementById('run').addEventListener('click', runAll);
+document.getElementById('export').addEventListener('click', () => {
+  if (!reportData) { alert('Run tests first'); return; }
+  const blob = new Blob([JSON.stringify(reportData,null,2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `gane-test-report-${Date.now()}.json`;
+  a.click();
+});
+
+// Auto-run on load
+window.addEventListener('load', () => setTimeout(runAll, 300));
+</script>
+</body></html>

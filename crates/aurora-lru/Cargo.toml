@@ -1,7 +1,0 @@
-[package]
-name = "aurora-lru"
-version = "0.1.0"
-edition = "2021"
-description = "LRU eviction cache with capacity limits, hit/miss tracking, and TTL support"
-
-[dependencies]

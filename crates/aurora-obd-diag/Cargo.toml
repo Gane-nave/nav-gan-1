@@ -1,6 +1,0 @@
-[package]
-name = "aurora-obd-diag"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

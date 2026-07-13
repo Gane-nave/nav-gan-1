@@ -1,7 +1,0 @@
-[package]
-name = "aurora-fsm"
-version = "0.1.0"
-edition = "2021"
-description = "Finite state machine for state management"
-
-[dependencies]

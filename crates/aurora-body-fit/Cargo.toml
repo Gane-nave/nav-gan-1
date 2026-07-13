@@ -1,6 +1,0 @@
-[package]
-name = "aurora-body-fit"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

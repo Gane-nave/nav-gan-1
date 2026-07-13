@@ -1,6 +1,0 @@
-[package]
-name = "aurora-wheel-well"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

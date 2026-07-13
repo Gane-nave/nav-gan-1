@@ -1,8 +1,0 @@
-[package]
-name = "aurora-jumphash"
-version.workspace = true
-edition.workspace = true
-license.workspace = true
-description = "Jump consistent hashing for load balancing for AURORA NAV"
-
-[dependencies]

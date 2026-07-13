@@ -1,0 +1,7 @@
+[package]
+name = "gane-pubsub"
+version = "0.1.0"
+edition = "2021"
+description = "Publish-subscribe messaging for inter-component communication in G.A.N.E NAV"
+
+[dependencies]

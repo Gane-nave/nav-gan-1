@@ -1,0 +1,11 @@
+[package]
+name = "gane-config"
+version.workspace = true
+edition.workspace = true
+description = "Unified TOML/environment configuration for G.A.N.E NAV"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+thiserror = { workspace = true }
+toml = "0.8"

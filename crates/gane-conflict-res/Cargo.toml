@@ -1,0 +1,8 @@
+[package]
+name = "gane-conflict-res"
+version = "0.1.0"
+edition = "2021"
+description = "Conflict resolution between GNSS, map-match, and IMU."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

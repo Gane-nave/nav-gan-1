@@ -1,6 +1,0 @@
-[package]
-name = "aurora-transfer-case"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

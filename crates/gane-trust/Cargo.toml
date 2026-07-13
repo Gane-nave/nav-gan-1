@@ -1,0 +1,12 @@
+[package]
+name = "gane-trust"
+version.workspace = true
+edition.workspace = true
+description = "Trust system — reputation scoring, multi-source validation, sybil/collusion detection"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

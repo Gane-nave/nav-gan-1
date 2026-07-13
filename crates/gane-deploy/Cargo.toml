@@ -1,0 +1,9 @@
+[package]
+name = "gane-deploy"
+version.workspace = true
+edition.workspace = true
+description = "Deployment manifests, Dockerfile, and docker-compose for G.A.N.E NAV"
+# This crate contains only deployment files (Dockerfile, docker-compose, k8s manifests).
+# It has no Rust source code — just a placeholder lib.rs for workspace membership.
+
+[dependencies]

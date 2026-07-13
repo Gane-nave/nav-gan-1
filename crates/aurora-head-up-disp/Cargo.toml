@@ -1,6 +1,0 @@
-[package]
-name = "aurora-head-up-disp"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,0 +1,15 @@
+[package]
+name = "gane-vehicle"
+version.workspace = true
+edition.workspace = true
+description = "Vehicle manufacturer integrations for G.A.N.E NAV — OEM protocols, sensor adapters, CAN bus"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-sensors = { path = "../gane-sensors" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }
+thiserror = { workspace = true }

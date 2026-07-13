@@ -1,0 +1,8 @@
+[package]
+name = "gane-error-accum"
+version = "0.1.0"
+edition = "2021"
+description = "Cumulative error correction for dead reckoning drift."
+
+[dependencies]
+serde = { version = "1", features = ["derive"] }

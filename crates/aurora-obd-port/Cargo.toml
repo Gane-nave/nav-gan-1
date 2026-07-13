@@ -1,6 +1,0 @@
-[package]
-name = "aurora-obd-port"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

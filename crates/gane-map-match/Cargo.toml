@@ -1,0 +1,11 @@
+[package]
+name = "gane-map-match"
+version.workspace = true
+edition.workspace = true
+description = "Map matching — snaps GPS coordinates to actual road segments"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

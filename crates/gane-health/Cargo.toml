@@ -1,0 +1,7 @@
+[package]
+name = "gane-health"
+version = "0.1.0"
+edition = "2021"
+description = "Health check aggregation and readiness probes for G.A.N.E NAV"
+
+[dependencies]

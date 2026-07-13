@@ -1,6 +1,0 @@
-[package]
-name = "aurora-headlamp-aim"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

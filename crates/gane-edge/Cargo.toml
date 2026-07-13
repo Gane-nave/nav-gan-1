@@ -1,0 +1,14 @@
+[package]
+name = "gane-edge"
+version.workspace = true
+edition.workspace = true
+description = "Edge-first processing — local computation, data reduction, resource management"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+thiserror = { workspace = true }
+tracing = { workspace = true }

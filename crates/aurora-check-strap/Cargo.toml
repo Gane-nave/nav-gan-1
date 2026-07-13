@@ -1,6 +1,0 @@
-[package]
-name = "aurora-check-strap"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

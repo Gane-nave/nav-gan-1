@@ -1,6 +1,0 @@
-[package]
-name = "aurora-drive-shaft"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

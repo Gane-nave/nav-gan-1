@@ -1,6 +1,0 @@
-[package]
-name = "aurora-parts-cat"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

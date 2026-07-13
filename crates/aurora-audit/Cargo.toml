@@ -1,7 +1,0 @@
-[package]
-name = "aurora-audit"
-version = "0.1.0"
-edition = "2021"
-description = "Audit logging & compliance reporting — audit trail, compliance reports, data retention"
-
-[dependencies]

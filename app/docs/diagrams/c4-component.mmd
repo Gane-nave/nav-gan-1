@@ -1,0 +1,82 @@
+---
+title: "G.A.N.E — C4 Component Diagram (Server)"
+---
+graph TB
+    subgraph "tRPC Router Layer"
+        authRouter["auth<br/>me, logout"]
+        telRouter["telemetry<br/>ingest, query, stream"]
+        anomRouter["anomaly<br/>detect, history, stats"]
+        fleetRouter["fleet<br/>devices, geofences, commands"]
+        incRouter["incident<br/>report, confirm, resolve"]
+        liveRouter["liveSharing<br/>start, update, stop"]
+        crowdRouter["crowd<br/>reportSpeed, getGrid"]
+        analyticsRouter["analytics<br/>events, snapshots"]
+        obsRouter["observability<br/>traces, metrics, health"]
+        adminRouter["admin<br/>users, config, flags, aiBot"]
+        modRouter["moderation<br/>review, appeal, reputation"]
+        sysRouter["system<br/>notifyOwner, health"]
+    end
+
+    subgraph "Core Engines (Client-Side)"
+        eskf["ESKF Engine<br/>15-state Kalman Filter<br/>Position/Velocity/Attitude"]
+        pdr["PDR Engine<br/>Step Detection<br/>Dead Reckoning"]
+        mapMatch["Map Matching<br/>HMM-based<br/>Road Snapping"]
+        routeGraph["Route Graph<br/>A* / Dijkstra<br/>Turn-by-Turn"]
+        urbanCanyon["Urban Canyon<br/>Multipath Detection<br/>Building Geometry"]
+        multiConst["Multi-Constellation<br/>GPS+Galileo+GLONASS+BeiDou<br/>Weighted Fusion"]
+    end
+
+    subgraph "Data Engines (Server-Side)"
+        trafficPipe["Traffic Pipeline<br/>Segment Aggregation<br/>Congestion Classification"]
+        incidentEng["Incident Engine<br/>State Machine<br/>Geo-Clustering"]
+        crowdIntel["Crowd Intelligence<br/>Speed Grid<br/>Outlier Rejection"]
+        analyticsPipe["Analytics Pipeline<br/>Event Processing<br/>Snapshot Generation"]
+        etlPipe["ETL Pipeline<br/>Extract-Transform-Load<br/>Batch Processing"]
+        tripMgr["Trip Manager<br/>Start/End/Waypoints<br/>Distance Calculation"]
+        geofenceEng["Geofence Engine<br/>Point-in-Polygon<br/>Enter/Exit Events"]
+    end
+
+    subgraph "Security & Reliability"
+        rateLimiter["Rate Limiter<br/>Token Bucket<br/>Per-IP/Device"]
+        secHeaders["Security Headers<br/>CORS, CSP, HSTS"]
+        backpressure["Backpressure<br/>Load Shedding<br/>Circuit Breaker"]
+        healthMon["Health Monitor<br/>Dependency Checks<br/>Readiness Probes"]
+        retryModel["Retry Model<br/>Exponential Backoff<br/>Jitter"]
+        dataRetention["Data Retention<br/>TTL Policies<br/>Auto-Purge"]
+    end
+
+    subgraph "Integration Layer"
+        integHub["Integration Hub<br/>Multi-Channel Notifications<br/>Webhook Dispatch"]
+        wsBridge["WebSocket Bridge<br/>Real-time Events<br/>Pub/Sub"]
+        modPipeline["Moderation Pipeline<br/>AI Content Analysis<br/>Reputation Scoring"]
+    end
+
+    telRouter --> trafficPipe
+    telRouter --> etlPipe
+    anomRouter --> crowdIntel
+    incRouter --> incidentEng
+    crowdRouter --> crowdIntel
+    analyticsRouter --> analyticsPipe
+    fleetRouter --> geofenceEng
+    fleetRouter --> tripMgr
+    modRouter --> modPipeline
+
+    incidentEng --> integHub
+    integHub --> wsBridge
+
+    rateLimiter --> telRouter
+    rateLimiter --> incRouter
+    secHeaders --> authRouter
+    backpressure --> telRouter
+    healthMon --> sysRouter
+
+    style eskf fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style pdr fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style mapMatch fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style routeGraph fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style trafficPipe fill:#22c55e,stroke:#16a34a,color:#fff
+    style incidentEng fill:#22c55e,stroke:#16a34a,color:#fff
+    style crowdIntel fill:#22c55e,stroke:#16a34a,color:#fff
+    style rateLimiter fill:#ef4444,stroke:#dc2626,color:#fff
+    style backpressure fill:#ef4444,stroke:#dc2626,color:#fff
+    style healthMon fill:#ef4444,stroke:#dc2626,color:#fff

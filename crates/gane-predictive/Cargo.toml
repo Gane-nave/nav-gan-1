@@ -1,0 +1,11 @@
+[package]
+name = "gane-predictive"
+version.workspace = true
+edition.workspace = true
+description = "Predictive pre-departure route planning"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

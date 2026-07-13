@@ -1,0 +1,16 @@
+[package]
+name = "gane-probabilistic"
+version.workspace = true
+edition.workspace = true
+description = "Probabilistic routing — multi-objective optimization with uncertainty propagation"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-map = { path = "../gane-map" }
+gane-routing = { path = "../gane-routing" }
+gane-risk = { path = "../gane-risk" }
+gane-confidence = { path = "../gane-confidence" }
+serde = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+tracing = { workspace = true }

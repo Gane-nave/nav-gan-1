@@ -1,0 +1,10 @@
+[package]
+name = "gane-web"
+version.workspace = true
+edition.workspace = true
+description = "G.A.N.E NAV visual UI layer — interactive map, real-time tracking, route visualization"
+
+[dependencies]
+gane-orchestrator = { path = "../gane-orchestrator" }
+serde = { workspace = true }
+serde_json = { workspace = true }

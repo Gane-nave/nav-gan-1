@@ -1,0 +1,11 @@
+[package]
+name = "gane-drive-patterns"
+version.workspace = true
+edition.workspace = true
+description = "Driving pattern recognition and analysis"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

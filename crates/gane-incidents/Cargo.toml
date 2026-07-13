@@ -1,0 +1,11 @@
+[package]
+name = "gane-incidents"
+version.workspace = true
+edition.workspace = true
+description = "Traffic incident detection and reporting"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

@@ -1,0 +1,8 @@
+[package]
+name = "gane-social"
+version = "0.1.0"
+edition = "2021"
+description = "Social and community features — user reports, shared routes, social alerts"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

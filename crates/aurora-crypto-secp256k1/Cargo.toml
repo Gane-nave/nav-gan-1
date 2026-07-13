@@ -1,4 +1,0 @@
-[package]
-name = "aurora-crypto-secp256k1"
-version = "0.1.0"
-edition = "2021"

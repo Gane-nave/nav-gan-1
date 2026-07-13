@@ -1,6 +1,0 @@
-[package]
-name = "aurora-puddle-light"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,6 +1,0 @@
-[package]
-name = "aurora-cabin-press"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

@@ -1,0 +1,48 @@
+{
+  "name": "G.A.N.E — Global Autonomous Navigation Ecosystem",
+  "short_name": "G.A.N.E NAV",
+  "description": "Mission-critical multi-layer navigation and operational orchestration platform with GNSS fusion, real-time telemetry, and multi-channel integrations.",
+  "start_url": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#0a0a1a",
+  "theme_color": "#0a0a1a",
+  "categories": ["navigation", "utilities", "productivity"],
+  "lang": "en",
+  "dir": "auto",
+  "scope": "/",
+  "icons": [
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-192_173d3e9e.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-384_6c235625.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-512_9928fdeb.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-192_173d3e9e.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-512_9928fdeb.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "prefer_related_applications": false,
+  "display_override": ["standalone", "window-controls-overlay"]
+}

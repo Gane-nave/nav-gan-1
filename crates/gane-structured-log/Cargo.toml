@@ -1,0 +1,8 @@
+[package]
+name = "gane-structured-log"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "Structured logging engine for G.A.N.E NAV"
+
+[dependencies]

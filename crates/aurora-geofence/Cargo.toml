@@ -1,8 +1,0 @@
-[package]
-name = "aurora-geofence"
-version = "0.1.0"
-edition = "2021"
-description = "Precise geo-fencing with zone entry/exit triggers."
-
-[dependencies]
-serde = { version = "1", features = ["derive"] }

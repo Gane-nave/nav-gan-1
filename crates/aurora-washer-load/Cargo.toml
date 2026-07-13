@@ -1,6 +1,0 @@
-[package]
-name = "aurora-washer-load"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

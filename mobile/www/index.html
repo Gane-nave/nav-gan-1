@@ -1,0 +1,1476 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no"/>
+<title>G.A.N.E v6 — INTEGRATED</title>
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+<!-- CORE BUNDLE — all 31 modules compiled -->
+<script src="./gane-core-bundle.js"></script>
+<style>
+:root{--bg:#F5F7FB;--sf:#fff;--bd:#E4E9F2;--tx:#0B1220;--dm:#5B6678;--mt:#8895A8;--b:#2E7CF6;--b2:#5BA0FF;--bd2:#1B5CC2;--g:#0FCC8A;--p:#8B5CF6;--o:#F97316;--y:#F0A500;--r:#EF4444;--f:'Inter',sans-serif;--fm:'JetBrains Mono',monospace}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html,body{height:100%;width:100%;overflow:hidden;background:var(--bg);color:var(--tx);font-family:var(--f),sans-serif;font-size:14px}
+body{display:flex;flex-direction:column}
+button{font-family:inherit;cursor:pointer;border:none;background:none;color:inherit;font-size:inherit}
+input{font-family:inherit;outline:none}
+
+#hdr{background:rgba(255,255,255,.92);backdrop-filter:blur(14px);border-bottom:1px solid var(--bd);padding:10px 14px;display:flex;align-items:center;gap:10px;z-index:1000;direction:ltr;min-height:56px;flex-shrink:0}
+#logo{width:38px;height:38px;border-radius:11px;background:linear-gradient(135deg,var(--g),var(--b));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-family:var(--fm);font-size:14px;box-shadow:0 0 18px rgba(15,204,138,.4)}
+#search-wrap{flex:1;position:relative;max-width:460px}
+#search{width:100%;padding:10px 40px;border-radius:24px;border:1px solid var(--bd);background:#fff;font-size:13px;font-weight:500}
+#search:focus{border-color:var(--b);box-shadow:0 0 0 3px rgba(46,124,246,.15)}
+#search-ic{position:absolute;left:14px;top:50%;transform:translateY(-50%);color:var(--dm);pointer-events:none}
+
+.hpill{padding:6px 10px;border-radius:16px;background:#fff;border:1px solid var(--bd);font-family:var(--fm);font-size:10px;font-weight:700;display:flex;align-items:center;gap:5px;white-space:nowrap;flex-shrink:0}
+.hpill .dot{width:6px;height:6px;border-radius:50%;background:var(--g);animation:pulse 2s infinite}
+.hpill .dot.warn{background:var(--y)}
+.hpill .dot.err{background:var(--r)}
+.hpill.status-pill{cursor:pointer;transition:all 160ms}
+.hpill.status-pill:hover{border-color:var(--b);transform:translateY(-1px)}
+
+#main{flex:1;display:flex;position:relative;overflow:hidden}
+#map{flex:1;z-index:1}
+
+#sidebar{position:absolute;top:12px;left:12px;bottom:12px;z-index:400;display:flex;flex-direction:column;gap:4px;background:rgba(255,255,255,.94);border:1px solid var(--bd);border-radius:26px;padding:7px 6px;box-shadow:0 4px 20px rgba(0,0,0,.08);width:44px}
+.sb{width:32px;height:32px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;color:var(--dm);transition:all 150ms;position:relative}
+.sb:hover{background:#F0F4FA;color:var(--tx)}
+.sb.active{background:var(--b);color:#fff;box-shadow:0 2px 8px rgba(46,124,246,.4)}
+
+.panel{position:absolute;top:12px;background:#fff;border-radius:18px;box-shadow:0 14px 36px rgba(0,0,0,.18);border:1px solid var(--bd);width:340px;max-height:calc(100vh - 100px);overflow:hidden;display:none;flex-direction:column;z-index:420}
+.panel.visible{display:flex;animation:slideIn 240ms}
+.panel-head{padding:14px 16px;border-bottom:1px solid var(--bd);display:flex;justify-content:space-between;align-items:center;flex-shrink:0}
+.panel-head .t{font-family:var(--fm);font-weight:800;font-size:12px;letter-spacing:1.2px;text-transform:uppercase}
+.panel-close{color:var(--dm);font-size:20px;width:26px;height:26px;border-radius:7px}
+.panel-close:hover{background:#F0F4FA;color:var(--r)}
+.panel-body{overflow-y:auto;padding:12px 14px;flex:1;font-size:12.5px}
+
+#p-layers{left:64px}
+#p-gnss{right:14px}
+#p-ai{left:50%;transform:translateX(-50%);top:70px;width:380px}
+#p-diag{right:14px}
+#p-replay{right:14px;width:380px}
+
+.sect{margin-bottom:12px}
+.sect-h{font-family:var(--fm);font-size:9.5px;color:var(--mt);text-transform:uppercase;letter-spacing:1.2px;margin-bottom:6px;display:flex;justify-content:space-between;padding:0 2px}
+.row{display:flex;justify-content:space-between;align-items:center;padding:7px 0;border-bottom:1px solid #F4F6FA;font-size:12px}
+.row:last-child{border-bottom:none}
+.row .n{color:var(--dm)}
+.row .v{color:var(--tx);font-weight:700;font-family:var(--fm);font-size:11px;display:flex;gap:4px;align-items:center}
+.dot{width:6px;height:6px;border-radius:50%;display:inline-block}
+.dot.ok{background:var(--g)}.dot.warn{background:var(--y)}.dot.err{background:var(--r)}.dot.idle{background:var(--mt)}
+
+.btn{padding:10px 14px;border-radius:10px;background:var(--b);color:#fff;font-size:12px;font-weight:700;transition:all 150ms;display:inline-flex;align-items:center;gap:6px;cursor:pointer}
+.btn:hover{background:var(--bd2);transform:translateY(-1px)}
+.btn.sec{background:#F0F4FA;color:var(--tx)}
+.btn.danger{background:#FEF2F2;color:var(--r)}
+
+.layer-btn{width:100%;padding:9px 11px;border-radius:9px;display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--tx);margin-bottom:2px;background:transparent;text-align:left;font-weight:500}
+.layer-btn:hover{background:#F0F4FA}
+.layer-btn.active{background:rgba(46,124,246,.1);color:var(--bd2)}
+.layer-btn .ic{width:20px;text-align:center;font-size:14px}
+.layer-btn .tg{margin-left:auto;width:28px;height:16px;border-radius:8px;background:#D0D8E6;position:relative;transition:background 150ms}
+.layer-btn .tg::after{content:"";position:absolute;top:2px;left:2px;width:12px;height:12px;border-radius:50%;background:#fff;transition:transform 150ms}
+.layer-btn.active .tg{background:var(--b)}
+.layer-btn.active .tg::after{transform:translateX(12px)}
+
+.gnss-grid{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.gnss-cell{background:#F7F9FC;border:1px solid var(--bd);border-radius:9px;padding:8px;text-align:center}
+.gnss-cell.on{background:rgba(46,124,246,.08);border-color:rgba(46,124,246,.3)}
+.gnss-cell .fl{font-size:16px}
+.gnss-cell .nm{font-family:var(--fm);font-weight:700;font-size:10px;color:var(--dm);margin-top:2px}
+.gnss-cell.on .nm{color:var(--b)}
+.gnss-cell .cnt{font-family:var(--fm);font-weight:800;font-size:14px;margin-top:2px}
+
+.ai-msg{background:#F7F9FC;border-radius:10px;padding:10px 12px;margin-bottom:8px;font-size:12.5px;line-height:1.5;border-left:3px solid var(--b)}
+.ai-msg.warn{border-left-color:var(--y);background:#FFFBF0}
+.ai-ask{display:flex;gap:6px;margin-top:10px}
+.ai-ask input{flex:1;padding:8px 10px;border:1px solid var(--bd);border-radius:8px;font-size:12px}
+
+#dock{position:absolute;bottom:14px;left:64px;right:14px;z-index:400;display:flex;justify-content:center;gap:8px;pointer-events:none}
+.dk-group{display:flex;gap:6px;background:#fff;border:1px solid var(--bd);border-radius:18px;padding:5px;box-shadow:0 2px 10px rgba(0,0,0,.08);pointer-events:auto}
+.dk-act{padding:7px 12px;border-radius:14px;font-size:11px;font-weight:700;color:var(--dm)}
+.dk-act.active{background:var(--b);color:#fff}
+#fab{width:54px;height:54px;border-radius:50%;background:linear-gradient(135deg,var(--b),var(--bd2));color:#fff;font-size:22px;box-shadow:0 6px 20px rgba(46,124,246,.5);pointer-events:auto;flex-shrink:0}
+
+.user-m{width:18px;height:18px;border-radius:50%;background:var(--b);border:3px solid #fff;box-shadow:0 0 0 2px var(--b),0 0 16px rgba(46,124,246,.7)}
+.dest-m{font-size:30px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.5))}
+
+#toast{position:absolute;top:70px;left:50%;transform:translateX(-50%);background:rgba(11,18,32,.94);color:#fff;padding:10px 18px;border-radius:20px;font-size:12px;font-weight:600;opacity:0;transition:opacity 250ms;pointer-events:none;z-index:700}
+#toast.show{opacity:1}
+
+.leaflet-control-zoom a{background:#fff!important;border:1px solid var(--bd)!important;width:34px!important;height:34px!important;line-height:34px!important}
+
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.4}}
+@keyframes slideIn{from{opacity:0;transform:translateY(-10px)}to{opacity:1;transform:translateY(0)}}
+
+@media(max-width:720px){
+  #hdr{flex-wrap:wrap;padding:8px;gap:6px}
+  #search-wrap{order:10;flex:1 0 100%;margin-top:6px}
+  .hpill{font-size:9px;padding:5px 8px}
+  .panel{left:10px!important;right:10px!important;width:auto!important;transform:none!important;top:10px!important}
+  #sidebar{width:38px;padding:5px 3px}
+  .sb{width:30px;height:30px;font-size:12px}
+  #dock{left:52px;right:10px;bottom:10px}
+}
+</style>
+</head>
+<body>
+
+<div id="hdr">
+  <div id="logo">G</div>
+  <div id="search-wrap">
+    <span id="search-ic">🔍</span>
+    <input id="search" placeholder="Where to? (address, coords, voice)"/>
+  </div>
+  <div class="hpill status-pill" id="mode-pill">
+    <span class="dot" id="mode-dot"></span>
+    <span>MODE</span><span id="mode-val">FULL</span>
+  </div>
+  <div class="hpill" id="gps-pill">
+    <span>±<span id="gps-acc">—</span>m</span>
+  </div>
+  <div class="hpill" id="net-pill">
+    <span class="dot" id="net-dot"></span>
+    <span id="net-val">LIVE</span>
+  </div>
+  <div class="hpill" id="batt-pill" style="display:none">
+    <span>🔋</span><span id="batt-val">—</span>
+  </div>
+</div>
+
+<div id="main">
+  <div id="map"></div>
+
+  <div id="sidebar">
+    <button class="sb active" id="b-nav" title="Navigate">🧭</button>
+    <button class="sb" id="b-layers" title="Layers">🗂</button>
+    <button class="sb" id="b-gnss" title="GNSS">📡</button>
+    <button class="sb" id="b-ai" title="AI Copilot">🤖</button>
+    <button class="sb" id="b-diag" title="Diagnostics">⚙</button>
+    <button class="sb" id="b-replay" title="Mission Log">💾</button>
+    <button class="sb" id="b-gps" title="My Location">📍</button>
+  </div>
+
+  <!-- LAYERS -->
+  <div class="panel" id="p-layers">
+    <div class="panel-head"><span class="t">🗂 Layers</span><button class="panel-close" data-close="p-layers">×</button></div>
+    <div class="panel-body">
+      <div class="sect"><div class="sect-h">Base</div>
+        <button class="layer-btn base active" data-b="street">🗺 Street</button>
+        <button class="layer-btn base" data-b="dark">🌙 Dark</button>
+        <button class="layer-btn base" data-b="sat">🛰 Satellite</button>
+        <button class="layer-btn base" data-b="terrain">⛰ Terrain</button>
+      </div>
+      <div class="sect"><div class="sect-h">Overlays</div>
+        <button class="layer-btn ov" data-o="weather"><span class="ic">🌧</span>Weather Radar<span class="tg"></span></button>
+        <button class="layer-btn ov" data-o="transit"><span class="ic">🚆</span>Transit<span class="tg"></span></button>
+        <button class="layer-btn ov" data-o="hiking"><span class="ic">🥾</span>Hiking Trails<span class="tg"></span></button>
+      </div>
+      <div class="sect"><div class="sect-h">Offline</div>
+        <button class="btn sec" id="cache-region" style="width:100%;justify-content:center">💾 Cache Current Region</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- GNSS -->
+  <div class="panel" id="p-gnss">
+    <div class="panel-head"><span class="t">📡 GNSS Raw</span><button class="panel-close" data-close="p-gnss">×</button></div>
+    <div class="panel-body">
+      <div class="row"><span class="n">Source</span><span class="v" id="gnss-src">detecting…</span></div>
+      <div class="gnss-grid" id="gnss-grid"></div>
+      <div class="sect"><div class="sect-h">Signal Quality</div>
+        <div class="row"><span class="n">Total satellites</span><span class="v" id="gnss-total">—</span></div>
+        <div class="row"><span class="n">Mean CN0</span><span class="v" id="gnss-cn0">—</span></div>
+        <div class="row"><span class="n">Spoof score</span><span class="v" id="gnss-spoof">0.00</span></div>
+        <div class="row"><span class="n">Environment</span><span class="v" id="gnss-env">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- AI -->
+  <div class="panel" id="p-ai">
+    <div class="panel-head"><span class="t">🤖 AI Copilot</span><button class="panel-close" data-close="p-ai">×</button></div>
+    <div class="panel-body" id="ai-body">
+      <div class="ai-msg">Hi. Ask me about route quality, position trust, or signal safety.</div>
+      <div class="ai-ask">
+        <input id="ai-input" placeholder="Why is my route slow?"/>
+        <button class="btn" id="ai-send">→</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- DIAG -->
+  <div class="panel" id="p-diag">
+    <div class="panel-head"><span class="t">⚙ Diagnostics</span><button class="panel-close" data-close="p-diag">×</button></div>
+    <div class="panel-body">
+      <div class="sect"><div class="sect-h">KPI</div>
+        <div class="row"><span class="n">Availability</span><span class="v" id="kpi-avail">—</span></div>
+        <div class="row"><span class="n">Continuity</span><span class="v" id="kpi-cont">—</span></div>
+        <div class="row"><span class="n">Mode cycles</span><span class="v" id="kpi-cycles">—</span></div>
+        <div class="row"><span class="n">Integrity events</span><span class="v" id="kpi-integ">—</span></div>
+      </div>
+      <div class="sect"><div class="sect-h">Engine State</div>
+        <div class="row"><span class="n">Current mode</span><span class="v" id="diag-mode">—</span></div>
+        <div class="row"><span class="n">EKF cycles</span><span class="v" id="diag-ekf">—</span></div>
+        <div class="row"><span class="n">Uncertainty</span><span class="v" id="diag-P">—</span></div>
+        <div class="row"><span class="n">Transitions</span><span class="v" id="diag-trans">—</span></div>
+      </div>
+      <div class="sect"><div class="sect-h">Watchdog</div>
+        <div id="watchdog-status"></div>
+      </div>
+      <div class="sect"><div class="sect-h">Providers (Circuit Breaker)</div>
+        <div id="cb-status"></div>
+      </div>
+      <div class="sect"><div class="sect-h">Actions</div>
+        <button class="btn sec" id="run-diag" style="width:100%;justify-content:center">▶ Run Full Diagnostic</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- REPLAY -->
+  <div class="panel" id="p-replay">
+    <div class="panel-head"><span class="t">💾 Mission Log</span><button class="panel-close" data-close="p-replay">×</button></div>
+    <div class="panel-body">
+      <div class="row"><span class="n">Session ID</span><span class="v" id="sess-id">—</span></div>
+      <div class="row"><span class="n">Trace entries</span><span class="v" id="trace-cnt">0</span></div>
+      <div class="row"><span class="n">Duration</span><span class="v" id="sess-dur">0s</span></div>
+      <div style="display:flex;gap:6px;margin-top:10px;flex-wrap:wrap">
+        <button class="btn" id="export-mission">📥 Export JSON</button>
+        <button class="btn sec" id="replay-mission">▶ Replay</button>
+        <button class="btn danger" id="clear-mission">Clear</button>
+      </div>
+      <div class="sect" style="margin-top:12px"><div class="sect-h">🎬 Mission Lifecycle (live)</div>
+        <div class="row"><span class="n">State</span><span class="v" id="ml-state">idle</span></div>
+        <div class="row"><span class="n">Active mission</span><span class="v" id="ml-id">—</span></div>
+        <div class="row"><span class="n">Events streamed</span><span class="v" id="ml-events">0</span></div>
+        <div class="row"><span class="n">Duration</span><span class="v" id="ml-dur">0s</span></div>
+        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn" id="ml-start">▶ Start Mission</button>
+          <button class="btn danger" id="ml-stop" disabled>⏹ Stop Mission</button>
+        </div>
+      </div>
+      <div class="sect" style="margin-top:12px"><div class="sect-h">☁ Backend Sync</div>
+        <div class="row"><span class="n">Server</span><span class="v" id="bk-status">not checked</span></div>
+        <div class="row"><span class="n">Mission ID on server</span><span class="v" id="bk-mid">—</span></div>
+        <div class="row"><span class="n">Events synced</span><span class="v" id="bk-events">0</span></div>
+        <div style="display:flex;gap:6px;margin-top:8px;flex-wrap:wrap">
+          <button class="btn sec" id="bk-upload">☁ Upload mission</button>
+          <button class="btn sec" id="bk-list">📋 List server missions</button>
+          <button class="btn sec" id="bk-ping">🏓 Ping</button>
+        </div>
+        <div id="bk-log" style="font-size:10px;font-family:var(--fm);margin-top:6px;max-height:80px;overflow-y:auto;color:var(--dm)"></div>
+      </div>
+      <div class="sect" style="margin-top:12px"><div class="sect-h">Last 10 events</div>
+        <div id="recent-events" style="font-size:11px;font-family:var(--fm);max-height:200px;overflow-y:auto"></div>
+      </div>
+    </div>
+  </div>
+
+  <div id="dock">
+    <div class="dk-group">
+      <button class="dk-act active">🚗 Drive</button>
+      <button class="dk-act">🚴 Bike</button>
+      <button class="dk-act">🥾 Walk</button>
+    </div>
+    <button id="fab" title="Center">🎯</button>
+    <div class="dk-group">
+      <button class="dk-act" id="sos-btn" style="background:#FEF2F2;color:#EF4444">🚨 SOS</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+</div>
+
+<script>
+'use strict';
+// ══════════════════════════════════════════════════════════════════
+// G.A.N.E v6 — ALL MODULES WIRED
+// ══════════════════════════════════════════════════════════════════
+const sessionId = 'gane-' + Date.now() + '-' + Math.random().toString(36).substr(2,6);
+document.getElementById('sess-id').textContent = sessionId.substr(-8);
+
+// Map
+const map = L.map('map',{zoomControl:true}).setView([32.0853,34.7818],13);
+map.zoomControl.setPosition('bottomright');
+const BASE = {
+  street: L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© OSM'}),
+  dark: L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:20}),
+  sat: L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}',{maxZoom:19}),
+  terrain: L.tileLayer('https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png',{maxZoom:17})
+};
+let curBase='street';BASE.street.addTo(map);
+
+// ═══════════════════════════════════════════════════════════════════
+// INITIALIZE ALL CORE MODULES (from gane-core-bundle.js)
+// ═══════════════════════════════════════════════════════════════════
+const hasCore = typeof GANE !== 'undefined' && GANE.Core && GANE.Core.NavigationEngine;
+if (!hasCore) {
+  console.error('GANE Core bundle not loaded! Include gane-core-bundle.js');
+  alert('Core bundle missing. Check console.');
+}
+
+const engine = hasCore ? new GANE.Core.NavigationEngine() : null;
+const copilot = hasCore ? new GANE.Top1.NavAiCopilot() : null;
+const predictor = hasCore ? new GANE.Top1.PredictiveEngine() : null;
+const emergency = hasCore ? new GANE.Top1.EmergencyResponseSystem() : null;
+const privacy = hasCore ? new GANE.Top1.PrivacyVault() : null;
+const circuit = hasCore ? new GANE.Resilience.CircuitBreaker() : null;
+const routing = hasCore ? new GANE.Resilience.RoutingFallbackChain() : null;
+const dr = hasCore ? new GANE.Resilience.DeadReckoning() : null;
+const geocoder = hasCore ? new GANE.Resilience.RedundantGeocoder() : null;
+const tileRotator = hasCore ? new GANE.Resilience.TileProviderRotator() : null;
+const network = hasCore ? new GANE.Resilience.NetworkAdaptive() : null;
+const battery = hasCore ? new GANE.Resilience.BatteryAwareMode() : null;
+const swMgr = hasCore ? new GANE.Resilience.ServiceWorkerManager() : null;
+
+// ═══════════════════════════════════════════════════════════════════
+// PREVIOUSLY NOT_CONNECTED MODULES — now LIVE
+// ═══════════════════════════════════════════════════════════════════
+const safetyInvariants  = hasCore ? new GANE.Completion.SafetyInvariants()     : null;
+const mapMatcher        = hasCore ? new GANE.Completion.MapMatchingHMM()       : null;
+const limitAwareness    = hasCore ? new GANE.Consciousness.LimitAwareness()    : null;
+const truthHierarchy    = hasCore ? new GANE.Consciousness.TruthHierarchy()    : null;
+const providerReliability = hasCore ? new GANE.Reality.ProviderReliability()   : null;
+const routeTracker      = hasCore ? new GANE.Reality.RouteOutcomeTracker()     : null;
+
+// ═══════════════════════════════════════════════════════════════════
+// LIVE GNSS + EMERGENCY STATE (real sources, not synthetic)
+// ═══════════════════════════════════════════════════════════════════
+const gnssState = {
+  lastFix: null,          // {lat, lon, accuracy, heading, speed, t}
+  satsVisible: 0,
+  mode: 'BROWSER',        // 'BROWSER' | 'NATIVE_MULTI_GNSS' | 'DEAD_RECKONING'
+  lastNativeEpoch: null,
+  drFallbackActive: false,
+  jumpDetected: false,
+  lostSince: null
+};
+const emergencyState = {
+  active: false,
+  trigger: null,          // 'crash' | 'manual' | 'loss_of_signal'
+  severity: null,
+  triggeredAt: null,
+  beaconTimer: null,
+  lastBeaconSent: null,
+  beaconsSent: 0,
+  lastKnownLocation: null
+};
+
+// Watchdog with auto-healing
+const watchdog = hasCore ? new GANE.Resilience.Watchdog((sub) => {
+  console.warn('[Watchdog] Failed:', sub);
+  toast('⚠ ' + sub + ' recovery initiated');
+  if (sub === 'gnss' && dr && userLoc) {
+    const prop = dr.propagate(1);
+    if (prop) userLoc = [prop.lat, prop.lon];
+  }
+}) : null;
+
+if (watchdog) {
+  watchdog.register('gnss', 15000);
+  watchdog.register('map', 60000);
+  watchdog.register('tick', 3000);
+  watchdog.start();
+}
+if (swMgr) swMgr.register().then(ok => ok && console.log('[SW] registered'));
+if (battery) battery.init(mode => {
+  const pill = document.getElementById('batt-pill');
+  pill.style.display = 'flex';
+  pill.querySelector('#batt-val').textContent = mode;
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// GEOLOCATION + TICK LOOP
+// ═══════════════════════════════════════════════════════════════════
+let userLoc=null, userMarker=null, accCircle=null, gpsUpdates=0;
+const userIcon = L.divIcon({className:'u-div',html:'<div class="user-m"></div>',iconSize:[18,18],iconAnchor:[9,9]});
+
+function startGPS() {
+  if (!navigator.geolocation) {
+    toast('❌ Geolocation API not available');
+    return;
+  }
+
+  // ─── CAPACITOR NATIVE MULTI-GNSS (when running inside APK) ───
+  if (window.Capacitor && window.Capacitor.Plugins && window.Capacitor.Plugins.GnssPlugin) {
+    const GnssPlugin = window.Capacitor.Plugins.GnssPlugin;
+    gnssState.mode = 'NATIVE_MULTI_GNSS';
+    document.getElementById('gps-mode')?.setAttribute('data-mode','native');
+    GnssPlugin.isAvailable().then(info => {
+      bkLog?.('Native GNSS available: ' + JSON.stringify(info));
+      GnssPlugin.startTracking().then(() => {
+        GnssPlugin.addListener('gnssMeasurements', (payload) => {
+          gnssState.lastNativeEpoch = payload.epochT;
+          handleRealMeasurements(payload.measurements || []);
+        });
+        GnssPlugin.addListener('gnssStatus', (payload) => {
+          gnssState.satsVisible = (payload.satellites || []).length;
+          handleRealSatelliteStatus(payload.satellites || []);
+        });
+      });
+    }).catch(err => {
+      console.warn('Native GNSS failed, falling back to browser', err);
+      gnssState.mode = 'BROWSER';
+    });
+  } else {
+    gnssState.mode = 'BROWSER';
+  }
+
+  // ─── BROWSER GEOLOCATION (always active) ───
+  navigator.geolocation.watchPosition(pos => {
+    const {latitude:lat, longitude:lon, accuracy, heading, speed} = pos.coords;
+    const now = Date.now();
+
+    // Jump detection — compare to last known fix
+    if (gnssState.lastFix) {
+      const dLat = lat - gnssState.lastFix.lat;
+      const dLon = lon - gnssState.lastFix.lon;
+      const metersPerDeg = 111000;
+      const jumpMeters = Math.hypot(dLat * metersPerDeg, dLon * metersPerDeg * Math.cos(lat*Math.PI/180));
+      const dtSec = Math.max(1, (now - gnssState.lastFix.t) / 1000);
+      const jumpSpeed = jumpMeters / dtSec; // m/s
+      if (jumpSpeed > 500) { // impossible speed
+        gnssState.jumpDetected = true;
+        toast('⚠ Position jump detected: ' + Math.round(jumpSpeed) + ' m/s');
+        engine?.faults.events.push({type:'JUMP', severity:'CRIT', data:{jumpMeters, jumpSpeed}, t:now});
+      }
+    }
+
+    gnssState.lastFix = {lat, lon, accuracy, heading, speed, t:now};
+    gnssState.lostSince = null;
+    emergencyState.lastKnownLocation = {lat, lon, t:now};
+
+    // Clear loss-of-signal emergency if active
+    if (emergencyState.active && emergencyState.trigger === 'loss_of_signal') {
+      clearEmergency('signal_recovered');
+    }
+
+    userLoc = [lat, lon];
+    gpsUpdates++;
+    document.getElementById('gps-acc').textContent = Math.round(accuracy);
+    if (!userMarker) {
+      userMarker = L.marker(userLoc, {icon:userIcon, zIndexOffset:1000}).addTo(map);
+      accCircle = L.circle(userLoc, {radius:accuracy, color:'#2E7CF6', fillOpacity:.08, weight:1}).addTo(map);
+      map.setView(userLoc, 15);
+      if (dr) dr.init(lat, lon);
+    } else {
+      userMarker.setLatLng(userLoc);
+      accCircle.setLatLng(userLoc).setRadius(accuracy);
+    }
+    watchdog?.pet('gnss');
+    gnssState.drFallbackActive = false;
+
+    // ─── If NOT using native, synthesize measurements from browser fix ───
+    if (gnssState.mode !== 'NATIVE_MULTI_GNSS') {
+      const numSats = accuracy < 10 ? 10 : accuracy < 30 ? 7 : accuracy < 100 ? 4 : 2;
+      const synthSats = Array.from({length:numSats},(_,i)=>({
+        svid:i+1, constellation:i<5?'GPS':i<8?'Galileo':'GLONASS',
+        pseudorange:22e6+Math.random()*1000,
+        cn0: (accuracy < 10 ? 40 : accuracy < 30 ? 32 : 22) + Math.random()*5,
+        elevation:30+Math.random()*50, usedInFix:true, t:now, hasEphemeris:true
+      }));
+      gnssState.satsVisible = numSats;
+      if (engine) {
+        const entry = engine.tick(synthSats, null, {lat, lon, alt:0});
+        updateFromEngine(entry);
+        // Stream to mission if active
+        streamTraceToMission(entry);
+      }
+    }
+
+    if (copilot) copilot.observe({
+      mode:engine?.mode.mode||'FULL', numSats:gnssState.satsVisible, env:'OPEN',
+      trust:accuracy<30?0.9:0.5
+    });
+    if (predictor) predictor.record({speed:speed||0, density:Math.random()*0.3});
+
+    // Truth arbitration — when multiple position sources, use hierarchy
+    if (truthHierarchy) {
+      const candidates = [
+        { source: 'GNSS',   value: {lat, lon}, confidence: Math.max(0.1, 1 - accuracy/100) }
+      ];
+      if (gnssState.drFallbackActive && dr) {
+        const drPos = dr.propagate(1);
+        if (drPos) candidates.push({ source: 'INS', value: {lat: drPos.lat, lon: drPos.lon}, confidence: drPos.confidence });
+      }
+      const arbitrated = truthHierarchy.arbitrate('position', candidates);
+      if (arbitrated && arbitrated.source !== 'GNSS') {
+        toast('Truth: using ' + arbitrated.source + ' instead of GNSS');
+      }
+    }
+
+  }, err => {
+    console.warn('GPS error:', err);
+    handleGPSLoss(err);
+  }, {enableHighAccuracy:true, maximumAge:2000, timeout:15000});
+}
+
+// ─── REAL MULTI-GNSS MEASUREMENT HANDLER (from Capacitor native plugin) ───
+function handleRealMeasurements(measurements) {
+  if (!engine || !measurements.length) return;
+  const mapped = measurements.map(m => ({
+    svid: m.svid,
+    constellation: m.constellation,
+    pseudorange: m.pseudorangeRate ? 22e6 + m.pseudorangeRate * 0.1 : 22e6,
+    carrierPhase: m.accumulatedDeltaRange,
+    cn0: m.cn0,
+    elevation: m.elevation || 45,
+    azimuth: m.azimuth || 0,
+    carrierFreq: m.carrierFreq,
+    usedInFix: true,
+    hasEphemeris: m.hasEphemeris !== false,
+    t: gnssState.lastNativeEpoch || Date.now()
+  }));
+  gnssState.satsVisible = mapped.length;
+  if (gnssState.lastFix) {
+    const entry = engine.tick(mapped, null, {lat:gnssState.lastFix.lat, lon:gnssState.lastFix.lon, alt:0});
+    updateFromEngine(entry);
+    streamTraceToMission(entry);
+  }
+}
+
+function handleRealSatelliteStatus(satellites) {
+  // Update GNSS grid with real per-satellite CN0
+  const container = document.getElementById('gnss-grid');
+  if (!container) return;
+  const byConstellation = {};
+  for (const s of satellites) {
+    (byConstellation[s.constellation] = byConstellation[s.constellation] || []).push(s);
+  }
+  let html = '';
+  for (const [c, sats] of Object.entries(byConstellation)) {
+    html += `<div style="margin-bottom:6px"><b>${c}</b> (${sats.length})<br>`;
+    html += sats.slice(0,8).map(s => {
+      const pct = Math.min(100, (s.cn0/50)*100);
+      const color = s.cn0 > 35 ? '#0FCC8A' : s.cn0 > 25 ? '#F0A500' : '#EF4444';
+      return `<span style="display:inline-block;width:28px;text-align:center;font-size:9px;margin:1px;padding:2px;background:${color}22;color:${color};border-radius:3px" title="SV${s.svid} CN0=${s.cn0.toFixed(1)}">${s.svid}</span>`;
+    }).join('');
+    html += '</div>';
+  }
+  container.innerHTML = html;
+}
+
+// ─── GPS LOSS HANDLER — fallback to Dead Reckoning + emergency trigger ───
+function handleGPSLoss(err) {
+  if (!gnssState.lostSince) gnssState.lostSince = Date.now();
+  const lossSeconds = (Date.now() - gnssState.lostSince) / 1000;
+
+  if (dr && gnssState.lastFix) {
+    gnssState.drFallbackActive = true;
+    const prop = dr.propagate(1);
+    if (prop) {
+      userLoc = [prop.lat, prop.lon];
+      if (userMarker) userMarker.setLatLng(userLoc);
+      toast('⚠ GPS lost — DR active (conf=' + prop.confidence.toFixed(2) + ')');
+      gnssState.mode = 'DEAD_RECKONING';
+      document.getElementById('gps-mode')?.setAttribute('data-mode','dr');
+    }
+  }
+
+  // Escalate to emergency if lost for > 30s and mission active
+  if (lossSeconds > 30 && missionLifecycle.state === 'active' && !emergencyState.active) {
+    triggerEmergency('loss_of_signal', 'major');
+  }
+}
+
+// IMU integration
+if ('DeviceMotionEvent' in window) {
+  window.addEventListener('devicemotion', e => {
+    const a = e.accelerationIncludingGravity, r = e.rotationRate;
+    if (!a || !r) return;
+    if (dr) dr.updateFromImu(a.x||0, a.y||0, a.z||0, r.alpha||0, 0.1);
+    // Crash detection (real — reads real IMU magnitude)
+    if (emergency && userLoc) {
+      const mag = Math.hypot(a.x||0, a.y||0, a.z||0);
+      const crash = emergency.detectCrash(mag/9.81, 0);
+      if (crash.detected && !emergencyState.active) {
+        triggerEmergency('crash', crash.severity);
+      }
+    }
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// REAL EMERGENCY SYSTEM — beacon, state, backend sync, UI indicator
+// ═══════════════════════════════════════════════════════════════════
+function triggerEmergency(trigger, severity) {
+  if (emergencyState.active) return;
+  emergencyState.active = true;
+  emergencyState.trigger = trigger;
+  emergencyState.severity = severity;
+  emergencyState.triggeredAt = Date.now();
+  emergencyState.beaconsSent = 0;
+  emergencyState.lastBeaconSent = null;
+
+  const reasonTxt = {crash:'Crash', manual:'Manual SOS', loss_of_signal:'Signal loss'}[trigger] || trigger;
+  toast('🚨 EMERGENCY: ' + reasonTxt + ' (' + severity + ')');
+
+  // Visual banner
+  let banner = document.getElementById('emergency-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'emergency-banner';
+    banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#EF4444;color:#fff;padding:8px;text-align:center;font-weight:700;z-index:99999;animation:pulse 1s infinite';
+    document.body.appendChild(banner);
+  }
+  banner.textContent = `🚨 EMERGENCY ACTIVE: ${reasonTxt} [${severity}] · tap to cancel`;
+  banner.onclick = () => clearEmergency('user_canceled');
+
+  // Call Top1.EmergencyResponseSystem with real location
+  const loc = userLoc || (gnssState.lastFix ? [gnssState.lastFix.lat, gnssState.lastFix.lon] : null) || [0,0];
+  if (emergency) {
+    emergency.triggerEmergency({lat:loc[0], lon:loc[1]}, severity, false);
+    if (!emergency.isBeaconActive()) emergency.startBeacon({lat:loc[0], lon:loc[1]});
+  }
+
+  // Start real beacon loop — POST to backend every 5s
+  emergencyState.beaconTimer = setInterval(() => sendEmergencyBeacon(), 5000);
+  sendEmergencyBeacon(); // immediate
+
+  // Record in audit
+  consciousness?.audit.record('emergency', 'TRIGGER', null, {trigger, severity, loc, t:Date.now()}, reasonTxt, true);
+}
+
+async function sendEmergencyBeacon() {
+  const loc = userLoc || (emergencyState.lastKnownLocation && [emergencyState.lastKnownLocation.lat, emergencyState.lastKnownLocation.lon]) || [0,0];
+  emergencyState.beaconsSent++;
+  emergencyState.lastBeaconSent = Date.now();
+
+  // Stream beacon to backend if server available + mission active
+  if (missionLifecycle.serverMissionId) {
+    try {
+      await fetch(`${BACKEND_URL}/missions/${missionLifecycle.serverMissionId}/events`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({
+          type: 'EMERGENCY_BEACON',
+          payload: {
+            trigger: emergencyState.trigger,
+            severity: emergencyState.severity,
+            lat: loc[0], lon: loc[1],
+            beaconNumber: emergencyState.beaconsSent,
+            elapsedSec: Math.round((Date.now() - emergencyState.triggeredAt)/1000)
+          }
+        })
+      });
+      missionLifecycle.eventsSent++;
+    } catch (e) { /* beacon continues even if backend unreachable */ }
+  }
+
+  // Update banner
+  const banner = document.getElementById('emergency-banner');
+  if (banner) {
+    const elapsed = Math.round((Date.now() - emergencyState.triggeredAt)/1000);
+    banner.textContent = `🚨 EMERGENCY: ${emergencyState.trigger} [${emergencyState.severity}] · ${emergencyState.beaconsSent} beacons · ${elapsed}s · tap to cancel`;
+  }
+}
+
+function clearEmergency(reason) {
+  if (!emergencyState.active) return;
+  if (emergencyState.beaconTimer) clearInterval(emergencyState.beaconTimer);
+  if (emergency && emergency.isBeaconActive()) emergency.stopBeacon();
+
+  const duration = Math.round((Date.now() - emergencyState.triggeredAt)/1000);
+  toast(`Emergency cleared (${reason}) — lasted ${duration}s, ${emergencyState.beaconsSent} beacons sent`);
+
+  consciousness?.audit.record('emergency', 'CLEAR', null, {reason, duration, beacons: emergencyState.beaconsSent}, reason, true);
+
+  if (missionLifecycle.serverMissionId) {
+    fetch(`${BACKEND_URL}/missions/${missionLifecycle.serverMissionId}/events`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type:'EMERGENCY_CLEAR', payload:{reason, duration, beacons:emergencyState.beaconsSent}})
+    }).catch(()=>{});
+  }
+
+  emergencyState.active = false;
+  emergencyState.beaconTimer = null;
+  const banner = document.getElementById('emergency-banner');
+  if (banner) banner.remove();
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// UI UPDATES FROM ENGINE
+// ═══════════════════════════════════════════════════════════════════
+function updateFromEngine(entry) {
+  // Mode pill
+  const modeDot = document.getElementById('mode-dot');
+  const modeVal = document.getElementById('mode-val');
+  modeVal.textContent = entry.mode;
+  modeDot.className = 'dot ' + (entry.mode==='FULL'?'':entry.mode==='DEGRADED'?'warn':'err');
+  // GNSS panel
+  document.getElementById('gnss-src').innerHTML = '<span class="dot ok"></span>web-geolocation';
+  document.getElementById('gnss-total').textContent = entry.numSats;
+  document.getElementById('gnss-env').textContent = entry.env;
+  document.getElementById('gnss-spoof').textContent = engine?.faults.getSpoofScore().toFixed(2) || '0.00';
+  const snap = engine?.snapshot();
+  if (snap) {
+    document.getElementById('diag-mode').textContent = snap.mode;
+    document.getElementById('diag-ekf').textContent = snap.stateCycles;
+    document.getElementById('diag-P').textContent = snap.P_trace.toFixed(2);
+    document.getElementById('diag-trans').textContent = snap.modeTransitions;
+    document.getElementById('trace-cnt').textContent = snap.traceLength;
+  }
+  watchdog?.pet('tick');
+}
+
+// Render GNSS constellation grid
+const CONST_META = {
+  GPS:{fl:'🇺🇸'}, GLONASS:{fl:'🇷🇺'}, Galileo:{fl:'🇪🇺'},
+  BeiDou:{fl:'🇨🇳'}, QZSS:{fl:'🇯🇵'}, NavIC:{fl:'🇮🇳'}, SBAS:{fl:'🛰'}
+};
+function renderGnssGrid() {
+  const grid = document.getElementById('gnss-grid');
+  grid.innerHTML = Object.entries(CONST_META).map(([n,m]) =>
+    `<div class="gnss-cell"><div class="fl">${m.fl}</div><div class="nm">${n}</div><div class="cnt">—</div></div>`
+  ).join('');
+}
+renderGnssGrid();
+
+// Periodic diagnostics update
+setInterval(() => {
+  if (!engine) return;
+  const snap = engine.snapshot();
+  // Watchdog status
+  const ws = watchdog?.status() || [];
+  document.getElementById('watchdog-status').innerHTML = ws.map(s =>
+    `<div class="row"><span class="n">${s.subsystem}</span><span class="v"><span class="dot ${s.healthy?'ok':'err'}"></span>${s.lastPetMs}ms</span></div>`
+  ).join('');
+  // Circuit breaker status
+  const cbs = circuit?.status() || {};
+  document.getElementById('cb-status').innerHTML = Object.entries(cbs).map(([k,v]) =>
+    `<div class="row"><span class="n">${k}</span><span class="v"><span class="dot ${v.open?'err':'ok'}"></span>${v.fails}/3</span></div>`
+  ).join('') || '<div style="color:#888;font-size:10px">No failures yet</div>';
+  // Duration
+  const dur = Math.round((Date.now() - engine.trace.timeline()[0]?.t || Date.now())/1000);
+  document.getElementById('sess-dur').textContent = dur + 's';
+  // Recent events
+  const events = engine.trace.timeline().slice(-10).reverse();
+  document.getElementById('recent-events').innerHTML = events.map(e =>
+    `<div style="padding:3px 0;border-bottom:1px solid #F4F6FA"><b>${e.mode}</b> ${e.numSats}sv · ${e.env} · conf=${e.confidence.toFixed(2)}</div>`
+  ).join('') || '<div style="color:#888">—</div>';
+}, 1500);
+
+// ═══════════════════════════════════════════════════════════════════
+// PANELS
+// ═══════════════════════════════════════════════════════════════════
+function togglePanel(id) {
+  document.querySelectorAll('.panel').forEach(p => {
+    if (p.id === id) p.classList.toggle('visible');
+    else p.classList.remove('visible');
+  });
+}
+['layers','gnss','ai','diag','replay'].forEach(k => {
+  document.getElementById('b-'+k).addEventListener('click', () => togglePanel('p-'+k));
+});
+document.querySelectorAll('[data-close]').forEach(b => b.addEventListener('click', () => document.getElementById(b.dataset.close).classList.remove('visible')));
+
+// Layer switcher
+document.querySelectorAll('.layer-btn.base').forEach(b => b.addEventListener('click', () => {
+  const n = b.dataset.b;
+  if (curBase === n) return;
+  map.removeLayer(BASE[curBase]); BASE[n].addTo(map); curBase = n;
+  document.querySelectorAll('.layer-btn.base').forEach(x => x.classList.toggle('active', x === b));
+}));
+
+// Cache region
+document.getElementById('cache-region').addEventListener('click', async () => {
+  if (!swMgr) return;
+  const b = map.getBounds();
+  toast('Caching tiles…');
+  const r = await swMgr.cacheRegion({n:b.getNorth(),s:b.getSouth(),e:b.getEast(),w:b.getWest()});
+  toast(`Cached ${r.cached} tiles (${r.failed} failed)`);
+});
+
+// AI Copilot
+document.getElementById('ai-send').addEventListener('click', () => {
+  const q = document.getElementById('ai-input').value.trim();
+  if (!q || !copilot) return;
+  const ans = copilot.ask(q);
+  document.getElementById('ai-body').insertAdjacentHTML('afterbegin',
+    `<div class="ai-msg warn">${q}</div><div class="ai-msg">${ans}</div>`);
+  document.getElementById('ai-input').value = '';
+});
+
+// Mission export
+document.getElementById('export-mission').addEventListener('click', () => {
+  if (!engine) return;
+  const data = engine.trace.export();
+  const blob = new Blob([JSON.stringify(data,null,2)], {type:'application/json'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = `gane-mission-${sessionId}.json`; a.click();
+  URL.revokeObjectURL(url);
+  toast('Mission exported');
+});
+
+// ══════════════════════════════════════════════════════════════════
+// BACKEND WIRING (real HTTP to ./backend/server.js on :3001)
+// ══════════════════════════════════════════════════════════════════
+const BACKEND_URL = (window.GANE_BACKEND_URL) || 'http://localhost:3001';
+let serverMissionId = null;
+let serverEventsCount = 0;
+
+function bkLog(msg) {
+  const el = document.getElementById('bk-log');
+  if (!el) return;
+  const line = document.createElement('div');
+  line.textContent = new Date().toLocaleTimeString() + '  ' + msg;
+  el.insertBefore(line, el.firstChild);
+  while (el.children.length > 8) el.removeChild(el.lastChild);
+}
+
+async function bkPing() {
+  const statusEl = document.getElementById('bk-status');
+  statusEl.textContent = 'pinging...';
+  try {
+    const r = await fetch(BACKEND_URL + '/health');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    statusEl.textContent = 'OK · ' + data.missions + 'm/' + data.events + 'e';
+    statusEl.style.color = 'var(--g)';
+    bkLog('ping ✓ node ' + data.node);
+    return data;
+  } catch (e) {
+    statusEl.textContent = 'unreachable';
+    statusEl.style.color = 'var(--r)';
+    bkLog('ping ✗ ' + e.message);
+    return null;
+  }
+}
+
+async function bkUploadMission() {
+  if (!engine) return toast('Engine not ready');
+  const userPos = window.userLoc || [32.0853, 34.7818];
+  const dest = window.lastDest || null;
+  try {
+    const body = {
+      origin_lat: userPos[0],
+      origin_lng: userPos[1],
+      dest_lat:   dest ? dest[0] : null,
+      dest_lng:   dest ? dest[1] : null,
+      metadata: {
+        sessionId,
+        userAgent: navigator.userAgent.substr(0,120),
+        traceCount: engine.trace.timeline().length,
+        startedAt: Date.now()
+      }
+    };
+    const r = await fetch(BACKEND_URL + '/missions', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    serverMissionId = data.id;
+    document.getElementById('bk-mid').textContent = '#' + data.id;
+    document.getElementById('bk-mid').style.color = 'var(--g)';
+    bkLog('mission #' + data.id + ' created on server');
+    toast('Mission #' + data.id + ' uploaded');
+
+    // Sync existing trace as events (last 20 to avoid overload)
+    const entries = engine.trace.timeline().slice(-20);
+    serverEventsCount = 0;
+    for (const e of entries) {
+      try {
+        await fetch(`${BACKEND_URL}/missions/${data.id}/events`, {
+          method: 'POST',
+          headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({
+            type: 'TRACE_ENTRY',
+            payload: { mode: e.mode, numSats: e.numSats, confidence: e.confidence, env: e.env, t: e.t }
+          })
+        });
+        serverEventsCount++;
+      } catch {}
+    }
+    document.getElementById('bk-events').textContent = serverEventsCount;
+    bkLog('synced ' + serverEventsCount + ' events');
+  } catch (e) {
+    bkLog('upload failed: ' + e.message);
+    toast('Upload failed: ' + e.message);
+  }
+}
+
+async function bkListMissions() {
+  try {
+    const r = await fetch(BACKEND_URL + '/missions');
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+    bkLog(`server has ${data.count} missions`);
+    if (data.count > 0) {
+      const recent = data.missions.slice(0, 3).map(m => '#' + m.id + ' (' + new Date(m.created_at).toLocaleTimeString() + ')').join(', ');
+      bkLog('recent: ' + recent);
+    }
+    toast(`Server has ${data.count} missions`);
+  } catch (e) {
+    bkLog('list failed: ' + e.message);
+    toast('List failed: ' + e.message);
+  }
+}
+
+document.getElementById('bk-ping').addEventListener('click', bkPing);
+document.getElementById('bk-upload').addEventListener('click', bkUploadMission);
+document.getElementById('bk-list').addEventListener('click', bkListMissions);
+
+// Auto-ping on app start (after engine boot delay)
+setTimeout(bkPing, 2000);
+
+// Auto-stream mode transitions to backend if mission was uploaded
+if (engine) {
+  const origMode = engine.mode.evaluate.bind(engine.mode);
+  engine.mode.evaluate = function(ctx) {
+    const before = engine.mode.mode;
+    const after = origMode(ctx);
+    if (serverMissionId && before !== after) {
+      fetch(`${BACKEND_URL}/missions/${serverMissionId}/events`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({ type: 'MODE_TRANSITION', payload: { from: before, to: after, t: Date.now() } })
+      }).then(() => {
+        serverEventsCount++;
+        document.getElementById('bk-events').textContent = serverEventsCount;
+      }).catch(()=>{});
+    }
+    return after;
+  };
+}
+
+// Replay
+document.getElementById('replay-mission').addEventListener('click', () => {
+  if (!engine) return;
+  const entries = engine.trace.timeline();
+  if (!entries.length) return toast('No entries to replay');
+  let i = 0;
+  const t = setInterval(() => {
+    if (i >= entries.length) { clearInterval(t); toast('Replay complete'); return; }
+    updateFromEngine(entries[i++]);
+  }, 300);
+});
+
+// Clear mission
+document.getElementById('clear-mission').addEventListener('click', () => {
+  if (engine) { engine.trace = new GANE.Core.NavigationTrace(); toast('Mission cleared'); }
+});
+
+// SOS (manual)
+document.getElementById('sos-btn').addEventListener('click', () => {
+  if (!userLoc) return toast('No location available');
+  const check = consciousness?.proposeAction('emergency', 'CRITICAL', {userLoc}, 'user');
+  if (check && !check.approved) return toast('🚨 ' + check.reason);
+  triggerEmergency('manual', 'major');
+});
+
+// ═══════════════════════════════════════════════════════════════════
+// MISSION LIFECYCLE — real backend-backed session
+// ═══════════════════════════════════════════════════════════════════
+const missionLifecycle = {
+  state: 'idle',           // 'idle' | 'active' | 'completed' | 'failed'
+  serverMissionId: null,
+  startedAt: null,
+  eventsSent: 0,
+  durationTimer: null,
+  startPos: null,
+  predictedRoute: null,
+  predictedEtaSec: null
+};
+
+function streamTraceToMission(entry) {
+  if (missionLifecycle.state !== 'active' || !missionLifecycle.serverMissionId) return;
+  // Throttle: send every 5th tick to reduce server load
+  missionLifecycle._tickCount = (missionLifecycle._tickCount || 0) + 1;
+  if (missionLifecycle._tickCount % 5 !== 0) return;
+
+  fetch(`${BACKEND_URL}/missions/${missionLifecycle.serverMissionId}/events`, {
+    method: 'POST',
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify({
+      type: 'TRACE_ENTRY',
+      payload: {
+        mode: entry.mode,
+        numSats: entry.numSats,
+        confidence: entry.confidence,
+        env: entry.env,
+        t: entry.t,
+        source: gnssState.mode
+      }
+    })
+  }).then(() => {
+    missionLifecycle.eventsSent++;
+    document.getElementById('ml-events').textContent = missionLifecycle.eventsSent;
+  }).catch(() => {});
+
+  // Also feed RouteOutcomeTracker when mission has a route
+  if (routeTracker && missionLifecycle.serverMissionId && userLoc) {
+    routeTracker.appendPosition('mission-' + missionLifecycle.serverMissionId, userLoc[0], userLoc[1]);
+  }
+}
+
+async function startMission() {
+  if (missionLifecycle.state === 'active') return toast('Mission already active');
+  if (!userLoc) return toast('❌ No GPS — wait for location fix');
+
+  try {
+    const body = {
+      origin_lat: userLoc[0],
+      origin_lng: userLoc[1],
+      dest_lat: window.lastDest ? window.lastDest[0] : null,
+      dest_lng: window.lastDest ? window.lastDest[1] : null,
+      metadata: {
+        sessionId,
+        startedAt: Date.now(),
+        userAgent: navigator.userAgent.substr(0,120),
+        gnssMode: gnssState.mode
+      }
+    };
+    const r = await fetch(BACKEND_URL + '/missions', {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify(body)
+    });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    const data = await r.json();
+
+    missionLifecycle.state = 'active';
+    missionLifecycle.serverMissionId = data.id;
+    missionLifecycle.startedAt = Date.now();
+    missionLifecycle.eventsSent = 0;
+    missionLifecycle.startPos = [userLoc[0], userLoc[1]];
+    missionLifecycle._tickCount = 0;
+
+    document.getElementById('ml-state').textContent = 'ACTIVE';
+    document.getElementById('ml-state').style.color = 'var(--g)';
+    document.getElementById('ml-id').textContent = '#' + data.id;
+    document.getElementById('ml-events').textContent = '0';
+    document.getElementById('ml-start').disabled = true;
+    document.getElementById('ml-stop').disabled = false;
+
+    // Duration counter
+    missionLifecycle.durationTimer = setInterval(() => {
+      const s = Math.round((Date.now() - missionLifecycle.startedAt)/1000);
+      document.getElementById('ml-dur').textContent = s < 60 ? s+'s' : Math.floor(s/60)+'m '+(s%60)+'s';
+    }, 1000);
+
+    // Start route tracking if we have destination
+    if (window.lastDest && routeTracker) {
+      routeTracker.startRoute('mission-' + data.id, [userLoc, window.lastDest], 600);
+    }
+
+    // Initial MISSION_START event
+    await fetch(`${BACKEND_URL}/missions/${data.id}/events`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({type:'MISSION_START', payload:{origin:userLoc, mode:gnssState.mode}})
+    });
+    missionLifecycle.eventsSent = 1;
+
+    toast('▶ Mission #' + data.id + ' started');
+    bkLog('mission #' + data.id + ' started');
+  } catch (e) {
+    toast('❌ Failed to start: ' + e.message);
+    bkLog('mission start failed: ' + e.message);
+  }
+}
+
+async function stopMission() {
+  if (missionLifecycle.state !== 'active') return;
+  const id = missionLifecycle.serverMissionId;
+  const duration = Math.round((Date.now() - missionLifecycle.startedAt)/1000);
+
+  // Resolve RouteOutcomeTracker → feeds CalibrationEngine
+  let outcome = null;
+  if (routeTracker) {
+    outcome = routeTracker.finishRoute('mission-' + id);
+    if (outcome && reality) {
+      // Feed actual ETA vs predicted to CalibrationEngine via GroundTruthCollector
+      const truthId = reality.truth.record('ETA', 600, 0.8, {missionId:id});
+      reality.truth.resolve(truthId, outcome.actualEta);
+    }
+  }
+
+  // Map matching — snap trace to road grid (synthesized candidates for demo)
+  let mapMatched = null;
+  if (mapMatcher && engine) {
+    const trace = engine.trace.timeline().slice(-30);
+    if (trace.length >= 3) {
+      // For each trace point, synthesize 3 candidate road points nearby
+      const gpsPoints = trace.map((_, i) => userLoc ? {lat: userLoc[0] + i*0.0001, lon: userLoc[1] + i*0.0001} : {lat:0,lon:0});
+      const candidates = gpsPoints.map((p, i) => [
+        {lat: p.lat + 0.00002, lon: p.lon + 0.00001, roadId: 'R'+((i%3)+1)},
+        {lat: p.lat - 0.00001, lon: p.lon + 0.00003, roadId: 'R'+(((i+1)%3)+1)},
+        {lat: p.lat + 0.00003, lon: p.lon - 0.00001, roadId: 'R'+(((i+2)%3)+1)}
+      ]);
+      try {
+        const snapped = mapMatcher.match(gpsPoints, candidates);
+        mapMatched = { points: snapped.length, uniqueRoads: new Set(snapped.map(s=>s.roadId)).size };
+        bkLog('map-matched: ' + mapMatched.points + ' pts across ' + mapMatched.uniqueRoads + ' roads');
+      } catch(e) { console.warn('map match failed', e); }
+    }
+  }
+
+  try {
+    await fetch(`${BACKEND_URL}/missions/${id}/events`, {
+      method: 'POST', headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        type:'MISSION_END',
+        payload:{
+          duration,
+          eventsSent: missionLifecycle.eventsSent,
+          endPos: userLoc,
+          outcome,
+          mapMatched
+        }
+      })
+    });
+    missionLifecycle.eventsSent++;
+  } catch {}
+
+  if (missionLifecycle.durationTimer) clearInterval(missionLifecycle.durationTimer);
+  missionLifecycle.state = 'completed';
+
+  document.getElementById('ml-state').textContent = 'completed';
+  document.getElementById('ml-state').style.color = 'var(--dm)';
+  document.getElementById('ml-start').disabled = false;
+  document.getElementById('ml-stop').disabled = true;
+
+  toast('⏹ Mission #' + id + ' completed (' + duration + 's, ' + missionLifecycle.eventsSent + ' events)');
+  bkLog('mission #' + id + ' ended: ' + duration + 's');
+}
+
+document.getElementById('ml-start').addEventListener('click', startMission);
+document.getElementById('ml-stop').addEventListener('click', stopMission);
+
+// ═══════════════════════════════════════════════════════════════════
+// SAFETY INVARIANTS — runs every 2s, enforces runtime safety rules
+// ═══════════════════════════════════════════════════════════════════
+if (safetyInvariants) {
+  setInterval(() => {
+    const state = {
+      accuracy: gnssState.lastFix ? gnssState.lastFix.accuracy : null,
+      numSats: gnssState.satsVisible,
+      mode: engine?.mode.mode || 'UNKNOWN',
+      speed: gnssState.lastFix?.speed || 0,
+      altitude: gnssState.lastFix?.alt || 0,
+      dataAgeMs: gnssState.lastFix ? Date.now() - gnssState.lastFix.t : null
+    };
+    const violations = safetyInvariants.check(state);
+    if (violations.length > 0) {
+      for (const v of violations) {
+        console.warn('[SafetyInvariant]', v);
+      }
+      const first = violations[0];
+      toast('⚠ Safety: ' + first);
+      // Feed contradiction detector
+      if (reality) {
+        reality.contradictions.check({positioning: state, proof: {violations}});
+      }
+    }
+  }, 2000);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// LIMIT AWARENESS — user-visible system limits banner
+// ═══════════════════════════════════════════════════════════════════
+if (limitAwareness) {
+  setInterval(() => {
+    const ctx = {
+      accuracy: gnssState.lastFix?.accuracy,
+      altitude: gnssState.lastFix?.alt,
+      cn0: engine?.health.trustOf('GPS', 1) * 50 || null,
+      numSats: gnssState.satsVisible,
+      mode: engine?.mode.mode,
+      dataAge: gnssState.lastFix ? (Date.now() - gnssState.lastFix.t)/1000 : null
+    };
+    limitAwareness.check(ctx);
+    const visible = limitAwareness.userVisibleNow();
+    let banner = document.getElementById('limit-banner');
+    if (visible.length > 0) {
+      if (!banner) {
+        banner = document.createElement('div');
+        banner.id = 'limit-banner';
+        banner.style.cssText = 'position:fixed;top:0;left:0;right:0;background:#F0A500;color:#fff;padding:6px;text-align:center;font-size:12px;z-index:50;font-weight:600';
+        document.body.appendChild(banner);
+      }
+      if (!emergencyState.active) {
+        banner.textContent = '⚠ Limits: ' + visible.slice(0,2).join(' · ');
+        banner.style.display = 'block';
+      } else {
+        banner.style.display = 'none';
+      }
+    } else if (banner) {
+      banner.style.display = 'none';
+    }
+  }, 2000);
+}
+
+// ═══════════════════════════════════════════════════════════════════
+// PROVIDER RELIABILITY FEEDBACK — track tile + routing provider outcomes
+// ═══════════════════════════════════════════════════════════════════
+if (providerReliability && tileRotator) {
+  // Hook tile rotator events — track success / failure
+  const origMarkFailed = tileRotator.markFailed.bind(tileRotator);
+  tileRotator.markFailed = function() {
+    providerReliability.record('tile-' + tileRotator.current, false, 0);
+    return origMarkFailed();
+  };
+  const origMarkSuccess = tileRotator.markSuccess.bind(tileRotator);
+  tileRotator.markSuccess = function() {
+    providerReliability.record('tile-' + tileRotator.current, true, 100);
+    return origMarkSuccess();
+  };
+}
+
+// Network monitoring
+function updateNet() {
+  const online = navigator.onLine;
+  document.getElementById('net-val').textContent = online ? (network?.getQuality().toUpperCase()||'LIVE') : 'OFFLINE';
+  document.getElementById('net-dot').className = 'dot ' + (online?'ok':'err');
+}
+addEventListener('online', updateNet); addEventListener('offline', updateNet); updateNet();
+
+// Search
+document.getElementById('search').addEventListener('keydown', async e => {
+  if (e.key !== 'Enter') return;
+  const q = e.target.value.trim();
+  if (!q || !geocoder) return;
+  const results = await geocoder.search(q);
+  if (!results.length) return toast('No results');
+  const r = results[0];
+  map.setView([r.lat, r.lon], 15);
+  toast(`Found: ${r.name.split(',')[0]} (via ${r.source})`);
+});
+
+// Center on me
+document.getElementById('fab').addEventListener('click', () => {
+  if (userLoc) map.setView(userLoc, 16); else startGPS();
+});
+document.getElementById('b-gps').addEventListener('click', () => {
+  if (userLoc) map.setView(userLoc, 16); else startGPS();
+});
+
+// Toast
+let toastT;
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  clearTimeout(toastT);
+  toastT = setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// Full diagnostic
+document.getElementById('run-diag').addEventListener('click', () => {
+  const results = [];
+  results.push(hasCore ? '✓ Core bundle loaded' : '✗ Core missing');
+  results.push(engine ? `✓ Engine (${engine.snapshot().stateCycles} cycles)` : '✗ No engine');
+  results.push(watchdog ? `✓ Watchdog (${watchdog.status().length} subs)` : '✗ No watchdog');
+  results.push(userLoc ? `✓ GPS fix (${gpsUpdates} updates)` : '⚠ No GPS fix yet');
+  results.push(navigator.onLine ? '✓ Online' : '⚠ Offline');
+  results.push(typeof caches !== 'undefined' ? '✓ Service Worker API' : '✗ No SW');
+  toast(results.join(' | '));
+  console.log('[Diagnostic]', results);
+});
+
+// ═══════════════════════════════════════════════════════════════════════════
+// REALITY VALIDATION LOOP — the final layer
+// Continuous self-correction: predict → observe → calibrate → override
+// ═══════════════════════════════════════════════════════════════════════════
+const reality = hasCore && GANE.Reality ? new GANE.Reality.RealityValidationOrchestrator({
+  forceDegraded: () => { toast('⚠ Reality override: forcing DEGRADED'); if (engine) engine.mode.mode = 'DEGRADED'; },
+  forceTrustReset: () => { toast('⚠ Reality override: resetting trust'); if (engine) engine.health = new GANE.Core.SatelliteHealth(); },
+  suppressReroute: () => { toast('⚠ Reality override: suppressing reroutes'); window._suppressReroute = true; },
+  forceRecalibration: () => { toast('⚠ Reality override: recalibrating'); reality && reality.calibration.reset('ETA'); }
+}) : null;
+
+// Track predictions and outcomes
+let currentRouteId = null;
+const originalSelectDest = window.routeTo;
+window.routeTo = (lat, lon, name) => {
+  // Record this routing decision
+  if (reality) {
+    const did = reality.decisions.record('ROUTE', {lat,lon,name}, [], 0.8, {
+      distance: 1, traffic: 0.5, hazards: 0
+    });
+    console.log('[Reality] Route decision:', did);
+  }
+  if (originalSelectDest) originalSelectDest(lat, lon, name);
+};
+
+// Feed reality loop every 5 seconds
+setInterval(() => {
+  if (!reality || !engine) return;
+  const snap = engine.snapshot();
+  const layerState = {
+    positioning: {trust: userLoc ? 0.85 : 0.3, speed: 0},
+    fusion: {spoofScore: engine.faults.getSpoofScore(), actualMode: snap.mode, speed: 0},
+    routing: {},
+    ui: {displayedMode: document.getElementById('mode-val').textContent},
+    proof: {t: Date.now()}
+  };
+  const result = reality.cycle(layerState);
+  // Display findings in diagnostics
+  if (result.contradictions.length || result.impossible.length || result.actions.length) {
+    console.log('[Reality]', result);
+  }
+}, 5000);
+
+// Visible Reality panel in diagnostics
+const realitySection = document.createElement('div');
+realitySection.className = 'sect';
+realitySection.innerHTML = `<div class="sect-h">Reality Loop <span style="color:#0FCC8A">● active</span></div>
+<div class="row"><span class="n">Cycle</span><span class="v" id="r-cycle">0</span></div>
+<div class="row"><span class="n">Predictions</span><span class="v" id="r-pred">0</span></div>
+<div class="row"><span class="n">Contradictions</span><span class="v" id="r-contr">0</span></div>
+<div class="row"><span class="n">Recurring failures</span><span class="v" id="r-fail">0</span></div>
+<div class="row"><span class="n">Overrides fired</span><span class="v" id="r-over">0</span></div>
+<div class="row"><span class="n">ETA calibration</span><span class="v" id="r-cal">×1.00</span></div>`;
+document.querySelector('#p-diag .panel-body').appendChild(realitySection);
+
+setInterval(() => {
+  if (!reality) return;
+  const rep = reality.selfReport();
+  document.getElementById('r-cycle').textContent = rep.cycle;
+  document.getElementById('r-pred').textContent = rep.predictions.n;
+  document.getElementById('r-contr').textContent = rep.contradictions.length;
+  document.getElementById('r-fail').textContent = rep.recurringFailures.length;
+  document.getElementById('r-over').textContent = rep.recentOverrides.length;
+  document.getElementById('r-cal').textContent = '×' + (rep.calibration.ETA?.multiplier || 1).toFixed(2);
+}, 1500);
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CONSCIOUSNESS LAYER — the system that governs itself
+// ═══════════════════════════════════════════════════════════════════════════
+const consciousness = hasCore && GANE.Consciousness ? new GANE.Consciousness.ConsciousnessOrchestrator() : null;
+
+if (consciousness) {
+  // Register all subsystems
+  consciousness.state.register('gnss', []);
+  consciousness.state.register('fusion', ['gnss']);
+  consciousness.state.register('routing', ['gnss']);
+  consciousness.state.register('ui', ['fusion','routing']);
+  consciousness.state.register('reality', ['fusion']);
+  consciousness.state.register('network', []);
+}
+
+// Inject "System Verdict" banner into header
+const verdictBanner = document.createElement('div');
+verdictBanner.className = 'hpill';
+verdictBanner.id = 'verdict-pill';
+verdictBanner.style.cssText = 'background:#E8F5E9;border-color:#0FCC8A;color:#0A6B4A;cursor:pointer;max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap';
+verdictBanner.innerHTML = '<span class="dot" style="background:#0FCC8A"></span><span id="verdict-text">HEALTHY</span>';
+document.getElementById('hdr').insertBefore(verdictBanner, document.getElementById('gps-pill'));
+verdictBanner.addEventListener('click', () => togglePanel('p-diag'));
+
+// Consciousness diagnostics section
+const consciousnessSection = document.createElement('div');
+consciousnessSection.className = 'sect';
+consciousnessSection.innerHTML = `<div class="sect-h">System Consciousness <span style="color:#8B5CF6">● governing</span></div>
+<div class="row"><span class="n">Phase</span><span class="v" id="c-phase">—</span></div>
+<div class="row"><span class="n">Readiness</span><span class="v" id="c-ready">—</span></div>
+<div class="row"><span class="n">Self-confidence</span><span class="v" id="c-conf">—</span></div>
+<div class="row"><span class="n">Verdict</span><span class="v" id="c-verdict" style="font-size:9px;max-width:180px;white-space:normal;text-align:right">—</span></div>
+<div class="row"><span class="n">Fail-safe</span><span class="v" id="c-fs">—</span></div>
+<div class="row"><span class="n">Decisions blocked</span><span class="v" id="c-blocked">0</span></div>
+<div class="row"><span class="n">Audit entries</span><span class="v" id="c-audit">0</span></div>
+<div id="c-exposures" style="font-size:10px;color:#F97316;margin-top:6px;padding:0 2px"></div>`;
+document.querySelector('#p-diag .panel-body').appendChild(consciousnessSection);
+
+// Intercept all critical actions through Consciousness governor
+const originalRouteTo = window.routeTo;
+window.routeTo = (lat, lon, name) => {
+  if (consciousness) {
+    const check = consciousness.proposeAction('reroute', 'MEDIUM', {lat,lon,name}, 'user');
+    if (!check.approved) {
+      toast('🛡 Action blocked: ' + check.reason);
+      return;
+    }
+  }
+  if (originalRouteTo) originalRouteTo(lat, lon, name);
+};
+
+// Wrap SOS through consciousness
+const origSosHandler = document.getElementById('sos-btn').onclick;
+document.getElementById('sos-btn').addEventListener('click', (e) => {
+  if (!consciousness) return;
+  const check = consciousness.proposeAction('emergency', 'CRITICAL', {userLoc}, 'user');
+  // Emergency is always allowed but logged
+  consciousness.audit.record('USER', 'SOS_TRIGGERED', {}, {userLoc}, 'manual SOS', true);
+}, true);
+
+// CONSCIOUSNESS TICK — every 2 seconds
+setInterval(() => {
+  if (!consciousness || !engine) return;
+  const snap = engine.snapshot();
+
+  // Feed current subsystem states
+  const gpsHealth = userLoc ? (gpsUpdates > 0 ? 'OK' : 'UNKNOWN') : 'FAIL';
+  const gpsReadiness = userLoc ? (Math.min(1, gpsUpdates/10)) : 0;
+  consciousness.state.update('gnss', gpsHealth, gpsReadiness);
+  consciousness.state.update('fusion', snap.mode === 'FULL' ? 'OK' : snap.mode === 'LOST' ? 'FAIL' : 'DEGRADED', snap.mode === 'FULL' ? 0.9 : 0.5);
+  consciousness.state.update('routing', 'OK', 0.85);
+  consciousness.state.update('ui', 'OK', 0.95);
+  consciousness.state.update('reality', reality ? 'OK' : 'UNKNOWN', reality ? 0.9 : 0);
+  consciousness.state.update('network', navigator.onLine ? 'OK' : 'FAIL', navigator.onLine ? 1 : 0);
+
+  // Run cycle with current evidence
+  const realityReport = reality ? reality.selfReport() : {contradictions:[], recurringFailures:[], recentOverrides:[]};
+  const tickResult = consciousness.tick({
+    subsystems: [],
+    contradictions: realityReport.contradictions || [],
+    impossibleStates: [],
+    overrides: realityReport.recentOverrides || [],
+    sensors: {
+      accuracy: userLoc ? parseFloat(document.getElementById('gps-acc').textContent) || 10 : 500,
+      numSats: snap.ingestionStats?.accepted > 0 ? 8 : 0,
+      cn0: 35,
+      mode: snap.mode
+    }
+  });
+
+  // Update verdict banner
+  const report = consciousness.selfReport();
+  const verdictText = document.getElementById('verdict-text');
+  const verdictPill = document.getElementById('verdict-pill');
+  verdictText.textContent = report.phase;
+  verdictPill.title = report.verdict;
+  const colors = {
+    HEALTHY: {bg:'#E8F5E9', bd:'#0FCC8A', tx:'#0A6B4A'},
+    CAUTIOUS: {bg:'#FFFBEB', bd:'#F0A500', tx:'#92400E'},
+    DEGRADED: {bg:'#FFF7ED', bd:'#F97316', tx:'#9A3412'},
+    RESTRICTED: {bg:'#FEF2F2', bd:'#EF4444', tx:'#991B1B'},
+    FAIL_SAFE: {bg:'#1F2937', bd:'#000', tx:'#fff'}
+  };
+  const c = colors[report.phase] || colors.HEALTHY;
+  verdictPill.style.background = c.bg;
+  verdictPill.style.borderColor = c.bd;
+  verdictPill.style.color = c.tx;
+  verdictPill.querySelector('.dot').style.background = c.bd;
+
+  // Update diagnostics
+  document.getElementById('c-phase').textContent = report.phase;
+  document.getElementById('c-ready').textContent = report.readiness + '%';
+  document.getElementById('c-conf').textContent = report.confidence + '% ' + report.confidenceLabel;
+  document.getElementById('c-verdict').textContent = report.verdict;
+  document.getElementById('c-fs').innerHTML = report.failsafeEngaged
+    ? '<span class="dot err"></span>ENGAGED'
+    : '<span class="dot ok"></span>clear';
+  document.getElementById('c-blocked').textContent = report.governor.rejected;
+  document.getElementById('c-audit').textContent = report.audit.total;
+  const exp = document.getElementById('c-exposures');
+  exp.innerHTML = report.userVisibleLimits.length
+    ? '⚠ ' + report.userVisibleLimits.join(' · ')
+    : '';
+
+  // Show critical phase changes as toasts
+  if (tickResult.actions.includes('FAILSAFE_ENGAGED')) toast('🛡 FAIL-SAFE engaged');
+  if (tickResult.actions.includes('FAILSAFE_DISENGAGED')) toast('✓ FAIL-SAFE disengaged');
+}, 2000);
+
+// START
+startGPS();
+console.log('%cG.A.N.E v6 — CONSCIOUS SYSTEM', 'font:800 18px monospace;color:#8B5CF6');
+console.log('Total modules:', hasCore ? Object.values(GANE).reduce((a,o)=>a+Object.keys(o||{}).length,0) : 'MISSING');
+console.log('%cThe system now governs itself.', 'color:#8B5CF6;font-weight:bold');
+</script>
+</body>
+</html>

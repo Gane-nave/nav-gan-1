@@ -1,6 +1,0 @@
-[package]
-name = "aurora-compressor-vib"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

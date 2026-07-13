@@ -1,0 +1,35 @@
+{
+  "name": "G.A.N.E Navigator",
+  "short_name": "G.A.N.E",
+  "description": "Global Autonomous Navigation Engine — aviation-grade navigation for everyone",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#03060C",
+  "theme_color": "#2E7CF6",
+  "categories": ["navigation", "travel", "utilities", "productivity"],
+  "scope": "./",
+  "lang": "he",
+  "dir": "auto",
+  "icons": [
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAxOTIgMTkyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwRkNDOEEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyRTdDRjYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iMTkyIiBoZWlnaHQ9IjE5MiIgcng9IjM0IiBmaWxsPSJ1cmwoI2cpIi8+PHBvbHlnb24gcG9pbnRzPSI0OCwxMDYgMTUwLDIzIDEwMCwxNjkgOTIsMTExIiBmaWxsPSIjZmZmIi8+PC9zdmc+",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA1MTIgNTEyIj48ZGVmcz48bGluZWFyR3JhZGllbnQgaWQ9ImciIHgxPSIwIiB5MT0iMCIgeDI9IjEiIHkyPSIxIj48c3RvcCBvZmZzZXQ9IjAiIHN0b3AtY29sb3I9IiMwRkNDOEEiLz48c3RvcCBvZmZzZXQ9IjEiIHN0b3AtY29sb3I9IiMyRTdDRjYiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB3aWR0aD0iNTEyIiBoZWlnaHQ9IjUxMiIgcng9IjkyIiBmaWxsPSJ1cmwoI2cpIi8+PHBvbHlnb24gcG9pbnRzPSIxMjgsMjgyIDQwMCw2MSAyNjYsNDUxIDI0Niw4OTciIGZpbGw9IiNmZmYiLz48L3N2Zz4=",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    { "name": "Navigate Home", "url": "./index.html?action=home" },
+    { "name": "SOS Emergency", "url": "./index.html?action=sos" },
+    { "name": "Offline Mode", "url": "./index.html?mode=offline" }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": []
+}

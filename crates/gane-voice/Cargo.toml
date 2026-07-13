@@ -1,0 +1,8 @@
+[package]
+name = "gane-voice"
+version = "0.1.0"
+edition = "2021"
+description = "Voice navigation, TTS integration, audio guidance"
+
+[dependencies]
+gane-core = { path = "../gane-core" }

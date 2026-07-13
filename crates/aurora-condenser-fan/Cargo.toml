@@ -1,6 +1,0 @@
-[package]
-name = "aurora-condenser-fan"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

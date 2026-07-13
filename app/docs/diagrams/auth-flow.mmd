@@ -1,0 +1,59 @@
+---
+title: "G.A.N.E — Authentication & Authorization Flow"
+---
+sequenceDiagram
+    participant U as User/Browser
+    participant SPA as React SPA
+    participant API as API Gateway
+    participant Auth as Auth Service
+    participant OAuth as Manus OAuth
+    participant DB as TiDB Database
+
+    Note over U,DB: === OAuth 2.0 Login Flow ===
+
+    U->>SPA: Click "Login"
+    SPA->>SPA: getLoginUrl(returnPath)<br/>Encode origin + returnPath in state
+    SPA->>OAuth: Redirect to VITE_OAUTH_PORTAL_URL<br/>with state parameter
+    OAuth->>U: Show login form
+    U->>OAuth: Enter credentials
+    OAuth->>API: Redirect to /api/oauth/callback<br/>with authorization code + state
+    API->>Auth: Exchange code for access token<br/>via OAUTH_SERVER_URL
+    Auth->>OAuth: POST /token (code, client_id)
+    OAuth-->>Auth: Access token + user profile
+    Auth->>DB: Upsert user record<br/>(openId, name, avatar)
+    DB-->>Auth: User record (with role)
+    Auth->>Auth: Sign JWT session cookie<br/>(RS256, 24h TTL)
+    Auth-->>API: Set-Cookie: session=JWT<br/>(HttpOnly, Secure, SameSite)
+    API->>SPA: Redirect to origin + returnPath<br/>(from decoded state)
+    SPA->>SPA: Cookie auto-attached
+
+    Note over U,DB: === Authenticated API Call ===
+
+    SPA->>API: tRPC request<br/>Cookie: session=JWT
+    API->>Auth: Verify JWT signature<br/>Check expiry
+    Auth-->>API: ctx.user = { id, role, openId }
+    API->>API: protectedProcedure check<br/>Role-based access control
+
+    alt Admin Operation
+        API->>API: Check ctx.user.role === 'admin'
+        alt Authorized
+            API->>DB: Execute admin query
+            DB-->>API: Result
+            API-->>SPA: Success response
+        else Forbidden
+            API-->>SPA: 403 FORBIDDEN
+        end
+    else Regular Operation
+        API->>DB: Execute query<br/>(row-level security)
+        DB-->>API: User-scoped result
+        API-->>SPA: Success response
+    end
+
+    Note over U,DB: === Session Expiry ===
+
+    SPA->>API: tRPC request (expired JWT)
+    API->>Auth: JWT verification fails
+    Auth-->>API: UNAUTHORIZED (10001)
+    API-->>SPA: Error: "Please login"
+    SPA->>SPA: redirectToLoginIfUnauthorized()
+    SPA->>OAuth: Redirect to login

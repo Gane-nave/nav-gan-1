@@ -1,0 +1,16 @@
+[package]
+name = "gane-core"
+version.workspace = true
+edition.workspace = true
+description = "Canonical data model for G.A.N.E NAV"
+
+[dependencies]
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+nalgebra = { workspace = true }
+thiserror = { workspace = true }
+
+[target.'cfg(target_arch = "wasm32")'.dependencies]
+getrandom = { version = "0.2", features = ["js"] }

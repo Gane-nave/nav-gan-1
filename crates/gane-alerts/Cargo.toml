@@ -1,0 +1,11 @@
+[package]
+name = "gane-alerts"
+version.workspace = true
+edition.workspace = true
+description = "Hazard, camera, and road alerts"
+
+[dependencies]
+serde = { workspace = true }
+
+[dev-dependencies]
+serde_json = { workspace = true }

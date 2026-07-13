@@ -1,0 +1,14 @@
+[package]
+name = "gane-osm-import"
+version.workspace = true
+edition.workspace = true
+description = "OSM road-network importer: Overpass JSON -> G.A.N.E RoadGraph with vehicle restrictions"
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-map = { path = "../gane-map" }
+gane-routing = { path = "../gane-routing" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+

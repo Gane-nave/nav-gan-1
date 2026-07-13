@@ -1,6 +1,0 @@
-[package]
-name = "aurora-glow-plug"
-version = "0.1.0"
-edition = "2021"
-
-[dependencies]

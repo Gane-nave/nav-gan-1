@@ -1,6 +1,0 @@
-[package]
-name = "aurora-sound-dead"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

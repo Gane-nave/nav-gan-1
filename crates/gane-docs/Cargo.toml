@@ -1,0 +1,53 @@
+[package]
+name = "gane-docs"
+version.workspace = true
+edition.workspace = true
+license.workspace = true
+description = "G.A.N.E NAV — Workspace documentation, architecture guides, and usage examples"
+publish = false
+
+[dependencies]
+gane-core = { path = "../gane-core" }
+gane-events = { path = "../gane-events" }
+gane-gnss = { path = "../gane-gnss" }
+gane-fusion = { path = "../gane-fusion" }
+gane-integrity = { path = "../gane-integrity" }
+gane-continuity = { path = "../gane-continuity" }
+gane-routing = { path = "../gane-routing" }
+gane-map = { path = "../gane-map" }
+gane-config = { path = "../gane-config" }
+gane-app = { path = "../gane-app" }
+gane-telemetry = { path = "../gane-telemetry" }
+gane-corrections = { path = "../gane-corrections" }
+gane-sensors = { path = "../gane-sensors" }
+gane-risk = { path = "../gane-risk" }
+gane-confidence = { path = "../gane-confidence" }
+gane-traffic = { path = "../gane-traffic" }
+gane-stability = { path = "../gane-stability" }
+gane-edge = { path = "../gane-edge" }
+gane-resilience = { path = "../gane-resilience" }
+gane-satellite = { path = "../gane-satellite" }
+gane-city = { path = "../gane-city" }
+gane-twin = { path = "../gane-twin" }
+gane-fleet = { path = "../gane-fleet" }
+gane-emergency = { path = "../gane-emergency" }
+gane-ux = { path = "../gane-ux" }
+gane-micro-nav = { path = "../gane-micro-nav" }
+gane-parking = { path = "../gane-parking" }
+gane-charging = { path = "../gane-charging" }
+gane-sdk = { path = "../gane-sdk" }
+gane-developer = { path = "../gane-developer" }
+gane-marketplace = { path = "../gane-marketplace" }
+gane-payments = { path = "../gane-payments" }
+gane-vehicle = { path = "../gane-vehicle" }
+gane-lane = { path = "../gane-lane" }
+gane-offline = { path = "../gane-offline" }
+gane-probabilistic = { path = "../gane-probabilistic" }
+gane-evidence = { path = "../gane-evidence" }
+gane-trust = { path = "../gane-trust" }
+gane-anti-manipulation = { path = "../gane-anti-manipulation" }
+serde = { workspace = true }
+serde_json = { workspace = true }
+chrono = { workspace = true }
+uuid = { workspace = true }
+nalgebra = { workspace = true }

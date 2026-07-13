@@ -1,0 +1,94 @@
+---
+title: "G.A.N.E — Data Flow & Lineage Diagram"
+---
+graph LR
+    subgraph "Sensors & Sources"
+        gnss["🛰️ GNSS Raw<br/>1 Hz, NMEA"]
+        imu["📐 IMU Raw<br/>100 Hz, Binary"]
+        tel["📊 Device Telemetry<br/>1-10 Hz, JSON"]
+        crowd["👥 Crowd Reports<br/>Event-driven"]
+        weather["🌦️ Weather Feed<br/>5 min, JSON"]
+        v2x["📡 V2X BSM<br/>10 Hz, Protobuf"]
+    end
+
+    subgraph "Transformations"
+        eskfFusion["🔄 ESKF Fusion<br/>Kalman Filter<br/>< 10ms"]
+        trafficAgg["🔄 Traffic Aggregation<br/>Weighted Average<br/>< 5s"]
+        anonymize["🔄 Anonymization<br/>Differential Privacy<br/>ε=1.0"]
+        validate["🔄 Incident Validation<br/>N≥3 Confirmation<br/>< 100ms"]
+        plausibility["🔄 V2X Plausibility<br/>Physics Check<br/>< 10ms"]
+        mlPredict["🔄 ML Prediction<br/>XGBoost + LightGBM<br/>< 200ms"]
+    end
+
+    subgraph "Derived Data"
+        fusedPos["📍 Fused Position<br/>10 Hz, Confidential<br/>CEP 1-3m"]
+        trafficLive["🚦 Live Traffic<br/>30s refresh<br/>Segment Speed"]
+        predictions["🤖 ML Predictions<br/>On-demand<br/>ETA + Congestion"]
+        validatedV2X["✅ Validated BSM<br/>Plausibility-checked"]
+        trips["🗺️ Trip Records<br/>Event-driven<br/>Confidential"]
+    end
+
+    subgraph "Storage & Consumers"
+        db[("💾 TiDB<br/>Trips, Incidents,<br/>Analytics")]
+        cache[("⚡ Cache<br/>Traffic, Weather,<br/>Sessions")]
+        s3[("☁️ S3<br/>Evidence,<br/>Archives")]
+        mapUI["🗺️ Map Renderer"]
+        navUI["🧭 Navigation HUD"]
+        dashUI["📊 Analytics Dashboard"]
+    end
+
+    gnss --> eskfFusion
+    imu --> eskfFusion
+    eskfFusion --> fusedPos
+
+    tel --> trafficAgg
+    tel --> anonymize
+    crowd --> validate
+    crowd --> trafficAgg
+    validate --> trafficAgg
+    trafficAgg --> trafficLive
+
+    anonymize --> s3
+
+    trafficLive --> mlPredict
+    weather --> mlPredict
+    fusedPos --> mlPredict
+    mlPredict --> predictions
+
+    v2x --> plausibility
+    plausibility --> validatedV2X
+
+    fusedPos --> trips
+    fusedPos --> mapUI
+    fusedPos --> navUI
+
+    trafficLive --> cache
+    trafficLive --> mapUI
+    predictions --> navUI
+    validatedV2X --> mapUI
+
+    trips --> db
+    crowd --> db
+    tel --> db
+
+    trafficLive --> dashUI
+    predictions --> dashUI
+
+    style gnss fill:#64748b,stroke:#475569,color:#fff
+    style imu fill:#64748b,stroke:#475569,color:#fff
+    style tel fill:#64748b,stroke:#475569,color:#fff
+    style crowd fill:#64748b,stroke:#475569,color:#fff
+    style weather fill:#64748b,stroke:#475569,color:#fff
+    style v2x fill:#64748b,stroke:#475569,color:#fff
+    style eskfFusion fill:#f59e0b,stroke:#d97706,color:#fff
+    style trafficAgg fill:#f59e0b,stroke:#d97706,color:#fff
+    style anonymize fill:#f59e0b,stroke:#d97706,color:#fff
+    style validate fill:#f59e0b,stroke:#d97706,color:#fff
+    style plausibility fill:#f59e0b,stroke:#d97706,color:#fff
+    style mlPredict fill:#f59e0b,stroke:#d97706,color:#fff
+    style fusedPos fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style trafficLive fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style predictions fill:#0ea5e9,stroke:#0284c7,color:#fff
+    style db fill:#22c55e,stroke:#16a34a,color:#fff
+    style cache fill:#22c55e,stroke:#16a34a,color:#fff
+    style s3 fill:#22c55e,stroke:#16a34a,color:#fff

@@ -1,0 +1,75 @@
+# G.A.N.E — Load Testing Pipeline
+# ==================================
+# Runs k6 load tests on demand or on main branch pushes.
+# Tests API throughput and WebSocket connection capacity.
+
+name: Load Tests
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_host:
+        description: "Target host URL (e.g., https://gane.manus.space)"
+        required: true
+        default: "http://localhost:3000"
+      duration:
+        description: "Test duration (e.g., 30s, 1m, 5m)"
+        required: false
+        default: "1m"
+      vus:
+        description: "Number of virtual users"
+        required: false
+        default: "50"
+  push:
+    branches: [main]
+    paths:
+      - "load-tests/**"
+
+concurrency:
+  group: load-test-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  load-test:
+    name: k6 Load Test
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Install k6
+        run: |
+          sudo gpg -k
+          sudo gpg --no-default-keyring --keyring /usr/share/keyrings/k6-archive-keyring.gpg --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys C5AD17C747E3415A3642D57D77C6C491D6AC1D68
+          echo "deb [signed-by=/usr/share/keyrings/k6-archive-keyring.gpg] https://dl.k6.io/deb stable main" | sudo tee /etc/apt/sources.list.d/k6.list
+          sudo apt-get update
+          sudo apt-get install -y k6
+
+      - name: Run API throughput test
+        run: |
+          k6 run \
+            --env TARGET_HOST=${{ github.event.inputs.target_host || 'http://localhost:3000' }} \
+            --duration ${{ github.event.inputs.duration || '1m' }} \
+            --vus ${{ github.event.inputs.vus || '50' }} \
+            --out json=load-tests/results/api-results.json \
+            load-tests/api-throughput.js
+        timeout-minutes: 15
+        continue-on-error: true
+
+      - name: Run WebSocket connection test
+        run: |
+          k6 run \
+            --env TARGET_HOST=${{ github.event.inputs.target_host || 'http://localhost:3000' }} \
+            --duration ${{ github.event.inputs.duration || '1m' }} \
+            --vus ${{ github.event.inputs.vus || '50' }} \
+            --out json=load-tests/results/ws-results.json \
+            load-tests/ws-connections.js
+        timeout-minutes: 15
+        continue-on-error: true
+
+      - name: Upload load test results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: load-test-results-${{ github.run_number }}
+          path: load-tests/results/
+          retention-days: 30

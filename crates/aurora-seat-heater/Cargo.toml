@@ -1,6 +1,0 @@
-[package]
-name = "aurora-seat-heater"
-version.workspace = true
-edition.workspace = true
-
-[dependencies]

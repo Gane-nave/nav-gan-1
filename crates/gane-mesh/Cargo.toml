@@ -1,0 +1,7 @@
+[package]
+name = "gane-mesh"
+version = "0.1.0"
+edition = "2021"
+description = "Service discovery & mesh — registry, load balancing, circuit breaking"
+
+[dependencies]

@@ -1,7 +1,0 @@
-[package]
-name = "aurora-features"
-version = "0.1.0"
-edition = "2021"
-description = "Feature flags & A/B testing — flag management, rollout strategies, experiment tracking"
-
-[dependencies]
