@@ -45,9 +45,19 @@ jobs:
         with:
           enablement: true
 
-      - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3.0.1
+      # Inlined actions/upload-pages-artifact: the composite references
+      # upload-artifact by tag internally, which this repo's pin-to-SHA
+      # actions policy rejects. deploy-pages only needs a single-tar
+      # artifact named "github-pages".
+      - name: Package Pages artifact
+        run: tar --dereference --hard-dereference --directory app/dist/public -cf "$RUNNER_TEMP/artifact.tar" .
+
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         with:
-          path: app/dist/public
+          name: github-pages
+          path: ${{ runner.temp }}/artifact.tar
+          retention-days: 1
+          if-no-files-found: error
 
   deploy:
     needs: build
