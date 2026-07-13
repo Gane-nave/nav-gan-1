@@ -69,9 +69,7 @@ export default function Home() {
   const { state, dispatch, mapRef } = useNavigation();
   const { user } = useAuth();
   const [booted, setBooted] = useState(false);
-  const [activeCollabSession, setActiveCollabSession] = useState<string | null>(
-    null
-  );
+  const [activeCollabSession] = useState<string | null>(null);
   const {
     remoteCursors,
     updateCursor,
