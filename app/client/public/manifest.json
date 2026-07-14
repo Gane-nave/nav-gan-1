@@ -2,7 +2,7 @@
   "name": "G.A.N.E — Global Autonomous Navigation Ecosystem",
   "short_name": "G.A.N.E NAV",
   "description": "Mission-critical multi-layer navigation and operational orchestration platform with GNSS fusion, real-time telemetry, and multi-channel integrations.",
-  "start_url": "/",
+  "start_url": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#0a0a1a",
@@ -10,7 +10,7 @@
   "categories": ["navigation", "utilities", "productivity"],
   "lang": "en",
   "dir": "auto",
-  "scope": "/",
+  "scope": "./",
   "icons": [
     {
       "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-192_173d3e9e.png",

@@ -9,7 +9,8 @@
  *     component stays fully functional offline / air-gapped: when tiles
  *     are unreachable it falls back to an inline dark style and the road
  *     network itself remains the basemap
- *   - Routing runs in the G.A.N.E Rust engine (WASM) on the same graph
+ *   - Routing runs in the G.A.N.E Rust engine (WASM) via route_geo — the
+ *     exact snap+route pipeline the CLI and worker use. No TS fork.
  *
  * Interaction: first click sets origin, second sets destination and
  * computes a vehicle-aware route; the next click starts over.
@@ -18,98 +19,26 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import maplibregl from "maplibre-gl";
 import "maplibre-gl/dist/maplibre-gl.css";
 import {
+  engineAssetUrl,
   loadGaneEngine,
+  VEHICLE_PRESETS,
   type GaneEngineBridge,
-  type GaneVehicleEnvelope,
 } from "@/engine/ganeWasmBridge";
 
 const TILE_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
-const GRAPH_URL = `${import.meta.env.BASE_URL}engine/kouvola-graph.json`;
+const GRAPH_ASSET = "kouvola-graph.json";
 
-/** Snap candidates per endpoint — mirrors gane-osm-import::route. */
-const SNAP_CANDIDATES = 64;
-const MAX_SNAP_DISTANCE_M = 1_500;
-
-// ── Graph schema (as produced by gane-osm-import) ──────────────────────────
+// ── Graph overlay schema (subset of the importer's output we render) ───────
 
 interface GraphPosition {
   latitude_deg: number;
   longitude_deg: number;
 }
 
-interface GraphNode {
-  id: string;
-  position: GraphPosition;
+interface OverlayGraph {
+  nodes: { position: GraphPosition }[];
+  segments: { geometry: GraphPosition[]; road_class: string }[];
 }
-
-interface GraphSegment {
-  id: string;
-  from_node: string;
-  to_node: string;
-  geometry: GraphPosition[];
-  road_class: string;
-  one_way: boolean;
-  tunnel: boolean;
-  hazmat_restricted: boolean;
-  weight_limit_kg: number | null;
-  height_limit_m: number | null;
-  length_m: number;
-}
-
-interface RoadGraph {
-  nodes: GraphNode[];
-  segments: GraphSegment[];
-}
-
-// ── Vehicle presets (mirrors gane-osm-import::route::envelope_by_name) ─────
-
-const VEHICLES: Record<string, GaneVehicleEnvelope> = {
-  car: {
-    class: "car",
-    height_m: 1.6,
-    width_m: 1.8,
-    length_m: 4.5,
-    weight_kg: 1_800,
-    axle_count: 2,
-    hazmat: false,
-  },
-  van: {
-    class: "van",
-    height_m: 2.5,
-    width_m: 1.9,
-    length_m: 5.5,
-    weight_kg: 3_200,
-    axle_count: 2,
-    hazmat: false,
-  },
-  truck: {
-    class: "heavy_truck",
-    height_m: 4.2,
-    width_m: 2.55,
-    length_m: 16.5,
-    weight_kg: 26_000,
-    axle_count: 5,
-    hazmat: false,
-  },
-  bus: {
-    class: "bus",
-    height_m: 3.4,
-    width_m: 2.55,
-    length_m: 12,
-    weight_kg: 18_000,
-    axle_count: 3,
-    hazmat: false,
-  },
-  emergency: {
-    class: "emergency",
-    height_m: 2.8,
-    width_m: 2.0,
-    length_m: 6.0,
-    weight_kg: 4_500,
-    axle_count: 2,
-    hazmat: false,
-  },
-};
 
 const VEHICLE_LABELS: Record<string, string> = {
   car: "🚗 Car",
@@ -118,45 +47,6 @@ const VEHICLE_LABELS: Record<string, string> = {
   bus: "🚌 Bus",
   emergency: "🚑 Emergency",
 };
-
-/** TS port of VehicleEnvelope::permits — hard legality constraints only. */
-function permits(env: GaneVehicleEnvelope, seg: GraphSegment): boolean {
-  if (seg.height_limit_m != null && env.height_m > seg.height_limit_m)
-    return false;
-  if (seg.weight_limit_kg != null && env.weight_kg > seg.weight_limit_kg)
-    return false;
-  if (env.hazmat && (seg.hazmat_restricted || seg.tunnel)) return false;
-  const motorized = env.class !== "bicycle" && env.class !== "pedestrian";
-  switch (seg.road_class) {
-    case "Pedestrian":
-      return (
-        env.class === "pedestrian" ||
-        env.class === "bicycle" ||
-        env.class === "emergency"
-      );
-    case "Cycleway":
-      return env.class === "bicycle" || env.class === "pedestrian";
-    case "Motorway":
-    case "Trunk":
-      return motorized;
-    case "Track":
-      return env.class !== "heavy_truck";
-    default:
-      return true;
-  }
-}
-
-function haversineM(a: GraphPosition, b: GraphPosition): number {
-  const R = 6_371_000;
-  const la1 = (a.latitude_deg * Math.PI) / 180;
-  const la2 = (b.latitude_deg * Math.PI) / 180;
-  const dLa = la2 - la1;
-  const dLo = ((b.longitude_deg - a.longitude_deg) * Math.PI) / 180;
-  const h =
-    Math.sin(dLa / 2) ** 2 +
-    Math.cos(la1) * Math.cos(la2) * Math.sin(dLo / 2) ** 2;
-  return 2 * R * Math.asin(Math.sqrt(h));
-}
 
 /** Road-class → overlay color (dark-theme friendly). */
 const CLASS_COLORS: Record<string, string> = {
@@ -176,7 +66,7 @@ const CLASS_COLORS: Record<string, string> = {
 interface RouteResult {
   distanceM: number;
   timeS: number;
-  polyline: [number, number][]; // [lon, lat]
+  polyline: [number, number][]; // [lon, lat] — MapLibre order
 }
 
 interface OpenNavigationMapProps {
@@ -188,79 +78,19 @@ export default function OpenNavigationMap({
 }: OpenNavigationMapProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const mapRef = useRef<maplibregl.Map | null>(null);
-  const graphRef = useRef<RoadGraph | null>(null);
   const engineRef = useRef<GaneEngineBridge | null>(null);
   const markersRef = useRef<maplibregl.Marker[]>([]);
-  const clicksRef = useRef<[number, number][]>([]); // [lat, lon]
+  // The drawn route survives style swaps via this ref (style.load re-applies).
+  const routeRef = useRef<RouteResult | null>(null);
 
+  const [clicks, setClicks] = useState<[number, number][]>([]); // [lat, lon]
   const [status, setStatus] = useState("loading engine…");
   const [vehicle, setVehicle] = useState("car");
-  const vehicleRef = useRef(vehicle);
-  vehicleRef.current = vehicle;
   const [route, setRoute] = useState<RouteResult | null>(null);
   const [routeError, setRouteError] = useState<string | null>(null);
 
-  /** Vehicle-aware snap with multi-candidate fallback — mirrors the Rust CLI. */
-  const computeRoute = useCallback(
-    (from: [number, number], to: [number, number]): RouteResult => {
-      const graph = graphRef.current;
-      const engine = engineRef.current;
-      if (!graph || !engine) throw new Error("engine not ready");
-      const env = VEHICLES[vehicleRef.current];
-
-      const usable = graph.nodes.filter(n =>
-        graph.segments.some(
-          s => (s.from_node === n.id || s.to_node === n.id) && permits(env, s)
-        )
-      );
-      const candidates = (pt: [number, number]) =>
-        usable
-          .map(n => ({
-            id: n.id,
-            d: haversineM(n.position, {
-              latitude_deg: pt[0],
-              longitude_deg: pt[1],
-            }),
-          }))
-          .filter(c => c.d <= MAX_SNAP_DISTANCE_M)
-          .sort((a, b) => a.d - b.d)
-          .slice(0, SNAP_CANDIDATES);
-
-      const fromCands = candidates(from);
-      const toCands = candidates(to);
-      const pairs = fromCands
-        .flatMap(f => toCands.map(t => ({ f, t, d: f.d + t.d })))
-        .sort((a, b) => a.d - b.d);
-
-      const segById = new Map(graph.segments.map(s => [s.id, s]));
-      for (const { f, t } of pairs) {
-        try {
-          const res = engine.route({
-            from_node: f.id,
-            to_node: t.id,
-            envelope: env,
-          });
-          if (!Number.isFinite(res.total_cost_s)) continue;
-          let distanceM = 0;
-          const polyline: [number, number][] = [];
-          for (const segId of res.segments) {
-            const seg = segById.get(segId);
-            if (!seg) continue;
-            distanceM += seg.length_m;
-            for (const g of seg.geometry)
-              polyline.push([g.longitude_deg, g.latitude_deg]);
-          }
-          return { distanceM, timeS: res.total_cost_s, polyline };
-        } catch {
-          // pair not connected for this vehicle — try the next one
-        }
-      }
-      throw new Error("no legal route for the selected vehicle");
-    },
-    []
-  );
-
   const drawRoute = useCallback((r: RouteResult | null) => {
+    routeRef.current = r;
     const map = mapRef.current;
     if (!map) return;
     const src = map.getSource("gane-route") as
@@ -280,43 +110,75 @@ export default function OpenNavigationMap({
     });
   }, []);
 
+  /** One shared compute path for clicks and vehicle switches. */
+  const recompute = useCallback(
+    (from: [number, number], to: [number, number], vehicleKey: string) => {
+      const engine = engineRef.current;
+      if (!engine) return;
+      try {
+        const geo = engine.routeGeo(
+          from[0],
+          from[1],
+          to[0],
+          to[1],
+          VEHICLE_PRESETS[vehicleKey]
+        );
+        const r: RouteResult = {
+          distanceM: geo.total_length_m,
+          timeS: geo.total_time_s,
+          // Engine polyline is (lat, lon); MapLibre wants (lon, lat).
+          polyline: geo.polyline.map(([lat, lon]) => [lon, lat]),
+        };
+        setRoute(r);
+        setRouteError(null);
+        drawRoute(r);
+      } catch (err) {
+        setRoute(null);
+        setRouteError(err instanceof Error ? err.message : String(err));
+        drawRoute(null);
+      }
+    },
+    [drawRoute]
+  );
+
   const handleClick = useCallback(
     (e: maplibregl.MapMouseEvent) => {
       onMapClick?.(e.lngLat.lat, e.lngLat.lng);
       const map = mapRef.current;
       if (!map || !engineRef.current) return;
 
-      if (clicksRef.current.length >= 2) {
-        clicksRef.current = [];
+      let base = clicks;
+      if (clicks.length >= 2) {
+        base = [];
         markersRef.current.forEach(m => m.remove());
         markersRef.current = [];
         setRoute(null);
         setRouteError(null);
         drawRoute(null);
       }
+      const next: [number, number][] = [...base, [e.lngLat.lat, e.lngLat.lng]];
 
-      clicksRef.current.push([e.lngLat.lat, e.lngLat.lng]);
       const marker = new maplibregl.Marker({
-        color: clicksRef.current.length === 1 ? "#22c55e" : "#ef4444",
+        color: next.length === 1 ? "#22c55e" : "#ef4444",
       })
         .setLngLat(e.lngLat)
         .addTo(map);
       markersRef.current.push(marker);
 
-      if (clicksRef.current.length === 2) {
-        try {
-          const r = computeRoute(clicksRef.current[0], clicksRef.current[1]);
-          setRoute(r);
-          setRouteError(null);
-          drawRoute(r);
-        } catch (err) {
-          setRoute(null);
-          setRouteError(err instanceof Error ? err.message : String(err));
-        }
-      }
+      setClicks(next);
     },
-    [computeRoute, drawRoute, onMapClick]
+    [clicks, drawRoute, onMapClick]
   );
+  // The map binds one listener at mount; this ref always points at the
+  // freshest closure so late prop changes (collab onMapClick) are honored.
+  const handleClickRef = useRef(handleClick);
+  handleClickRef.current = handleClick;
+
+  // Compute on destination click and recompute on vehicle switch —
+  // one effect, one code path.
+  useEffect(() => {
+    if (clicks.length === 2) recompute(clicks[0], clicks[1], vehicle);
+  }, [clicks, vehicle, recompute]);
 
   useEffect(() => {
     if (!containerRef.current) return;
@@ -366,17 +228,21 @@ export default function OpenNavigationMap({
     const ro = new ResizeObserver(() => map.resize());
     ro.observe(containerRef.current);
 
+    let disposed = false;
     const addOverlays = async () => {
       try {
         const [graphResp, engine] = await Promise.all([
-          fetch(GRAPH_URL),
+          fetch(engineAssetUrl(GRAPH_ASSET)),
           loadGaneEngine(),
         ]);
-        const graph = (await graphResp.json()) as RoadGraph;
-        graphRef.current = graph;
+        // One fetch, one parse: raw text feeds the engine (which parses in
+        // Rust); the overlay parses the same text once for rendering.
+        const graphText = await graphResp.text();
+        const graph = JSON.parse(graphText) as OverlayGraph;
+        if (disposed) return;
         engineRef.current = engine;
         if (engine) {
-          engine.loadGraph(JSON.stringify(graph));
+          engine.loadGraph(graphText);
           setStatus(
             `engine v${engine.version()} · ${graph.nodes.length} nodes · ${graph.segments.length} roads`
           );
@@ -429,9 +295,10 @@ export default function OpenNavigationMap({
                 "line-opacity": 0.95,
               },
             });
+            // A style swap wiped the sources; restore the active route.
+            drawRoute(routeRef.current);
           }
         };
-        // (Re-)install overlays on every style swap, including the offline fallback.
         if (map.isStyleLoaded()) install();
         map.on("style.load", install);
 
@@ -450,31 +317,18 @@ export default function OpenNavigationMap({
       }
     };
     void addOverlays();
-    map.on("click", handleClick);
+    const onClick = (e: maplibregl.MapMouseEvent) => handleClickRef.current(e);
+    map.on("click", onClick);
 
     return () => {
+      disposed = true;
       ro.disconnect();
-      map.off("click", handleClick);
+      map.off("click", onClick);
       map.remove();
       mapRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  // Re-route on vehicle change when both endpoints are set.
-  useEffect(() => {
-    if (clicksRef.current.length !== 2) return;
-    try {
-      const r = computeRoute(clicksRef.current[0], clicksRef.current[1]);
-      setRoute(r);
-      setRouteError(null);
-      drawRoute(r);
-    } catch (err) {
-      setRoute(null);
-      setRouteError(err instanceof Error ? err.message : String(err));
-      drawRoute(null);
-    }
-  }, [vehicle, computeRoute, drawRoute]);
 
   const minutes = route ? Math.max(1, Math.round(route.timeS / 60)) : 0;
 
@@ -491,7 +345,7 @@ export default function OpenNavigationMap({
 
       {/* Vehicle picker */}
       <div className="absolute left-1/2 top-24 z-20 flex -translate-x-1/2 gap-1 rounded-lg bg-slate-900/80 p-1 backdrop-blur">
-        {Object.keys(VEHICLES).map(v => (
+        {Object.keys(VEHICLE_PRESETS).map(v => (
           <button
             key={v}
             type="button"
@@ -502,7 +356,7 @@ export default function OpenNavigationMap({
                 : "text-slate-300 hover:bg-slate-700"
             }`}
           >
-            {VEHICLE_LABELS[v]}
+            {VEHICLE_LABELS[v] ?? v}
           </button>
         ))}
       </div>
@@ -525,7 +379,7 @@ export default function OpenNavigationMap({
           </span>
         ) : (
           <span className="text-slate-400">
-            {clicksRef.current.length === 1
+            {clicks.length === 1
               ? "click destination…"
               : "click map to set origin"}
           </span>

@@ -6,6 +6,7 @@
  * null when Workers/WASM are unavailable so callers keep fallback paths.
  */
 
+import { engineAssetUrl } from "./ganeWasmBridge";
 import type { GaneFusedState, GaneVehicleEnvelope } from "./ganeWasmBridge";
 
 export interface GaneGeoRoute {
@@ -109,10 +110,9 @@ export class GaneEngineWorkerClient {
   static async spawn(): Promise<GaneEngineWorkerClient | null> {
     try {
       if (typeof Worker === "undefined") return null;
-      const worker = new Worker(
-        `${import.meta.env.BASE_URL}engine/gane.worker.js`,
-        { type: "module" }
-      );
+      const worker = new Worker(engineAssetUrl("gane.worker.js"), {
+        type: "module",
+      });
       const client = new GaneEngineWorkerClient(worker);
       const version = await client.call<string>("init");
       console.info(

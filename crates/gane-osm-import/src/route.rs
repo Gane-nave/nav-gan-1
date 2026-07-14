@@ -2,12 +2,15 @@
 //! shortest path. This is the same call path the product uses — CLI and WASM
 //! are thin shells over it.
 
+use std::collections::HashMap;
+
 use gane_core::map::RoadGraph;
 use gane_core::types::EntityId;
 use gane_core::vehicle::VehicleEnvelope;
 use gane_map::graph::RoadGraphIndex;
 use gane_routing::dijkstra::{cost, shortest_path, CostFn};
 use gane_routing::vehicle_aware::by_time_for_vehicle;
+use gane_unionfind::UnionFind;
 use serde::Serialize;
 
 use crate::builder::haversine_m;
@@ -44,24 +47,6 @@ pub fn nearest_node(graph: &RoadGraph, lat: f64, lon: f64) -> Option<EntityId> {
         .map(|n| n.id)
 }
 
-/// Snap a coordinate to the nearest node the vehicle can actually use — one
-/// with at least one incident segment the envelope permits. Plain nearest-node
-/// snapping strands motor vehicles on footway/cycleway nodes: on real OSM data
-/// nearly half the network can be non-drivable, and a car queried from a park
-/// bench would get "no legal route" with a road 30 m away.
-pub fn nearest_usable_node(
-    graph: &RoadGraph,
-    index: &RoadGraphIndex,
-    lat: f64,
-    lon: f64,
-    envelope: &VehicleEnvelope,
-) -> Option<EntityId> {
-    usable_candidates(graph, index, lat, lon, envelope, 1)
-        .into_iter()
-        .next()
-        .map(|(id, _)| id)
-}
-
 /// The `k` nearest envelope-usable nodes with their snap distance in meters,
 /// nearest first. Multiple candidates matter because the single nearest
 /// usable node can sit in a car-disconnected island (a cul-de-sac cluster
@@ -92,8 +77,14 @@ pub fn usable_candidates(
         })
         .map(|n| (n.id, haversine_m(&n.position, &probe)))
         .collect();
+    // Select-k before sorting: O(N + k log k) instead of O(N log N).
+    if candidates.len() > k && k > 0 {
+        candidates.select_nth_unstable_by(k - 1, |a, b| {
+            a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal)
+        });
+        candidates.truncate(k);
+    }
     candidates.sort_by(|a, b| a.1.partial_cmp(&b.1).unwrap_or(std::cmp::Ordering::Equal));
-    candidates.truncate(k);
     candidates
 }
 
@@ -115,19 +106,14 @@ pub fn route_geo(
     const SNAP_CANDIDATES: usize = 64;
     /// A snap farther than this is a wrong answer, not a fallback.
     const MAX_SNAP_DISTANCE_M: f64 = 1_500.0;
-    /// Bound on pair attempts — the full candidate product. Failed searches
-    /// only explore the stranded island they start in, so even exhausting
-    /// every pair stays fast; a tighter cap was observed to cut off the
-    /// first connectable pair on real clipped extracts.
-    const MAX_PAIR_ATTEMPTS: usize = SNAP_CANDIDATES * SNAP_CANDIDATES;
 
     type Candidates = Vec<(EntityId, f64)>;
     let constrained = envelope.is_some();
-    let (cost_fn, from_cands, to_cands): (CostFn, Candidates, Candidates) = match envelope {
+    let (cost_fn, from_cands, to_cands): (CostFn, Candidates, Candidates) = match &envelope {
         Some(env) => (
             by_time_for_vehicle(env.clone()),
-            usable_candidates(graph, index, from.0, from.1, &env, SNAP_CANDIDATES),
-            usable_candidates(graph, index, to.0, to.1, &env, SNAP_CANDIDATES),
+            usable_candidates(graph, index, from.0, from.1, env, SNAP_CANDIDATES),
+            usable_candidates(graph, index, to.0, to.1, env, SNAP_CANDIDATES),
         ),
         None => (
             Box::new(cost::by_time),
@@ -139,6 +125,32 @@ pub fn route_geo(
                 .unwrap_or_default(),
         ),
     };
+
+    // Component pre-filter: union-find over envelope-permitted segments
+    // (undirected, O(S α)) lets us skip candidate pairs in different
+    // components without running a single Dijkstra. Without this, a
+    // main-network from-candidate paired with a stranded to-candidate
+    // floods the entire network once per failed pair. One-way asymmetry
+    // can still fail a uf-connected pair, so the fallback loop remains.
+    let node_idx: HashMap<EntityId, usize> = graph
+        .nodes
+        .iter()
+        .enumerate()
+        .map(|(i, n)| (n.id, i))
+        .collect();
+    let mut uf = UnionFind::new(graph.nodes.len());
+    for seg in &graph.segments {
+        let permitted = match &envelope {
+            Some(env) => env.permits(seg).is_ok(),
+            None => true,
+        };
+        if permitted {
+            if let (Some(&a), Some(&b)) = (node_idx.get(&seg.from_node), node_idx.get(&seg.to_node))
+            {
+                uf.union(a, b);
+            }
+        }
+    }
 
     // Try candidate pairs in order of combined snap distance so the route
     // still starts as close to the request as the network allows.
@@ -153,18 +165,23 @@ pub fn route_geo(
         })
         .collect();
     pairs.sort_by(|a, b| a.2.partial_cmp(&b.2).unwrap_or(std::cmp::Ordering::Equal));
-    pairs.truncate(MAX_PAIR_ATTEMPTS);
 
     let (from_id, to_id, path) = pairs.into_iter().find_map(|(f, t, _)| {
+        match (node_idx.get(&f), node_idx.get(&t)) {
+            (Some(&fi), Some(&ti)) if !uf.connected(fi, ti) => return None,
+            _ => {}
+        }
         shortest_path(index, f, t, &cost_fn)
             .filter(|p| p.total_cost.is_finite())
             .map(|p| (f, t, p))
     })?;
 
+    let seg_by_id: HashMap<EntityId, &gane_core::map::RoadSegment> =
+        graph.segments.iter().map(|s| (s.id, s)).collect();
     let mut total_length_m = 0.0;
     let mut polyline: Vec<(f64, f64)> = Vec::new();
     for seg_id in &path.segments {
-        if let Some(seg) = graph.segments.iter().find(|s| s.id == *seg_id) {
+        if let Some(seg) = seg_by_id.get(seg_id) {
             total_length_m += seg.length_m;
             for g in &seg.geometry {
                 polyline.push((g.latitude_deg, g.longitude_deg));
@@ -290,7 +307,10 @@ mod tests {
         );
 
         let car = envelope_by_name("car").unwrap();
-        let usable = nearest_usable_node(&graph, &index, probe.0, probe.1, &car).unwrap();
+        let usable = usable_candidates(&graph, &index, probe.0, probe.1, &car, 1)
+            .first()
+            .map(|(id, _)| *id)
+            .unwrap();
         let usable_node = graph.nodes.iter().find(|n| n.id == usable).unwrap();
         assert!(
             (usable_node.position.latitude_deg - 32.0800).abs() < 1e-6,

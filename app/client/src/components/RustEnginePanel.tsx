@@ -16,20 +16,13 @@ import {
   GaneEngineWorkerClient,
   type GaneGeoRoute,
 } from "@/engine/ganeEngineClient";
+import { engineAssetUrl, VEHICLE_PRESETS } from "@/engine/ganeWasmBridge";
 import type { GaneFusedState } from "@/engine/ganeWasmBridge";
 
 const ORIGIN: [number, number] = [32.08, 34.78];
 const DEST: [number, number] = [32.09, 34.78];
 
-const HEAVY_TRUCK = {
-  class: "heavy_truck" as const,
-  height_m: 4.2,
-  width_m: 2.55,
-  length_m: 16.5,
-  weight_kg: 26000,
-  axle_count: 5,
-  hazmat: false,
-};
+const HEAVY_TRUCK = VEHICLE_PRESETS.truck;
 
 interface EngineDemoState {
   status: "loading" | "ready" | "unavailable";
@@ -89,7 +82,7 @@ export default function RustEnginePanel({ onClose }: { onClose: () => void }) {
 
         // Vehicle-aware routing on the imported demo graph.
         const graphJson = await (
-          await fetch(`${import.meta.env.BASE_URL}engine/demo-graph.json`)
+          await fetch(engineAssetUrl("demo-graph.json"))
         ).text();
         const graphNodes = await client.loadGraph(graphJson);
         const car = await client.routeGeo(...ORIGIN, ...DEST);

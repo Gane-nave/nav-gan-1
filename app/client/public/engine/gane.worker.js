@@ -15,8 +15,8 @@ let engine = null;
 
 async function ensureEngine() {
   if (engine) return engine;
-  const mod = await import("/engine/gane_wasm.js");
-  await mod.default({ module_or_path: "/engine/gane_wasm_bg.wasm" });
+  const mod = await import("./gane_wasm.js");
+  await mod.default({ module_or_path: new URL("./gane_wasm_bg.wasm", import.meta.url) });
   engine = new mod.GaneEngine();
   return engine;
 }
