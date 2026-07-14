@@ -13,6 +13,7 @@
 - **Offline-first**: boots on an inline style with zero external fetches; the imported road network doubles as the basemap when tiles are unreachable
 - **Click-to-route**: first click sets origin, second computes a vehicle-aware route (car / van / truck / bus / emergency), switching vehicles re-routes live
 - **Installable PWA** with self-contained icons and a base-path-aware service worker
+- **Scope note**: the live deployment is the static client — map, engine, routing, and PWA run fully in-browser; server-backed features (auth, live collaboration, fleet telemetry) stay in demo mode until a backend host is provisioned
 - **Regions are data-driven**: add a city by running `gane-osm-import` on an OSM extract and dropping the graph JSON + one entry in `app/client/public/engine/regions.json`
 
 ## Monorepo layout
