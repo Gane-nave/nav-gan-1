@@ -1,0 +1,15 @@
+{
+  "regions": [
+    {
+      "id": "kouvola",
+      "name": "Kouvola \u00b7 Finland",
+      "graph": "kouvola-graph.json",
+      "center": [
+        26.95,
+        60.53
+      ],
+      "zoom": 13,
+      "attribution": "Real OSM extract (ODbL)"
+    }
+  ]
+}

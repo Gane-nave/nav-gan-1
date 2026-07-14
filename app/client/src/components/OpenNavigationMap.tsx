@@ -26,7 +26,23 @@ import {
 } from "@/engine/ganeWasmBridge";
 
 const TILE_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
-const GRAPH_ASSET = "kouvola-graph.json";
+
+/** Region registry: add a city by dropping a graph JSON + one entry in
+ *  public/engine/regions.json — no code changes. */
+interface Region {
+  id: string;
+  name: string;
+  graph: string;
+  center: [number, number]; // [lon, lat]
+  zoom: number;
+}
+const DEFAULT_REGION: Region = {
+  id: "kouvola",
+  name: "Kouvola · Finland",
+  graph: "kouvola-graph.json",
+  center: [26.95, 60.53],
+  zoom: 13,
+};
 
 // ── Graph overlay schema (subset of the importer's output we render) ───────
 
@@ -85,6 +101,7 @@ export default function OpenNavigationMap({
 
   const [clicks, setClicks] = useState<[number, number][]>([]); // [lat, lon]
   const [status, setStatus] = useState("loading engine…");
+  const [regionName, setRegionName] = useState<string | null>(null);
   const [vehicle, setVehicle] = useState("car");
   const [route, setRoute] = useState<RouteResult | null>(null);
   const [routeError, setRouteError] = useState<string | null>(null);
@@ -231,8 +248,14 @@ export default function OpenNavigationMap({
     let disposed = false;
     const addOverlays = async () => {
       try {
+        const region: Region = await fetch(engineAssetUrl("regions.json"))
+          .then(r => (r.ok ? r.json() : null))
+          .then(m => m?.regions?.[0] ?? DEFAULT_REGION)
+          .catch(() => DEFAULT_REGION);
+        setRegionName(region.name);
+        map.jumpTo({ center: region.center, zoom: region.zoom });
         const [graphResp, engine] = await Promise.all([
-          fetch(engineAssetUrl(GRAPH_ASSET)),
+          fetch(engineAssetUrl(region.graph)),
           loadGaneEngine(),
         ]);
         // One fetch, one parse: raw text feeds the engine (which parses in
@@ -340,7 +363,8 @@ export default function OpenNavigationMap({
 
       {/* Status chip */}
       <div className="pointer-events-none absolute left-1/2 top-16 z-20 -translate-x-1/2 rounded-lg bg-slate-900/80 px-3 py-1.5 font-mono text-xs text-emerald-300 backdrop-blur">
-        G.A.N.E · {status}
+        G.A.N.E · {regionName ? `${regionName} · ` : ""}
+        {status}
       </div>
 
       {/* Vehicle picker */}
