@@ -4,6 +4,17 @@
 
 > Canonical engineering documents: [`SYSTEM-REVIEW.md`](./SYSTEM-REVIEW.md) · [`GANE-NAV-MASTER-BLUEPRINT.md`](./GANE-NAV-MASTER-BLUEPRINT.md) · [`docs/PHASE1-TECHNICAL-DESIGN.md`](./docs/PHASE1-TECHNICAL-DESIGN.md)
 
+## 🌍 Live app
+
+**https://gane-nave.github.io/nav-gan-1/** — the web client, deployed from `main` on every push.
+
+- **Fully open stack, zero API keys**: MapLibre GL (BSD-3) + OpenFreeMap vector tiles (free, no registration) + OpenStreetMap data (ODbL)
+- **The Rust engine runs in your browser**: routing is computed by `gane-wasm` (vehicle-aware snapping, legality constraints, multi-candidate fallback) — the same code path as the CLI and server; the deploy pipeline rebuilds the WASM on every release so the engine can never go stale
+- **Offline-first**: boots on an inline style with zero external fetches; the imported road network doubles as the basemap when tiles are unreachable
+- **Click-to-route**: first click sets origin, second computes a vehicle-aware route (car / van / truck / bus / emergency), switching vehicles re-routes live
+- **Installable PWA** with self-contained icons and a base-path-aware service worker
+- **Regions are data-driven**: add a city by running `gane-osm-import` on an OSM extract and dropping the graph JSON + one entry in `app/client/public/engine/regions.json`
+
 ## Monorepo layout
 
 ```

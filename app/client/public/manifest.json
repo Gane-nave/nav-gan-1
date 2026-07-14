@@ -7,42 +7,46 @@
   "orientation": "any",
   "background_color": "#0a0a1a",
   "theme_color": "#0a0a1a",
-  "categories": ["navigation", "utilities", "productivity"],
+  "categories": [
+    "navigation",
+    "utilities",
+    "productivity"
+  ],
   "lang": "en",
   "dir": "auto",
   "scope": "./",
   "icons": [
     {
-      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-192_173d3e9e.png",
+      "src": "./icons/gane-icon-192.png",
       "sizes": "192x192",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-384_6c235625.png",
+      "src": "./icons/gane-icon-384.png",
       "sizes": "384x384",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-512_9928fdeb.png",
+      "src": "./icons/gane-icon-512.png",
       "sizes": "512x512",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/png"
     },
     {
-      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-192_173d3e9e.png",
+      "src": "./icons/gane-icon-192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "maskable"
     },
     {
-      "src": "https://d2xsxph8kpxj0f.cloudfront.net/97884477/Po7Xs3DDU8PjnGuUqXZUkr/gane-icon-512_9928fdeb.png",
+      "src": "./icons/gane-icon-512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "prefer_related_applications": false,
-  "display_override": ["standalone", "window-controls-overlay"]
+  "display_override": [
+    "standalone",
+    "window-controls-overlay"
+  ]
 }
