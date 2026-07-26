@@ -921,13 +921,38 @@ export class PolicyEngine {
     }
   }
 
+  /**
+   * Stable, order-independent serialization of the whole context.
+   *
+   * Rules may read ANY field, so the cache key must cover any field —
+   * a hand-picked subset silently replays another journey's verdict. This
+   * previously keyed on vehicle class, origin and hour only, so a hazmat
+   * truck cleared on one trip kept `allowed: true` for a different
+   * destination through tunnels. Serializing everything also means a field
+   * added to PolicyContext later cannot reintroduce the same class of bug.
+   */
+  private serializeContext(value: unknown): string {
+    if (value === null || typeof value !== 'object') return JSON.stringify(value) ?? 'null';
+    if (Array.isArray(value)) return `[${value.map(v => this.serializeContext(v)).join(',')}]`;
+    const entries = Object.entries(value as Record<string, unknown>)
+      .filter(([, v]) => v !== undefined)
+      .sort(([a], [b]) => (a < b ? -1 : a > b ? 1 : 0));
+    return `{${entries.map(([k, v]) => `${k}:${this.serializeContext(v)}`).join(',')}}`;
+  }
+
   private hashContext(context: PolicyContext): string {
-    const key = `${context.vehicle.class}:${context.route.origin.lat},${context.route.origin.lon}:${context.time.hour}`;
-    let hash = 0;
+    const key = this.serializeContext(context);
+    // 64-bit-ish: two independent 32-bit accumulators. A single 32-bit hash
+    // collides often enough to matter once the key covers the full context,
+    // and a collision here silently returns the wrong compliance verdict.
+    let h1 = 0x811c9dc5;
+    let h2 = 0xc2b2ae35;
     for (let i = 0; i < key.length; i++) {
-      hash = ((hash << 5) - hash + key.charCodeAt(i)) | 0;
+      const c = key.charCodeAt(i);
+      h1 = ((h1 << 5) - h1 + c) | 0;
+      h2 = (Math.imul(h2 ^ c, 0x5bd1e995) + i) | 0;
     }
-    return Math.abs(hash).toString(36);
+    return `${Math.abs(h1).toString(36)}.${Math.abs(h2).toString(36)}`;
   }
 
   private computeCacheKey(context: PolicyContext): string {
