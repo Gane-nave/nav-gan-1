@@ -1,7 +1,7 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'com.gane.navigator',
+  appId: 'com.gane.nav',
   appName: 'G.A.N.E Navigator',
   webDir: 'www',
   backgroundColor: '#03060C',
