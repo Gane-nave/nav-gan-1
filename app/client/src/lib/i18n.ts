@@ -188,7 +188,14 @@ export type TranslationKey =
   // Risk factors
   | 'risk.weather' | 'risk.seismic' | 'risk.position'
   // Metrics
-  | 'metric.temperature' | 'metric.humidity' | 'metric.windSpeed' | 'metric.pressure';
+  | 'metric.temperature' | 'metric.humidity' | 'metric.windSpeed' | 'metric.pressure'
+  // Open navigation map
+  | 'map.aria.label' | 'map.aria.instructions' | 'map.aria.vehiclePicker' | 'map.aria.routeStatus'
+  | 'map.hint.origin' | 'map.hint.destination'
+  | 'map.status.loading' | 'map.status.engineUnavailable' | 'map.status.graphUnavailable'
+  | 'map.status.nodes' | 'map.status.roads'
+  | 'map.vehicle.car' | 'map.vehicle.van' | 'map.vehicle.truck' | 'map.vehicle.bus' | 'map.vehicle.emergency'
+  | 'map.route.km' | 'map.route.min' | 'map.error.noRoute';
 
 type Translations = Record<TranslationKey, string>;
 
@@ -196,6 +203,14 @@ type Translations = Record<TranslationKey, string>;
 // ENGLISH (Base Language)
 // ═══════════════════════════════════════════════════════════
 const en: Translations = {
+  // Open navigation map
+  'map.aria.label': 'Interactive navigation map', 'map.aria.instructions': 'Press Enter or Space to place a point at the map center: first sets the origin, second computes the route. Arrow keys pan the map.',
+  'map.aria.vehiclePicker': 'Vehicle type', 'map.aria.routeStatus': 'Route status',
+  'map.hint.origin': 'click or press Enter to set origin', 'map.hint.destination': 'set destination…',
+  'map.status.loading': 'loading engine…', 'map.status.engineUnavailable': 'engine unavailable — map only',
+  'map.status.graphUnavailable': 'road graph unavailable', 'map.status.nodes': 'nodes', 'map.status.roads': 'roads',
+  'map.vehicle.car': 'Car', 'map.vehicle.van': 'Van', 'map.vehicle.truck': 'Truck', 'map.vehicle.bus': 'Bus', 'map.vehicle.emergency': 'Emergency',
+  'map.route.km': 'km', 'map.route.min': 'min', 'map.error.noRoute': 'No legal route for the selected vehicle',
   // Navigation & App
   'nav.home': 'Home', 'nav.spec': 'G.A.N.E Specification', 'nav.gane': 'G.A.N.E', 'nav.search': 'Search specification...',
   'home.title': 'Global Advanced Navigation Engine', 'home.subtitle': 'Comprehensive Engineering Master Specification for a decentralized, defense-grade infrastructure managing global traffic networks at continental scale.',
@@ -329,6 +344,14 @@ const en: Translations = {
 // HEBREW
 // ═══════════════════════════════════════════════════════════
 const he: Translations = {
+  // מפת ניווט פתוחה
+  'map.aria.label': 'מפת ניווט אינטראקטיבית', 'map.aria.instructions': 'הקש Enter או רווח כדי למקם נקודה במרכז המפה: הראשונה מגדירה מוצא, השנייה מחשבת מסלול. מקשי החצים מזיזים את המפה.',
+  'map.aria.vehiclePicker': 'סוג רכב', 'map.aria.routeStatus': 'מצב המסלול',
+  'map.hint.origin': 'לחץ או הקש Enter לבחירת מוצא', 'map.hint.destination': 'בחר יעד…',
+  'map.status.loading': 'טוען מנוע…', 'map.status.engineUnavailable': 'המנוע לא זמין — מפה בלבד',
+  'map.status.graphUnavailable': 'רשת הכבישים לא זמינה', 'map.status.nodes': 'צמתים', 'map.status.roads': 'כבישים',
+  'map.vehicle.car': 'רכב', 'map.vehicle.van': 'מסחרי', 'map.vehicle.truck': 'משאית', 'map.vehicle.bus': 'אוטובוס', 'map.vehicle.emergency': 'חירום',
+  'map.route.km': 'ק"מ', 'map.route.min': 'דק׳', 'map.error.noRoute': 'אין מסלול חוקי לרכב שנבחר',
   'nav.home': 'בית', 'nav.spec': 'מפרט G.A.N.E', 'nav.gane': 'G.A.N.E', 'nav.search': 'חיפוש במפרט...',
   'home.title': 'מנוע ניווט מתקדם גלובלי', 'home.subtitle': 'מפרט הנדסי מלא למערכת תשתית מבוזרת ברמת הגנה לניהול רשתות תנועה גלובליות בקנה מידה יבשתי.',
   'home.cta': 'צפייה במפרט', 'home.explore': 'חקור G.A.N.E',
@@ -457,6 +480,14 @@ const he: Translations = {
 // ARABIC
 // ═══════════════════════════════════════════════════════════
 const ar: Translations = {
+  // خريطة ملاحة مفتوحة
+  'map.aria.label': 'خريطة ملاحة تفاعلية', 'map.aria.instructions': 'اضغط Enter أو المسافة لوضع نقطة في مركز الخريطة: الأولى تحدد نقطة البداية والثانية تحسب المسار. مفاتيح الأسهم تحرك الخريطة.',
+  'map.aria.vehiclePicker': 'نوع المركبة', 'map.aria.routeStatus': 'حالة المسار',
+  'map.hint.origin': 'انقر أو اضغط Enter لتحديد نقطة البداية', 'map.hint.destination': 'حدد الوجهة…',
+  'map.status.loading': 'جارٍ تحميل المحرك…', 'map.status.engineUnavailable': 'المحرك غير متاح — الخريطة فقط',
+  'map.status.graphUnavailable': 'شبكة الطرق غير متاحة', 'map.status.nodes': 'عقد', 'map.status.roads': 'طرق',
+  'map.vehicle.car': 'سيارة', 'map.vehicle.van': 'شاحنة صغيرة', 'map.vehicle.truck': 'شاحنة', 'map.vehicle.bus': 'حافلة', 'map.vehicle.emergency': 'طوارئ',
+  'map.route.km': 'كم', 'map.route.min': 'دقيقة', 'map.error.noRoute': 'لا يوجد مسار قانوني للمركبة المحددة',
   'nav.home': 'الرئيسية', 'nav.spec': 'مواصفات G.A.N.E', 'nav.gane': 'G.A.N.E', 'nav.search': 'البحث في المواصفات...',
   'home.title': 'محرك الملاحة المتقدم العالمي', 'home.subtitle': 'مواصفات هندسية شاملة لبنية تحتية لامركزية بدرجة دفاعية لإدارة شبكات المرور العالمية.',
   'home.cta': 'استكشاف المواصفات', 'home.explore': 'استكشاف G.A.N.E',

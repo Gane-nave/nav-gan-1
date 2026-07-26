@@ -6,7 +6,7 @@
 
 ## 🌍 Live app
 
-**https://gane-nave.github.io/nav-gan-1/** — the web client, deployed from `main` on every push.
+**https://gane-nave.github.io/nav-gan-1/** — the web client, rebuilt and redeployed by CI on every push to the default branch (engine WASM included, so the browser never runs a stale engine).
 
 - **Fully open stack, zero API keys**: MapLibre GL (BSD-3) + OpenFreeMap vector tiles (free, no registration) + OpenStreetMap data (ODbL)
 - **The Rust engine runs in your browser**: routing is computed by `gane-wasm` (vehicle-aware snapping, legality constraints, multi-candidate fallback) — the same code path as the CLI and server; the deploy pipeline rebuilds the WASM on every release so the engine can never go stale
@@ -28,7 +28,7 @@ crates/        Rust navigation engine workspace — 264 crates, all real or conn
                ├─ gane-osm-import: Overpass JSON -> restriction-aware road graphs + geo CLI
                └─ gane-replay-verify: golden-trace harness (native/WASM bit-identity)
 app/           TypeScript product application (React 19 PWA + Express/tRPC + MySQL/Drizzle)
-               58 panels, 49 client engines, 22 executable contract modules, 33-table schema,
+               41 panels, 51 client engines, 22 executable contract modules, 32-table schema,
                40+ languages with full RTL, 11-type vehicle profile system
 mobile/        Android delivery channel (Capacitor + raw-GNSS plugin + TWA packaging,
                app id com.gane.nav) with a zero-dependency verified missions backend
@@ -39,11 +39,11 @@ docs/          Technical designs and engineering documentation
 
 - Engine: **264 crates, every one real or dependency-connected** — the ~2,190
   generated placeholder crates were removed (they live in git history only).
-- **5,066 engine tests — all green** (incl. 88 adversarial test files and
+- **5,067 engine tests — all green** (incl. 88 adversarial test files and
   cross-crate e2e suites); full workspace compile in ~20 s.
 - The engine **builds, runs, and serves**: `cargo run -p gane-app` → REST API on :3000
   (`/health`, `/position`, `/integrity`, `/metrics`, OpenAPI + Swagger) + live dashboard.
-- The navigation core **compiles to WASM** (`gane-wasm`, ~630 KB release artifact) — one
+- The navigation core **compiles to WASM** (`gane-wasm`, ~316 KB shipped wasm-bindgen artifact) — one
   engine for server, browser, and Android.
 - Vehicle-envelope routing enforced as hard constraints: an illegal route for the given
   vehicle (height/weight/hazmat/road class) is never returned.
@@ -80,11 +80,12 @@ docker compose up --build
 
 ## CI
 
-Seven gates on every PR: Build & Check, Clippy (`-D warnings`), full test suite with
+Nine gates on every PR: Build & Check, Clippy (`-D warnings`), full test suite with
 count gate, Format, Benchmarks Compile, Documentation (`RUSTDOCFLAGS=-D warnings`),
-and **WASM Core Check** (the navigation core must always compile for
-`wasm32-unknown-unknown`). All actions are pinned to full commit SHAs per org policy.
+**WASM Core Check** (the navigation core must always compile for
+`wasm32-unknown-unknown`), **App** (tsc + vitest), and **Mobile**. All actions are
+pinned to full commit SHAs per org policy.
 
 ## License
 
-MIT
+MIT — see [`LICENSE`](./LICENSE). Contributions welcome; see [`CONTRIBUTING.md`](./CONTRIBUTING.md).

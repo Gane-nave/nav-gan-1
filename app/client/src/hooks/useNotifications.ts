@@ -16,6 +16,7 @@
  * - Notification sound engine (Web Audio API)
  */
 import { useCallback, useEffect, useRef } from "react";
+import { shouldShowNotification } from "@/lib/notificationThrottle";
 import { trpc } from "@/lib/trpc";
 import { toast } from "sonner";
 
@@ -198,6 +199,25 @@ export function useNotifications() {
     function handleNotification(e: Event) {
       const { detail } = e as CustomEvent<NotificationEventDetail>;
       const prefs = preferencesRef.current;
+
+      // Throttle repeats before anything user-visible happens. Without this a
+      // stuck upstream condition re-fires the same alert every tick — the
+      // "warnings appear every second" defect. Per-message cooldown lives in
+      // lib/notificationThrottle so sound and toast stay in lockstep.
+      const throttleType =
+        detail.notificationType === "error" ||
+        detail.notificationType === "warning" ||
+        detail.notificationType === "success"
+          ? detail.notificationType
+          : "info";
+      if (
+        !shouldShowNotification(
+          `${detail.title}|${detail.message ?? ""}`,
+          throttleType
+        )
+      ) {
+        return;
+      }
 
       // Play sound if enabled
       if (prefs?.enableSound !== false) {
