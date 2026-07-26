@@ -85,35 +85,82 @@ function encodeGeohash(lat: number, lon: number, precision: number = 7): string 
   return hash;
 }
 
-function geohashNeighbors(hash: string): string[] {
-  // Simplified: return the 8 neighboring geohashes
-  // For production, use proper neighbor calculation
-  const neighbors: string[] = [];
-  const prefix = hash.slice(0, -1);
-  const lastChar = hash[hash.length - 1];
-  const idx = GEOHASH_CHARS.indexOf(lastChar);
-
-  for (let d = -1; d <= 1; d++) {
-    const ni = idx + d;
-    if (ni >= 0 && ni < GEOHASH_CHARS.length) {
-      neighbors.push(prefix + GEOHASH_CHARS[ni]);
-    }
-  }
-
-  // Also add prefix-level neighbors
-  if (prefix.length > 0) {
-    const prefixLast = prefix[prefix.length - 1];
-    const prefixIdx = GEOHASH_CHARS.indexOf(prefixLast);
-    for (let d = -1; d <= 1; d++) {
-      const ni = prefixIdx + d;
-      if (ni >= 0 && ni < GEOHASH_CHARS.length) {
-        const newPrefix = prefix.slice(0, -1) + GEOHASH_CHARS[ni];
-        neighbors.push(newPrefix + lastChar);
+/** Decode a geohash to the lat/lon bounds of its cell. */
+function geohashBounds(hash: string): {
+  latMin: number;
+  latMax: number;
+  lonMin: number;
+  lonMax: number;
+} {
+  let latMin = -90;
+  let latMax = 90;
+  let lonMin = -180;
+  let lonMax = 180;
+  let isLon = true;
+  for (const c of hash) {
+    const idx = GEOHASH_CHARS.indexOf(c);
+    if (idx < 0) continue;
+    for (let b = 4; b >= 0; b--) {
+      const bit = (idx >> b) & 1;
+      if (isLon) {
+        const mid = (lonMin + lonMax) / 2;
+        if (bit) lonMin = mid;
+        else lonMax = mid;
+      } else {
+        const mid = (latMin + latMax) / 2;
+        if (bit) latMin = mid;
+        else latMax = mid;
       }
+      isLon = !isLon;
     }
   }
+  return { latMin, latMax, lonMin, lonMax };
+}
 
-  return Array.from(new Set(neighbors)).filter(n => n !== hash);
+/**
+ * Every geohash cell whose area can intersect a circle of `radiusM`.
+ *
+ * Two defects lived here. Adjacency was computed by stepping the base-32
+ * character index, which has no relation to geographic adjacency — geohash
+ * characters interleave latitude and longitude bits — and the search then
+ * looked at a fixed 3x3 block regardless of the requested radius (~460 m at
+ * precision 7), so a 25 km query from Tel Aviv missed Herzliya at 10.7 km.
+ * Cells are derived by decoding the centre to its bounds and stepping whole
+ * cell widths, with the ring size taken from the radius.
+ *
+ * Bounded so a huge radius on a fine precision cannot enumerate the planet:
+ * past the cap the caller is better served by a full scan, and the distance
+ * filter downstream keeps the result correct either way.
+ */
+function cellsCovering(
+  lat: number,
+  lon: number,
+  radiusM: number,
+  precision: number
+): string[] {
+  const center = encodeGeohash(lat, lon, precision);
+  const b = geohashBounds(center);
+  const latStep = b.latMax - b.latMin;
+  const lonStep = b.lonMax - b.lonMin;
+
+  const latM = 111_320;
+  const lonM = Math.max(1, 111_320 * Math.cos((lat * Math.PI) / 180));
+  const MAX_RING = 32; // 65x65 cells; beyond this a scan is cheaper
+  const ringLat = Math.min(MAX_RING, Math.ceil(radiusM / Math.max(1, latStep * latM)));
+  const ringLon = Math.min(MAX_RING, Math.ceil(radiusM / Math.max(1, lonStep * lonM)));
+
+  const out = new Set<string>();
+  for (let i = -ringLat; i <= ringLat; i++) {
+    const nLat = lat + i * latStep;
+    if (nLat > 90 || nLat < -90) continue;
+    for (let j = -ringLon; j <= ringLon; j++) {
+      let nLon = lon + j * lonStep;
+      if (nLon > 180) nLon -= 360;
+      if (nLon < -180) nLon += 360;
+      out.add(encodeGeohash(nLat, nLon, precision));
+    }
+  }
+  return Array.from(out);
 }
 
 function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
@@ -196,7 +243,11 @@ export class GeospatialIndex {
    */
   findNearby(lat: number, lon: number, radiusM: number, limit: number = 100): NearbyResult[] {
     const centerHash = encodeGeohash(lat, lon, this.precision);
-    const searchHashes = [centerHash, ...geohashNeighbors(centerHash)];
+    // Cover the whole search circle, not just the adjacent ring. A cell at
+    // precision 7 is ~150 m across, so the old fixed 3x3 block silently
+    // dropped every point beyond ~230 m — a 25 km query missed a town 10.7 km
+    // away. Derive the ring radius from the requested radius instead.
+    const searchHashes = cellsCovering(lat, lon, radiusM, this.precision);
 
     const results: NearbyResult[] = [];
 
