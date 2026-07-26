@@ -24,6 +24,7 @@ import {
   VEHICLE_PRESETS,
   type GaneEngineBridge,
 } from "@/engine/ganeWasmBridge";
+import { useLanguage } from "@/contexts/LanguageContext";
 
 const TILE_STYLE_URL = "https://tiles.openfreemap.org/styles/liberty";
 
@@ -56,13 +57,21 @@ interface OverlayGraph {
   segments: { geometry: GraphPosition[]; road_class: string }[];
 }
 
-const VEHICLE_LABELS: Record<string, string> = {
-  car: "🚗 Car",
-  van: "🚐 Van",
-  truck: "🚛 Truck",
-  bus: "🚌 Bus",
-  emergency: "🚑 Emergency",
+/** Emoji only — the readable name comes from i18n (`map.vehicle.*`). */
+const VEHICLE_ICONS: Record<string, string> = {
+  car: "🚗",
+  van: "🚐",
+  truck: "🚛",
+  bus: "🚌",
+  emergency: "🚑",
 };
+
+/** Engine status as data, so it re-renders translated when the language changes. */
+type EngineStatus =
+  | { kind: "loading" }
+  | { kind: "ready"; version: string; nodes: number; roads: number }
+  | { kind: "engineUnavailable" }
+  | { kind: "graphUnavailable" };
 
 /** Road-class → overlay color (dark-theme friendly). */
 const CLASS_COLORS: Record<string, string> = {
@@ -100,7 +109,8 @@ export default function OpenNavigationMap({
   const routeRef = useRef<RouteResult | null>(null);
 
   const [clicks, setClicks] = useState<[number, number][]>([]); // [lat, lon]
-  const [status, setStatus] = useState("loading engine…");
+  const { t, dir } = useLanguage();
+  const [status, setStatus] = useState<EngineStatus>({ kind: "loading" });
   const [regionName, setRegionName] = useState<string | null>(null);
   const [vehicle, setVehicle] = useState("car");
   const [route, setRoute] = useState<RouteResult | null>(null);
@@ -149,18 +159,23 @@ export default function OpenNavigationMap({
         setRoute(r);
         setRouteError(null);
         drawRoute(r);
-      } catch (err) {
+      } catch {
+        // The engine's only failure mode here is "no legal route"; surface it
+        // translated rather than leaking the raw Rust string to the user.
         setRoute(null);
-        setRouteError(err instanceof Error ? err.message : String(err));
+        setRouteError("noRoute");
         drawRoute(null);
       }
     },
     [drawRoute]
   );
 
-  const handleClick = useCallback(
-    (e: maplibregl.MapMouseEvent) => {
-      onMapClick?.(e.lngLat.lat, e.lngLat.lng);
+  /** Place the next route point. Shared by pointer and keyboard input so
+   *  both paths are exactly equivalent — a keyboard user is never second
+   *  class on a map. */
+  const placePoint = useCallback(
+    (lat: number, lon: number) => {
+      onMapClick?.(lat, lon);
       const map = mapRef.current;
       if (!map || !engineRef.current) return;
 
@@ -173,18 +188,78 @@ export default function OpenNavigationMap({
         setRouteError(null);
         drawRoute(null);
       }
-      const next: [number, number][] = [...base, [e.lngLat.lat, e.lngLat.lng]];
+      const next: [number, number][] = [...base, [lat, lon]];
 
       const marker = new maplibregl.Marker({
         color: next.length === 1 ? "#22c55e" : "#ef4444",
       })
-        .setLngLat(e.lngLat)
+        .setLngLat([lon, lat])
         .addTo(map);
       markersRef.current.push(marker);
 
       setClicks(next);
     },
     [clicks, drawRoute, onMapClick]
+  );
+
+  const handleClick = useCallback(
+    (e: maplibregl.MapMouseEvent) => placePoint(e.lngLat.lat, e.lngLat.lng),
+    [placePoint]
+  );
+
+  /** Full keyboard control of the map, owned by this container rather than
+   *  MapLibre's canvas-level handler — focus lands on the container (it is
+   *  what carries role/aria), so relying on the canvas would leave arrow keys
+   *  dead and a keyboard user unable to move between two points at all.
+   *  Enter/Space places a point at the center; arrows pan; +/- zoom. */
+  const handleKeyDown = useCallback(
+    (e: React.KeyboardEvent<HTMLDivElement>) => {
+      const map = mapRef.current;
+      if (!map) return;
+
+      // A screenful is too coarse and a pixel too fine; a quarter-screen step
+      // matches how far a mouse drag typically moves the view.
+      const step = () => Math.max(80, map.getContainer().clientHeight / 4);
+
+      switch (e.key) {
+        case "Enter":
+        case " ": {
+          e.preventDefault();
+          const c = map.getCenter();
+          placePoint(c.lat, c.lng);
+          return;
+        }
+        case "ArrowLeft":
+          e.preventDefault();
+          map.panBy([-step(), 0]);
+          return;
+        case "ArrowRight":
+          e.preventDefault();
+          map.panBy([step(), 0]);
+          return;
+        case "ArrowUp":
+          e.preventDefault();
+          map.panBy([0, -step()]);
+          return;
+        case "ArrowDown":
+          e.preventDefault();
+          map.panBy([0, step()]);
+          return;
+        case "+":
+        case "=":
+          e.preventDefault();
+          map.zoomIn();
+          return;
+        case "-":
+        case "_":
+          e.preventDefault();
+          map.zoomOut();
+          return;
+        default:
+          return;
+      }
+    },
+    [placePoint]
   );
   // The map binds one listener at mount; this ref always points at the
   // freshest closure so late prop changes (collab onMapClick) are honored.
@@ -266,11 +341,14 @@ export default function OpenNavigationMap({
         engineRef.current = engine;
         if (engine) {
           engine.loadGraph(graphText);
-          setStatus(
-            `engine v${engine.version()} · ${graph.nodes.length} nodes · ${graph.segments.length} roads`
-          );
+          setStatus({
+            kind: "ready",
+            version: engine.version(),
+            nodes: graph.nodes.length,
+            roads: graph.segments.length,
+          });
         } else {
-          setStatus("engine unavailable — map only");
+          setStatus({ kind: "engineUnavailable" });
         }
 
         const roads: GeoJSON.FeatureCollection = {
@@ -336,7 +414,7 @@ export default function OpenNavigationMap({
         );
       } catch (err) {
         console.warn("[open-map] overlay init failed", err);
-        setStatus("road graph unavailable");
+        setStatus({ kind: "graphUnavailable" });
       }
     };
     void addOverlays();
@@ -355,58 +433,106 @@ export default function OpenNavigationMap({
 
   const minutes = route ? Math.max(1, Math.round(route.timeS / 60)) : 0;
 
+  const statusText =
+    status.kind === "ready"
+      ? `v${status.version} · ${status.nodes} ${t("map.status.nodes")} · ${status.roads} ${t("map.status.roads")}`
+      : t(`map.status.${status.kind}` as Parameters<typeof t>[0]);
+
+  const vehicleName = (v: string) =>
+    t(`map.vehicle.${v}` as Parameters<typeof t>[0]);
+
+  /** Single source for what the bottom panel says — also what screen
+   *  readers announce, so sighted and non-sighted users get one truth. */
+  const panelText = routeError
+    ? t("map.error.noRoute")
+    : route
+      ? `${(route.distanceM / 1000).toFixed(2)} ${t("map.route.km")} · ~${minutes} ${t("map.route.min")} · ${vehicleName(vehicle)}`
+      : clicks.length === 1
+        ? t("map.hint.destination")
+        : t("map.hint.origin");
+
   return (
-    <div className="absolute inset-0" data-testid="open-navigation-map">
+    <div
+      className="absolute inset-0"
+      data-testid="open-navigation-map"
+      dir={dir}
+    >
       {/* Inline position: maplibre-gl.css sets `.maplibregl-map{position:relative}`,
-          which can out-cascade the utility class and collapse the height to 0. */}
-      <div ref={containerRef} style={{ position: "absolute", inset: 0 }} />
+          which can out-cascade the utility class and collapse the height to 0.
+          role=application + tabIndex: the map is a focusable widget that owns
+          its own keys (arrows pan, Enter/Space places a point). */}
+      <div
+        ref={containerRef}
+        style={{ position: "absolute", inset: 0 }}
+        role="application"
+        aria-label={t("map.aria.label")}
+        aria-describedby="gane-map-instructions"
+        tabIndex={0}
+        onKeyDown={handleKeyDown}
+      />
+
+      {/* Keyboard/screen-reader instructions — visually hidden, always read. */}
+      <p id="gane-map-instructions" className="sr-only">
+        {t("map.aria.instructions")}
+      </p>
 
       {/* Status chip */}
       <div className="pointer-events-none absolute left-1/2 top-16 z-20 -translate-x-1/2 rounded-lg bg-slate-900/80 px-3 py-1.5 font-mono text-xs text-emerald-300 backdrop-blur">
         G.A.N.E · {regionName ? `${regionName} · ` : ""}
-        {status}
+        {statusText}
       </div>
 
       {/* Vehicle picker */}
-      <div className="absolute left-1/2 top-24 z-20 flex -translate-x-1/2 gap-1 rounded-lg bg-slate-900/80 p-1 backdrop-blur">
+      <div
+        className="absolute left-1/2 top-24 z-20 flex -translate-x-1/2 gap-1 rounded-lg bg-slate-900/80 p-1 backdrop-blur"
+        role="group"
+        aria-label={t("map.aria.vehiclePicker")}
+      >
         {Object.keys(VEHICLE_PRESETS).map(v => (
           <button
             key={v}
             type="button"
             onClick={() => setVehicle(v)}
-            className={`rounded-md px-2 py-1 text-xs transition-colors ${
+            aria-pressed={vehicle === v}
+            aria-label={vehicleName(v)}
+            className={`rounded-md px-2 py-1 text-xs transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-400 ${
               vehicle === v
                 ? "bg-blue-600 text-white"
                 : "text-slate-300 hover:bg-slate-700"
             }`}
           >
-            {VEHICLE_LABELS[v] ?? v}
+            <span aria-hidden="true">{VEHICLE_ICONS[v] ?? ""}</span>{" "}
+            {vehicleName(v)}
           </button>
         ))}
       </div>
 
-      {/* Route result / hint */}
-      <div className="absolute bottom-32 left-1/2 z-20 -translate-x-1/2 rounded-lg bg-slate-900/85 px-4 py-2 text-center text-sm text-slate-100 backdrop-blur">
+      {/* Route result / hint — announced politely on every change. */}
+      <div
+        className="absolute bottom-32 left-1/2 z-20 -translate-x-1/2 rounded-lg bg-slate-900/85 px-4 py-2 text-center text-sm text-slate-100 backdrop-blur"
+        role="status"
+        aria-live="polite"
+        aria-label={t("map.aria.routeStatus")}
+      >
         {routeError ? (
-          <span className="text-amber-400">{routeError}</span>
+          <span className="text-amber-400">{panelText}</span>
         ) : route ? (
           <span>
             <span className="font-semibold text-blue-400">
-              {(route.distanceM / 1000).toFixed(2)} km
+              {(route.distanceM / 1000).toFixed(2)} {t("map.route.km")}
             </span>
             {" · "}
             <span className="font-semibold text-emerald-400">
-              ~{minutes} min
+              ~{minutes} {t("map.route.min")}
             </span>
             {" · "}
-            <span className="text-slate-400">{VEHICLE_LABELS[vehicle]}</span>
+            <span className="text-slate-400">
+              <span aria-hidden="true">{VEHICLE_ICONS[vehicle]}</span>{" "}
+              {vehicleName(vehicle)}
+            </span>
           </span>
         ) : (
-          <span className="text-slate-400">
-            {clicks.length === 1
-              ? "click destination…"
-              : "click map to set origin"}
-          </span>
+          <span className="text-slate-400">{panelText}</span>
         )}
       </div>
     </div>

@@ -119,6 +119,7 @@ export const sidebarGroups: SidebarGroupType[] = [
       { id: 'ai-optimizer' as SmartPanel, icon: BrainCircuit, label: 'Optimizer', labelHe: 'אופטימיזציה', i18nKey: 'sidebar.optimizer', accent: COLORS.purple },
       { id: 'driver-score', icon: Gauge, label: 'Score', labelHe: 'ציון', i18nKey: 'sidebar.score', accent: COLORS.gold },
       { id: 'analytics', icon: Sparkles, label: 'Analytics', labelHe: 'אנליטיקה', i18nKey: 'sidebar.analytics', accent: COLORS.gold },
+      { id: 'analytics-engine', icon: Sparkles, label: 'Analytics Engine', labelHe: 'מנוע אנליטיקה', i18nKey: 'sidebar.analytics', accent: COLORS.gold },
       { id: 'social-nav' as SmartPanel, icon: Orbit, label: 'Social', labelHe: 'חברתי', i18nKey: 'sidebar.social', accent: COLORS.pink },
       { id: 'live-sharing' as SmartPanel, icon: Signal, label: 'Share', labelHe: 'שיתוף', i18nKey: 'sidebar.liveShare', accent: COLORS.cyan },
       { id: 'collaboration' as SmartPanel, icon: Users, label: 'Collab', labelHe: 'שיתוף פעולה', i18nKey: 'sidebar.collab', accent: COLORS.cyan },

@@ -37,6 +37,13 @@ const handlers = {
   updatePosition: async (e, n, u, sigma) =>
     (await ensureEngine()).update_position(e, n, u, sigma),
   fusedState: async () => JSON.parse((await ensureEngine()).position()),
+  // Canonical 15-state ESKF — same filter as native/CLI, off the main thread.
+  eskfImu: async (ax, ay, az, gx, gy, gz, dtS) =>
+    (await ensureEngine()).eskf_imu(ax, ay, az, gx, gy, gz, dtS),
+  eskfUpdatePosition: async (e, n, u, sigmaM) =>
+    (await ensureEngine()).eskf_update_position(e, n, u, sigmaM),
+  eskfZupt: async sigmaMps => (await ensureEngine()).eskf_zupt(sigmaMps),
+  eskfState: async () => JSON.parse((await ensureEngine()).eskf_state()),
   reset: async () => (await ensureEngine()).reset(),
 };
 

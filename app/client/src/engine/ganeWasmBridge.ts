@@ -114,6 +114,23 @@ export function engineAssetUrl(name: string): string {
   return `${import.meta.env.BASE_URL}engine/${name}`;
 }
 
+/**
+ * Canonical 15-state ESKF snapshot — the filter the product is specified
+ * around (position, velocity, heading, estimated IMU biases, uncertainty).
+ */
+export interface GaneEskfState {
+  /** ENU position, metres. */
+  p: [number, number, number];
+  /** ENU velocity, m/s. */
+  v: [number, number, number];
+  heading_rad: number;
+  /** Estimated accelerometer bias, m/s². */
+  accel_bias: [number, number, number];
+  /** Estimated gyroscope bias, rad/s. */
+  gyro_bias: [number, number, number];
+  horizontal_uncertainty_m: number;
+}
+
 export interface GaneFusedState {
   east_m: number;
   north_m: number;
@@ -145,6 +162,18 @@ interface WasmEngine {
     toLon: number,
     envelopeJson?: string | null
   ): string;
+  eskf_imu(
+    ax: number,
+    ay: number,
+    az: number,
+    gx: number,
+    gy: number,
+    gz: number,
+    dtS: number
+  ): void;
+  eskf_update_position(e: number, n: number, u: number, sigmaM: number): number;
+  eskf_zupt(sigmaMps: number): number;
+  eskf_state(): string;
 }
 
 export class GaneEngineBridge {
@@ -223,6 +252,39 @@ export class GaneEngineBridge {
         envelope ? JSON.stringify(envelope) : null
       )
     ) as GaneGeoRoute;
+  }
+
+  // ── Canonical 15-state ESKF ──────────────────────────────────────────────
+  // The same filter the native stack and the replay harness run. Wrapped here
+  // so the browser can use the canonical path instead of only the legacy
+  // predict/updatePosition EKF shims.
+
+  /** Strapdown IMU propagation: accel (m/s²) and gyro (rad/s), body frame. */
+  eskfImu(
+    ax: number,
+    ay: number,
+    az: number,
+    gx: number,
+    gy: number,
+    gz: number,
+    dtS: number
+  ): void {
+    this.engine.eskf_imu(ax, ay, az, gx, gy, gz, dtS);
+  }
+
+  /** GNSS position update (ENU metres). Returns the NIS gate value. */
+  eskfUpdatePosition(e: number, n: number, u: number, sigmaM: number): number {
+    return this.engine.eskf_update_position(e, n, u, sigmaM);
+  }
+
+  /** Zero-velocity update (stationary). Returns the NIS gate value. */
+  eskfZupt(sigmaMps: number): number {
+    return this.engine.eskf_zupt(sigmaMps);
+  }
+
+  /** Full canonical filter state, including estimated IMU biases. */
+  eskfState(): GaneEskfState {
+    return JSON.parse(this.engine.eskf_state()) as GaneEskfState;
   }
 }
 

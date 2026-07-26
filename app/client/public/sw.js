@@ -8,9 +8,9 @@
  * - App shell (HTML): Cache-first for instant offline loads
  */
 
-const APP_CACHE = 'gane-app-v1';
+const APP_CACHE = 'gane-app-v2';
 const TILE_CACHE = 'gane-tiles-v1';
-const STATIC_CACHE = 'gane-static-v1';
+const STATIC_CACHE = 'gane-static-v2';
 const API_CACHE = 'gane-api-v1';
 
 const MAX_TILE_ENTRIES = 2000;
@@ -29,7 +29,7 @@ const TILE_PATTERNS = [
 ];
 
 // Static asset extensions
-const STATIC_EXTENSIONS = ['.js', '.css', '.woff', '.woff2', '.ttf', '.otf', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico'];
+const STATIC_EXTENSIONS = ['.js', '.css', '.woff', '.woff2', '.ttf', '.otf', '.png', '.jpg', '.jpeg', '.svg', '.webp', '.ico', '.wasm', '.json'];
 
 // ─── Install: Precache app shell ───
 self.addEventListener('install', (event) => {
@@ -37,6 +37,13 @@ self.addEventListener('install', (event) => {
     caches.open(APP_CACHE).then((cache) => {
       return cache.addAll([
         './',
+        // Engine assets: without these a cold offline start cannot route at
+        // all — the WASM filter/router and the road graph are the product.
+        './engine/gane_wasm.js',
+        './engine/gane_wasm_bg.wasm',
+        './engine/gane.worker.js',
+        './engine/regions.json',
+        './engine/kouvola-graph.json',
       ]);
     }).then(() => self.skipWaiting())
   );
