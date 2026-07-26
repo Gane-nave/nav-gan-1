@@ -118,17 +118,15 @@ function geohashBounds(hash: string): {
 }
 
 /**
- * The eight geographically adjacent cells.
- *
- * Base-32 geohash characters interleave latitude and longitude bits, so
- * stepping the character index (the previous approach) does not move one cell
- * on the ground — it produced four arbitrary cells and made findNearby drop
- * genuinely close points (Herzliya, 10.7 km from Tel Aviv, was missed by a
- * 25 km query). Decoding the cell and re-encoding one cell-width away in each
- * direction is exact by construction.
- */
-/**
  * Every geohash cell whose area can intersect a circle of `radiusM`.
+ *
+ * Two defects lived here. Adjacency was computed by stepping the base-32
+ * character index, which has no relation to geographic adjacency — geohash
+ * characters interleave latitude and longitude bits — and the search then
+ * looked at a fixed 3x3 block regardless of the requested radius (~460 m at
+ * precision 7), so a 25 km query from Tel Aviv missed Herzliya at 10.7 km.
+ * Cells are derived by decoding the centre to its bounds and stepping whole
+ * cell widths, with the ring size taken from the radius.
  *
  * Bounded so a huge radius on a fine precision cannot enumerate the planet:
  * past the cap the caller is better served by a full scan, and the distance
@@ -163,29 +161,6 @@ function cellsCovering(
     }
   }
   return Array.from(out);
-}
-
-function geohashNeighbors(hash: string): string[] {
-  const b = geohashBounds(hash);
-  const latStep = b.latMax - b.latMin;
-  const lonStep = b.lonMax - b.lonMin;
-  const lat = (b.latMin + b.latMax) / 2;
-  const lon = (b.lonMin + b.lonMax) / 2;
-
-  const out: string[] = [];
-  for (const dLat of [-1, 0, 1]) {
-    for (const dLon of [-1, 0, 1]) {
-      if (dLat === 0 && dLon === 0) continue;
-      const nLat = lat + dLat * latStep;
-      if (nLat > 90 || nLat < -90) continue;
-      // Wrap longitude so a query at the antimeridian still sees both sides.
-      let nLon = lon + dLon * lonStep;
-      if (nLon > 180) nLon -= 360;
-      if (nLon < -180) nLon += 360;
-      out.push(encodeGeohash(nLat, nLon, hash.length));
-    }
-  }
-  return out;
 }
 
 function haversineDistance(lat1: number, lon1: number, lat2: number, lon2: number): number {
